@@ -40,7 +40,7 @@ xinput set-prop 12 338 1                          # enable natural scrolling
 nitrogen --set-zoom-fill --random ~/Pictures/atmosphere/Wadim Kashin &
 unclutter -root &
 nm-applet &
-picom -f &
+picom --experimental-backends &
 blueman-applet &
 redshift -l 55.75222:37.61556 -t 6500:4000 &
 emacs &
