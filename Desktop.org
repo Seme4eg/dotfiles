@@ -1,0 +1,377 @@
+#+TITLE: Desktop Environment
+
+#+PROPERTY: header-args: :mkdirp yes
+#+PROPERTY: header-args:sh   :tangle-mode (identity #o555)
+#+PROPERTY: header-args:conf :tangle-mode (identity #o555)
+
+- [ ] setup =dunst=
+  
+* DWX
+Flexpatch from this [[https://www.youtube.com/watch?v=keXKCe7xh74][video]]
+
+Quick intro into DWX + 2 useful links below in this [[https://www.youtube.com/watch?v=b9zSQY5wbr4][video]]
+
+Links below this [[https://www.youtube.com/watch?v=B5r47Q1cn_o][video]]
+
+Also take a look for kebinding managing via [[https://github.com/baskerville/sxhkd][sxhkd]]
+
+To modify dwx use =Xlib manual=.
+
+
+* EXWM
+
+** Readme
+Link the .desktop file from =.doom= dir with the file in =xsessions= folder:
+
+: sudo ln -f ~/.doom.d/exwm/EXWM.desktop /usr/share/xsessions/EXWM.desktop
+
+/exwm/Xmodmap file remaps ctrl to caps and caps to right control key.
+
+#+CAPTION: useful info
+#+begin_comment
+An exwm-mode buffer has two input modes: line-mode and char-mode (these phrases
+are borrowed from ansi-mode). They define how key events should be processed. In
+line-mode, EXWM intercepts all key events and sends applications only keys not
+explicitly assigned. Whereas in char-mode, EXWM does no interception but only
+responds to those globally grabbed key sequences. exwm-mode buffers are created
+in line-mode by default. We will discuss how to switch input mode later.
+
+Every exwm-mode buffer also has a major mode menu, from which most commands or
+other features are accessible. However it has the limitation that you can not
+access it from other buffers, so use it as a reference/reminder rather than
+totally relying on it.
+#+end_comment
+
+- C-x 2/3 :: split horisontally / vertically
+- exwm-workspace-switch-to-buffer :: shows all available buffers active in cur.
+  workspace
+
+_Managing windows:_
+- M-& :: launch a process asynchronously
+- S-M-& :: launch without popup
+
+Split / move / swap etc. windows just like anywhere else. (use ~s-arrows~ to swap
+between windows)
+
+- C-c C-t C-f (exwm-floating-toggle-floating) - Toggle between tiling and floating mode
+- C-c C-f (exwm-layout-set-fullscreen) - Enter fullscreen mode
+- C-c C-h (exwm-floating-hide) - Hide a floating X window
+- C-c C-k (exwm-input-release-keyboard) - Switch to char-mode
+- C-c C-m (exwm-workspace-move-window) - Move X window to another workspace
+- C-c C-q (exwm-input-send-next-key) - Send a single key to the X window; can be
+  prefixed with C-u to send multiple keys
+- C-c C-t C-m (exwm-layout-toggle-mode-line) - Toggle mode-line
+
+Fullscreen: =exwm-layout-toggle-fullscreen= - makes application full screen and
+turns the window into =char-mode=.
+
+_Workspaces:_
+- s-{0..9} :: switch to numbered workspace
+- s-w :: workspace selector (type ~+/-~ after this kbd to add / delete workspace)
+- C-c RET :: move window to numbered workspace
+
+*NOTE:* windows r attached to a single workspace
+
+*** Prerequisites
+**** desktop-environment [[https://github.com/DamienCassou/desktop-environment][#docs]]
+
+To use all commands =desktop-environment= provides without customizing the
+package, the following system packages must be available on your system:
+
+Volume:             [[https://www.alsa-project.org/wiki/Main_Page][amixer]]
+Brightness:         [[https://github.com/Hummer12007/brightnessctl][brightnessctl]]
+Screenshot:         [[https://tracker.debian.org/pkg/scrot][scrot]]
+Screenlock:         [[https://tools.suckless.org/slock/][slock]]
+Keyboard backlight: [[https://upower.freedesktop.org/][upower]]
+Wifi and bluetooth: [[https://linrunner.de/en/tlp/tlp.html][TLP]]
+Music:              [[https://github.com/altdesktop/playerctl][playerctl]]
+
+** Prerequisites
+- =xmodmap= for rebinding caps to ctrl
+- =feh= for background
+- amixer, brightnesctl, scrot, slock, upower, TLP, playerctl - for
+  =desktop-environment= to work (prob not all pkgs will b needed, check [[file:README.org::*desktop-environment \[\[https://github.com/DamienCassou/desktop-environment\]\[#docs\]\]][here]])
+- [[http://jonls.dk/redshift/][redshift]] - nightlight
+
+** TODO Desktop Entry
+todo: the file linking to usr/share/xsessions file isn't working
+
+Contents of =exwm.desktop= file:
+#+begin_src shell
+[Desktop Entry]
+Name=exwm
+Exec=sh ~/exwm/init.sh
+TryExec=sh
+Type=Application
+X-LightDM-DesktopName=exwm
+DesktopNames=exwm
+#+end_src
+** Launch script
+#+begin_src shell :tangle ~/exwm/init.sh :shebang #!/bin/sh :mkdirp yes
+. ~/.profile              # Source .profile for common environment vars
+xhost +SI:localuser:$USER # Disable access control for the current user
+xsettingsd &              # Run xsettingsd to progagate font and theme settings
+xset -b                   # Turn off the system bell
+xss-lock -- slock &       # Enable screen locking on suspend
+xset r rate 200 60 # Set keyboard repeat rate.
+
+# Make Java applications aware this is a non-reparenting window manager.
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# run the screen compositor
+picom & # new name for 'compton'
+
+# -mm -- maximise emacs window on startup
+exec dbus-launch --exit-with-session emacs -mm --debug-init --use-exwm
+#+end_src
+** Xmodmap setup (Ctrl to Caps)
+#+begin_src sh :tangle ~/exwm/Xmodmap
+clear lock
+clear control
+keycode 66 = Control_L
+add control = Control_L
+add Lock = Control_R
+#+end_src
+** desktop.el
+:PROPERTIES:
+:header-args: :tangle ~/exwm/exwm-config.el :mkdirp yes
+:END:
+
+*** Prerequisites
+#+begin_src emacs-lisp
+(require 'exwm-systemtray)
+;; (setq exwm-systemtray-height 32)
+(exwm-systemtray-enable)
+;; For multimonitor setup:
+;; (require 'exwm-randr)
+;; (exwm-randr-enable)
+
+;; using xim input
+(require 'exwm-xim)
+(exwm-xim-enable)
+(push ?\C-\\ exwm-input-prefix-keys)   ;; use Ctrl + \ to switch input method
+#+end_src
+*** Window Management
+#+begin_src emacs-lisp
+;; Annoying focus issues
+(setq mouse-autoselect-window nil
+      focus-follows-mouse t
+      exwm-workspace-warp-cursor t
+      exwm-workspace-number 5
+      ;exwm-workspace-minibuffer-position 'bottom
+      exwm-workspace-display-echo-area-timeout 5)
+
+;; update buffer names of opened windows whenever 2 windows with same
+;; name appear (like Opera & Opera<1> - u gonna see that)
+(add-hook 'exwm-update-class-hook
+          (lambda ()
+            (exwm-workspace-rename-buffer exwm-class-name)))
+
+;; TODO: cut title if it's too long
+(add-hook 'exwm-update-title-hook
+          (lambda ()
+            (pcase exwm-class-name
+              ("qutebrowser" (exwm-workspace-rename-buffer (format "Qutebrowser: %s" exwm-title))))))
+
+(exwm-enable)
+#+end_src
+*** Helper Functions
+#+begin_src emacs-lisp
+(defun exwm/run-in-background (command)
+  (let ((command-parts (split-string command "[ ]+")))
+    (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
+
+(defun exwm/bind-function (key invocation &rest bindings)
+  "Bind KEYs to FUNCTIONs globally"
+  (while key
+    (exwm-input-set-key (kbd key)
+                        `(lambda ()
+                           (interactive)
+                           (funcall ',invocation)))
+    (setq key (pop bindings)
+          invocation (pop bindings))))
+
+(defun exwm/bind-command (key command &rest bindings)
+  "Bind KEYs to COMMANDs globally"
+  (while key
+    (exwm-input-set-key (kbd key)
+                        `(lambda ()
+                           (interactive)
+                           (exwm/run-in-background ,command)))
+    (setq key (pop bindings)
+          command (pop bindings))))
+#+end_src
+*** Configuration
+#+begin_src emacs-lisp
+(defun efs/exwm-init-hook ()
+  ;; Launch Telega in workspace 0 if we've logged in before
+  ;; (exwm-workspace-switch-create 0)
+  ;; (when (file-exists-p "~/.telega/db.sqlite")
+  ;;   (telega nil))
+
+  (exwm-workspace-switch-create 1)
+  ;; (eshell) ;; Open eshell by default
+
+  ;; Launch apps that will run in the background:
+  ;; (exwm/run-in-background "dunst")
+  (exwm/run-in-background "nm-applet") ;; - network-manager system tray icons
+  ;; (exwm/run-in-background "syncthing-gtk --minimized")
+  (exwm/run-in-background "redshift -l 55.751244:37.618423 -t 6500:3500")
+  )
+
+(defun dw/setup-window-by-class ()
+  (interactive)
+  (pcase exwm-class-name
+    ("Emacs" (call-interactively #'exwm-input-toggle-keyboard))
+    ;; ??? ("Xephyr" (call-interactively #'exwm-input-toggle-keyboard))
+    ("discord" (exwm-workspace-move-window 3))
+    ("qutebrowser" (exwm-workspace-move-window 2))
+    ("mpv" (exwm-floating-toggle-floating)
+     (dw/exwm-floating-toggle-pinned))
+    ;; ??? ("gsi" (exwm-input-toggle-keyboard))
+    )
+  )
+
+;; Do some post-init setup
+(add-hook 'exwm-init-hook #'efs/exwm-init-hook)
+
+;; Manipulate windows as they're created
+(add-hook 'exwm-manage-finish-hook
+          (lambda ()
+            ;; Hide the modeline on all X windows
+            ;; (exwm-layout-hide-mode-line)))
+            ;; Send the window where it belongs
+            (dw/setup-window-by-class)))
+
+;; Hide the modeline on all floating windows
+(add-hook 'exwm-floating-setup-hook
+          (lambda ()
+            (exwm-layout-hide-mode-line)))
+#+end_src
+*** TODO Desktop Configuration
+#+begin_src emacs-lisp
+(defun dw/run-xmodmap ()
+  (interactive)
+  (start-process-shell-command "xmodmap" nil "xmodmap ~/.doom.d/exwm/Xmodmap"))
+
+(defun dw/update-wallpapers ()
+  (interactive)
+  (start-process-shell-command
+   "feh" nil "feh --bg-scale ~/Pictures/xXfymMYfBFM.jpg"))
+
+;; (setq dw/panel-process nil)
+;; (defun dw/kill-panel ()
+;;   (interactive)
+;;   (when dw/panel-process
+;;     (ignore-errors
+;;       (kill-process dw/panel-process)))
+;;   (setq dw/panel-process nil))
+
+;; (defun dw/start-panel ()
+;;   (interactive)
+;;   (dw/kill-panel)
+;;   (setq dw/panel-process (start-process-shell-command "polybar" nil "polybar panel")))
+
+(defun dw/configure-desktop ()
+  (interactive)
+    (dw/run-xmodmap)
+    (run-at-time "2 sec" nil (lambda () (dw/update-wallpapers))))
+
+(defun dw/on-exwm-init ()
+  (dw/configure-desktop)
+  ;; (dw/start-panel)
+  )
+
+(add-hook 'exwm-init-hook #'dw/on-exwm-init)
+#+end_src
+*** TODO Panel
+*** Kbds
+#+begin_src emacs-lisp
+;; These keys should always pass through to Emacs (in line-mode)
+(setq exwm-input-prefix-keys
+      '(?\C-x
+        ?\C-h
+        ?\ ;; spc??
+        ?\M-x
+        ?\M-`
+        ?\M-&
+        ?\M-:
+        ?\C-\M-j ;; buffer list
+        ;; ?\C-\M-k  ;; Browser list
+        ;; ?\C-\M-n  ;; Next workspace
+        ;; ?\C-\M-'  ;; Popper toggle
+        ?\C-\ ;; ctrl + space
+        ;; ?\C-\;
+        ))
+
+;; Ctrl+Q will enable the next key to be sent directly to the window
+(define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
+
+;; (defun exwm/run-qute ()
+;;   (exwm/run-in-background "qutebrowser")
+;;   (exwm-workspace-switch-create 2))
+
+;; (exwm/bind-function
+;;  "s-o" 'exwm/run-qute
+;;  "s-q" 'kill-buffer)
+
+(exwm/bind-command
+ "s-p" "playerctl play-pause"
+ "s-[" "playerctl previous"
+ "s-]" "playerctl next")
+
+(desktop-environment-mode)
+(setq desktop-environment-brightness-small-increment "2%+"
+      desktop-environment-brightness-small-decrement "2%-"
+      desktop-environment-brightness-normal-increment "5%+"
+      desktop-environment-brightness-normal-decrement "5%-"
+      desktop-environment-screenshot-command "flameshot gui"
+      )
+
+;; set up global key bindings. These always work, no matter the input state.
+;; keep in mind that changing this list after EXWM initializes has no effect.
+(setq exwm-input-global-keys
+      `(
+        ;; reset to line-mode (C-c C-k switches to char-mode via
+        ;; exwm-input-release-keyboard
+        ([?\s-\C-r] . exwm-reset)
+        ;; ([?\s-r] . exwm-reset)
+
+        ;; Move between windows
+        ;; ([?\s-h] . windmove-left)
+        ;; ([?\s-l] . windmove-right)
+        ;; ([?\s-k] . windmove-up)
+        ;; ([?\s-j] . windmove-down)
+
+        ([?\s-w] . exwm-workspace-switch)
+
+        ;; Bind "s-<f2>" to "slock", a simple X display locker.
+        ([s-f2] . (lambda ()
+                    (interactive)
+                    (start-process "" nil "/usr/bin/slock")))
+
+        ;; Launch applications via chell command
+        ([?\s-o] . (lambda (command)
+                     (interactive (list (read-shell-command "$ ")))
+                     (start-process-shell-command command nil command)))
+
+        ([?\s-i] . exwm-input-toggle-keyboard)
+        ([?\s-e] . dired-jump)
+        ([?\s-E] . (lambda () (interactive) (dired "~")))
+        ([?\s-Q] . (lambda () (interactive) (kill-buffer)))
+        ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+        ,@(mapcar (lambda (i)
+                    `(,(kbd (format "s-%d" i)) .
+                      (lambda ()
+                        (interactive)
+                        (exwm-workspace-switch-create ,i))))
+                  (number-sequence 0 9))))
+
+(exwm-input-set-key (kbd "<s-return>") 'vterm)
+;; TODO: write my own .desktop files finder that will be compatible with
+;; vertico
+;; You might therefore be interested in this link:
+;; https://www.mattduck.com/emacs-fuzzy-launcher.html
+;; (exwm-input-set-key (kbd "s-SPC") 'app-launcher-run-app)
+(exwm-input-set-key (kbd "s-f") 'exwm-layout-toggle-fullscreen)
+#+end_src
