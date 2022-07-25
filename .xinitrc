@@ -52,4 +52,4 @@ xss-lock -- slock &                               # Enable screen locking on sus
 # Switching between DEs / WMs usint xinit:
 # https://wiki.archlinux.org/title/Xinit#Switching_between_desktop_environments/window_managers
 
-exec awesome
+exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr
