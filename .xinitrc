@@ -38,6 +38,8 @@ xinput set-prop 12 338 1                          # enable natural scrolling
 
 # string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd)
 nitrogen --set-zoom-fill --random ~/Pictures/atmosphere/Wadim Kashin &
+# https://www.reddit.com/r/awesomewm/comments/vgpv6d/awesomeclient_not_working_with_e_dbussend_failed/
+# eval "$(DISPLAY="$D" dbus-launch --sh-syntax --exit-with-session)"
 unclutter -root &
 nm-applet &
 picom --experimental-backends &
