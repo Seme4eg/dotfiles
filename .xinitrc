@@ -46,7 +46,7 @@ picom --experimental-backends &
 blueman-applet &
 redshift -l 55.75222:37.61556 -t 6500:4000 &
 emacs &
-qutebrowser &
+# qutebrowser & # moved to autorun.sh script in awesome
 org.telegram.desktop &
 com.discordapp.Discord &
 xss-lock -- slock &                               # Enable screen locking on suspend
