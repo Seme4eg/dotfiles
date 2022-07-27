@@ -1,0 +1,474 @@
+#+title: Arch Installation
+#+SOURCE: https://wiki.artixlinux.org/Main/Installation, https://wiki.archlinux.org/title/Installation_guide, https://www.youtube.com/watch?v=jqUP1juP4qM, good vid that explains why we doin certain things - https://www.youtube.com/watch?v=nCc_4fSYzRA
+
+** kbd layout
+(arch) ~ls /usr/share/kbd/keymaps/**/*.map.gz~
+(artix) ~ls -R /usr/share/kbd/keymaps~ (grep ru from the output?)
+
+or to find needed one - ~localectl list-keymaps | grep EN~
+
+~# loadkeys de-latin1~ <- both, but how to set multiple jus in case?
+
+#+NAME: arch
+Console fonts are located in /usr/share/kbd/consolefonts/ and can likewise be set with setfont(8).
+
+#+NAME: artix
+This only sets the selected keyboard layout in the current tty and only until
+reboot. To make the setting permanent, you have to edit /etc/conf.d/keymaps in
+the installed system. It's also useful to set up /etc/vconsole.conf - it may
+look like this:
+
+#+begin_src
+FONT_MAP=8859-1_to_uni
+FONT=lat1-16
+KEYMAP=de-latin1
+#+end_src
+
+** Verify the boot mode
+To verify the boot mode, list the efivars directory:
+
+: # ls /sys/firmware/efi/efivars
+
+If the command shows the directory without error, then the system is booted in UEFI mode. If the directory does not exist, the system may be booted in BIOS (or CSM) mode. If the system did not boot in the mode you desired, refer to your motherboard's manual.
+
+** Connect to the internet
+#+NAME: arch
+- Ensure your network interface is listed and enabled, for example with
+  ip-link(8): ~ip link~
+- for wireless make sure the card is not blocked with rfkill
+- wi-fi connection via iwctl
+- configure network connection:
+  - (arch) -> dhcp or static IP address
+  - (artix) -> redirects to [[https://wiki.archlinux.org/title/Network_configuration/Wireless][arch wiki network configuration / Wireless]]
+- # ping archlinux.org
+
+[[https://youtu.be/QzY2T3B4wlo?t=245][This vid]] steps:
+- activate wifi adapter - ~ip link set <adapter_name (wlan0?)> up~
+- if it's blocked - ~rfkill unblock wifi~
+- repeat 1st step
+- connmanctl -> scan wifi -> services
+- register the agent to handle user requests - ~agent on~
+- connect wifi_<tab>_<first3numbers><tab>
+
+[[https://youtu.be/DPLnBPM4DhI?t=719][This vid]] info:
+
+- Make sure we have internet connection: ~ip addr show~ (or just ~ip a~). There
+  ya'll c your wireless connection as =wlan0= or something.
+- To connect to wi-fi type ~iwctl~, then if u don't know your wireless device name
+  run ~device list~.
+- Find the wi-fi - ~station {wireless_device_name} scan~, which won't show
+  anything, but will initiate the scan.
+- Get networks - ~station {wireless_device_name} get-networks~
+- connect - ~station {device_name} connect {wifiname}~. After that your ~ip a~
+  should give wlan ip.
+
+** Update system clock
+arch:
+- Use timedatectl(1) to ensure the system clock is accurate:
+  : # timedatectl set-ntp true
+- To check the service status, use ~timedatectl status~.
+
+artix:
+- Set the time zone: ~ln -sf /usr/share/zoneinfo/Region/City /etc/localtime~
+- Run hwclock to generate /etc/adjtime:
+  ~hwclock --systohc~ (Note that this will default to UTC)
+
+** Partition the disks
+/Also mentions [[https://wiki.archlinux.org/index.php/Partitioning#Example_layouts][arch wiki partitioning]] page./
+
+*NOTE:* The BIOS boot partition is necessary on UEFI systems with a
+GPT-partitioned disk. EFI system partition has to be created and mounted at
+/mnt/boot and the suggested size is around *512* MiB.
+
+: sudo parted -l # find out whether your disk is gpt or mbr
+
+When recognized by the live system, disks are assigned to a block device such as
+/dev/sda, /dev/nvme0n1 or /dev/mmcblk0. To identify these devices, use =lsblk= or
+fdisk.
+
+: # fdisk -l
+
+# Results ending in rom, loop or airoot may be ignored.
+
+The following partitions are required for a chosen device:
+- One partition for the root directory /.
+- For booting in UEFI mode: an EFI system partition.
+
+If you want to create any stacked block devices for LVM, *system encryption* or
+RAID, do it now.
+
+Use fdisk / cfdisk / parted to modify partition tables. For example:
+
+: # fdisk /dev/the_disk_to_be_partitioned
+
+NOTE: If the disk from which you want to boot already has an EFI system
+partition, do not create another one, but use the existing partition instead.
+
+*** Using cfdisk
+- cfdisk /dev/sd<something>?
+- delete all partitions
+- write -> yes
+- new -> 512M -> type -> EFI system
+- choose free space -> new -> <enter> -> type remains linux filesystem
+- write -> yes -> quit
+
+*** Using fdisk
+- ~p~ - list all partitions that u currently have
+- ~g~ - create new gpt-partition table (or ~d~ to delete particular ones)
+- ~n[ew]~ -> 1 (default) -> 2048 (default) -> +1G (efi partition) (tho wiki
+  recommends +512M)
+- ~n~ -> 3x enter (root partition)
+- ~t[ype]~ -> 1st partition (efi one) -> l[ist] to get all available types ->
+  choose EFI system
+- set root partition type to /Linux filesystem/
+- ~p~ -> check which partitions you ended up with
+- ~w[rite]~ if everything is as u want
+
+*** Dm-encrypt
+[[https://wiki.archlinux.org/title/Dm-crypt][wiki page]] (there follow 1st 2 'usage' links), and useful [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
+
+Boot loader must be on *separate* partition.
+
+~modprobe dm-crypt~ - be sure module is loaded
+~cryptsetup benchmark~ - optional
+
+https://youtu.be/DPLnBPM4DhI?t=3171 (encrypting the largest partition):
+- ~cryptsetup luksFormat (-v[erbose] to get more output) (-s[ize of key] 512)
+  (-h[ash] sha512) {partition_name (/dev/sd[something])}~ -> YES ...
+- ~cryptsetup open (--type luks (can b omitted)) {partition_name}
+  {name_of_partition_for_mapper_to_use}~ - many name it 'cryptroot', *BUT* when
+  referring (when formatting for instance) to this partition now u gonna use
+  =/dev/mapper/{chosen_name}=, same when mounting it.
+- next steps in [[*Initramfs][Initramfs]] section
+
+** Format partitions
+If you are doing a UEFI installation, the boot partition is not optional and
+needs to be formatted as fat32.
+
+: mkfs.fat -F 32 /dev/sd<?>
+
+You can label EFI partition with ~fatlabel /dev/sda4 BOOT~ command
+
+Format remaining partitions (use mapper for partition that is encrypted):
+
+: mkfs.ext4 (-L ROOT) /dev/sda<?>        <- root partition
+
+~lsblk~ to check things
+
+** Mount Partitions
+#+begin_src shell
+swapon /dev/disk/by-label/SWAP             (if created)
+mount /dev/disk/by-label/ROOT /mnt # or mount /dev/mapper/<name> /mnt
+# mkdir /mnt/boot
+# mkdir /mnt/home
+# mount /dev/disk/by-label/HOME /mnt/home    (if created)
+mount --mkdir /dev/disk/by-label/BOOT /mnt/boot    (if created)
+#+end_src
+
+~lsblk~ to check mounted partitions
+
+** Installation
+*** Select the mirrors
+In prev step when connected internet if u ran reflector and mirrors update then
+u basically have left to comment out unwanted ones.
+
+From [[https://youtu.be/SFzN6e7USGk?t=242][this vid]] (after u connected the net):
+- ~reflector -c {country (Russia)} -a 6 (age of the server) --sort rate (of
+  speed) --save /etc/pacman.d/mirrorlist~
+- ~pacman -Syy~
+
+Packages to be installed must be downloaded from mirror servers, which are
+defined in =/etc/pacman.d/mirrorlist=. On the live system, after connecting to the
+internet, reflector updates the mirror list by choosing 20 most recently
+synchronized HTTPS mirrors and sorting them by download rate.
+
+The higher a mirror is placed in the list, the more priority it is given when
+downloading a package. You may want to inspect the file to see if it is
+satisfactory. If it is not, edit the file accordingly, and move the
+geographically closest mirrors to the top of the list, although other criteria
+should be taken into account.
+
+This file will later be copied to the new system by pacstrap, so it is worth
+getting right.
+
+*NOTE:* mirrors setup, remove us ones [[https://wiki.archlinux.org/title/Mirrors][link]]
+
+*** Install essential packages
+#+NAME: arch
+: pacstrap /mnt base linux-zen (linux-zen-headers) linux-firmware
+
+#+NAME: artix
+: basestrap /mnt base base-devel openrc elogind-openrc linux-zen (linux-zen-headers) linux-firmware
+
+*NOTE:* /linux-zen-headers/ isn't listed for install in both official installation
+guides, but many ppl in the net highly recommend installing it.
+
+/[[https://archlinux.org/groups/x86_64/base-devel/][base-devel]] packages/
+
+To install other packages or package groups, append the names to the pacstrap
+command above (space separated) or use pacman while chrooted into the new
+system. For comparison, packages available in the live system can be found in
+pkglist.x86_64.txt.
+
+** Configure the system
+*** Fstab
+Generate an fstab file (use -U or -L to define by UUID or labels, respectively):
+
+#+NAME: arch
+: # genfstab -U /mnt >> /mnt/etc/fstab
+
+#+NAME: artix
+: fstabgen -U /mnt >> /mnt/etc/fstab        <- edit and verify, also set root, swap, home and etc..
+
+NOTE: some use ~-p~ flat, what it does?
+
+Check the resulting =/mnt/etc/fstab= file, and edit it in case of errors.
+
+*** Chroot
+#+NAME: arch
+Change root into the new system:
+
+: # arch-chroot /mnt
+
+#+NAME: artix
+Check the resulting fstab for errors before rebooting. Now, you can chroot into your new Artix system with:
+
+: artix-chroot /mnt # formerly artools-chroot
+
+*** Time zone
+~timedatectl list-timezones | grep {City}~ -> will output something like Europe/Zurich
+
+Set the time zone (tab completion works):
+
+: # ln -sf /usr/share/zoneinfo/Region/City <-(depends on output above) /etc/localtime
+
+[[https://youtu.be/DPLnBPM4DhI?t=5768][Some]] instead of cmd above run ~timedatectl set-timezone Country/City~
+
+Run hwclock(8) to generate /etc/adjtime:
+
+: # hwclock --systohc
+
+This command assumes the hardware clock is set to UTC. See System time#Time standard for details.
+*** Localization
+Edit /etc/locale.gen and uncomment en_US.UTF-8 UTF-8 and other needed locales.
+Generate the locales by running:
+
+: # locale-gen
+
+Create the locale.conf (in etc) file, and set the LANG variable accordingly:
+
+#+NAME: /etc/locale.conf
+: LANG=en_US.UTF-8
+
+If you set the console keyboard layout, make the changes persistent in vconsole.conf(5):
+
+#+NAME: /etc/vconsole.conf
+: KEYMAP=de-latin1 <- you've already chosen this one in the beg. of process
+
+#+NAME: artix addition
+To set the locale systemwide, create or edit =/etc/locale.conf= (which is sourced
+by =/etc/profile=) or =/etc/bash/bashrc.d/artix.bashrc= or
+=/etc/bash/bashrc.d/local.bashrc=; user-specific changes may be made to their
+respective =~/.bashrc=, for example:
+
+#+begin_src
+export LANG="en_US.UTF-8"     <-- localize in your languages
+export LC_COLLATE="C"
+#+end_src
+
+*** Network configuration
+Create the hostname file:
+
+#+NAME: /etc/hostname
+: myhostname
+
+... or just ~hostnamectl set-hostname {name}~
+
+Complete the [[https://wiki.archlinux.org/title/Network_configuration][network configuration]] for the newly installed environment. That may
+include installing suitable [[https://wiki.archlinux.org/title/Network_configuration#Network_management][network management]] software.
+
+_Next from artix:_
+
+Now add matching entries to hosts:
+#+begin_src sh
+nano /etc/hosts
+127.0.0.1        localhost
+::1              localhost
+127.0.1.1        myhostname.localdomain  myhostname
+#+end_src
+
+Then you can check your name with ~hostnamectl~
+
+If the system has a permanent IP address, it should be used instead of 127.0.1.1.
+
+If you use OpenRC you should add your hostname to /etc/conf.d/hostname too:
+
+: hostname='myhostname'
+
+And install your prefered DHCP client
+
+: pacman -S dhcpcd (or dhclient)
+
+... or instead of directly using a standalone [[https://wiki.archlinux.org/title/Network_configuration#DHCP][DHCP]] client you can also use a
+[[https://wiki.archlinux.org/title/Network_configuration#Network_managers][network manager]], some of which have a built-in DHCP client.
+
+If you want to use a wireless connection, be sure to also install *wpa_supplicant*.
+
+[[https://youtu.be/DPLnBPM4DhI?t=4129][Vid]]: innstall some pkgs for wi-fi networking:
+
+: pacman -S ...
+
+networkmanager networkmanager-openrc wpa_supplicant wireless_tools nm-applet
+dialog (which will allow us to use something like wi-fi menu and the ability to
+connect to wifi over cmd in the situation where our gui won't work)
+
+NOTE: some also install =netctl= (2nd network manager along with =networkmanager=
+but for now i decided not to.)
+
+- enable network namager so when machine boots up we have wifi - ~rc-update add
+  NetworkManager default~ (~default~ is a run level)
+
+*** Initramfs
+Creating a new initramfs is usually not required, because mkinitcpio was run on installation of the kernel package with pacstrap.
+
+#+NAME: In case of encryption
+- edit =/etc/mkinitcpio.conf= ~HOOKS="...~ line somewhere after block (before
+  fylesystems) add word ~encrypt~ and somewhere after autodetect add keyboard and
+  keymap (and delete keyboard in the end of the line)
+- ~mkinitcpio -p linux~
+- next steps of crypting are in
+
+For LVM, *system encryption* or RAID, modify mkinitcpio.conf(5) and recreate the initramfs image:
+
+: # mkinitcpio -P
+
+NOTE: tho majority of ppl r running it bit differently: ~mkinitcpio -p linux~ (in
+case you have different linux kernel use it instead of ~linux~)
+
+*** Add user(s)
+First, set the root passwd: ~passwd~
+
+Second, create a regular user and password:
+#+begin_src sh
+useradd -m user # -m is home dir
+passwd user
+#+end_src
+
+*NOTE:* in many [[https://youtu.be/SFzN6e7USGk?t=1305][tutorials]] tho ppl create user with ~useradd -mG wheel {uname}~ (-G
+creates a suplementary group (a work group), it ?has? to do with sudo
+privileges). Some also add ~-g users~ to the command. In case u do as they do then
+do following steps:
+- after setting user password: ~EDITOR=vim visudo~ -> find line with the comment
+  above it /uncomment to allow members of group wheel to execute any command/) and
+  uncomment this line
+
+*** Boot Loader
+First, install *grub* and *os-prober* (for detecting other installed operating systems):
+
+#+begin_src sh
+pacman -S grub os-prober efibootmgr # some also INSTALL dofgstools and mtools
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub   # for UEFI systems, GRUB or grub???
+grub-mkconfig -o /boot/grub/grub.cfg
+#+end_src
+
+Some use instead of 2nd command this: ~grub-install --target=x86_64-efi
+--bootloader-id=grub_uefi --recheck~
+
+From [[https://youtu.be/DPLnBPM4DhI?t=5040][this vid]]:
+- create locale dir if it doesn't exist (check with ~ls -l /boot/grub~ -> there
+  should b =locale= dir)
+- for english messages in grub -> ~cp
+  /usr/share/locale/en\@quit/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo~ (is it necessary?)
+
+#+NAME: in case of encryption
+- get UUID of root partition (one way is to ~blkid > somefile~ -> ~vim somefile~ and
+  copy UUID of root partition from there)
+- edit ~GRUB_CMDLINE_LINUX~ in =/etc/default/grub=, set it to:
+  + *variation 1:* "cryptdevice={partition_name(normal one, like
+    /dev/sd[something])}:{chosen_name from above (like cryptroot)}" (*preferable*)
+  + *variation 2:* "cryptdevice=UUID={uuid_copied from the above}:{chosen_name
+    from above (like cryptroot)} root=/dev/mapper/{chosen_name}"
+- ([[https://youtu.be/DPLnBPM4DhI?t=5171][some]] uncomment line "GRUB_ENABLE_CRYPTODISK=y" and instead of
+  ~GRUB_CMDLINE_LINUX~ they edit the line above with ~DEFAULT~ in the end with
+  ~cryptdevice={partition_name}:{chosen_name??}:allow-discards(why is that?)~ <-
+  they add it in the beginning of line value)
+- grub-mkconfig -o /boot/grub/grub.cfg
+
+Also [[https://youtu.be/SFzN6e7USGk?t=1454][some]] add ~video=1920x1080~ in the end of ~GRUB_CMDLINE_LINUX_DEFAULT~ line.
+
+If you have an Intel or AMD CPU, enable [[https://wiki.archlinux.org/title/Microcode][microcode]] updates in addition.
+
+*** Before reboot
+Additional packages:
+- vim (also some install [intel|amd]-ucode here as well)
+- _bluetooth_: bluez bluez-utils bluez-openrc
+- _audio_: alsa-utils pulseaudio pulseaudio-bluetooth
+- _misc_: git reflector (latter is prob already there) bash-completion
+- file system manager
+- eg [[https://archlinux.org/packages/?name=sof-firmware][sof-firmware]] for [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware][sound-cards]] (e.g. a network manager or DHCP client)
+- [[https://wiki.archlinux.org/title/Networking][networking]] software
+- text editor (vim / emacs)
+- packages for accessing documentation in man and info pages: man-db, man-pages
+  and texinfo. (usually those r included in base-devel group, so if u r
+  installing latter, u can omit this step)
+- =openssh= - gives the ability to manage installation remotely. If you do enable
+  that figure out how to make it start when your computer starts (with systemd u
+  jus need to run ~systemctl enable sshd~, but i ain't usin it)
+- install =amd-ucode= or =intel-ucode= (depends on which processor u've
+  got) (relates to [[*Boot Loader][Boot Loader]] -> microcode)
+
+[[https://wiki.archlinux.org/title/OpenRC#Usage][converting systemd commands to openrc ones]]
+
+~default~ is a run level
+
+- enable bluetooth on boot - ~rc-update add bluetoothd default~
+
+Next steps r optional, but in case you want to connect to your machine via ssh
+from another one:
+- pacman -S openssh openssh-openrc
+- rc-update add sshd default
+
+
+*** Reboot
+Exit the chroot environment by typing ~exit~ or pressing =Ctrl+d=.
+
+Optionally manually unmount all the partitions with ~umount -R /mnt~: this allows
+noticing any "busy" partitions, and finding the cause with fuser(1). (some ppl
+use ~umount -a~ (-a for all))
+
+Finally, restart the machine by typing ~reboot~: any partitions still mounted will
+be automatically unmounted by systemd. Remember to remove the installation
+medium and then login into the new system with the root account.
+
+*** After reboot
+*BEFORE* you install anything from below -> maybe install it all with GUIX package
+manager?
+
+- ~sudo pacman -S terminus-font~ -> ~sudo setfont ter-132n~
+- to connect to wifi - ~sudo nmtui~
+- syncronize network time protocol: ~timedatectl set-ntp true~
+- sync hardware clock and sys clodk -> ~sudo hwclock --systohc
+- ~reflector -c {country (Russia)} -a 6 (age of the server) --sort rate (of
+  speed) --save /etc/pacman.d/mirrorlist~
+- ~pacman -Syy~
+- enable reflector in openrc?? (~systemctl enable --now reflector.timer~)
+- enable fstrim in openrc?? (~systemctl enable --now fstrim.timer~)
+- enable some essential [[https://wiki.archlinux.org/title/OpenRC#Services][services]] in openrc?
+- install graphics-card drivers: install =nvidia-utils= (in case of an intel
+  video card) *OR* even better [[https://wiki.archlinux.org/title/NVIDIA#Custom_kernel][nvidia-dkms]] (redirected from [[https://bbs.archlinux.org/viewtopic.php?id=251515][here]])
+- enable timesync service in openrc? (~systemctl enable systemd-timesyncd)
+- install ~xorg-server~ and ~xorg-apps~
+- dmenu ttf-dejavu ttf-liberation noto-fonts nitrogen picom pcmanfm (very fast &
+  light file manager) (? materia-gtk-theme papirus-icon-theme)
+
+** Questions
+** learning todos
+Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
+** Todos
+- Backups - look for 'rsync' heading on [[https://linuxhint.com/best_backup_restore_arch_linux/][this page]], and on [[https://wiki.archlinux.org/title/Rsync#As_a_backup_utility][arch wiki page]]
+- [[https://wiki.archlinux.org/title/Kernel][kernel]] - zen kernel? ([[https://www.youtube.com/watch?v=KbcUmAlQCHs][how to switch arch kernels]])
+- read [[https://wiki.archlinux.org/title/Pacman][pacman]] article and [[https://wiki.archlinux.org/title/Pacman/Tips_and_tricks][pacman tips and tricks]] one
+- read [[https://wiki.archlinux.org/title/Security][security]] wiki page
+- read [[https://wiki.archlinux.org/title/List_of_applications][list of applications]] wiki page
+- watch: [[https://www.youtube.com/watch?v=cBeSJvYkV7I][Linux Crash Course - The Arch User Repository (AUR)]], [[https://www.youtube.com/watch?v=HD7jJEh4ZaM][Linux Crash
+  Course - The Pacman Command]]
