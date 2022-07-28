@@ -5,8 +5,6 @@
 (arch) ~ls /usr/share/kbd/keymaps/**/*.map.gz~
 (artix) ~ls -R /usr/share/kbd/keymaps~ (grep ru from the output?)
 
-or to find needed one - ~localectl list-keymaps | grep EN~
-
 ~# loadkeys de-latin1~ <- both, but how to set multiple jus in case?
 
 #+NAME: arch
@@ -139,7 +137,7 @@ https://youtu.be/DPLnBPM4DhI?t=3171 (encrypting the largest partition):
   {name_of_partition_for_mapper_to_use}~ - many name it 'cryptroot', *BUT* when
   referring (when formatting for instance) to this partition now u gonna use
   =/dev/mapper/{chosen_name}=, same when mounting it.
-- next steps in [[*Initramfs][Initramfs]] section
+- next steps in [[*After chrooted][After chrooted]] section
 
 ** Format partitions
 If you are doing a UEFI installation, the boot partition is not optional and
@@ -152,8 +150,6 @@ You can label EFI partition with ~fatlabel /dev/sda4 BOOT~ command
 Format remaining partitions (use mapper for partition that is encrypted):
 
 : mkfs.ext4 (-L ROOT) /dev/sda<?>        <- root partition
-
-~lsblk~ to check things
 
 ** Mount Partitions
 #+begin_src shell
@@ -220,17 +216,11 @@ Generate an fstab file (use -U or -L to define by UUID or labels, respectively):
 #+NAME: artix
 : fstabgen -U /mnt >> /mnt/etc/fstab        <- edit and verify, also set root, swap, home and etc..
 
-NOTE: some use ~-p~ flat, what it does?
+NOTE: some use ~-p[rinting]~ flag (to include printing mounts)
 
 Check the resulting =/mnt/etc/fstab= file, and edit it in case of errors.
 
 *** Chroot
-#+NAME: arch
-Change root into the new system:
-
-: # arch-chroot /mnt
-
-#+NAME: artix
 Check the resulting fstab for errors before rebooting. Now, you can chroot into your new Artix system with:
 
 : artix-chroot /mnt # formerly artools-chroot
@@ -297,8 +287,6 @@ nano /etc/hosts
 127.0.1.1        myhostname.localdomain  myhostname
 #+end_src
 
-Then you can check your name with ~hostnamectl~
-
 If the system has a permanent IP address, it should be used instead of 127.0.1.1.
 
 If you use OpenRC you should add your hostname to /etc/conf.d/hostname too:
@@ -318,9 +306,10 @@ If you want to use a wireless connection, be sure to also install *wpa_supplican
 
 : pacman -S ...
 
-networkmanager networkmanager-openrc wpa_supplicant wireless_tools nm-applet
-dialog (which will allow us to use something like wi-fi menu and the ability to
-connect to wifi over cmd in the situation where our gui won't work)
+networkmanager networkmanager-openrc wpa_supplicant wireless_tools
+network-manager-applet dialog (which will allow us to use something like wi-fi
+menu and the ability to connect to wifi over cmd in the situation where our gui
+won't work)
 
 NOTE: some also install =netctl= (2nd network manager along with =networkmanager=
 but for now i decided not to.)
@@ -328,7 +317,13 @@ but for now i decided not to.)
 - enable network namager so when machine boots up we have wifi - ~rc-update add
   NetworkManager default~ (~default~ is a run level)
 
-*** Initramfs
+*** After chrooted
+Proceed with [[https://wiki.artixlinux.org/Main/InstallationWithFullDiskEncryption#chroot][official artix guide]], but at a time i omitted the /locale,
+timezone, hostname/ section (cuz did it above) and in /mkinitcpio/ omitted the
+'resume' flag cuz im not using lvm. /Grub installation/ section is better also be
+omitted since i have good instructions below (but /grub configuration/ better
+not). Everything below is useful, but read before doint anything.
+
 Creating a new initramfs is usually not required, because mkinitcpio was run on installation of the kernel package with pacstrap.
 
 #+NAME: In case of encryption
@@ -336,7 +331,7 @@ Creating a new initramfs is usually not required, because mkinitcpio was run on 
   fylesystems) add word ~encrypt~ and somewhere after autodetect add keyboard and
   keymap (and delete keyboard in the end of the line)
 - ~mkinitcpio -p linux~
-- next steps of crypting are in
+- next steps of crypting are in [[*Boot Loader][Boot Loader]] section
 
 For LVM, *system encryption* or RAID, modify mkinitcpio.conf(5) and recreate the initramfs image:
 
@@ -366,9 +361,9 @@ do following steps:
 First, install *grub* and *os-prober* (for detecting other installed operating systems):
 
 #+begin_src sh
-pacman -S grub os-prober efibootmgr # some also INSTALL dofgstools and mtools
+pacman -S grub os-prober efibootmgr # some also INSTALL dosfstools and mtools
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub   # for UEFI systems, GRUB or grub???
-grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg # don't do it now if u encrypted disk
 #+end_src
 
 Some use instead of 2nd command this: ~grub-install --target=x86_64-efi
@@ -378,56 +373,44 @@ From [[https://youtu.be/DPLnBPM4DhI?t=5040][this vid]]:
 - create locale dir if it doesn't exist (check with ~ls -l /boot/grub~ -> there
   should b =locale= dir)
 - for english messages in grub -> ~cp
-  /usr/share/locale/en\@quit/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo~ (is it necessary?)
+  /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo~ (is it necessary?)
 
 #+NAME: in case of encryption
 - get UUID of root partition (one way is to ~blkid > somefile~ -> ~vim somefile~ and
   copy UUID of root partition from there)
-- edit ~GRUB_CMDLINE_LINUX~ in =/etc/default/grub=, set it to:
+- follow steps [[https://wiki.artixlinux.org/Main/InstallationWithFullDiskEncryption#GRUB_-_Configuration][here]], but there are variations on how to set
+  ~GRUB_CMDLINE_LINUX_DEFAULT~ line:
   + *variation 1:* "cryptdevice={partition_name(normal one, like
-    /dev/sd[something])}:{chosen_name from above (like cryptroot)}" (*preferable*)
+    /dev/sd[something])}:{chosen_name from above (like cryptroot)}"
   + *variation 2:* "cryptdevice=UUID={uuid_copied from the above}:{chosen_name
     from above (like cryptroot)} root=/dev/mapper/{chosen_name}"
-- ([[https://youtu.be/DPLnBPM4DhI?t=5171][some]] uncomment line "GRUB_ENABLE_CRYPTODISK=y" and instead of
-  ~GRUB_CMDLINE_LINUX~ they edit the line above with ~DEFAULT~ in the end with
-  ~cryptdevice={partition_name}:{chosen_name??}:allow-discards(why is that?)~ <-
-  they add it in the beginning of line value)
 - grub-mkconfig -o /boot/grub/grub.cfg
 
 Also [[https://youtu.be/SFzN6e7USGk?t=1454][some]] add ~video=1920x1080~ in the end of ~GRUB_CMDLINE_LINUX_DEFAULT~ line.
 
-If you have an Intel or AMD CPU, enable [[https://wiki.archlinux.org/title/Microcode][microcode]] updates in addition.
+If you have an Intel or AMD CPU, enable [[https://wiki.archlinux.org/title/Microcode][microcode]] updates in addition. And after
+that rerun ~grum-mkconfig~ again:
+- install =amd-ucode= or =intel-ucode= (depends on which processor u've got)
 
 *** Before reboot
 Additional packages:
-- vim (also some install [intel|amd]-ucode here as well)
 - _bluetooth_: bluez bluez-utils bluez-openrc
 - _audio_: alsa-utils pulseaudio pulseaudio-bluetooth
 - _misc_: git reflector (latter is prob already there) bash-completion
 - file system manager
-- eg [[https://archlinux.org/packages/?name=sof-firmware][sof-firmware]] for [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware][sound-cards]] (e.g. a network manager or DHCP client)
-- [[https://wiki.archlinux.org/title/Networking][networking]] software
-- text editor (vim / emacs)
 - packages for accessing documentation in man and info pages: man-db, man-pages
-  and texinfo. (usually those r included in base-devel group, so if u r
-  installing latter, u can omit this step)
-- =openssh= - gives the ability to manage installation remotely. If you do enable
-  that figure out how to make it start when your computer starts (with systemd u
-  jus need to run ~systemctl enable sshd~, but i ain't usin it)
-- install =amd-ucode= or =intel-ucode= (depends on which processor u've
-  got) (relates to [[*Boot Loader][Boot Loader]] -> microcode)
+  and texinfo. (those *are not* included in base-devel group)
+- =openssh= & =openssh-openrc= - gives the ability to manage installation remotely.
+  If you do enable that figure out how to make it start when your computer
+  starts (with systemd u jus need to run ~systemctl enable sshd~, but i ain't usin
+  it). Next steps r optional, but in case you want to connect to your machine via ssh from another one:
+  - rc-update add sshd default
+
+- eg [[https://archlinux.org/packages/?name=sof-firmware][sof-firmware]] for [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware][sound-cards]] (e.g. a network manager or DHCP client)
 
 [[https://wiki.archlinux.org/title/OpenRC#Usage][converting systemd commands to openrc ones]]
 
-~default~ is a run level
-
 - enable bluetooth on boot - ~rc-update add bluetoothd default~
-
-Next steps r optional, but in case you want to connect to your machine via ssh
-from another one:
-- pacman -S openssh openssh-openrc
-- rc-update add sshd default
-
 
 *** Reboot
 Exit the chroot environment by typing ~exit~ or pressing =Ctrl+d=.
@@ -444,22 +427,45 @@ medium and then login into the new system with the root account.
 *BEFORE* you install anything from below -> maybe install it all with GUIX package
 manager?
 
-- ~sudo pacman -S terminus-font~ -> ~sudo setfont ter-132n~
+After installation many packages won't b found (like reflector), cuz [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][arch repos]]
+are disabled by default as of june 2021 in artix. To install package mentioned
+in prev. link first enable [[https://wiki.artixlinux.org/Main/Repositories#Universe][universe repository]], then update repos list, install
+that package and run ~pacman-key --populate archlinux~ (which should b suggested
+to run after package installation). Then add arch mirrors to pacman.conf as
+shown in [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][this example]]. Sync package database again.
+
 - to connect to wifi - ~sudo nmtui~
-- syncronize network time protocol: ~timedatectl set-ntp true~
-- sync hardware clock and sys clodk -> ~sudo hwclock --systohc
+- install graphics-card drivers: install =nvidia-utils= (in case of an intel
+  video card) *OR* even better [[https://wiki.archlinux.org/title/NVIDIA#Custom_kernel][nvidia-dkms]] (redirected from [[https://bbs.archlinux.org/viewtopic.php?id=251515][here]])
+- install ~xorg-server~ and ~xorg-apps~
+- removed 3 last agetty.ttys in openrc
+- install =syslog-ng-openrc= and enable syslog-ng service
+- install =alsa-utils-openrc= and enable alsasound service
+- read [[https://wiki.artixlinux.org/Main/Configuration][this]] and follow. Thos i didn't do the 'alsa' steps
+- install awesome and dmenu, set up xorg as in wiki (including drivers
+  installation), in case of any errors awesome will output where the log file is
+  in tty, there look for /EE/ (errors)
+- generate ssh and add it to github to copy my .dotfiles and awesome private
+  repositories
+- install flatpak and ~flatpak remote-add --if-not-exists flathub
+  https://flathub.org/repo/flathub.flatpakrepo~, then telegramm and discord
+
+-----
+
+- ~sudo pacman -S terminus-font~ -> ~sudo setfont ter-132n~
 - ~reflector -c {country (Russia)} -a 6 (age of the server) --sort rate (of
   speed) --save /etc/pacman.d/mirrorlist~
 - ~pacman -Syy~
 - enable reflector in openrc?? (~systemctl enable --now reflector.timer~)
 - enable fstrim in openrc?? (~systemctl enable --now fstrim.timer~)
 - enable some essential [[https://wiki.archlinux.org/title/OpenRC#Services][services]] in openrc?
-- install graphics-card drivers: install =nvidia-utils= (in case of an intel
-  video card) *OR* even better [[https://wiki.archlinux.org/title/NVIDIA#Custom_kernel][nvidia-dkms]] (redirected from [[https://bbs.archlinux.org/viewtopic.php?id=251515][here]])
-- enable timesync service in openrc? (~systemctl enable systemd-timesyncd)
-- install ~xorg-server~ and ~xorg-apps~
+- enable timesync service in openrc? (~systemctl enable systemd-timesyncd~)
 - dmenu ttf-dejavu ttf-liberation noto-fonts nitrogen picom pcmanfm (very fast &
   light file manager) (? materia-gtk-theme papirus-icon-theme)
+
+-----
+
+- read github 'how to add ssh' to find a way to never insert my passphrase again..
 
 ** Questions
 ** learning todos
