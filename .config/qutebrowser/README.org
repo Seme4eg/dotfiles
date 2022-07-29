@@ -377,6 +377,7 @@ c.downloads.location.prompt = False
 
 # Scale pages and UI better for hidpi
 c.qt.highdpi  = True
+c.zoom.default = 175
 
 # Automatically turn on insert mode when a loaded page focuses a text field
 c.input.insert_mode.auto_load = True
@@ -392,7 +393,7 @@ c.editor.command = ["emacsclient", "+{line}:{column}", "{file}"]
 #+end_src
 *** Fonts
 #+begin_src python
-monospace                   = "11pt Roboto"
+monospace                   = "19pt Roboto"
 c.fonts.completion.category = f"bold {monospace}"
 c.fonts.completion.entry    = monospace
 c.fonts.debug_console       = monospace
@@ -405,7 +406,7 @@ c.fonts.prompts             = monospace
 c.fonts.statusbar           = monospace
 c.fonts.tabs.selected       = monospace
 c.fonts.tabs.unselected     = monospace
-c.fonts.hints               = "bold 13px 'DejaVu Sans Mono'"
+c.fonts.hints               = "bold 25px 'DejaVu Sans Mono'"
 # c.fonts.hints = monospace
 #+end_src
 *** Theme

@@ -357,6 +357,8 @@ do following steps:
   above it /uncomment to allow members of group wheel to execute any command/) and
   uncomment this line
 
+Set [[https://wiki.artixlinux.org/Main/Configuration#User_permissions][user permissions]].
+
 *** Boot Loader
 First, install *grub* and *os-prober* (for detecting other installed operating systems):
 
@@ -448,7 +450,10 @@ shown in [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][this
 - generate ssh and add it to github to copy my .dotfiles and awesome private
   repositories
 - install flatpak and ~flatpak remote-add --if-not-exists flathub
-  https://flathub.org/repo/flathub.flatpakrepo~, then telegramm and discord
+  https://flathub.org/repo/flathub.flatpakrepo~, then telegramm and discord, for
+  now decided not to go with qutebrowser from flatpack then it seems that i need
+  to edit where it looks for config.py file
+- set [[https://wiki.archlinux.org/title/GRUB/Tips_and_tricks#Setting_the_framebuffer_resolution][grub resolution]],
 
 -----
 
@@ -478,3 +483,5 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
 - read [[https://wiki.archlinux.org/title/List_of_applications][list of applications]] wiki page
 - watch: [[https://www.youtube.com/watch?v=cBeSJvYkV7I][Linux Crash Course - The Arch User Repository (AUR)]], [[https://www.youtube.com/watch?v=HD7jJEh4ZaM][Linux Crash
   Course - The Pacman Command]]
+- didn't manage to set up [[https://wiki.archlinux.org/title/Video_acceleration][hardware video acceleration]]
+- setup suspend hook in openrc to change layout back to us for slock to work
