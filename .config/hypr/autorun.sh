@@ -1,4 +1,5 @@
 qutebrowser &
+discord &
 emacs &
 syncthing &
 # for mako
@@ -6,6 +7,7 @@ dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus &
 mako &
 hyprpaper &
 waybar &
+nm-applet --indicator &
 pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I
 
