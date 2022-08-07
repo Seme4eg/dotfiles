@@ -1,0 +1,4 @@
+#+title: Hyprland info
+
+** Apps to use on Wayland
+https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
