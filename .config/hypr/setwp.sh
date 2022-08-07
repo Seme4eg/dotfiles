@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
+
 wp=$(find ~/Pictures/atmosphere/Wadim\ Kashin/ -type f | shuf -n 1)
+configFile=~/.config/hypr/hyprpaper.conf
 
-[[ $prev_wallpaper ]] &&
-  hyprctl hyprpaper unload "$prev_wallpaper"
-# pkill hyprpaper
-# hyprpaper &
-# sleep 0.1
-hyprctl hyprpaper preload "$wp"
-hyprctl hyprpaper wallpaper "eDP-1,$wp"
+pkill -9 hyprpaper
 
-prev_wallpaper=$wp
+> $configFile
+echo "preload = $wp" 1>> $configFile
+echo "wallpaper = eDP-1,$wp" 1>> $configFile
+
+hyprpaper &
