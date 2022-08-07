@@ -1,14 +1,5 @@
 export PATH="$HOME/.emacs.d/bin:$HOME/.npm-global/bin:$PATH"
 
-export GDK_SCALE=2
-export GDK_DPI_SCALE=0.5
-
-export QT_SCALE_FACTOR_ROUNDING_POLICY=PassThrough
-export QT_ENABLE_HIGHDPI_SCALING=1
-export QT_SCALE_FACTOR=1.2
-
-export LIBVA_DRIVER_NAME=vdpau
-
 # Make sure `ls` collates dotfiles first (for dired)
 # export LC_COLLATE="C"
 
@@ -21,3 +12,19 @@ export LIBVA_DRIVER_NAME=vdpau
 
 # Load .bashrc to get login environment
 [ -f ~/.bashrc ] && . ~/.bashrc
+
+# --- Wayland setup ---
+
+GBM_BACKEND=nvidia-drm
+__GLX_VENDOR_LIBRARY_NAME=nvidia
+
+# qutebrowser vars
+QT_SCALE_FACTOR=1
+QT_QPA_PALTFORM=wayland
+QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+XDG_SESSION_TYPE=wayland
+GDK_BACKEND=wayland
+
+# bemenu vars
+BEMENU_BACKEND=wayland
+# BEMENU_SCALE=2

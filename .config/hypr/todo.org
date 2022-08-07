@@ -1,0 +1,12 @@
+#+title: Todo
+#+SOURCE: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
+
+** setup notifications (mako/dunst)
+If you are using elogind, you might need to manually start a dbus user session:
+
+: dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
+
+Change looks? try both?
+** brightness
+cache current brightness in openrc
+does autorun work? brightness is restored?
