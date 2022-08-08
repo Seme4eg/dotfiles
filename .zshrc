@@ -2,7 +2,7 @@
 #                         Install 'grml-zsh-config' !                          #
 ###############################################################################
 
-stty stop undef # disable C-s to freeze terminal
+# stty stop undef # disable C-s to freeze terminal
 # Nobody need flow control anymore. Troublesome feature.
 #stty -ixon
 setopt noflowcontrol
@@ -117,6 +117,23 @@ bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 bindkey '^[[P' delete-char
 
 ###############################################################################
+#                                   Antigen                                   #
+###############################################################################
+
+# if not using oh-my-zsh, then load plugins with antigen
+# <https://github.com/zsh-users/antigen.git>
+source /usr/share/zsh/share/antigen.zsh # installed it with AUR
+# source $HOME/.dotfiles/zsh/antigen/antigen.zsh
+
+antigen bundle zdharma-continuum/fast-syntax-highlighting
+
+# Load the theme
+antigen theme romkatv/powerlevel10k
+
+# Tell antigen that you're done
+antigen apply
+
+###############################################################################
 #                              Last things to do                              #
 ###############################################################################
 
@@ -124,8 +141,8 @@ bindkey '^[[P' delete-char
 # [ -f "~/.config/shell/shortcutrc" ] && source "~/.config/shell/shortcutrc"
 # [ -f "~/.config/shell/aliasrc" ] && source "~/.config/shell/aliasrc"
 
-# Load syntax highlighting; should be last.
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
 BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

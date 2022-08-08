@@ -194,3 +194,8 @@ for zshd in $(ls -A ${HOME}/.config/zsh.d/^*.(z)sh$); do
     . "${zshd}"
 done
 #+end_src
+*** this guys' config?
+https://github.com/xero/dotfiles/tree/master/zsh
+*** [[https://wiki.archlinux.org/title/Zsh#Plugin_managers][Zsh plugin managers]]
+One of which is [[https://github.com/zsh-users/antigen][Antigen]] for zsh plugins managing + some settings from [[https://unix.stackexchange.com/questions/58319/what-is-the-key-difference-between-grml-zsh-config-and-oh-my-zsh-config][this]] post
+*** [[https://github.com/romkatv/powerlevel10k][Poewrlevel10k]] themes
