@@ -1,0 +1,17 @@
+# --- Startup vars ---
+
+# show battery status in RPROMPT
+GRML_DISPLAY_BATTERY=1
+# always load the complete setup, even for root
+GRML_ALWAYS_LOAD_ALL=1
+
+# --- Prompt styling ---
+
+# Default (left): rc change-root user at host path vcs percent;
+# Default (right): sad-smiley
+zstyle ':prompt:grml:left:setup' items rc change-root grml-chroot path vcs at #percent
+zstyle ':prompt:grml:right:setup' items sad-smiley
+zstyle ':prompt:grml:left:items:at' post ' %F{087}╭ರ_•́ %f '
+zstyle ':prompt:grml:right:items:battery' post ' (⌣_⌣”)'
+zstyle ':prompt:grml:left:items:rc' pre '%F{183}'
+zstyle ':prompt:grml:left:items:rc' post '%f'

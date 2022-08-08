@@ -1,0 +1,196 @@
+#+title: Zsh
+
+Grml docs: https://grml.org/zsh/grmlzshrc.html
+
+[[https://wiki.archlinux.org/title/Zsh#Sample_.zshrc_files][Sample .zshrc files]]
+
+- https://wiki.archlinux.org/title/Zsh
+- https://zsh.sourceforge.io/Guide/zshguide.html
+- Creating widgets (commands/aliases):
+- https://sgeb.io/posts/zsh-zle-custom-widgets/
+- [[https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html][Zsh documentation]]
+- Part of code below was taken from here:
+- https://github.com/LukeSmithxyz/voidrice/blob/master/.config/zsh/.zshrc
+- [[https://man.archlinux.org/man/zshmodules.1#THE_ZSH/NEARCOLOR_MODULE][Zsh loadable modules]]
+
+** Keybingings cheatsheet (taken from docs)
+Apart from zsh's default key bindings, grmlzshrc comes with its own set of key
+bindings. Note that bindings like ESC-e can also be typed as ALT-e on PC
+keyboards.
+
+- ~ESC-e~ Edit the current command buffer in your favourite editor.
+- ~ESC-v~ Deletes a word left of the cursor; seeing '/' as additional word separator.
+- ~CTRL-x-1~ Jump right after the first word.
+- ~CTRL-x-M()~ Create directory under cursor or the selected area. To select an
+  area press ctrl-@ and use the cursor. Use case: you type "mv abc
+  ~/testa/testb/testc/" and remember that the directory does not exist yet ->
+  press CTRL-xM and problem solved.
+- ~CTRL-x-p~ Searches the last occurrence of string before the cursor in the
+  command history.
+- ~CTRL-x-z~ Display help on keybindings and zsh line editor. Press consecutively
+  to page through content.
+- ~CTRL-z~ Brings a job, which got suspended with CTRL-z back to foreground.
+
+** Shell functions
+=grmlzshrc= comes with a wide array of defined shell functions to ease the user's
+life.
+
+- ~accessed()~ - Lists files in current directory, which have been accessed within
+  the last N days. N is an integer to be passed as first and only argument. If
+  no argument is specified N is set to 1.
+- ~any()~ - Lists processes matching given pattern.
+- ~cdrecord()~ - If the original cdrecord is not installed, issues a warning to
+  the user to use the wodim binary instead. Wodim is the debian fork of Joerg
+  Schillings cdrecord.
+- ~cdt()~ - Creates a temporary directory using mktemp. Then changes current
+  working directory to it.
+- ~changed()~ - Lists files in current directory, which have been changed within
+  the last N days. N is an integer to be passed as first and only argument. If
+  no argument is specified N is set to 1.
+- ~check_com()~ - Returns true if given command exists either as program,
+  function, alias, builtin or reserved word. If the option -c is given, only
+  returns true, if command is a program.
+- ~cl()~ - Changes current directory to the one supplied by argument and lists the
+  files in it, including file names starting with ".".
+- ~edalias()~ - Edit given alias.
+- ~grml_vcs_info_toggle_colour()~ - Toggles between coloured and uncoloured
+  formats in vcs_info configuration. This is useful with prompts that break if
+  colour codes are in vcs_info format expansions (like the `clint' prompt and
+  every other prompt that uses %v to expand the contents of `$vcs_into_msg_0_').
+  If you are using customised vcs_info formats, you shouldn't be using this
+  function, since it will set all formats to grml's default values (either
+  coloured or plain) again.
+- ~mkcd()~ - Creates directory including parent directories, if necessary. Then
+  changes current working directory to it.
+- ~modified()~ - Lists files in current directory, which have been modified within
+  the last N days. N is an integer to be passed as first and only argument. If
+  no argument is specified N is set to 1.
+- ~salias()~ - Creates an alias with sudo prepended, if $EUID is not zero. Run
+  "salias -h" for details. See also xunfunction() below.
+- ~simple-extract()~ - Tries to uncompress/unpack given files with the appropriate
+  programs. If an URI starting with https, http or ftp is provided
+  simple-extract tries to download and then uncompress/unpack the file. The
+  choice is made along the filename ending. simple-extract will not delete the
+  original archive (even on .gz,.bz2 or .xz) unless you use the '-d' option.
+- ~sll()~ - Prints details of symlinks given as arguments.
+- ~Start(), Restart(), Stop(), Force-Reload(), Reload()~ - Functions for
+  controlling daemons. Example usage: % Restart ssh
+- ~trans()~ - Translates a word from german to english (-D) or vice versa (-E).
+- ~vim()~ - Wrapper for vim(1). It tries to set the title and hands vim the
+  environment variable VIM_OPTIONS on the command line. So the user may define
+  command line options, she always wants, in her .zshrc.local.
+- ~whatwhen()~ - Searches the history for a given pattern and lists the results by
+  date. The first argument is the search pattern. The second and third ones are
+  optional and denote a search range (default: -100).
+- ~xcat()~ - Tries to cat(1) file(s) given as parameter(s). Always returns true.
+  See also xunfunction() below.
+- ~xsource()~ - Tries to source the file(s) given as parameter(s). Always returns
+  true. See zshbuiltins(1) for a detailed description of the source command. See
+  also xunfunction() below.
+- ~zrclocal()~ - Sources /etc/zsh/zshrc.local and ${HOME}/.zshrc.local. These are
+  the files where own modifications should go. See also zshbuiltins(1) for a
+  description of the source command.
+
+** Aliases
+grmlzshrc comes with a wide array of predefined aliases to ease the user's life.
+A few aliases (like those involving grep or ls) use the option --color=auto for
+colourizing output. That option is part of GNU implementations of these tools,
+and will only be used if such an implementation is detected.
+
+- ~da~ /(du -sch)/ -- Prints the summarized disk usage of the arguments as well as a
+  grand total in human readable format.
+- ~debs-by-size~ /(grep-status -FStatus -sInstalled-Size,Package -n "install ok
+  installed" | paste -sd " \n" | sort -rn)/ -- Prints installed Packages sorted
+  by size (descending).
+- ~dir~ /(ls -lSrah)/ -- Lists files (including dot files) sorted by size (biggest
+  last) in long and human readable output format.
+- ~grep~ /(grep --color=auto)/ -- Shows grep output in nice colors, if available.
+- ~grml-version~ /(cat /etc/grml_version)/ -- Prints version of running grml.
+- ~http~ /(python -m SimpleHTTPServer)/ -- Basic HTTP server implemented in python.
+  Listens on port 8000/tcp and serves current directory. Implements GET and HEAD
+  methods.
+- ~insecscp~ /(scp -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null")/
+  -- scp with possible man-in-the-middle attack enabled. This is convenient, if
+  the targets host key changes frequently, for example on virtualized test- or
+  development-systems. To be used only inside trusted networks, of course.
+- ~insecssh~ /(ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null")/
+  -- ssh with possible man-in-the-middle attack enabled (for an explanation see
+  insecscp above).
+- ~j~ /(jobs -l)/ -- Prints status of jobs in the current shell session in long
+  format.
+- ~l~ /(ls -l --color=auto)/ -- Lists files in long output format with indicator for
+  filetype appended to filename. If the terminal supports it, with colored
+  output.
+- ~la~ /(ls -la --color=auto)/ -- Lists files in long colored output format.
+  Including file names starting with ".".
+- ~lad~ /(ls -d .*(/))/ -- Lists the dot directories (not their contents) in current
+  directory.
+- ~lh~ /(ls -hAl --color=auto)/ -- Lists files in long and human readable output
+  format in nice colors, if available. Includes file names starting with "."
+  except "." and "..".
+- ~llog~ /($PAGER /var/log/syslog)/ -- Opens syslog in pager.
+- ~ls~ /(ls -C --color=auto)/ -- Lists directory, entries are listed by columns and
+  an indicator for file type is appended to each file name. Additionally the
+  output is colored, if the terminal supports it.
+- ~lsa~ /(ls -a .*(.))/ -- Lists dot files in current working directory.
+- ~lsbig~ /(ls -flh *(.OL[1,10]))/ -- Displays the ten biggest files (long and human
+  readable output format).
+- ~lsd~ /(ls -d *(/))/ -- Shows directories.
+- ~lse~ /(ls -d *(/^F))/ -- Shows empty directories.
+- ~lsl~ /(ls -l *(@))/ -- Lists symbolic links in current directory.
+- ~rmcdir~ /('cd ..; rmdir $OLDPWD || cd $OLDPWD)/ -- rmdir current working
+  directory
+- ~su~ /(sudo su)/ -- If user is running a Grml live system, don't ask for any
+  password, if she wants a root shell.
+- $(uname -r)-reboot --- (kexec -l --initrd=/boot/initrd.img-"$(uname -r)"
+  --command-line=\"$(cat /proc/cmdline)\" /boot/vmlinuz-"$(uname -r)") Reboots
+  using kexec(8) and thus reduces boot time by skipping hardware initialization
+  of BIOS/firmware.
+- ~...~ (cd ../../) -- Changes current directory two levels higher.
+
+** Todos
+*** make pacman reeplacements of following default apt aliases:
+
+acs (apt search)
+ Searches debian package lists for the regular expression provided as argument. The search includes package names and descriptions.
+ Prints out name and short description of matching packages.
+
+acsh (apt show)
+ Shows the package records for the packages provided as arguments.
+
+adg (apt dist-upgrade)
+ Performs an upgrade of all installed packages. Also tries to automatically handle changing dependencies with new versions of packages.
+ As this may change the install status of (or even remove) installed packages, it is potentially dangerous to use dist-upgrade; invoked by
+ sudo, if necessary.
+
+ag (apt upgrade)
+ Downloads and installs the newest versions of all packages currently installed on the system. Under no circumstances are currently
+ installed packages removed, or packages not already installed retrieved and installed. New versions of currently installed packages that
+ cannot be upgraded without changing the install status of another package will be left at their current version. An update must be
+ performed first (see au below); run by sudo, if necessary.
+
+agi (apt install)
+ Downloads and installs or upgrades the packages given on the command line. If a hyphen is appended to the package name, the
+ identified package will be removed if it is installed. Similarly a plus sign can be used to designate a package to install. This may be useful to
+ override decisions made by apt's conflict resolution system. A specific version of a package can be selected for installation by following
+ the package name with an equals and the version of the package to select. This will cause that version to be located and selected for
+ install. Alternatively a specific distribution can be selected by following the package name with a slash and the version of the distribution
+ or the Archive name (stable, testing, unstable). Gets invoked by sudo, if user id is not 0.
+
+ati (aptitude install)
+ Aptitude is a terminal-based package manager with a command line mode similar to apt (see agi above); invoked by sudo, if necessary.
+
+au (apt update)
+ Resynchronizes the package index files from their sources. The indexes of available packages are fetched from the location(s) specified in
+ /etc/apt/sources.list. An update should always be performed before an upgrade or dist-upgrade; run by sudo, if necessary.
+*** sourcing?
+#+begin_src bash
+# Include user-specified configs.
+if [ ! -d "${ZSHDDIR}" ]; then
+    mkdir -p "${ZSHDDIR}" && echo "# Put your user-specified config here." > "${ZSHDDIR}/example.zsh"
+fi
+
+for zshd in $(ls -A ${HOME}/.config/zsh.d/^*.(z)sh$); do
+    . "${zshd}"
+done
+#+end_src
