@@ -7,3 +7,4 @@ tmp/
 .npm-global/
 .npm/
 node_modules/
+.antidote

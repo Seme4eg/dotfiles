@@ -8,45 +8,25 @@
 setopt noflowcontrol
 eval "$(zoxide init zsh)"
 
-#------------------------------
-# Variables
-#------------------------------
+# --- Sourcing ---
+
+# for now using powerlevel10k instead
+# [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
+
+# --- Variables ---
 export BROWSER="chromium"
 export EDITOR=vim
 
-###############################################################################
-#                                   Aliases                                   #
-###############################################################################
+# --- Antidote (https://getantidote.github.io/) ---
+
+[[ -e ~/.config/zsh/.antidote ]] || git clone https://github.com/mattmc3/antidote.git ~/.config/zsh/.antidote
+. ~/.config/zsh/.antidote/antidote.zsh
+antidote load ~/.config/zsh/plugins
+
+# --- Aliases ---
 
 alias sp="sudo pacman"
 # alias z="zoxide"
-
-###############################################################################
-#                                   Theming                                   #
-###############################################################################
-
-# Docs on theming: https://man.archlinux.org/man/zshcontrib.1#PROMPT_THEMES
-# (also some info in arch wiki in zsh article)
-
-autoload -Uz promptinit && promptinit
-[[ "$COLORTERM" == (24bit|truecolor) || "${terminfo[colors]}" -eq '16777216' ]] ||
-zmodload zsh/nearcolor
-
-# Define the theme
-prompt_sad_setup() {
-  # Doc on prompt string: https://man.archlinux.org/man/zshmisc.1#Visual_effects
-  # Colors here: https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
-  PROMPT='%B%F{183}%n%f@%F{087}%M %f| %1d/ ╭ರ_•́%b ' # left
-  RPROMPT='[%F{183}%?%f] (⌣_⌣”)' # right
-}
-
-prompt_themes+=( sad ) # Add the theme to promptsys
-
-# prompt sad # 'my' theme, but for now i use grmls' one
-
-# set the default prompt to the walters theme
-# prompt elite2 cyan white #magenta # 'prompt -l' - list awailable themes
-
 
 ###############################################################################
 #                               History settings                              #
@@ -117,29 +97,8 @@ bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 bindkey '^[[P' delete-char
 
 ###############################################################################
-#                                   Antigen                                   #
-###############################################################################
-
-# if not using oh-my-zsh, then load plugins with antigen
-# <https://github.com/zsh-users/antigen.git>
-source /usr/share/zsh/share/antigen.zsh # installed it with AUR
-# source $HOME/.dotfiles/zsh/antigen/antigen.zsh
-
-antigen bundle zdharma-continuum/fast-syntax-highlighting
-
-# Load the theme
-antigen theme romkatv/powerlevel10k
-
-# Tell antigen that you're done
-antigen apply
-
-###############################################################################
 #                              Last things to do                              #
 ###############################################################################
-
-# Load aliases and shortcuts if existent.
-# [ -f "~/.config/shell/shortcutrc" ] && source "~/.config/shell/shortcutrc"
-# [ -f "~/.config/shell/aliasrc" ] && source "~/.config/shell/aliasrc"
 
 BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL

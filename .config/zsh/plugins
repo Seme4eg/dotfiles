@@ -1,0 +1,25 @@
+# comments are supported like this
+# zshzoo/zfunctions
+# zshzoo/zshrc.d
+# zsh-users/zsh-completions
+
+# empty lines are skipped
+
+# annotations are also allowed:
+# ohmyzsh/ohmyzsh   path:lib/clipboard.zsh
+# ohmyzsh/ohmyzsh   path:plugins/colored-man-pages
+# romkatv/zsh-bench kind:path
+# olets/zsh-abbr    kind:defer
+
+# prompts:
+#   with prompt plugins, remember to add this to your .zshrc:
+#   `autoload -Uz promptinit && promptinit && prompt pure`
+# sindresorhus/pure     kind:fpath
+# romkatv/powerlevel10k kind:fpath
+
+# --- other plugins ---
+# zsh-users/zsh-history-substring-search
+
+zdharma-continuum/fast-syntax-highlighting
+zsh-users/zsh-autosuggestions
+romkatv/powerlevel10k
