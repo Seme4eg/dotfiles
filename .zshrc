@@ -25,8 +25,16 @@ antidote load ~/.config/zsh/plugins
 
 # --- Aliases ---
 
-alias sp="sudo pacman"
-# alias z="zoxide"
+alias pm="sudo pacman"
+alias pmi="pm -S" # install
+alias pmr="pm -Rs" # remove
+alias pmsr="pm -Ss" # search remotes
+alias pmsl="pm -Ss" # search locally
+alias pmlo="pm -Qdt" # list orphaned
+alias pmro="pm -Rns $(pacman -Qtdq)" # remove orphaned
+alias pms="pm -Syy" # sync
+alias pmU="pm -Syyu"
+alias pmu="pm -Syu"
 
 ###############################################################################
 #                               History settings                              #
