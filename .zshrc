@@ -14,7 +14,7 @@ eval "$(zoxide init zsh)"
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
 # --- Variables ---
-export BROWSER="chromium"
+export BROWSER=qutebrowser
 export EDITOR=vim
 
 # --- Antidote (https://getantidote.github.io/) ---
