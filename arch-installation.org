@@ -471,6 +471,15 @@ shown in [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][this
 -----
 
 - read github 'how to add ssh' to find a way to never insert my passphrase again..
+*** Installing mu4e nitbits
+First i needed to import my gpg keys (gpg2) from old machine, the process of
+which can be found in the end of this [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][article]].
+
+The secret.gpg file i copied via ssh using [[https://www.freecodecamp.org/news/scp-linux-command-example-how-to-ssh-file-transfer-from-remote-to-local/][this]] article
+
+Then [[https://stackoverflow.com/questions/33361068/gnupg-there-is-no-assurance-this-key-belongs-to-the-named-user][set trust level]].
+
+Then proceed to mu4e documentation of doom emacs.
 
 ** Questions
 ** learning todos
