@@ -485,12 +485,12 @@ Then proceed to mu4e documentation of doom emacs.
 ** learning todos
 Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 ** Todos
+- GPG asks for key on every mu4e update
+- restore pacman default hooks (especially openrc one (idk what was in there
+  tho)) from another machine with freshly installed artix
+- swaylock and sleep do not stop cooling system, setup hybernation???
+- how to [[https://askubuntu.com/questions/37767/how-to-access-a-usb-flash-drive-from-the-terminal#37775][automount]] usbs?
 - Backups - look for 'rsync' heading on [[https://linuxhint.com/best_backup_restore_arch_linux/][this page]], and on [[https://wiki.archlinux.org/title/Rsync#As_a_backup_utility][arch wiki page]]
 - [[https://wiki.archlinux.org/title/Kernel][kernel]] - zen kernel? ([[https://www.youtube.com/watch?v=KbcUmAlQCHs][how to switch arch kernels]])
-- read [[https://wiki.archlinux.org/title/Pacman][pacman]] article and [[https://wiki.archlinux.org/title/Pacman/Tips_and_tricks][pacman tips and tricks]] one
 - read [[https://wiki.archlinux.org/title/Security][security]] wiki page
-- read [[https://wiki.archlinux.org/title/List_of_applications][list of applications]] wiki page
-- watch: [[https://www.youtube.com/watch?v=cBeSJvYkV7I][Linux Crash Course - The Arch User Repository (AUR)]], [[https://www.youtube.com/watch?v=HD7jJEh4ZaM][Linux Crash
-  Course - The Pacman Command]]
 - didn't manage to set up [[https://wiki.archlinux.org/title/Video_acceleration][hardware video acceleration]]
-- setup suspend hook in openrc to change layout back to us for slock to work
