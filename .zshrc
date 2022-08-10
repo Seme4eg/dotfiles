@@ -31,7 +31,9 @@ alias pmr="pm -Rs" # remove
 alias pmsr="pm -Ss" # search remotes
 alias pmsl="pm -Ss" # search locally
 alias pmlo="pm -Qdt" # list orphaned
-alias pmro="pm -Rns $(pacman -Qtdq)" # remove orphaned
+# If no orphans were found, the output is error: argument '-' specified with
+# empty stdin. This is expected as no arguments were passed to pacman -Rns.
+alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
 alias pms="pm -Syy" # sync
 alias pmU="pm -Syyu"
 alias pmu="pm -Syu"

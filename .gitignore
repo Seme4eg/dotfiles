@@ -7,5 +7,7 @@ tmp/
 .npm-global/
 .npm/
 node_modules/
+
+# dotfiles specific
 .antidote
 hyprpaper.conf
