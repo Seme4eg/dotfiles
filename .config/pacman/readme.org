@@ -1,0 +1,7 @@
+#+title: Pacman
+
+Read [[https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#List_of_installed_packages][list of installed packages]] and sections below to install backups.
+
+To setup hooks in =hooks= add its' directory to ~HookDir~ in =pacman.conf=. Example:
+
+: HookDir     = /etc/pacman.d/hooks/ /home/essence/.config/pacman/hooks/
