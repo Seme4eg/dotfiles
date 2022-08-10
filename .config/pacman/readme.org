@@ -2,6 +2,18 @@
 
 Read [[https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#List_of_installed_packages][list of installed packages]] and sections below to install backups.
 
-To setup hooks in =hooks= add its' directory to ~HookDir~ in =pacman.conf=. Example:
+To setup hooks in =hooks= *set* its' directory to ~HookDir~ in =pacman.conf=, beware
+tho, there is no way to specify multiple directories in .conf file, i tried and
+it deleted all my preinstalled with artix hooks, that were in
+=/etc/pacman.d/hooks/=  dir... So just specify single path and *move* there all
+hooks from previous one.
 
-: HookDir     = /etc/pacman.d/hooks/ /home/essence/.config/pacman/hooks/
+#+NAME: in pacman.conf
+: HookDir     = /home/essence/.config/pacman/hooks/
+
+-----
+
+To improve download speeds [[https://wiki.archlinux.org/title/Pacman#Enabling_parallel_downloads][enable]] parallel downloads and use [[https://archlinux.org/mirrorlist/?country=RU&protocol=https&ip_version=4&ip_version=7][pacman mirrorlist
+generator]] to get links relevant for your location.
+
+And maybe ya'll want 'Color' option uncommented in =pacman.conf=.

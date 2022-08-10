@@ -41,6 +41,7 @@ grml-zsh-config
 groff
 grub
 gzip
+htop
 hwinfo
 intel-ucode
 isync

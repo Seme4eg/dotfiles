@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Checking for orphaned packages...
+Depends = pacman
+When = PostTransaction
+Exec = /usr/bin/bash -c 'orphans=$(pacman -Qtdq); if [[ -n "$orphans" ]]; then echo -e "\e[1mOrphan packages found:\e[0m\n$orphans\n\e[1mPlease check and remove any no longer needed\e[0m"; fi'
