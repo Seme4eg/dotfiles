@@ -8,3 +8,4 @@ tmp/
 .npm/
 node_modules/
 .antidote
+hyprpaper.conf
