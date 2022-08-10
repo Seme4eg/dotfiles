@@ -1,7 +1,20 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-# Defer to .profile
-[[ -f ~/.profile  ]] && . ~/.profile
+# --- Wayland setup ---
+
+GBM_BACKEND=nvidia-drm
+__GLX_VENDOR_LIBRARY_NAME=nvidia
+
+# qutebrowser vars
+QT_SCALE_FACTOR=1
+QT_QPA_PALTFORM=wayland
+QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+XDG_SESSION_TYPE=wayland
+GDK_BACKEND=wayland
+
+# bemenu vars
+BEMENU_BACKEND=wayland
+# BEMENU_SCALE=2
 
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   # exec startx
