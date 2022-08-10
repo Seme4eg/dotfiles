@@ -35,6 +35,13 @@ alias pmro="pm -Rns $(pacman -Qtdq)" # remove orphaned
 alias pms="pm -Syy" # sync
 alias pmU="pm -Syyu"
 alias pmu="pm -Syu"
+# -Scc is more agressive approach, read bout it before using in case u decide to
+alias pmcc="pm -Sc" # Clear Cache
+
+# yay -Yc # remove unneeded deps
+# du -h --max-depth=1 ~/ | sort -h # make an alias?
+
+alias grubmkc="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
 ###############################################################################
 #                               History settings                              #
@@ -82,7 +89,7 @@ zle-line-init() {
 zle -N zle-line-init
 
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+precmd() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 ###############################################################################
 #                                   Utility                                   #
