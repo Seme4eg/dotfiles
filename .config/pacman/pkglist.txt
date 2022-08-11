@@ -59,6 +59,7 @@ mpd-openrc
 mpv
 msmtp
 mtools
+neofetch
 network-manager-applet
 networkmanager
 networkmanager-openrc
@@ -83,6 +84,7 @@ rofi
 scdoc
 sed
 sof-firmware
+spdlog
 stow
 sudo
 syncthing
