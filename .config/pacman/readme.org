@@ -1,4 +1,5 @@
 #+title: Pacman
+#+SOURCE: hooks source - https://forum.manjaro.org/t/creating-useful-pacman-hooks/55020
 
 Read [[https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#List_of_installed_packages][list of installed packages]] and sections below to install backups.
 
@@ -17,3 +18,5 @@ To improve download speeds [[https://wiki.archlinux.org/title/Pacman#Enabling_pa
 generator]] to get links relevant for your location.
 
 And maybe ya'll want 'Color' option uncommented in =pacman.conf=.
+
+Hook files syntax documentation links: [[https://man.archlinux.org/man/core/pacman/alpm-hooks.5.en][man 5 alpm-hooks]], [[https://wiki.archlinux.org/title/Pacman#Hooks][pacman@hooks #archlinux]]
