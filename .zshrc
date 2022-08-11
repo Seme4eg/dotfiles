@@ -13,6 +13,13 @@ eval "$(zoxide init zsh)"
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
+if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
+  # init-nvm.sh contents with bash_completion excluded and nvm dir changed
+  [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.config/nvm"
+  source /usr/share/nvm/nvm.sh
+  source /usr/share/nvm/install-nvm-exec
+fi
+
 # --- Variables ---
 export BROWSER=qutebrowser
 export EDITOR=vim

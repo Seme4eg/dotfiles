@@ -8,6 +8,7 @@ hyprpaper-git
 lf
 mako-git
 mu
+nvm-git
 python-pyperclip-git
 qutebrowser-git
 slurp-git

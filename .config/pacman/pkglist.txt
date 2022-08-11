@@ -62,6 +62,7 @@ mtools
 network-manager-applet
 networkmanager
 networkmanager-openrc
+networkmanager-openvpn
 noto-fonts
 nvidia
 openrc
