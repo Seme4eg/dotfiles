@@ -10,6 +10,7 @@ waybar &
 nm-applet --indicator &
 pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I
+wlsunset -l 55.7 -L 37.6 -t 3000 &
 
 # -i <img> -s fill
 swayidle -w \

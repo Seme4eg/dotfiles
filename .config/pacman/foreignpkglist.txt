@@ -15,5 +15,7 @@ slurp-git
 swayidle-git
 swaylock-git
 ttf-all-the-icons
+waybar-git
 wev-git
+wlsunset-git
 xkblayout-state-git
