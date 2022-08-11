@@ -23,6 +23,9 @@ fi
 # --- Variables ---
 export BROWSER=qutebrowser
 export EDITOR=vim
+# below ones seem to not work on wayland
+# export GDK_SCALE=2
+# export GDK_DPI_SCALE=0.5
 
 # --- Antidote (https://getantidote.github.io/) ---
 
