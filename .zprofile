@@ -14,7 +14,6 @@ GDK_BACKEND=wayland
 
 # bemenu vars
 BEMENU_BACKEND=wayland
-# BEMENU_SCALE=2
 
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   # exec startx
