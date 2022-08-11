@@ -9,6 +9,7 @@ setopt noflowcontrol
 eval "$(zoxide init zsh)"
 
 # --- Sourcing ---
+. ~/.config/zsh/.zprofile
 
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
@@ -21,8 +22,13 @@ if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
 fi
 
 # --- Variables ---
+# export PATH="$HOME/.emacs.d/bin:$HOME/.config/nvm/versions/node/v16.16.0/bin/:$PATH"
+typeset -U path PATH
+path=($path) # (~/.local/bin .. .. $path)
+export PATH
+export EDITOR=emacsclient
+export TERMINAL=alacritty
 export BROWSER=qutebrowser
-export EDITOR=vim
 # below ones seem to not work on wayland
 # export GDK_SCALE=2
 # export GDK_DPI_SCALE=0.5

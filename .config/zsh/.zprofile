@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/zsh
 
 # --- Wayland setup ---
 

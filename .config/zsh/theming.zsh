@@ -7,6 +7,8 @@ autoload -Uz promptinit && promptinit
 [[ "$COLORTERM" == (24bit|truecolor) || "${terminfo[colors]}" -eq '16777216' ]] ||
 zmodload zsh/nearcolor
 
+# Copy icons: https://youtu.be/KBh8lM3jeeE?t=863
+
 # Define the theme
 prompt_sad_setup() {
   # Doc on prompt string: https://man.archlinux.org/man/zshmisc.1#Visual_effects
