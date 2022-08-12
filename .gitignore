@@ -11,3 +11,4 @@ node_modules/
 # dotfiles specific
 .antidote
 hyprpaper.conf
+/.config/zsh/.zdirs
