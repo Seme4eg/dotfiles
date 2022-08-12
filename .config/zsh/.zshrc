@@ -59,7 +59,11 @@ alias pmcc="pm -Sc" # Clear Cache
 # yay -Yc # remove unneeded deps
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 
-alias grubmkc="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias 0x0="curl -F 'file=@-' 0x0.st" # < file
+# XXX: remove it and make system to automount
+alias mount="sudo mount -t ntfs3" # /dev/sda1 ~/media/usb
+alias hypru="cd ~/utils/Hyprland && git pull origin main && sudo make install"
 
 ###############################################################################
 #                               History settings                              #
