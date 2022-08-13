@@ -47,8 +47,7 @@ intel-ucode
 isync
 libtool
 linux-firmware
-linux-zen
-linux-zen-headers
+linux-headers
 m4
 make
 man-db
@@ -79,9 +78,12 @@ playerctl
 plocate
 pulseaudio
 pulseaudio-bluetooth
+qt5-wayland
+qt5ct
 ripgrep
 rofi
 scdoc
+seatd
 sed
 sof-firmware
 spdlog
@@ -94,11 +96,14 @@ ttf-dejavu
 ttf-font-awesome
 ttf-liberation
 vim
+vulkan-headers
+vulkan-validation-layers
 which
 wireless_tools
 wl-clipboard
 wofi
 wpa_supplicant
+xcb-util-errors
 xf86-video-intel
 xf86-video-nouveau
 xf86-video-vesa
@@ -124,7 +129,7 @@ xorg-xdriinfo
 xorg-xev
 xorg-xgamma
 xorg-xhost
-xorg-xinit
+xorg-xinput
 xorg-xkbevd
 xorg-xkbutils
 xorg-xkill
@@ -136,6 +141,7 @@ xorg-xrefresh
 xorg-xset
 xorg-xsetroot
 xorg-xvinfo
+xorg-xwayland
 xorg-xwd
 xorg-xwininfo
 xorg-xwud

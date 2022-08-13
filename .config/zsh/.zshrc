@@ -24,7 +24,7 @@ fi
 # --- Variables ---
 # export PATH="$HOME/.emacs.d/bin:$HOME/.config/nvm/versions/node/v16.16.0/bin/:$PATH"
 typeset -U path PATH
-path=($path) # (~/.local/bin .. .. $path)
+path=(~/.local/bin $path) # (~/.local/bin .. .. $path)
 export PATH
 export EDITOR=emacsclient
 export TERMINAL=alacritty
