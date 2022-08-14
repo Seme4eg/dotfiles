@@ -10,6 +10,7 @@ eval "$(zoxide init zsh)"
 
 # --- Sourcing ---
 . ~/.config/zsh/.zprofile
+. ~/.config/zsh/aliases.zsh
 
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
@@ -38,32 +39,6 @@ export BROWSER=qutebrowser
 [[ -e ~/.config/zsh/.antidote ]] || git clone https://github.com/mattmc3/antidote.git ~/.config/zsh/.antidote
 . ~/.config/zsh/.antidote/antidote.zsh
 antidote load ~/.config/zsh/plugins
-
-# --- Aliases ---
-
-alias pm="sudo pacman"
-alias pmi="pm -S" # install
-alias pmr="pm -Rs" # remove
-alias pmsr="pm -Ss" # search remotes
-alias pmsl="pm -Qs" # search locally
-alias pmlo="pm -Qdt" # list orphaned
-# If no orphans were found, the output is error: argument '-' specified with
-# empty stdin. This is expected as no arguments were passed to pacman -Rns.
-alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
-alias pms="pm -Syy" # sync
-alias pmU="pm -Syyu"
-alias pmu="pm -Syu"
-# -Scc is more agressive approach, read bout it before using in case u decide to
-alias pmcc="pm -Sc" # Clear Cache
-
-# yay -Yc # remove unneeded deps
-# du -h --max-depth=1 ~/ | sort -h # make an alias?
-
-alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-alias 0x0="curl -F 'file=@-' 0x0.st" # < file
-# XXX: remove it and make system to automount
-alias mount="sudo mount -t ntfs3" # /dev/sda1 ~/media/usb
-alias hypru="cd ~/utils/Hyprland && git pull origin main && sudo make install"
 
 ###############################################################################
 #                               History settings                              #
