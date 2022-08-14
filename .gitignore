@@ -12,3 +12,4 @@ node_modules/
 .antidote
 hyprpaper.conf
 /.config/zsh/.zdirs
+.zcompdump
