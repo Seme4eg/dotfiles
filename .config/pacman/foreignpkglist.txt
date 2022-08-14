@@ -2,6 +2,7 @@ bemenu-git
 brillo
 checkupdates+aur
 dunst-git
+emacs-gcc-wayland-devel-bin
 grim-git
 hyprpaper-git
 lf

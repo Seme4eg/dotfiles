@@ -22,7 +22,6 @@ discord
 dosfstools
 efibootmgr
 elogind-openrc
-emacs-nativecomp
 entr
 esysusers
 etmpfiles
