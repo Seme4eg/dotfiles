@@ -76,6 +76,7 @@ pdfjs
 pkgconf
 playerctl
 plocate
+polkit-kde-agent
 pulseaudio
 pulseaudio-bluetooth
 qt5-wayland
@@ -92,6 +93,7 @@ sudo
 syncthing
 syslog-ng-openrc
 texinfo
+timeshift
 ttf-dejavu
 ttf-font-awesome
 ttf-liberation
