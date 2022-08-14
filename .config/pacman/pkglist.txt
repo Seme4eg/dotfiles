@@ -106,7 +106,6 @@ wofi
 wpa_supplicant
 xcb-util-errors
 xf86-video-intel
-xf86-video-nouveau
 xf86-video-vesa
 xorg-bdftopcf
 xorg-docs
