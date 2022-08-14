@@ -1,9 +1,9 @@
 {
     // "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 40, // Waybar height (to be removed for auto height)
+    "height": 20, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 10, // Gaps between modules (4px)
+    "spacing": 0, // Gaps between modules (4px)
     "gtk-layer-shell": false,
     // Choose the order of the modules
     "modules-left": [
@@ -42,7 +42,7 @@
         }
     },
     "wlr/taskbar": {
-        "icon-size": 28,
+        "icon-size": 18,
         "format": "{icon}"
     },
     // "keyboard-state": {
@@ -61,8 +61,8 @@
         "format-icons": {"activated": "", "deactivated": ""}
     },
     "tray": {
-        "icon-size": 31,
-        "spacing": 10
+        "icon-size": 20,
+        "spacing": 5
     },
     "cpu": {
         "format": "{usage}% ",

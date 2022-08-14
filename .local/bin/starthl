@@ -5,28 +5,4 @@ cd ~
 export _JAVA_AWT_WM_NONREPARENTING=1
 export XCURSOR_SIZE=24
 
-# export GTK_BACKEND=wayland
-export GDK_SCALE=1.7
-# export GDK_DPI_SCALE=0.5
-# qutebrowser vars
-export QT_SCALE_FACTOR=1.7
-export SDL_VIDEODRIVER=wayland
-
-export QT_QPA_PLATFORM=wayland
-# export GDK_BACKEND=wayland
-
-export BEMENU_BACKEND=wayland
-
-
-# --- Nvidia vars ---
-# export LIBVA_DRIVER_NAME=nvidia
-# export CLUTTER_BACKEND=wayland
-# export XDG_SESSION_TYPE=wayland
-# export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-# export MOZ_ENABLE_WAYLAND=1
-# export GBM_BACKEND=nvidia-drm
-# export __GLX_VENDOR_LIBRARY_NAME=nvidia
-# export WLR_NO_HARDWARE_CURSORS=1
-# export WLR_BACKEND=vulkan
-
 exec Hyprland
