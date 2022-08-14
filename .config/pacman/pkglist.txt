@@ -98,6 +98,7 @@ ttf-font-awesome
 ttf-liberation
 vim
 vulkan-headers
+vulkan-intel
 vulkan-validation-layers
 which
 wireless_tools
