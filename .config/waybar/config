@@ -3,22 +3,22 @@
     // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 20, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 0, // Gaps between modules (4px)
+    "spacing": 15, // Gaps between modules (4px)
     "gtk-layer-shell": false,
     // Choose the order of the modules
     "modules-left": [
         "wlr/workspaces",
         "wlr/taskbar",
-        "sway/mode",
         "custom/media",
     ],
+
     "modules-center": ["custom/clock", "sway/window"],
     "modules-right": [
         "custom/language",
         "tray",
         "idle_inhibitor",
         "pulseaudio",
-        "network",
+        // "network",
         "cpu",
         "custom/gpu-usage",
         "custom/pacman",
@@ -28,7 +28,9 @@
         "backlight",
         "battery",
     ],
-    // Modules configuration
+
+    // --- Modules configuration ---
+
     "wlr/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -42,19 +44,8 @@
         }
     },
     "wlr/taskbar": {
-        "icon-size": 18,
+        "icon-size": 17,
         "format": "{icon}"
-    },
-    // "keyboard-state": {
-        // "capslock": true,
-        // "format": "{name} {icon}",
-        // "format-icons": {
-            // "locked": "",
-            // "unlocked": ""
-        // }
-    // },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -67,6 +58,32 @@
     "cpu": {
         "format": "{usage}% ",
         "tooltip": true
+    },
+    // "network": {
+        // // "interface": "wlp2*", // (Optional) To force the use of this interface
+        // "format-wifi": "{essid} ({signalStrength}%) ",
+        // "format-ethernet": "{ipaddr}/{cidr} ",
+        // "tooltip-format": "{ifname} via {gwaddr} ",
+        // "format-linked": "{ifname} {essid} (No IP) ",
+        // "format-disconnected": "Disconnected ⚠",
+        // "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    // },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
     },
     "memory": {
         // "format": "{}% "
@@ -98,32 +115,6 @@
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
-    },
-    // "network": {
-        // // "interface": "wlp2*", // (Optional) To force the use of this interface
-        // "format-wifi": "{essid} ({signalStrength}%) ",
-        // "format-ethernet": "{ipaddr}/{cidr} ",
-        // "tooltip-format": "{ifname} via {gwaddr} ",
-        // "format-linked": "{ifname} {essid} (No IP) ",
-        // "format-disconnected": "Disconnected ⚠",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    // },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
     },
 
     // --- Custom widgets ---
