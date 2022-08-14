@@ -7,7 +7,6 @@ hyprpaper-git
 lf
 mako-git
 mu
-nvidia-vaapi-driver-git
 nvm-git
 python-pyperclip-git
 qutebrowser-git

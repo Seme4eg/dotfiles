@@ -64,7 +64,6 @@ networkmanager
 networkmanager-openrc
 networkmanager-openvpn
 noto-fonts
-nvidia
 openrc
 openssh-openrc
 os-prober
