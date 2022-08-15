@@ -8,8 +8,8 @@ mako &
 hyprpaper &
 waybar &
 nm-applet --indicator &
-pkexec /usr/bin/brillo -c 2
-pkexec /usr/bin/brillo -I
+brillo -c 2
+brillo -I
 wlsunset -l 55.7 -L 37.6 -t 3000 &
 /usr/lib/polkit-kde-authentication-agent-1 &
 
