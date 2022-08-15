@@ -6,6 +6,7 @@ alsa-utils
 alsa-utils-openrc
 artix-archlinux-support
 autoconf
+autofs-openrc
 automake
 awesome
 base
