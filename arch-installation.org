@@ -485,12 +485,8 @@ Then proceed to mu4e documentation of doom emacs.
 ** learning todos
 Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 ** Todos
-- GPG asks for key on every mu4e update
-- restore pacman default hooks (especially openrc one (idk what was in there
-  tho)) from another machine with freshly installed artix
 - swaylock and sleep do not stop cooling system, setup hybernation???
 - how to [[https://askubuntu.com/questions/37767/how-to-access-a-usb-flash-drive-from-the-terminal#37775][automount]] usbs?
 - Backups - look for 'rsync' heading on [[https://linuxhint.com/best_backup_restore_arch_linux/][this page]], and on [[https://wiki.archlinux.org/title/Rsync#As_a_backup_utility][arch wiki page]]
-- [[https://wiki.archlinux.org/title/Kernel][kernel]] - zen kernel? ([[https://www.youtube.com/watch?v=KbcUmAlQCHs][how to switch arch kernels]])
 - read [[https://wiki.archlinux.org/title/Security][security]] wiki page
 - didn't manage to set up [[https://wiki.archlinux.org/title/Video_acceleration][hardware video acceleration]]
