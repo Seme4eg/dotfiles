@@ -1,33 +1,48 @@
 #+title: Arch Installation
 #+SOURCE: https://wiki.artixlinux.org/Main/Installation, https://wiki.archlinux.org/title/Installation_guide, https://www.youtube.com/watch?v=jqUP1juP4qM, good vid that explains why we doin certain things - https://www.youtube.com/watch?v=nCc_4fSYzRA
 
-** kbd layout
-(arch) ~ls /usr/share/kbd/keymaps/**/*.map.gz~
-(artix) ~ls -R /usr/share/kbd/keymaps~ (grep ru from the output?)
+** artix only
+- username and pass: artix artix
+- *networking*:
+  - s6-rc -u change dhcpcd-srv
+  - s6-rc -u change connmand-srv
+  - unblocks wifi
+    - rfkill unblock wifi
+    - ip link set wlan0 up
+- *partition disk*, format partitions, mount partitions
+- *basestrap* /mnt base base-devel s6 elogind-s6 linux linux-firmware vim intel-ucode
+- *fastabgen* -U /mnt >> /mnt/etc/fstab (cat /mnt/etc/fstab)
+- artools-chroot /mnt
+- *localization*:
+  - ln -sf ~/usr/share/zoneinfo/Europe/Moskow /etc/localtime~
+  - hwclock --systohc
+  - vim ~/etc/locale.gen~ (uncomment needed lang)
+  - locale-gen
+  - vim ~/etc/locale.conf~ -> LANG=en_US.UTF-8
+- setup *hostname* and *hostsfile*
+- passwd
+- setup *bootloader*:
+  - pacman -S grub efibootmgr networkmanager networkmanager-s6
+    network-manager-applet dosfstools linux-headers bluez bluez-s6 bluez-utils
+    xdg-utils xdg-user-dirs
+  - grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+  - grub-mkconfig -o /boot/grub/grub.cfg
+- useradd -mG wheel <username>
+- passwd <username>
+- EDITOR=vim visudo -> uncomment wheel
+- umount -R /mnt
+- reboot
+- ...
+- ~s6-rc -u change NetworkManager~ -> nmtui
+- s6-rc-bundle add default NetworkManager bluetoothd
+- s6-rc -u change bluetoothd (start service rn)
+- edit arch mirrorlist -> vim ~/etc/pacman.d/mirrorlist-arch -> uncomment your
+  country mirrors
+- *graphics*:
+  - pacman -S nvidia nvidia-utils (+ nvidia-settings) + all the rest of wayland
+    and compositor stuff
 
-~# loadkeys de-latin1~ <- both, but how to set multiple jus in case?
-
-#+NAME: arch
-Console fonts are located in /usr/share/kbd/consolefonts/ and can likewise be set with setfont(8).
-
-#+NAME: artix
-This only sets the selected keyboard layout in the current tty and only until
-reboot. To make the setting permanent, you have to edit /etc/conf.d/keymaps in
-the installed system. It's also useful to set up /etc/vconsole.conf - it may
-look like this:
-
-#+begin_src
-FONT_MAP=8859-1_to_uni
-FONT=lat1-16
-KEYMAP=de-latin1
-#+end_src
-
-** Verify the boot mode
-To verify the boot mode, list the efivars directory:
-
-: # ls /sys/firmware/efi/efivars
-
-If the command shows the directory without error, then the system is booted in UEFI mode. If the directory does not exist, the system may be booted in BIOS (or CSM) mode. If the system did not boot in the mode you desired, refer to your motherboard's manual.
+NOTEs: terminus-font for vim?
 
 ** Connect to the internet
 #+NAME: arch
@@ -163,8 +178,7 @@ mount --mkdir /dev/disk/by-label/BOOT /mnt/boot    (if created)
 
 ~lsblk~ to check mounted partitions
 
-** Installation
-*** Select the mirrors
+** Select the mirrors
 In prev step when connected internet if u ran reflector and mirrors update then
 u basically have left to comment out unwanted ones.
 
@@ -189,7 +203,7 @@ getting right.
 
 *NOTE:* mirrors setup, remove us ones [[https://wiki.archlinux.org/title/Mirrors][link]]
 
-*** Install essential packages
+** Install essential packages
 #+NAME: arch
 : pacstrap /mnt base linux-zen (linux-zen-headers) linux-firmware
 
@@ -486,7 +500,7 @@ Then proceed to mu4e documentation of doom emacs.
 Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 ** Todos
 - swaylock and sleep do not stop cooling system, setup hybernation???
-- how to [[https://askubuntu.com/questions/37767/how-to-access-a-usb-flash-drive-from-the-terminal#37775][automount]] usbs?
+- setup [[https://askubuntu.com/questions/37767/how-to-access-a-usb-flash-drive-from-the-terminal#37775][automount]] usbs?
 - Backups - look for 'rsync' heading on [[https://linuxhint.com/best_backup_restore_arch_linux/][this page]], and on [[https://wiki.archlinux.org/title/Rsync#As_a_backup_utility][arch wiki page]]
 - read [[https://wiki.archlinux.org/title/Security][security]] wiki page
 - didn't manage to set up [[https://wiki.archlinux.org/title/Video_acceleration][hardware video acceleration]]
