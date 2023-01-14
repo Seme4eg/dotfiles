@@ -10,37 +10,13 @@
     - rfkill unblock wifi
     - ip link set wlan0 up
 - *partition disk*, format partitions, mount partitions
-- *basestrap* /mnt base base-devel s6 elogind-s6 linux linux-firmware vim intel-ucode
-- *fastabgen* -U /mnt >> /mnt/etc/fstab (cat /mnt/etc/fstab)
-- artools-chroot /mnt
-- *localization*:
-  - ln -sf ~/usr/share/zoneinfo/Europe/Moskow /etc/localtime~
-  - hwclock --systohc
-  - vim ~/etc/locale.gen~ (uncomment needed lang)
-  - locale-gen
-  - vim ~/etc/locale.conf~ -> LANG=en_US.UTF-8
-- setup *hostname* and *hostsfile*
-- passwd
-- setup *bootloader*:
-  - pacman -S grub efibootmgr networkmanager networkmanager-s6
-    network-manager-applet dosfstools linux-headers bluez bluez-s6 bluez-utils
-    xdg-utils xdg-user-dirs
-  - grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-  - grub-mkconfig -o /boot/grub/grub.cfg
-- useradd -mG wheel <username>
-- passwd <username>
-- EDITOR=vim visudo -> uncomment wheel
-- umount -R /mnt
-- reboot
+- *basestrap* /mnt base base-devel s6 elogind-s6 linux linux-firmware vim
+
+
+
 - ...
-- ~s6-rc -u change NetworkManager~ -> nmtui
 - s6-rc-bundle add default NetworkManager bluetoothd
 - s6-rc -u change bluetoothd (start service rn)
-- edit arch mirrorlist -> vim ~/etc/pacman.d/mirrorlist-arch -> uncomment your
-  country mirrors
-- *graphics*:
-  - pacman -S nvidia nvidia-utils (+ nvidia-settings) + all the rest of wayland
-    and compositor stuff
 
 NOTEs: terminus-font for vim?
 
@@ -220,254 +196,105 @@ command above (space separated) or use pacman while chrooted into the new
 system. For comparison, packages available in the live system can be found in
 pkglist.x86_64.txt.
 
+
 ** Configure the system
-*** Fstab
-Generate an fstab file (use -U or -L to define by UUID or labels, respectively):
-
-#+NAME: arch
-: # genfstab -U /mnt >> /mnt/etc/fstab
-
-#+NAME: artix
-: fstabgen -U /mnt >> /mnt/etc/fstab        <- edit and verify, also set root, swap, home and etc..
-
-NOTE: some use ~-p[rinting]~ flag (to include printing mounts)
-
-Check the resulting =/mnt/etc/fstab= file, and edit it in case of errors.
-
-*** Chroot
-Check the resulting fstab for errors before rebooting. Now, you can chroot into your new Artix system with:
-
-: artix-chroot /mnt # formerly artools-chroot
-
-*** Time zone
-~timedatectl list-timezones | grep {City}~ -> will output something like Europe/Zurich
-
-Set the time zone (tab completion works):
-
-: # ln -sf /usr/share/zoneinfo/Region/City <-(depends on output above) /etc/localtime
-
-[[https://youtu.be/DPLnBPM4DhI?t=5768][Some]] instead of cmd above run ~timedatectl set-timezone Country/City~
-
-Run hwclock(8) to generate /etc/adjtime:
-
-: # hwclock --systohc
-
-This command assumes the hardware clock is set to UTC. See System time#Time standard for details.
-*** Localization
-Edit /etc/locale.gen and uncomment en_US.UTF-8 UTF-8 and other needed locales.
-Generate the locales by running:
-
-: # locale-gen
-
-Create the locale.conf (in etc) file, and set the LANG variable accordingly:
-
-#+NAME: /etc/locale.conf
-: LANG=en_US.UTF-8
-
-If you set the console keyboard layout, make the changes persistent in vconsole.conf(5):
-
-#+NAME: /etc/vconsole.conf
-: KEYMAP=de-latin1 <- you've already chosen this one in the beg. of process
-
-#+NAME: artix addition
-To set the locale systemwide, create or edit =/etc/locale.conf= (which is sourced
-by =/etc/profile=) or =/etc/bash/bashrc.d/artix.bashrc= or
-=/etc/bash/bashrc.d/local.bashrc=; user-specific changes may be made to their
-respective =~/.bashrc=, for example:
-
-#+begin_src
-export LANG="en_US.UTF-8"     <-- localize in your languages
-export LC_COLLATE="C"
-#+end_src
-
-*** Network configuration
-Create the hostname file:
-
-#+NAME: /etc/hostname
-: myhostname
-
-... or just ~hostnamectl set-hostname {name}~
-
-Complete the [[https://wiki.archlinux.org/title/Network_configuration][network configuration]] for the newly installed environment. That may
-include installing suitable [[https://wiki.archlinux.org/title/Network_configuration#Network_management][network management]] software.
-
-_Next from artix:_
-
-Now add matching entries to hosts:
-#+begin_src sh
-nano /etc/hosts
-127.0.0.1        localhost
-::1              localhost
-127.0.1.1        myhostname.localdomain  myhostname
-#+end_src
-
-If the system has a permanent IP address, it should be used instead of 127.0.1.1.
-
-If you use OpenRC you should add your hostname to /etc/conf.d/hostname too:
-
-: hostname='myhostname'
-
-And install your prefered DHCP client
-
-: pacman -S dhcpcd (or dhclient)
-
-... or instead of directly using a standalone [[https://wiki.archlinux.org/title/Network_configuration#DHCP][DHCP]] client you can also use a
-[[https://wiki.archlinux.org/title/Network_configuration#Network_managers][network manager]], some of which have a built-in DHCP client.
-
-If you want to use a wireless connection, be sure to also install *wpa_supplicant*.
-
-[[https://youtu.be/DPLnBPM4DhI?t=4129][Vid]]: innstall some pkgs for wi-fi networking:
-
-: pacman -S ...
-
-networkmanager networkmanager-openrc wpa_supplicant wireless_tools
-network-manager-applet dialog (which will allow us to use something like wi-fi
-menu and the ability to connect to wifi over cmd in the situation where our gui
-won't work)
-
-NOTE: some also install =netctl= (2nd network manager along with =networkmanager=
-but for now i decided not to.)
-
-- enable network namager so when machine boots up we have wifi - ~rc-update add
-  NetworkManager default~ (~default~ is a run level)
-
-*** After chrooted
-Proceed with [[https://wiki.artixlinux.org/Main/InstallationWithFullDiskEncryption#chroot][official artix guide]], but at a time i omitted the /locale,
-timezone, hostname/ section (cuz did it above) and in /mkinitcpio/ omitted the
-'resume' flag cuz im not using lvm. /Grub installation/ section is better also be
-omitted since i have good instructions below (but /grub configuration/ better
-not). Everything below is useful, but read before doint anything.
-
-Creating a new initramfs is usually not required, because mkinitcpio was run on installation of the kernel package with pacstrap.
-
-#+NAME: In case of encryption
-- edit =/etc/mkinitcpio.conf= ~HOOKS="...~ line somewhere after block (before
-  fylesystems) add word ~encrypt~ and somewhere after autodetect add keyboard and
-  keymap (and delete keyboard in the end of the line)
-- ~mkinitcpio -p linux~
-- next steps of crypting are in [[*Boot Loader][Boot Loader]] section
-
-For LVM, *system encryption* or RAID, modify mkinitcpio.conf(5) and recreate the initramfs image:
-
-: # mkinitcpio -P
-
-NOTE: tho majority of ppl r running it bit differently: ~mkinitcpio -p linux~ (in
-case you have different linux kernel use it instead of ~linux~)
-
-*** Add user(s)
-First, set the root passwd: ~passwd~
-
-Second, create a regular user and password:
-#+begin_src sh
-useradd -m user # -m is home dir
-passwd user
-#+end_src
-
-*NOTE:* in many [[https://youtu.be/SFzN6e7USGk?t=1305][tutorials]] tho ppl create user with ~useradd -mG wheel {uname}~ (-G
-creates a suplementary group (a work group), it ?has? to do with sudo
-privileges). Some also add ~-g users~ to the command. In case u do as they do then
-do following steps:
-- after setting user password: ~EDITOR=vim visudo~ -> find line with the comment
-  above it /uncomment to allow members of group wheel to execute any command/) and
-  uncomment this line
-
-Set [[https://wiki.artixlinux.org/Main/Configuration#User_permissions][user permissions]].
-
-*** Boot Loader
-First, install *grub* and *os-prober* (for detecting other installed operating systems):
-
-#+begin_src sh
-pacman -S grub os-prober efibootmgr # some also INSTALL dosfstools and mtools
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub   # for UEFI systems, GRUB or grub???
-grub-mkconfig -o /boot/grub/grub.cfg # don't do it now if u encrypted disk
-#+end_src
-
-Some use instead of 2nd command this: ~grub-install --target=x86_64-efi
---bootloader-id=grub_uefi --recheck~
-
-From [[https://youtu.be/DPLnBPM4DhI?t=5040][this vid]]:
-- create locale dir if it doesn't exist (check with ~ls -l /boot/grub~ -> there
-  should b =locale= dir)
-- for english messages in grub -> ~cp
-  /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo~ (is it necessary?)
-
-#+NAME: in case of encryption
-- get UUID of root partition (one way is to ~blkid > somefile~ -> ~vim somefile~ and
-  copy UUID of root partition from there)
-- follow steps [[https://wiki.artixlinux.org/Main/InstallationWithFullDiskEncryption#GRUB_-_Configuration][here]], but there are variations on how to set
-  ~GRUB_CMDLINE_LINUX_DEFAULT~ line:
-  + *variation 1:* "cryptdevice={partition_name(normal one, like
-    /dev/sd[something])}:{chosen_name from above (like cryptroot)}"
-  + *variation 2:* "cryptdevice=UUID={uuid_copied from the above}:{chosen_name
-    from above (like cryptroot)} root=/dev/mapper/{chosen_name}"
-- grub-mkconfig -o /boot/grub/grub.cfg
-
-Also [[https://youtu.be/SFzN6e7USGk?t=1454][some]] add ~video=1920x1080~ in the end of ~GRUB_CMDLINE_LINUX_DEFAULT~ line.
-
-If you have an Intel or AMD CPU, enable [[https://wiki.archlinux.org/title/Microcode][microcode]] updates in addition. And after
-that rerun ~grum-mkconfig~ again:
-- install =amd-ucode= or =intel-ucode= (depends on which processor u've got)
-
-*** Before reboot
-Additional packages:
-- _bluetooth_: bluez bluez-utils bluez-openrc
-- _audio_: alsa-utils pulseaudio pulseaudio-bluetooth
-- _misc_: git reflector (latter is prob already there) bash-completion
-- file system manager
-- packages for accessing documentation in man and info pages: man-db, man-pages
-  and texinfo. (those *are not* included in base-devel group)
-- =openssh= & =openssh-openrc= - gives the ability to manage installation remotely.
-  If you do enable that figure out how to make it start when your computer
-  starts (with systemd u jus need to run ~systemctl enable sshd~, but i ain't usin
-  it). Next steps r optional, but in case you want to connect to your machine via ssh from another one:
-  - rc-update add sshd default
-
-- eg [[https://archlinux.org/packages/?name=sof-firmware][sof-firmware]] for [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware][sound-cards]] (e.g. a network manager or DHCP client)
-
-[[https://wiki.archlinux.org/title/OpenRC#Usage][converting systemd commands to openrc ones]]
-
-- enable bluetooth on boot - ~rc-update add bluetoothd default~
-
-*** Reboot
-Exit the chroot environment by typing ~exit~ or pressing =Ctrl+d=.
-
-Optionally manually unmount all the partitions with ~umount -R /mnt~: this allows
-noticing any "busy" partitions, and finding the cause with fuser(1). (some ppl
-use ~umount -a~ (-a for all))
-
-Finally, restart the machine by typing ~reboot~: any partitions still mounted will
-be automatically unmounted by systemd. Remember to remove the installation
-medium and then login into the new system with the root account.
-
-*** After reboot
-*BEFORE* you install anything from below -> maybe install it all with GUIX package
-manager?
-
-After installation many packages won't b found (like reflector), cuz [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][arch repos]]
-are disabled by default as of june 2021 in artix. To install package mentioned
-in prev. link first enable [[https://wiki.artixlinux.org/Main/Repositories#Universe][universe repository]], then update repos list, install
-that package and run ~pacman-key --populate archlinux~ (which should b suggested
-to run after package installation). Then add arch mirrors to pacman.conf as
-shown in [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][this example]]. Sync package database again.
-
-- to connect to wifi - ~sudo nmtui~
-- install graphics-card drivers: install =nvidia-utils= (in case of an intel
-  video card) *OR* even better [[https://wiki.archlinux.org/title/NVIDIA#Custom_kernel][nvidia-dkms]] (redirected from [[https://bbs.archlinux.org/viewtopic.php?id=251515][here]])
-- install ~xorg-server~ and ~xorg-apps~
-- removed 3 last agetty.ttys in openrc
-- install =syslog-ng-openrc= and enable syslog-ng service
-- install =alsa-utils-openrc= and enable alsasound service
-- read [[https://wiki.artixlinux.org/Main/Configuration][this]] and follow. Thos i didn't do the 'alsa' steps
-- install awesome and dmenu, set up xorg as in wiki (including drivers
-  installation), in case of any errors awesome will output where the log file is
-  in tty, there look for /EE/ (errors)
-- generate ssh and add it to github to copy my .dotfiles and awesome private
-  repositories
-- install flatpak and ~flatpak remote-add --if-not-exists flathub
-  https://flathub.org/repo/flathub.flatpakrepo~, then telegramm and discord, for
-  now decided not to go with qutebrowser from flatpack then it seems that i need
-  to edit where it looks for config.py file
-- set [[https://wiki.archlinux.org/title/GRUB/Tips_and_tricks#Setting_the_framebuffer_resolution][grub resolution]],
++ *Fstab*: Generate an fstab file (use -U or -L to define by UUID or labels,
+  respectively):
+  - /arch/ : ~genfstab -U /mnt >> /mnt/etc/fstab~
+  - /artix/ : ~fstabgen -U /mnt >> /mnt/etc/fstab~
+  - Check the resulting =/mnt/etc/fstab= file, and edit it in case of errors.
++ *Chroot*: Check the resulting fstab for errors before rebooting. Now, you can
+  chroot into your new Artix system with: ~artix-chroot /mnt # formerly
+  artools-chrooT~
++ *Time zone*: Set the time zone (tab completion works):
+  - ~timedatectl list-timezones | grep {City}~ -> will output something like
+    Europe/Zurich
+  - ~ln -sf /usr/share/zoneinfo/Region/City /etc/localtime~. [[https://youtu.be/DPLnBPM4DhI?t=5768][Some]] instead run
+    ~timedatectl set-timezone Country/City~.
+  - Run hwclock(8) to generate /etc/adjtime: ~hwclock --systohc~. This command
+    assumes the hardware clock is set to UTC. See System time#Time standard for
+    details.
++ *Localization*
+  - vim ~/etc/locale.gen~ (uncomment needed lang(s))
+  - Generate the locales: ~locale-gen~
+  - vim ~/etc/locale.conf~ -> LANG=en_US.UTF-8
+  - User-specific locale changes may be made to their respective =~/.bashrc=, for
+    example: ~export LANG="en_US.UTF-8"; export LC_COLLATE="C"~
++ *Network configuration*: [[https://wiki.artixlinux.org/Main/Installation#Network_configuration][artix wiki section]]
+  - ... or instead of directly using a standalone [[https://wiki.archlinux.org/title/Network_configuration#DHCP][DHCP]] client you can also use a
+    [[https://wiki.archlinux.org/title/Network_configuration#Network_managers][network manager]], some of which have a built-in DHCP client.
+  - [[https://youtu.be/DPLnBPM4DhI?t=4129][Vid]]: innstall some pkgs for wi-fi networking: networkmanager
+    networkmanager-s6 network-manager-applet dialog (which will
+    allow us to use something like wi-fi menu and the ability to connect to wifi
+    over cmd in the situation where our gui won't work)
+  - NOTE: some also install =netctl= (2nd network manager along with
+    =networkmanager= but for now i decided not to.)
+  - enable network namager in your init system (also on artix wiki)
++ *Add user(s)*
+  - ~passwd~
+  - ~useradd -mG wheel <user>~
+    - -m is home dir
+    - -G creates a suplementary group (a work group), it ?has? to do with sudo
+      privileges
+  - ~passwd <user>~
+  - ~EDITOR=vim visudo~ -> uncomment wheel
+  - Set [[https://wiki.artixlinux.org/Main/Configuration#User_permissions][user permissions]]
++ *bootloader*
+  - pacman -S grub os-prober efibootmgr dosfstools
+  - grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
+  - grub-mkconfig -o /boot/grub/grub.cfg
+  - Also [[https://youtu.be/SFzN6e7USGk?t=1454][some]] add ~video=1920x1080~ in the end of ~GRUB_CMDLINE_LINUX_DEFAULT~ line.
+  - install =amd-ucode= or =intel-ucode= And rerun ~grub-mkconfig ...~
++ *Before reboot*
+  - _bluetooth_: bluez bluez-utils bluez-openrc
+  - _audio_: alsa-utils pulseaudio pulseaudio-bluetooth
+    - install =alsa-utils-s6= and enable alsa service
+  - _misc_: git dosfstools linux-headers xdg-utils xdg-user-dirs
+  - man-db, man-pages and texinfo. (those *are not* included in /base-devel/ group)
+  - =openssh= & =openssh-openrc= - gives the ability to manage installation remotely.
+    If you do enable that figure out how to make it start when your computer
+    starts (with systemd u jus need to run ~systemctl enable sshd~, but i ain't usin
+    it). Next steps r optional, but in case you want to connect to your machine via ssh from another one: ~rc-update add sshd default~
+  - eg [[https://archlinux.org/packages/?name=sof-firmware][sof-firmware]] for [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware][sound-cards]] (e.g. a network manager or DHCP client)
+  - *don't forget to enable needed services on boot and add them to groups /
+    bundles*
+  - [[https://wiki.archlinux.org/title/OpenRC#Usage][converting systemd commands to openrc ones]]
++ *reboot*
+  - Exit the chroot environment by typing ~exit~ or pressing =Ctrl+d=.
+  - Optionally manually unmount all the partitions with ~umount -R /mnt~: this
+    allows noticing any "busy" partitions, and finding the cause with fuser(1).
+    (some ppl use ~umount -a~ (-a for all))
+  - Finally, restart the machine by typing ~reboot~: any partitions still mounted
+    will be automatically unmounted by systemd.
++ setup *wifi*
+  - ~s6-rc -u change NetworkManager~
+  - ~sudo nmtui~
+  - ~touch /etc/s6/adminsv/default/contents.d/NetworkManager~
++ *Enable arch repos*
+  - [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][arch repos]]
+  - run ~pacman-key --populate archlinux~ (which should b suggested to run after
+    package installation).
+  - edit arch mirrorlist -> vim ~/etc/pacman.d/mirrorlist-arch -> uncomment your
+    country mirrors
++ *graphics*: install =nvidia=
++ *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
++ [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]]
++ copy dotfiles and run ~stow .~
++ [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
++ install [[https://wiki.hyprland.org/Getting-Started/Master-Tutorial/][hyprland]] and all my deps for it:
+  - *pacman*: alacritty bemenu webcord grim slurp brillo swaylock swayidle mako
+    pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard
+  - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git
+  - setup *nvidia*:
+    - follow hyprland wiki, do not install 'vaapi' driver, but do everything
+      else
+    - there are 2 checks in aliases, 1st one should show 2 vda things, on your
+      gpu the 'driver' field must show NOT nouveau, if it does - check
+      both modprobes if those are blocking nouveau and if they don't - add block
+      rule and regenerate modprobe
++ install zsh and make it [[https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell][default]]
++ setup *emacs*:
+  - deps: fd ripgrep plocate libvterm (for vterm) cmake
 
 -----
 
@@ -475,16 +302,19 @@ shown in [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][this
 - ~reflector -c {country (Russia)} -a 6 (age of the server) --sort rate (of
   speed) --save /etc/pacman.d/mirrorlist~
 - ~pacman -Syy~
-- enable reflector in openrc?? (~systemctl enable --now reflector.timer~)
 - enable fstrim in openrc?? (~systemctl enable --now fstrim.timer~)
 - enable some essential [[https://wiki.archlinux.org/title/OpenRC#Services][services]] in openrc?
 - enable timesync service in openrc? (~systemctl enable systemd-timesyncd~)
 - dmenu ttf-dejavu ttf-liberation noto-fonts nitrogen picom pcmanfm (very fast &
   light file manager) (? materia-gtk-theme papirus-icon-theme)
 
+*questionable:*
++ read [[https://wiki.artixlinux.org/Main/Configuration][this]] and follow. Thos i didn't do the 'alsa' steps
++ set [[https://wiki.archlinux.org/title/GRUB/Tips_and_tricks#Setting_the_framebuffer_resolution][grub resolution]],
+- enable reflector in openrc?? (~systemctl enable --now reflector.timer~)
+
 -----
 
-- read github 'how to add ssh' to find a way to never insert my passphrase again..
 *** Installing mu4e nitbits
 First i needed to import my gpg keys (gpg2) from old machine, the process of
 which can be found in the end of this [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][article]].
