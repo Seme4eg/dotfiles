@@ -1,13 +1,15 @@
 bemenu-git
 brillo
 checkupdates+aur
+discord_arch_electron_wayland
 dunst-git
+electron21-bin
 emacs-gcc-wayland-devel-bin
 grim-git
 hyprpaper-git
-lf
 mako-git
 mu
+noto-color-emoji-fontconfig
 nvm-git
 python-pyperclip-git
 qutebrowser-git
@@ -16,6 +18,8 @@ swayidle-git
 swaylock-git
 ttf-all-the-icons
 waybar-git
+webcord-git
 wev-git
 wlsunset-git
 xkblayout-state-git
+yay

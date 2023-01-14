@@ -1,9 +1,10 @@
 qutebrowser &
-discord &
+webcord --enable-features=UseOzonePlatform --ozone-platform=wayland &
 emacs &
 syncthing &
 # for mako
 dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus &
+dbus-launch # XXX
 mako &
 hyprpaper &
 waybar &

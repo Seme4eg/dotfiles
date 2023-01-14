@@ -4,6 +4,7 @@ acpid-openrc
 alacritty
 alsa-utils
 alsa-utils-openrc
+android-tools
 artix-archlinux-support
 autoconf
 autofs-openrc
@@ -17,9 +18,10 @@ bluez
 bluez-openrc
 bluez-utils
 chrono-date
+chrony
+chrony-openrc
 cmake
 dialog
-discord
 dosfstools
 efibootmgr
 elogind-openrc
@@ -29,7 +31,9 @@ etmpfiles
 fakeroot
 file
 findutils
+firefox
 flex
+fmt
 fzf
 gawk
 gcc
@@ -45,6 +49,7 @@ htop
 hwinfo
 intel-ucode
 isync
+lf
 libtool
 linux-firmware
 linux-headers
@@ -66,6 +71,7 @@ networkmanager-openvpn
 noto-fonts
 openrc
 openssh-openrc
+openvpn
 os-prober
 pacman
 pass
@@ -96,16 +102,20 @@ timeshift
 ttf-dejavu
 ttf-font-awesome
 ttf-liberation
+unzip
 vim
 vulkan-headers
 vulkan-intel
 vulkan-validation-layers
 which
+wine
 wireless_tools
 wl-clipboard
 wofi
 wpa_supplicant
 xcb-util-errors
+xdg-desktop-portal
+xdg-desktop-portal-wlr
 xf86-video-intel
 xf86-video-vesa
 xorg-bdftopcf
@@ -147,7 +157,6 @@ xorg-xwd
 xorg-xwininfo
 xorg-xwud
 xterm
-yay
 youtube-dl
 zoxide
 zsh
