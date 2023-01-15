@@ -1,20 +1,19 @@
+// https://github.com/Alexays/Waybar/wiki/Configuration
 {
-    // "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 20, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
     "spacing": 15, // Gaps between modules (4px)
     "gtk-layer-shell": false,
     // Choose the order of the modules
     "modules-left": [
         "wlr/workspaces",
         "wlr/taskbar",
-        "custom/media",
+        "hyprland/window"
+        // "custom/media",
     ],
 
-    "modules-center": ["custom/clock", "sway/window"],
+    "modules-center": ["custom/clock"],
     "modules-right": [
-        "custom/language",
+        "hyprland/language",
         "tray",
         "idle_inhibitor",
         "pulseaudio",
@@ -54,6 +53,16 @@
     "tray": {
         "icon-size": 20,
         "spacing": 5
+    },
+    "hyprland/window": {
+        "format": "> {}",
+        "separate-outputs": true
+    },
+    "hyprland/language": {
+        "format": "⌨ {}",
+        "format-en": "en",
+        "format-ru": "ru",
+        "keyboard-name": "at-translated-set-2-keyboard"
     },
     "cpu": {
         "format": "{usage}% ",
@@ -98,9 +107,8 @@
         "format-icons": ["", "", ""]
     },
     "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": [""]
+        "format": "{percent} {icon}",
+        "format-icons": ["", ""]
     },
     "battery": {
         "states": {
@@ -119,12 +127,6 @@
 
     // --- Custom widgets ---
 
-    "custom/language": {
-        "exec": "xkblayout-state print %n | head -c 2" ,
-        "format-icons": "⌨",
-        "format": "{} {icon}",
-        "interval": 1
-    },
     // Weather with detailed forecast
     // https://gist.github.com/bjesus/f8db49e1434433f78e5200dc403d58a3
     "custom/weather": {
