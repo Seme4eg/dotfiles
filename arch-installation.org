@@ -249,16 +249,16 @@ pkglist.x86_64.txt.
   - _bluetooth_: bluez bluez-utils bluez-openrc
   - _audio_: alsa-utils pulseaudio pulseaudio-bluetooth
     - install =alsa-utils-s6= and enable alsa service
-  - _misc_: git dosfstools linux-headers xdg-utils xdg-user-dirs
+  - _misc_: git dosfstools linux-headers xdg-utils xdg-user-dirs unzip wget fzf lf
   - man-db, man-pages and texinfo. (those *are not* included in /base-devel/ group)
   - =openssh= & =openssh-openrc= - gives the ability to manage installation remotely.
     If you do enable that figure out how to make it start when your computer
     starts (with systemd u jus need to run ~systemctl enable sshd~, but i ain't usin
     it). Next steps r optional, but in case you want to connect to your machine via ssh from another one: ~rc-update add sshd default~
-  - eg [[https://archlinux.org/packages/?name=sof-firmware][sof-firmware]] for [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware][sound-cards]] (e.g. a network manager or DHCP client)
+  - (recheck) alsa-firmware & [[https://archlinux.org/packages/?name=sof-firmware][sof-firmware]] for [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware][sound-cards]] (e.g. a network
+    manager or DHCP client)
   - *don't forget to enable needed services on boot and add them to groups /
     bundles*
-  - [[https://wiki.archlinux.org/title/OpenRC#Usage][converting systemd commands to openrc ones]]
 + *reboot*
   - Exit the chroot environment by typing ~exit~ or pressing =Ctrl+d=.
   - Optionally manually unmount all the partitions with ~umount -R /mnt~: this
@@ -276,15 +276,18 @@ pkglist.x86_64.txt.
     package installation).
   - edit arch mirrorlist -> vim ~/etc/pacman.d/mirrorlist-arch -> uncomment your
     country mirrors
-+ *graphics*: install =nvidia=
++ *graphics*: install =nvidia-dkms=
 + *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
 + [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]]
 + copy dotfiles and run ~stow .~
 + [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
++ ~usermod -a -G video,audio,power,dbus, USER~ (adbusers,uucp,vboxusers)
+  - ~grep <username> /etc/group~ will give you which groups user already is in
++ unmute audio channels in alsamixer and enable capture as well
 + install [[https://wiki.hyprland.org/Getting-Started/Master-Tutorial/][hyprland]] and all my deps for it:
   - *pacman*: alacritty bemenu webcord grim slurp brillo swaylock swayidle mako
-    pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard
-  - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git
+    pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard otf-font-awesome
+  - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git brillo hyprpaper-git
   - setup *nvidia*:
     - follow hyprland wiki, do not install 'vaapi' driver, but do everything
       else
@@ -294,24 +297,16 @@ pkglist.x86_64.txt.
       rule and regenerate modprobe
 + install zsh and make it [[https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell][default]]
 + setup *emacs*:
-  - deps: fd ripgrep plocate libvterm (for vterm) cmake
+  - deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
+    (for stickers and symbols to work)
 
 -----
 
-- ~sudo pacman -S terminus-font~ -> ~sudo setfont ter-132n~
-- ~reflector -c {country (Russia)} -a 6 (age of the server) --sort rate (of
-  speed) --save /etc/pacman.d/mirrorlist~
-- ~pacman -Syy~
 - enable fstrim in openrc?? (~systemctl enable --now fstrim.timer~)
-- enable some essential [[https://wiki.archlinux.org/title/OpenRC#Services][services]] in openrc?
 - enable timesync service in openrc? (~systemctl enable systemd-timesyncd~)
-- dmenu ttf-dejavu ttf-liberation noto-fonts nitrogen picom pcmanfm (very fast &
-  light file manager) (? materia-gtk-theme papirus-icon-theme)
 
 *questionable:*
-+ read [[https://wiki.artixlinux.org/Main/Configuration][this]] and follow. Thos i didn't do the 'alsa' steps
-+ set [[https://wiki.archlinux.org/title/GRUB/Tips_and_tricks#Setting_the_framebuffer_resolution][grub resolution]],
-- enable reflector in openrc?? (~systemctl enable --now reflector.timer~)
++ enable reflector in openrc?? (~systemctl enable --now reflector.timer~)
 
 -----
 
@@ -329,8 +324,34 @@ Then proceed to mu4e documentation of doom emacs.
 ** learning todos
 Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 ** Todos
+- wlsunset 100% 1 core load
+- learn s6, by starting from [[https://skarnet.org/software/s6/why.html][this]] and [[https://forums.gentoo.org/viewtopic-t-1105854.html][this]] article; write service that will
+  'updatedb' every hour
+  - move some things to user services from [[file:.config/hypr/autorun.sh][autorun]]
+  - [[https://github.com/Seme4eg/nixos-dots/blob/b67091196c8f8bd19d4e1210015ba8667e0f5316/hosts/nohomehost/default.nix#L34][plocate hourly]]
+  - [[https://github.com/Seme4eg/nixos-dots/blob/b67091196c8f8bd19d4e1210015ba8667e0f5316/hosts/nohomehost/default.nix#L53][nm applet]]
+  - [[https://wiki.archlinux.org/title/OpenRC#Usage][converting systemd commands to openrc ones]]
+  - enable some essential [[https://wiki.archlinux.org/title/OpenRC#Services][services]] in openrc?
+- reread hyprland wiki, see what's new
+- update tray thingie
+- configure mako
+- *suspend / hybernation*:
+  - /etc/elogind/logind.conf <- tried
+  - acpid + acpid-s6 + enabling its service doesn't help (+ logind handles
+    hardware switches like lid events OOTB)
+  - [ ] [[https://unix.stackexchange.com/questions/654707/slackware-and-elogind-how-to-enable-suspend-and-hibernate-for-power-user][haven't tried]]
+  - arch wiki power management [[https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#High_level_interfaces][article]]
+  - adding [[https://github.com/elogind/elogind/issues/140#issuecomment-710511939][this]] script didn't help as well, first added separate file in
+    system-sleep dir, than replaced original 'nvidia' file contents.. didn't
+    help
+  - *!* [[https://forum.artixlinux.org/index.php/topic,1639.msg11220.html#msg11220][artix linux forum thread]] <- maybe here is a trace
+  - [[https://forum.artixlinux.org/index.php/topic,3599.msg23379.html#msg23379][this thread]] describes my problem, except i can't `cat mem >|
+    /sys/power/state` even as sudo, permission denied
+- seup pipewire and wireplumber to work.............
 - swaylock and sleep do not stop cooling system, setup hybernation???
+- try to rewrite hyprpaper to just stop and reenable service instead of shit
+  that's in there rn
 - setup [[https://askubuntu.com/questions/37767/how-to-access-a-usb-flash-drive-from-the-terminal#37775][automount]] usbs?
-- Backups - look for 'rsync' heading on [[https://linuxhint.com/best_backup_restore_arch_linux/][this page]], and on [[https://wiki.archlinux.org/title/Rsync#As_a_backup_utility][arch wiki page]]
-- read [[https://wiki.archlinux.org/title/Security][security]] wiki page
-- didn't manage to set up [[https://wiki.archlinux.org/title/Video_acceleration][hardware video acceleration]]
+- write a script that will reduce boring typing when in stalling fresh system
+** notes
+https://gitea.artixlinux.org/artix/s6-services
