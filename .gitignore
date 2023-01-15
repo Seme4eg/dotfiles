@@ -18,3 +18,4 @@ hyprpaper.conf
 /.config/WebCord/
 /.config/syncthing/*
 !/.config/syncthing/config.xml
+/.config/zsh/.grmlrc
