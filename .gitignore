@@ -13,3 +13,6 @@ node_modules/
 hyprpaper.conf
 /.config/zsh/.zdirs
 .zcompdump
+/.config/htop/
+/.config/pulse/
+/.config/WebCord/
