@@ -1,0 +1,108 @@
+# Example config with more complex examples:
+# https://github.com/tridactyl/tridactyl/blob/master/.tridactylrc
+
+# --- General settings ---
+
+# set incsearch false # default
+set modeindicatorshowkeys true
+set smoothscroll true
+# set searchengine searchurls.searx # https://searx.space/
+# auto,dark,default,greenmat,halloween,midnight,quake,quakelight,shydactyl
+set theme midnight
+
+# NOTE: testing this "sane hinting mode"
+# vimperator vimperator-reflow
+set hintfiltermode simple
+set hintchars asdfghjkl
+set hintnames short
+
+# I'd like to get rid of all those predefined values first, but each of those
+# requires a separate 'setnull searchurls.<url>' line, you can't feed multiple
+# keys to one directive, otherwise you get a weird value in searchurls.
+# So i just define new ones and keep old ones.
+set searchurls.ecorp https://www.google.com/search?q=
+set searchurls.ddg   https://duckduckgo.com/?q=
+set searchurls.pedia https://en.wikipedia.org/wiki/Special:Search/
+set searchurls.yt    https://www.youtube.com/results?search_query=
+set searchurls.gh    https://github.com/search?utf8=✓&q=
+set searchurls.sp    https://startpage.com/do/search?language=english&cat=web&query=
+set searchurls.sx    https://searx.me/?category_general=on&q=
+set searchurls.osm   https://www.openstreetmap.org/search?query=
+set searchurls.mdn   https://developer.mozilla.org/en-US/search?q=
+
+
+# ------------------- Bindings -------------------
+
+# --- Normal ---
+
+bind --mode=normal K tabprev
+bind --mode=normal J tabnext
+bind --mode=normal I mode ignore
+bind --mode=normal <C-e> scrollline 3
+bind --mode=normal <C-y> scrollline -3
+
+bind --mode=normal z= zoom 0.1 true
+bind --mode=normal z- zoom -0.1 true
+# default binding, is here just so u remember
+bind --mode=normal zz zoom 1.0
+
+bind --mode=normal h fillcmdline help
+bind --mode=normal ,a fillcmdline apropos
+bind --mode=normal ,R restart
+bind --mode=normal ,S source
+# REVIEW: maybe i don't need it
+bind --mode=normal ,d tabduplicate
+# TODO: binding below zooms in *current* page (since viewconfig opens with delay)
+# bind --mode=normal ,hn composite viewconfig nmaps | zoom 1.4
+# how to zoom *opened* page?
+bind --mode=normal ,hn viewconfig nmaps
+# TODO: first it 'forwards' and only then it tabduplicates, which is a bs to me
+# bind --mode=normal ,L composite tabduplicate; forward
+# bind --mode=normal ,H composite tabduplicate; back
+
+# yank source blocks
+bind ;s hint -c pre -p
+# open multiple hints in background
+bind ;r hint -qb
+# Open hint link in Firefox reader mode:
+bind ;R composite hint -pipe a href | jsb -p tri.excmds.tabopen("about:reader?url=" + JS_ARG)
+
+# rudimentary find mode
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext 1
+bind N findnext -1
+bind ,<Space> nohlsearch
+
+unbind --mode=normal <S-Insert> <AC-Escape> <AC-`> <S-Escape> # escapes
+unbind --mode=normal gT gt ;; # tabs and hints
+unbind --mode=normal zI zM zO zR zi zm zo zr zz # don't need all those zoom bindings
+# nice easter egg, but i don't need it
+unbind --mode=normal <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-ArrowRight><AS-ArrowLeft><AS-ArrowRight>ba
+
+
+# --- Insert ---
+
+bind --mode=insert <C-v> mode ignore
+bind --mode=insert <C-g> composite unfocus | mode normal
+
+unbind --mode=insert <AC-Escape> <AC-`> <S-Escape>
+
+
+# --- Ex ---
+
+bind --mode=ex <C-j> ex.next_completion
+bind --mode=ex <C-k> ex.prev_completion
+bind --mode=ex <C-g> ex.hide_and_clear
+bind --mode=ex <A-p> ex.prev_history
+bind --mode=ex <A-n> ex.next_history
+# TODO: <C-w> doesn't work, browser closes tab
+# bind --mode=ex <A-w> ex.backward_kill_word # using this kbd breaks menu completely
+
+
+# --- Ignore ---
+
+bind --mode=ignore <C-[> mode normal
+bind --mode=ignore <C-g> mode normal
+
+unbind --mode=ignore <S-Insert> <AC-Escape> <AC-`> <S-Escape>
