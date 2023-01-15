@@ -16,3 +16,5 @@ hyprpaper.conf
 /.config/htop/
 /.config/pulse/
 /.config/WebCord/
+/.config/syncthing/*
+!/.config/syncthing/config.xml
