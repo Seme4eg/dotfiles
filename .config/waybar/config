@@ -8,7 +8,6 @@
         "wlr/workspaces",
         "wlr/taskbar",
         "hyprland/window"
-        // "custom/media",
     ],
 
     "modules-center": ["custom/clock"],
@@ -16,10 +15,8 @@
         "hyprland/language",
         "tray",
         "idle_inhibitor",
-        "pulseaudio",
-        // "network",
         "cpu",
-        "custom/gpu-usage",
+        // "custom/gpu-usage",
         "custom/pacman",
         "custom/weather",
         "memory",
@@ -31,7 +28,6 @@
     // --- Modules configuration ---
 
     "wlr/workspaces": {
-        "disable-scroll": true,
         "all-outputs": true,
         "format": "{icon}",
         // icons?:     
@@ -59,7 +55,7 @@
         "separate-outputs": true
     },
     "hyprland/language": {
-        "format": "⌨ {}",
+        "format": "{} ⌨",
         "format-en": "en",
         "format-ru": "ru",
         "keyboard-name": "at-translated-set-2-keyboard"
@@ -68,34 +64,7 @@
         "format": "{usage}% ",
         "tooltip": true
     },
-    // "network": {
-        // // "interface": "wlp2*", // (Optional) To force the use of this interface
-        // "format-wifi": "{essid} ({signalStrength}%) ",
-        // "format-ethernet": "{ipaddr}/{cidr} ",
-        // "tooltip-format": "{ifname} via {gwaddr} ",
-        // "format-linked": "{ifname} {essid} (No IP) ",
-        // "format-disconnected": "Disconnected ⚠",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    // },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
     "memory": {
-        // "format": "{}% "
         "format": "{used:0.1f}G/{total:0.1f}G "
     },
     "temperature": {
@@ -140,11 +109,10 @@
     },
     //alternate
     "custom/pacman": {
-        "format": "{}  ",
+        "format": "{} ",
         "interval": 3600,                     // every hour
         "exec": "checkupdates | wc -l",       // # of updates
         "exec-if": "exit 0",                  // always run; consider advanced run conditions
-        "on-click": "alacritty -e 'sudo pacman -Syu'; pkill -SIGRTMIN+8 waybar", // update system
         "signal": 8
     },
     // XXX: didn't find my 'gpu-busy-percent' file:
@@ -155,28 +123,4 @@
       // "return-type": "",
       // "interval": 1
     // },
-    // "custom/media": {
-        // "format": "{icon} {}",
-        // "return-type": "json",
-        // "max-length": 40,
-        // "format-icons": {
-            // "spotify": "",
-            // "default": "🎜"
-        // },
-        // "escape": true,
-        // "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-        // // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    // },
-    "custom/media": {
-        "format": "{icon} {}",
-        "escape": true,
-        "return-type": "json",
-        "max-length": 40,
-        "on-click": "playerctl play-pause",
-        "on-click-right": "playerctl stop",
-        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "exec": "~/.config/waybar/mediaplayer.py 2> /dev/null",
-    }
 }
