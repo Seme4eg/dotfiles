@@ -6,9 +6,7 @@ fpath+=( /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLA
 source /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-zdharma-continuum-SLASH-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 fpath+=( /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-junegunn-SLASH-fzf/shell )
 source /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-junegunn-SLASH-fzf/shell/completion.zsh
-source /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-junegunn-SLASH-fzf/shell/key-bindings.zsh
 fpath+=( /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-zsh-users-SLASH-zsh-autosuggestions )
 source /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-zsh-users-SLASH-zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 fpath+=( /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-powerlevel10k )
 source /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-powerlevel10k/powerlevel10k.zsh-theme
-source /home/earthian/.cache/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-romkatv-SLASH-powerlevel10k/powerlevel9k.zsh-theme
