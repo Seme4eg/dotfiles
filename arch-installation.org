@@ -1,19 +1,13 @@
 #+title: Arch Installation
-#+SOURCE: https://wiki.artixlinux.org/Main/Installation, https://wiki.archlinux.org/title/Installation_guide, https://www.youtube.com/watch?v=jqUP1juP4qM, good vid that explains why we doin certain things - https://www.youtube.com/watch?v=nCc_4fSYzRA
 
 ** artix only
 - username and pass: artix artix
 - *networking*:
-  - s6-rc -u change dhcpcd-srv
-  - s6-rc -u change connmand-srv
   - unblocks wifi
     - rfkill unblock wifi
     - ip link set wlan0 up
 - *partition disk*, format partitions, mount partitions
 - *basestrap* /mnt base base-devel s6 elogind-s6 linux linux-firmware vim
-
-
-
 - ...
 - s6-rc-bundle add default NetworkManager bluetoothd
 - s6-rc -u change bluetoothd (start service rn)
@@ -186,9 +180,6 @@ getting right.
 #+NAME: artix
 : basestrap /mnt base base-devel openrc elogind-openrc linux-zen (linux-zen-headers) linux-firmware
 
-*NOTE:* /linux-zen-headers/ isn't listed for install in both official installation
-guides, but many ppl in the net highly recommend installing it.
-
 /[[https://archlinux.org/groups/x86_64/base-devel/][base-devel]] packages/
 
 To install other packages or package groups, append the names to the pacstrap
@@ -227,8 +218,6 @@ pkglist.x86_64.txt.
     networkmanager-s6 network-manager-applet dialog (which will
     allow us to use something like wi-fi menu and the ability to connect to wifi
     over cmd in the situation where our gui won't work)
-  - NOTE: some also install =netctl= (2nd network manager along with
-    =networkmanager= but for now i decided not to.)
   - enable network namager in your init system (also on artix wiki)
 + *Add user(s)*
   - ~passwd~
@@ -240,7 +229,7 @@ pkglist.x86_64.txt.
   - ~EDITOR=vim visudo~ -> uncomment wheel
   - Set [[https://wiki.artixlinux.org/Main/Configuration#User_permissions][user permissions]]
 + *bootloader*
-  - pacman -S grub os-prober efibootmgr dosfstools
+  - pacman -S grub efibootmgr dosfstools
   - grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
   - grub-mkconfig -o /boot/grub/grub.cfg
   - Also [[https://youtu.be/SFzN6e7USGk?t=1454][some]] add ~video=1920x1080~ in the end of ~GRUB_CMDLINE_LINUX_DEFAULT~ line.
@@ -286,7 +275,8 @@ pkglist.x86_64.txt.
 + unmute audio channels in alsamixer and enable capture as well
 + install [[https://wiki.hyprland.org/Getting-Started/Master-Tutorial/][hyprland]] and all my deps for it:
   - *pacman*: alacritty bemenu webcord grim slurp brillo swaylock swayidle mako
-    pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard otf-font-awesome
+    pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard
+    otf-font-awesome pacman-contrib
   - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git brillo hyprpaper-git
   - setup *nvidia*:
     - follow hyprland wiki, do not install 'vaapi' driver, but do everything
@@ -335,6 +325,7 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
 - reread hyprland wiki, see what's new
 - update tray thingie
 - configure mako
+- read through my nixos dots ..
 - *suspend / hybernation*:
   - /etc/elogind/logind.conf <- tried
   - acpid + acpid-s6 + enabling its service doesn't help (+ logind handles
@@ -353,5 +344,7 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
   that's in there rn
 - setup [[https://askubuntu.com/questions/37767/how-to-access-a-usb-flash-drive-from-the-terminal#37775][automount]] usbs?
 - write a script that will reduce boring typing when in stalling fresh system
+- why i don't see all messages in tmp hypr logs?
+- setup pacman-hooks
 ** notes
 https://gitea.artixlinux.org/artix/s6-services
