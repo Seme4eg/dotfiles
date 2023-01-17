@@ -66,15 +66,17 @@ ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
+bindkey '^_' fzf-history-widget
+
 ###############################################################################
 #                              Last things to do                              #
 ###############################################################################
 
-# stty stop undef # disable C-s to freeze terminal
-# Nobody need flow control anymore. Troublesome feature.
+eval "$(zoxide init zsh)" # z / zi[nteractive] (using fzf if u have it)
+stty stop undef # disable C-s to freeze terminal
+# Nobody needs flow control anymore. Troublesome feature.
 #stty -ixon
 setopt noflowcontrol
-eval "$(zoxide init zsh)"
 
 # --- Sourcing ---
 . ~/.config/zsh/aliases.zsh
@@ -82,14 +84,12 @@ eval "$(zoxide init zsh)"
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
-# XXX: todo
-# if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
-#   # init-nvm.sh contents with bash_completion excluded and nvm dir changed
-#   [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.config/nvm"
-#   source /usr/share/nvm/nvm.sh
-#   source /usr/share/nvm/install-nvm-exec
-# fi
-
+if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
+  # init-nvm.sh contents with bash_completion excluded and nvm dir changed
+  [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.config/nvm"
+  source /usr/share/nvm/nvm.sh
+  source /usr/share/nvm/install-nvm-exec
+fi
 
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
 # [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
