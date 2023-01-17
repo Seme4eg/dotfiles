@@ -22,3 +22,4 @@ hyprpaper.conf
 /.config/dconf/
 /.config/discord/
 /.config/nvm/
+/.config/zsh/plugins.zsh
