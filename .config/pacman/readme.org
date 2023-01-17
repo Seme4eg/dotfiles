@@ -10,7 +10,10 @@ it deleted all my preinstalled with artix hooks, that were in
 hooks from previous one.
 
 #+NAME: in pacman.conf
-: HookDir     = /home/essence/.config/pacman/hooks/
+: HookDir     = $HOME/.config/pacman/hooks/
+
+*NOTE*: don't forget to check username and path in those hooks in case you changed
+any of those
 
 -----
 
