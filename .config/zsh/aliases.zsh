@@ -38,4 +38,5 @@ alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 # XXX: remove it and make system to automount
 # alias mount="sudo mount -t ntfs3" # /dev/sda1 ~/media/usb
-alias hypru="cd ~/utils/Hyprland && git pull origin main && sudo make install"
+alias check1="sudo lshw -C display"
+alias check2="lspci -vnnn | perl -lne 'print if /^\d+\:.+(\[\S+\:\S+\])/' | grep VGA"
