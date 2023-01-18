@@ -1,0 +1,10 @@
+[Install]
+WantedBy=hyprland-session.target
+
+[Service]
+ExecStart=/usr/bin/waybar
+Type=simple
+
+[Unit]
+Description=Idle manager for Wayland
+PartOf=hyprland-session.target
