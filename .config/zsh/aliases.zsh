@@ -40,3 +40,17 @@ alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 # alias mount="sudo mount -t ntfs3" # /dev/sda1 ~/media/usb
 alias check1="sudo lshw -C display"
 alias check2="lspci -vnnn | perl -lne 'print if /^\d+\:.+(\[\S+\:\S+\])/' | grep VGA"
+
+# soystemd
+alias sc="systemctl"
+alias scue="sc --user enable"
+alias scus="sc --user start"
+# there is also 'reload' but it aint applicable to all services
+alias scur="sc --user restart"
+alias scudr="sc --user daemon-reload"
+alias scuS="sc --user status"
+function reloadUUnit() { scudr && scur $1 && scuS $1 }
+
+alias scl="sc list-units"
+alias sclt="scl --type=target"
+alias scf="sc --failed"
