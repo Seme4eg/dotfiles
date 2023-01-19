@@ -24,3 +24,5 @@ hyprpaper.conf
 /.config/nvm/
 /.config/zsh/plugins.zsh
 /.config/systemd/user/hyprland-session.target.wants/
+/.config/pavucontrol.ini
+/.config/cef_user_data/
