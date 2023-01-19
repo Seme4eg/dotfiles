@@ -12,8 +12,9 @@
 
     "modules-center": ["custom/clock"],
     "modules-right": [
-        "hyprland/language",
         "tray",
+        "network",
+        "pulseaudio",
         "idle_inhibitor",
         "cpu",
         // "custom/gpu-usage",
@@ -42,6 +43,8 @@
         "icon-size": 17,
         "format": "{icon}"
     },
+    // TODO: setup waybars idle inhibitor or a shortcut to on/off it so the screen
+    // doesn't turn off when im watching something
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {"activated": "", "deactivated": ""}
@@ -59,6 +62,29 @@
         "format-en": "en",
         "format-ru": "ru",
         "keyboard-name": "at-translated-set-2-keyboard"
+    },
+    "network": {
+        // "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "{signalStrength}% ",
+        // https://fontawesome.com/icons/wifi-slash?s=regular&f=classic
+        "format-disconnected": "", //An empty format will hide the module.
+        "max-length": 50
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
     },
     "cpu": {
         "format": "{usage}% ",
