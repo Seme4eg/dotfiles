@@ -71,7 +71,7 @@ bind ;R composite hint -pipe a href | jsb -p tri.excmds.tabopen("about:reader?ur
 bind / fillcmdline find
 bind ? fillcmdline find -?
 bind n findnext 1
-bind N findnext -1
+bind N findnext 1 --reverse
 bind ,<Space> nohlsearch
 
 unbind --mode=normal <S-Insert> <AC-Escape> <AC-`> <S-Escape> # escapes
