@@ -1,0 +1,10 @@
+[Unit]
+Description=screen temperature
+PartOf=graphical-session.target
+
+[Install]
+WantedBy=hyprland-session.target
+
+[Service]
+ExecStart=/usr/bin/wlsunset -l 55.7 -L 37.6 -t 3000
+Type=simple

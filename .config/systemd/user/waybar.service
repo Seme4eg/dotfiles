@@ -1,10 +1,14 @@
+[Unit]
+Description=Idle manager for Wayland
+After=graphical-session.target
+PartOf=graphical-session.target
+X-Restart-Triggers=$HOME/.config/waybar/config $HOME/.config/waybar/style.css
+StartLimitBurts=5
+
 [Install]
 WantedBy=hyprland-session.target
 
 [Service]
 ExecStart=/usr/bin/waybar
-Type=simple
-
-[Unit]
-Description=Idle manager for Wayland
-PartOf=hyprland-session.target
+Restart=on-failure
+RestartSec=5s

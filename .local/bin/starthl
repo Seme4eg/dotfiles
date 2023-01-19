@@ -20,7 +20,8 @@ export GDK_BACKEND="wayland,x11" # new
 #export WLR_DRM_DEVICES=/dev/dri/card0
 export WLR_NO_HARDWARE_CURSORS=1
 
-export $(dbus-launch --exit-with-session) # for telega notifications
+# need when no soystemd
+# export $(dbus-launch --exit-with-session) # for telega notifications
 
 if [[ -e /dev/dri/card1 ]]; then
   :
