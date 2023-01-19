@@ -274,10 +274,11 @@ pkglist.x86_64.txt.
   - ~grep <username> /etc/group~ will give you which groups user already is in
 + unmute audio channels in alsamixer and enable capture as well
 + install [[https://wiki.hyprland.org/Getting-Started/Master-Tutorial/][hyprland]] and all my deps for it:
-  - *pacman*: alacritty bemenu webcord grim slurp brillo swaylock swayidle mako
+  - *pacman*: alacritty grim slurp swaylock swayidle mako
     pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard
-    otf-font-awesome pacman-contrib
+    otf-font-awesome pacman-contrib qt5ct libva
   - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git brillo hyprpaper-git
+    webcord bemenu-git brillo hyprland-git
   - setup *nvidia*:
     - follow hyprland wiki, do not install 'vaapi' driver, but do everything
       else
