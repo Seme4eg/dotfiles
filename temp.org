@@ -1,0 +1,84 @@
+#+title: Temp
+
+on pacstrap step there is an instruction 'userspace utilities for the management
+of file systems that will be used on the system' which links to file systems
+article, where i didn't find much info, but might've missed smth
+
+[[https://wiki.archlinux.org/title/systemd][systemd commands]]
+
+- follow official arch installation guide
+- on pacstrap step i did: ~pacstrap -K /mnt base base-devel linux linux-firmware
+  linux-headers sof-firmware networkmanager vim man-db man-pages texinfo~
+- ...
+- bootloader step:
+  - pacman -S grub efibootmgr (*omitted* dosfstools that i have listed in
+    arch_installation)
+  - install =amd-ucode= or =intel-ucode= And rerun ~grub-mkconfig -o
+    /boot/grub/grub.cfg~
+- *after reboot*:
+  - systemctl enable --now NetworkManager -> nmtui
+  - pacman -S zsh fzf wget zoxide
+  - useradd -m -G wheel -s /bin/zsh earthian
+  - passwd earthian
+  - (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
+    something won't work go to 'udev' page from this link
+  - uncomment Color, VerbosePkgLists & ParallelDownloads in /etc/pacman.conf
+  - ~EDITOR=vim visudo~ -> uncomment wheel
+  - pacman -S git openssh, [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]], clone dotfiles, install and run
+    ~stow .~
+
+** Todos
+- [ ] setup pacman hooks
+- [ ] setup bluetooth some day
+** removed apps
+- *pacman*:
+  - -acpi
+  - -acpid
+  - -acpid-openrc
+  - -android-tools
+  - -autofs-openrc
+  - -chrono-date
+  - -chrony
+  - -chrony-openrc
+  - -fmt
+  - -meson
+  - -mpd
+  - -mpd-openrc
+  - -mpv
+  - -msmtp
+  - -mtools
+  - -neofetch
+  - -openrc
+  - -openssh-openrc
+  - -openvpn
+  - -playerctl
+  - -scdoc
+  - -seatd
+  - -spdlog
+  - -syslog-ng-openrc
+  - -timeshift
+  - -vulkan-headers
+  - -vulkan-intel
+  - -vulkan-validation-layers
+- *foreign*:
+
+-bemenu-git
+-checkupdates+aur
+-discord_arch_electron_wayland
+-dunst-git
+-electron21-bin
+-emacs-gcc-wayland-devel-bin
+-grim-git
+-mako-git
+-mu
+-noto-color-emoji-fontconfig
+-nvm-git
+-python-pyperclip-git
+-qutebrowser-git
+-slurp-git
+-swayidle-git
+-swaylock-git
+-ttf-all-the-icons
+-webcord-git
+-wev-git
+-xkblayout-state-git
