@@ -1,6 +1,9 @@
 <configuration version="37">
     <folder id="9a4kl-cxrzf" label="mem-arch" path="/home/earthian/mem-arch" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -45,6 +48,9 @@
     </folder>
     <folder id="hkjpb-mmqwj" label="Books" path="/home/earthian/Books" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -89,6 +95,9 @@
     </folder>
     <folder id="kur5v-mxacx" label="Apps" path="/home/earthian/apps" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -133,6 +142,9 @@
     </folder>
     <folder id="oqlpo-zmwq9" label="Audiobooks" path="/home/earthian/Audiobooks" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -177,6 +189,9 @@
     </folder>
     <folder id="r7asu-23rtr" label="Documents" path="/home/earthian/Documents" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -221,6 +236,9 @@
     </folder>
     <folder id="th5g5-5t9vc" label="books" path="/home/earthian/git/archive/" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -265,6 +283,9 @@
     </folder>
     <folder id="uvxlq-9vwiq" label="tea" path="/home/earthian/git/tea/" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -309,6 +330,9 @@
     </folder>
     <folder id="xmx67-zj7wg" label="Pictures" path="/home/earthian/Pictures" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -353,6 +377,9 @@
     </folder>
     <folder id="xxwgz-nsgrz" label="Music" path="/home/earthian/Music" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
@@ -395,6 +422,16 @@
             <maxTotalSize>4096</maxTotalSize>
         </xattrFilter>
     </folder>
+    <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" name="etherr" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
+        <address>dynamic</address>
+        <paused>false</paused>
+        <autoAcceptFolders>false</autoAcceptFolders>
+        <maxSendKbps>0</maxSendKbps>
+        <maxRecvKbps>0</maxRecvKbps>
+        <maxRequestKiB>0</maxRequestKiB>
+        <untrusted>false</untrusted>
+        <remoteGUIPort>0</remoteGUIPort>
+    </device>
     <device id="CQVSFCO-HDHKFFU-YX7MCCM-OCCENW2-NOGMEVB-DF4RTJE-4R4U42G-DDJYVQX" name="chost" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
         <address>dynamic</address>
         <paused>false</paused>
@@ -473,6 +510,9 @@
     <defaults>
         <folder id="" label="" path="~" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
             <filesystemType>basic</filesystemType>
+            <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+                <encryptionPassword></encryptionPassword>
+            </device>
             <device id="O7HMHJN-OXVQICO-FX4XK7F-6BOFD6Q-76WD5SN-RNMUPLU-T7H73CV-52CXOAI" introducedBy="">
                 <encryptionPassword></encryptionPassword>
             </device>
