@@ -90,6 +90,8 @@ swaylock
 syncthing
 texinfo
 tldr
+udiskie
+udisks2
 unzip
 vim
 webkit2gtk
