@@ -40,7 +40,6 @@ mako
 man-db
 man-pages
 neofetch
-network-manager-applet
 networkmanager
 nvidia
 openssh
