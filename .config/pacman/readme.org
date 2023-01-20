@@ -12,8 +12,11 @@ hooks from previous one.
 #+NAME: in pacman.conf
 : HookDir     = $HOME/.config/pacman/hooks/
 
-*NOTE*: don't forget to check username and path in those hooks in case you changed
-any of those
+*NOTEs*:
+- '$HOME' might not be known to pacman so you might need to explicitly state
+  your user home dir
+- don't forget to check username and path in those hooks in case you changed any
+  of those
 
 -----
 
