@@ -41,7 +41,7 @@ alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 alias check1="sudo lshw -C display"
 alias check2="lspci -vnnn | perl -lne 'print if /^\d+\:.+(\[\S+\:\S+\])/' | grep VGA"
 
-# soystemd
+# soystemd --user
 alias sc="systemctl"
 alias scue="sc --user enable"
 alias scus="sc --user start"
@@ -54,3 +54,11 @@ function reloadUUnit() { scudr && scur $1 && scuS $1 }
 alias scl="sc list-units"
 alias sclt="scl --type=target"
 alias scf="sc --failed"
+
+# --- soystemd sudo ---
+alias ssc="sudo systemctl"
+alias ssce="ssc enable"
+alias sscr="ssc restart"
+alias sscd="ssc disable"
+alias sscs="ssc start"
+alias sscS="ssc status"
