@@ -1,0 +1,9 @@
+[Unit]
+Description=Hyrpland wallpaper utility
+PartOf=graphical-session.target
+
+[Install]
+WantedBy=hyprland-session.target
+
+[Service]
+ExecStart=/usr/bin/hyprpaper
