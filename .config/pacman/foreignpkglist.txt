@@ -5,7 +5,7 @@ hyprpaper-git
 nvm-git
 openvpn-update-systemd-resolved
 otf-font-awesome-5
-waybar-git
+waybar-hyprland-git
 webcord-git
 wlsunset-git
 xdg-desktop-portal-hyprland-git
