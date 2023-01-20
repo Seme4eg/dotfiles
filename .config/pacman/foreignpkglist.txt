@@ -1,11 +1,12 @@
 brillo
-emacs-pgtk-native-comp-git
+emacs-gcc-wayland-devel-bin
 hyprland-git
 hyprpaper-git
-nvm
-pm-utils
+nvm-git
+openvpn-update-systemd-resolved
+otf-font-awesome-5
 waybar-git
-webcord-bin
+webcord-git
 wlsunset-git
 xdg-desktop-portal-hyprland-git
 yay
