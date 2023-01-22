@@ -41,6 +41,7 @@ man-db
 man-pages
 neofetch
 networkmanager
+noto-fonts-emoji
 nvidia
 openssh
 openvpn
