@@ -34,6 +34,8 @@ alias ycc="yay -Sc" # Clear Cache
 
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 
+alias startvm="cd ~/utils/terminal-app-vm && qemu-system-x86_64 -net nic -net user,smb=/home/earthian/git/terminal-app -cpu host -enable-kvm -m 4096 -smp 4 -drive file=terminal-vm.qcow2,format=qcow2"
+
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 # XXX: remove it and make system to automount
@@ -44,6 +46,7 @@ alias check2="lspci -vnnn | perl -lne 'print if /^\d+\:.+(\[\S+\:\S+\])/' | grep
 # soystemd --user
 alias sc="systemctl"
 alias scue="sc --user enable"
+alias scud="sc --user disable"
 alias scus="sc --user start"
 # there is also 'reload' but it aint applicable to all services
 alias scur="sc --user restart"
@@ -58,7 +61,15 @@ alias scf="sc --failed"
 # --- soystemd sudo ---
 alias ssc="sudo systemctl"
 alias ssce="ssc enable"
-alias sscr="ssc restart"
 alias sscd="ssc disable"
 alias sscs="ssc start"
+alias sscr="ssc restart"
 alias sscS="ssc status"
+
+# --- openvpn service aliases ---
+alias vpns="ssc start openvpn-client@client.service"
+alias vpnstop="ssc stop openvpn-client@client.service"
+alias vpnr="ssc restart openvpn-client@client.service"
+alias vpnen="ssc enable --now openvpn-client@client.service"
+alias vpnd="ssc disable openvpn-client@client.service"
+alias vpnS="ssc status openvpn-client@client.service"
