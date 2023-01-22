@@ -6,7 +6,7 @@ dbus-update-activation-environment --systemd HOME DISPLAY WAYLAND_DISPLAY HYPRLA
 systemctl --user start hyprland-session.target
 
 /usr/lib/polkit-kde-authentication-agent-1 &
-# /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
+/usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
 
 firefox &
 webcord --enable-features=UseOzonePlatform --ozone-platform=wayland &
