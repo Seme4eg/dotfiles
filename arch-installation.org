@@ -315,7 +315,13 @@ Then proceed to mu4e documentation of doom emacs.
 ** learning todos
 Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 ** Todos
-- wlsunset 100% 1 core load
+- update tray thingie
+- configure mako
+- write a script that will reduce boring typing when in stalling fresh system
+- ? why i don't see all messages in tmp hypr logs?
+
+** s6 notes
+- https://gitea.artixlinux.org/artix/s6-services
 - learn s6, by starting from [[https://skarnet.org/software/s6/why.html][this]] and [[https://forums.gentoo.org/viewtopic-t-1105854.html][this]] article; write service that will
   'updatedb' every hour
   - move some things to user services from [[file:.config/hypr/autorun.sh][autorun]]
@@ -323,10 +329,6 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
   - [[https://github.com/Seme4eg/nixos-dots/blob/b67091196c8f8bd19d4e1210015ba8667e0f5316/hosts/nohomehost/default.nix#L53][nm applet]]
   - [[https://wiki.archlinux.org/title/OpenRC#Usage][converting systemd commands to openrc ones]]
   - enable some essential [[https://wiki.archlinux.org/title/OpenRC#Services][services]] in openrc?
-- reread hyprland wiki, see what's new
-- update tray thingie
-- configure mako
-- read through my nixos dots ..
 - *suspend / hybernation*:
   - /etc/elogind/logind.conf <- tried
   - acpid + acpid-s6 + enabling its service doesn't help (+ logind handles
@@ -339,13 +341,3 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
   - *!* [[https://forum.artixlinux.org/index.php/topic,1639.msg11220.html#msg11220][artix linux forum thread]] <- maybe here is a trace
   - [[https://forum.artixlinux.org/index.php/topic,3599.msg23379.html#msg23379][this thread]] describes my problem, except i can't `cat mem >|
     /sys/power/state` even as sudo, permission denied
-- seup pipewire and wireplumber to work.............
-- swaylock and sleep do not stop cooling system, setup hybernation???
-- try to rewrite hyprpaper to just stop and reenable service instead of shit
-  that's in there rn
-- setup [[https://askubuntu.com/questions/37767/how-to-access-a-usb-flash-drive-from-the-terminal#37775][automount]] usbs?
-- write a script that will reduce boring typing when in stalling fresh system
-- why i don't see all messages in tmp hypr logs?
-- setup pacman-hooks
-** notes
-https://gitea.artixlinux.org/artix/s6-services
