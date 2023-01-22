@@ -1,0 +1,154 @@
+#+title: Arch Installation
+
+** Installation & post-install configuring
+- follow official arch installation guide
+- Connect to the internet step
+  - activate wifi adapter - ~ip link set <adapter_name (wlan0?)> up~
+  - if it's blocked - ~rfkill unblock wifi~
+  - repeat 1st step
+  - connmanctl -> scan wifi -> services
+  - register the agent to handle user requests - ~agent on~
+  - connect wifi_<tab>_<first3numbers><tab>
+- disk partitioning -> see the child header below
+- on pacstrap step i did: ~pacstrap -K /mnt base base-devel linux linux-firmware
+  linux-headers sof-firmware networkmanager vim man-db man-pages texinfo~
+  - on pacstrap step there is an instruction 'userspace utilities for the
+    management of file systems that will be used on the system' which links to
+    file systems article, where i didn't find much info, but might've missed
+    smth
+- ...
+- bootloader step:
+  - pacman -S grub efibootmgr
+  - install =amd-ucode= or =intel-ucode= And rerun ~grub-mkconfig -o
+    /boot/grub/grub.cfg~
+- *after reboot*:
+  - systemctl enable --now NetworkManager -> nmtui
+  - pacman -S zsh fzf wget zoxide
+  - useradd -m -G wheel -s /bin/zsh earthian
+  - passwd earthian
+  - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
+  - (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
+    something won't work go to 'udev' page from this link
+  - ~EDITOR=vim visudo~ -> uncomment wheel
+  - uncomment Color, VerbosePkgLists & ParallelDownloads in /etc/pacman.conf
+  - pacman -S git openssh, [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]], clone dotfiles, install and run
+    ~mkdir ~/.local && stow .~ cuz we don't wana steam and other apps flood our
+    local/share folder so emacs project caching rips
+  - [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
+  - *sound bs*
+    - unmute audio channels in alsamixer and enable capture as well
+    - create =.asoundrc= to change default sound card
+    - put ~options snd-sof-intel-hda-common hda_model=alc298-dell-aio~ in
+      =/etc/modprobe.d/alsa-base.conf=
+    - but still webcord is dumb and better install pavucontrol and see in record
+      and input tabs what you can do to make webcord use external mic
+
+*** Partition the disks
+- check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
+  loop or airoot may be ignored.)
+
+**** Using cfdisk
+- cfdisk /dev/sd<something>?
+- delete all partitions
+- write -> yes
+- new -> 512M -> type -> EFI system
+- choose free space -> new -> <enter> -> type remains linux filesystem
+- write -> yes -> quit
+
+**** Using fdisk
+- ~p~ - list all partitions that u currently have
+- ~g~ - create new gpt-partition table (or ~d~ to delete particular ones)
+- ~n[ew]~ -> 1 (default) -> 2048 (default) -> +1G (efi partition) (tho wiki
+  recommends +512M)
+- ~n~ -> 3x enter (root partition)
+- ~t[ype]~ -> 1st partition (efi one) -> l[ist] to get all available types ->
+  choose EFI system
+- set root partition type to /Linux filesystem/
+- ~p~ -> check which partitions you ended up with
+- ~w[rite]~ if everything is as u want
+
+*** KILL hyprland
+create =/etc/systemd/system/hyprland-session.target= with contents:
+#+begin_src
+[Unit]
+Description=Hyprland Compositor Session;
+Documentation=man:systemd.special(7);
+BindsTo=graphical-session.target;
+Wants=graphical-session-pre.target;
+After=graphical-session-pre.target;
+#+end_src
+
+*Nvidia* setup: *DO NOT FOLLOW HYPRLAND WIKI*, first try to install just normal,
+proprietary =nvidia= package, do not add anything in grub conf or mkinitcpio, JUST
+TRY TO LAUNCH IT WITH NVIDIA (using ~starthl~ ofc). If it runs, then enable drm in
+grub conf and you're done.
+
+there are 2 checks in aliases, 1st one should show 2 vda things, on your gpu the
+'driver' field must show NOT nouveau, if it does - check both modprobes if those
+are blocking nouveau and if they don't - add block rule and regenerate modprobe.
+
+- *dependencies*:
+ - *pacman*: alacritty grim slurp swaylock swayidle mako
+   pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard
+   otf-font-awesome pacman-contrib qt5ct libva
+ - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git brillo hyprpaper-git
+   webcord bemenu-git brillo hyprland-git waybar-hyprland-git
+*** emacs
+deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
+(for stickers and symbols to work)
+
+**** TODO mu4e nitbits
+First i needed to import my gpg keys (gpg2) from old machine, the process of
+which can be found in the end of this [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][article]].
+
+The secret.gpg file i copied via ssh using [[https://www.freecodecamp.org/news/scp-linux-command-example-how-to-ssh-file-transfer-from-remote-to-local/][this]] article
+
+Then [[https://stackoverflow.com/questions/33361068/gnupg-there-is-no-assurance-this-key-belongs-to-the-named-user][set trust level]].
+
+Then proceed to mu4e documentation of doom emacs.
+
+
+** Arch notes / useful links
+[[https://wiki.archlinux.org/title/systemd][systemd commands]]
+
+** learning todos
+Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
+
+** Todos
+- update tray thingie
+- configure mako
+- write a script that will reduce boring typing when in stalling fresh system
+- ? why i don't see all messages in tmp hypr logs?
+- setup bluetooth some day
+- setup pager to read man pages..
+- waybar service doesn't restart on selected files change, tried all path variants
+- migrate your dots to [[https://github.com/linuxpiper/ansible-arch-setup][ansible]]; juicy yamls and no nixos https://www.google.com/search?q=ansible+arch#fpstate=ive&vld=cid:06bb073a,vid:H0cpE1Q_9N0
+- [[https://github.com/Seme4eg/nixos-dots/blob/b67091196c8f8bd19d4e1210015ba8667e0f5316/hosts/nohomehost/default.nix#L34][plocate hourly]]
+- write a script that cheks my current location every day and updates wlsunset
+  systemd service *AND* systemtime if location differs ?much? from the one that
+  was yesterday.
+** TODO removed apps
+- *pacman*:
+  - android-tools
+  - autofs
+  - fmt
+  - mpd
+  - mpv
+  - msmtp
+  - mtools
+  - playerctl
+  - scdoc
+  - seatd
+  - spdlog
+  - timeshift
+- *foreign*:
+  - checkupdates+aur
+  - discord_arch_electron_wayland
+  - grim-git
+  - mako-git
+  - mu
+  - slurp-git
+  - swayidle-git
+  - swaylock-git
+  - wev-git
+  - xkblayout-state-git

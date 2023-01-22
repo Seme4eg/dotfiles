@@ -1,0 +1,78 @@
+#+title: Artix (s6)
+
+Steps with no comments do not differ from arch setup
+
+Username and pass: artix artix
+
+** *networking*
+rfkill unblock wifi
+ip link set wlan0 up
+
+[[https://youtu.be/DPLnBPM4DhI?t=719][This vid]] info:
+- Make sure we have internet connection: ~ip addr show~ (or just ~ip a~). There
+  ya'll c your wireless connection as =wlan0= or something.
+- To connect to wi-fi type ~iwctl~, then if u don't know your wireless device name
+  run ~device list~.
+- Find the wi-fi - ~station {wireless_device_name} scan~, which won't show
+  anything, but will initiate the scan.
+- Get networks - ~station {wireless_device_name} get-networks~
+- connect - ~station {device_name} connect {wifiname}~. After that your ~ip a~
+  should give wlan ip.
+
+** update system clock
+** partition disk, format partitions, mount partitions
+** basestrap /mnt base base-devel s6 elogind-s6 linux linux-headers linux-firmware vim
+** fstabgen -U /mnt >> /mnt/etc/fstab
+** artix-chroot /mnt
+** Set the time zone & localization
+** passwd
+** setup bootloader
+** *reboot*
+** network
+/might be misleading, better check wiki/
+
+- s6-rc-bundle add default NetworkManager
+- ~s6-rc -u change NetworkManager~
+- ~sudo nmtui~
+- ~touch /etc/s6/adminsv/default/contents.d/NetworkManager~
+** hwclock --systohc
+** *Enable arch repos*
+- [[https://wiki.artixlinux.org/Main/Repositories#Arch_repositories][arch repos]]
+- run ~pacman-key --populate archlinux~ (which should b suggested to run after
+  package installation).
+- edit arch mirrorlist -> vim ~/etc/pacman.d/mirrorlist-arch -> uncomment your
+  country mirrors
+** audio
+- _audio_: alsa-utils alsa-utils-s6
+- enable alsa service
+** all the rest of postinstallation
+=openssh= & =openssh-s6= - to generage ssh for github
+
+... and also gives the ability to manage installation remotely. If you do enable
+that figure out how to make it start when your computer starts (with systemd u
+jus need to run ~systemctl enable sshd~, but i ain't usin it). Next steps r
+optional, but in case you want to connect to your machine via ssh from another
+one: ~rc-update add sshd default~
+
+
+** Notes
+- ~grep <username> /etc/group~ will give you which groups user already is in
+- https://gitea.artixlinux.org/artix/s6-services
+
+** s6 problems
+- *suspend / hybernation*:
+- /etc/elogind/logind.conf <- tried
+- acpid + acpid-s6 + enabling its service doesn't help (+ logind handles
+    hardware switches like lid events OOTB)
+  - [ ] [[https://unix.stackexchange.com/questions/654707/slackware-and-elogind-how-to-enable-suspend-and-hibernate-for-power-user][haven't tried]]
+  - arch wiki power management [[https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#High_level_interfaces][article]]
+  - adding [[https://github.com/elogind/elogind/issues/140#issuecomment-710511939][this]] script didn't help as well, first added separate file in
+    system-sleep dir, than replaced original 'nvidia' file contents.. didn't
+    help
+  - *!* [[https://forum.artixlinux.org/index.php/topic,1639.msg11220.html#msg11220][artix linux forum thread]] <- maybe here is a trace
+  - [[https://forum.artixlinux.org/index.php/topic,3599.msg23379.html#msg23379][this thread]] describes my problem, except i can't `cat mem >|
+    /sys/power/state` even as sudo, permission denied
+** Todos
+- learn s6, by starting from [[https://skarnet.org/software/s6/why.html][this]] and [[https://forums.gentoo.org/viewtopic-t-1105854.html][this]] article; write service that will
+  'updatedb' every hour
+  - move some things to user services from [[file:.config/hypr/autorun.sh][autorun]]
