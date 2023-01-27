@@ -55,6 +55,7 @@ alias scuS="sc --user status"
 function reloadUUnit() { scudr && scur $1 && scuS $1 }
 
 alias scl="sc list-units"
+alias sclt="sc list-timers"
 alias sclt="scl --type=target"
 alias scf="sc --failed"
 

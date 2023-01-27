@@ -13,3 +13,6 @@ zdharma-continuum/fast-syntax-highlighting
 junegunn/fzf path:shell
 zsh-users/zsh-autosuggestions
 romkatv/powerlevel10k
+
+# --- not installed ---
+# zsh-users/zsh-completions
