@@ -12,6 +12,7 @@
 
     "modules-center": ["custom/clock"],
     "modules-right": [
+        "hyprland/language",
         "tray",
         "network",
         "pulseaudio",
@@ -61,7 +62,6 @@
         "format": "{} ⌨",
         "format-en": "en",
         "format-ru": "ru",
-        "keyboard-name": "at-translated-set-2-keyboard"
     },
     "network": {
         // "format-wifi": "{essid} ({signalStrength}%) ",
