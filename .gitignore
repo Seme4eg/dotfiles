@@ -25,3 +25,4 @@ node_modules/
 /.config/systemd/user/hyprland-session.target.wants/
 /.config/pavucontrol.ini
 /.config/cef_user_data/
+/.config/neofetch/
