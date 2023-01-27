@@ -1,0 +1,10 @@
+[Unit]
+Description=waybar live udpater
+After=waybar.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user restart waybar.service
+
+[Install]
+WantedBy=hyprland-session.target

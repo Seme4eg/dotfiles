@@ -1,0 +1,8 @@
+
+# YES, you need to enable this path service as well !
+
+[Path]
+PathModified=/home/earthian/.config/waybar
+
+[Install]
+WantedBy=hyprland-session.target
