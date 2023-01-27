@@ -1,14 +1,6 @@
 [user]
-    name = sad
+    name = earthian
     email = d3v1ant@mail.ru
-[alias]
-    co = checkout
-    br = branch
-    rm = rebase master # check
-    com = checkout master # check
-    ss = status # check
-    al = add -all # check
-    cm = commit -m # check
 [core]
 	excludesfile = ~/.gitignore
 [github]
