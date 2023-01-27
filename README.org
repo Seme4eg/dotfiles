@@ -67,7 +67,7 @@
 - ~p~ -> check which partitions you ended up with
 - ~w[rite]~ if everything is as u want
 
-*** KILL hyprland
+*** hyprland
 create =/etc/systemd/system/hyprland-session.target= with contents:
 #+begin_src
 [Unit]
@@ -93,6 +93,7 @@ are blocking nouveau and if they don't - add block rule and regenerate modprobe.
    otf-font-awesome pacman-contrib qt5ct libva
  - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git brillo hyprpaper-git
    webcord bemenu-git brillo hyprland-git waybar-hyprland-git
+
 *** emacs
 deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
 (for stickers and symbols to work)

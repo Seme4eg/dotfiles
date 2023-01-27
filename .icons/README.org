@@ -1,0 +1,21 @@
+#+title: Cursor theme
+
+Check path of icon archives (if it's still same as in [[file:unpack-all.sh]]) and
+run it. To make custom cursor theme work and not revert back to default
+/usr/share/icons/Adwaita i removed the latter.
+
+To *change* cursor theme you need to change it's name in 3 places:
+- [[file:~/dotfiles/.config/hypr/autorun.sh]]
+- [[file:default/index.theme]]
+- [[file:~/dotfiles/.config/gtk-3.0/settings.ini]]
+
+*NOTE*: cursor theme is name of its folder in =~/.icons=
+
+Already *installed* cursor themes can be viewed with the command:
+
+: find /usr/share/icons ~/.local/share/icons ~/.icons -type d -name "cursors"
+
+No lxappearance needed, i just need cursor theme..
+
+Sources, but those ain't much needed with the explanation above: [[https://wiki.hyprland.org/FAQ/#how-do-i-change-me-mouse-cursor][hyprland wiki
+cursor faq]], [[https://wiki.archlinux.org/title/Cursor_themes#Installation][arch wiki cursor themes installation]].
