@@ -121,31 +121,27 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
 
 ** Todos
 - setup & *document* mu4e and isync isntallation
-- update tray thingie
+- update tray thingie to *EWW*; take a look at hyprland discord server, ya'll find
+  a lot there
 - configure mako
-- mpv.. and resolve all issues in my repo
 - gamescope with wf no workie
-- change cursor theme (hyprland?)
-- mpv and ur scripts..
+- mpv and resolve all issues in my repo
 - idle inhibitor - make it stop and start systemd swayidle service
 - maybe find out why fontawesome 5 icons in my waybar aren't working?
-- *EWW* <- take a look at hyprland discord server, ya'll find a lot there
 - somehow make amixer switch default mic on headphoned connect / disconnect
-- https://wiki.archlinux.org/title/Dotfiles#User_repositories
-- [zsh] [[https://youtu.be/KBh8lM3jeeE?t=451][setup]] fortune with quotes i have
-- [zsh] setup MANPAGER (zshrc) to view man pages in desired editor (~nvim +Man!~
-  for example)
 - write a script that will reduce boring typing when installing fresh system
-- ? why i don't see all messages in tmp hypr logs?
 - setup bluetooth some day
-- waybar service doesn't restart on selected files change, tried all path variants
 - migrate your dots to [[https://github.com/linuxpiper/ansible-arch-setup][ansible]]; juicy yamls and no nixos https://www.google.com/search?q=ansible+arch#fpstate=ive&vld=cid:06bb073a,vid:H0cpE1Q_9N0
-- [[https://github.com/Seme4eg/nixos-dots/blob/b67091196c8f8bd19d4e1210015ba8667e0f5316/hosts/nohomehost/default.nix#L34][plocate hourly]]
 - write a script that cheks my current location every day and updates wlsunset
   systemd service *AND* systemtime if location differs ?much? from the one that
   was yesterday.
 - write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
   in systray.
+
+- https://wiki.archlinux.org/title/Dotfiles#User_repositories
+
+- [?] setup emacsclient as $PAGER
+
 ** TODO removed apps
 - *pacman*:
   - android-tools
