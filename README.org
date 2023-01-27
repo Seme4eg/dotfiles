@@ -111,6 +111,10 @@ Then proceed to mu4e documentation of doom emacs.
 ** Arch notes / useful links
 [[https://wiki.archlinux.org/title/systemd][systemd commands]]
 
+*Enabled systemd services*:
+- systemd-timesyncd.service
+- plocate-updatedb.timer
+
 ** learning todos
 Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 
