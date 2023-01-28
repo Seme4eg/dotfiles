@@ -1,3 +1,4 @@
+binder_linux-dkms
 brillo
 emacs-gcc-wayland-devel-bin
 hyprland-git
@@ -5,7 +6,9 @@ hyprpaper-git
 nvm-git
 openvpn-update-systemd-resolved
 otf-font-awesome-5
+python-pyclip
 waybar-hyprland-git
+waydroid-git
 webcord-git
 wlsunset-git
 xdg-desktop-portal-hyprland-git
