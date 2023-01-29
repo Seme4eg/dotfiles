@@ -47,6 +47,7 @@ openssh
 openvpn
 pacman
 pacman-contrib
+pass
 patch
 pavucontrol
 pkgconf

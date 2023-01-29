@@ -15,6 +15,8 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
+export PASSWORD_STORE_DIR=$XDG_DATA_HOME/password-store
+
 # zsh-vi-mode
 # https://github.com/jeffreytse/zsh-vi-mode/issues/24#issuecomment-873029329
 ZVM_INIT_MODE=sourcing # <- needed BEFORE zvm gets sourced

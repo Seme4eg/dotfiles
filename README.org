@@ -108,6 +108,18 @@ Then [[https://stackoverflow.com/questions/33361068/gnupg-there-is-no-assurance-
 
 Then proceed to mu4e documentation of doom emacs.
 
+*** pass
+- copy secret2.gpg from wherever you have it stored and run ~gpg --import
+  secret2.gpg~
+- install pass and it should work right away.
+- for browser extension [[https://github.com/passff/passff#installation][PassFF]] install its [[https://github.com/passff/passff-host][backend]] and in [[file:~/.mozilla/native-messaging-hosts/passff.py][passff.py]] script file
+  add to COMMAND_ENV ~"PASSWORD_STORE_DIR":
+  "/home/earthian/.local/share/password-store"~. Things should work now
+- emacs doesn't know about =$PASSWORD_STORE_DIR= env var so you can either move it
+  from XDG_DATA_HOME dir to ~/ directory and omit the previous step with editing
+  passff.py file and delete the env var so everything is stock or just copy
+  =password-store= dir to =~/.password-store= and emacs will b fine.. (don't forget
+  to rename tho first)
 
 ** Arch notes / useful links
 [[https://wiki.archlinux.org/title/systemd][systemd commands]]
