@@ -1,0 +1,12 @@
+[Unit]
+Description=mako notifications tester
+After=waybar.service
+
+[Service]
+Type=oneshot
+# needed to create that script cuz /usr/bin/makoctl reload wasn't working
+# and was preventing the notification to appear with no logs
+ExecStart=/home/earthian/.config/mako/reload.sh
+
+[Install]
+WantedBy=hyprland-session.target

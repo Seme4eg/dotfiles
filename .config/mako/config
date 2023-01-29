@@ -1,28 +1,54 @@
-# defaults
+# man 5 mako
+# man makoctl (to control mako during runtime)
 
-sort=-time
-layer=overlay
-background-color=#2e3440
-width=500
-height=170
+# --- global options ---
+# max-history=5 # default
+# sort=-time # default
+
+# --- style options ---
+font=monospace 11 # font, in Pango format TODO
+
+# TODO colors with some color compositor or setup a python script to read my
+# main wallpaper colors and apply them to thos config
+background-color=#33333389
+text-color=#eeeeee
+width=470
+height=150
+# outer-margin=0,0
+margin=0,11
+padding=8,10
 border-size=1
-border-color=#88c0d0
-border-radius=13
-icons=0
-max-icon-size=64
+border-color=#999999
+border-radius=10
+# progress-color=over #ffffff
+icons=1
+max-icon-size=48
+icon-location=right
+# actions=1 # default
+
+# Default: <b>%s</b>\n%b    Default when grouped: (%g) <b>%s</b>\n%b
+# Also some grayscale color codes: https://uxplanet.org/designing-systematic-colors-b5d2605b15c
+format=<span color="#ffffff" size="13pt" line_height="1.4"><b>%a</b><span color="#888888" text_transform="lowercase"><i>   %s</i></span></span>\n<span color="#cccccc"><tt>%b</tt></span>
+
+# text-alignment=left|center|right
 default-timeout=3000
 ignore-timeout=0
-font=monospace 11
+# group-by=field[,fielf,...]
+# max-visible=5 # default
+layer=overlay
+# anchor=top-right # default
 
-[urgency=low]
-border-color=#cccccc
+# [urgency=low]
+# border-color=#cccccc
 
-[urgency=normal]
-border-color=#d08770
+# [urgency=normal]
+# border-color=#d08770
 
 [urgency=high]
-border-color=#bf616a
-default-timeout=0
+default-timeout=5000
+border-color=#ffffff
+background-color=#00000089
+text-color=#eeeeee
 
 [category=mpd]
 default-timeout=2000
