@@ -32,6 +32,12 @@ alias yu="yay -Syu"
 # -Scc is more agressive approach, read bout it before using in case u decide to
 alias ycc="yay -Sc" # Clear Cache
 
+# --- Utilities ---
+alias cat="bat"
+alias rm="rip -i" # https://github.com/nivekuil/rip
+alias cd="z" # zoxide
+alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
+
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 
 alias startvm="cd ~/utils/terminal-app-vm && qemu-system-x86_64 -net nic -net user,smb=/home/earthian/git/terminal-app -cpu host -enable-kvm -m 4096 -smp 4 -drive file=terminal-vm.qcow2,format=qcow2"
