@@ -28,6 +28,7 @@ icon-location=right
 
 # Default: <b>%s</b>\n%b    Default when grouped: (%g) <b>%s</b>\n%b
 # Also some grayscale color codes: https://uxplanet.org/designing-systematic-colors-b5d2605b15c
+# Also pango markup documentation: https://www.chordpro.org/chordpro/pango_markup/
 format=<span color="#ffffff" size="13pt" line_height="1.4"><b>%a</b><span color="#888888" text_transform="lowercase"><i>   %s</i></span></span>\n<span color="#cccccc"><tt>%b</tt></span>
 
 # text-alignment=left|center|right

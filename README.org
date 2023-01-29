@@ -143,6 +143,7 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
 - maybe find out why fontawesome 5 icons in my waybar aren't working?
 - somehow make amixer switch default mic on headphoned connect / disconnect
 - write a script that will reduce boring typing when installing fresh system
+- setup [[https://wiki.hyprland.org/Configuring/Binds/#submaps][submaps]] in my bindings, cuz too many and too chaotic
 - how to allow amixer to set sound higher than 100%? like in pavucontrol you can
   do it..
 - [[https://youtu.be/rMicrBPd4CM?t=544][setup]] [[https://github.com/dylanaraps/pywal][pywal]]
