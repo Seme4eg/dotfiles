@@ -48,6 +48,7 @@ alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 # alias mount="sudo mount -t ntfs3" # /dev/sda1 ~/media/usb
 alias check1="sudo lshw -C display"
 alias check2="lspci -vnnn | perl -lne 'print if /^\d+\:.+(\[\S+\:\S+\])/' | grep VGA"
+alias nmtui="sudo nmtui" # zoxide
 
 # soystemd --user
 alias sc="systemctl"
