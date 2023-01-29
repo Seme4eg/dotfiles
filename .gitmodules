@@ -1,0 +1,3 @@
+[submodule ".config/mpv"]
+	path = .config/mpv
+	url = git@github.com:Seme4eg/mpv-conf.git
