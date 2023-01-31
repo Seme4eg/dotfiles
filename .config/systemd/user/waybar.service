@@ -2,7 +2,7 @@
 # To life reload when config gets changed enable watcher.service & watcher.path
 
 [Unit]
-Description=Idle manager for Wayland
+Description=Bar for Wayland
 After=graphical-session.target
 PartOf=graphical-session.target
 # StartLimitBurts=5
