@@ -26,3 +26,5 @@ node_modules/
 /.config/pavucontrol.ini
 /.config/cef_user_data/
 /.config/neofetch/
+/.config/systemd/user/sockets.target.wants/
+/.config/systemd/user/default.target.wants/pipewire-pulse.service

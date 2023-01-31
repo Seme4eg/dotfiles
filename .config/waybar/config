@@ -15,7 +15,7 @@
         "hyprland/language",
         "tray",
         "network",
-        "pulseaudio",
+        "wireplumber",
         "idle_inhibitor",
         "cpu",
         // "custom/gpu-usage",
@@ -70,21 +70,10 @@
         "format-disconnected": "", //An empty format will hide the module.
         "max-length": 50
     },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
+    "wireplumber": {
+      "format": "{volume}% {icon}",
+      "format-muted": "", // 
+      "format-icons": ["", "", ""]
     },
     "cpu": {
         "format": "{usage}% ",

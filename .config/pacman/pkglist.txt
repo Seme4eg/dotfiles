@@ -52,10 +52,12 @@ pacman-contrib
 pass
 patch
 pavucontrol
+pipewire-alsa
+pipewire-audio
+pipewire-pulse
 pkgconf
 plocate
 polkit-kde-agent
-pulseaudio
 qt5-wayland
 qt5ct
 qt6-wayland
