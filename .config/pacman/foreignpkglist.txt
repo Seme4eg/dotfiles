@@ -3,7 +3,9 @@ brillo
 emacs-gcc-wayland-devel-bin
 hyprland-git
 hyprpaper-git
+mbsync-git
 mpv-full-git
+mu
 nvm-git
 openvpn-update-systemd-resolved
 otf-font-awesome-5

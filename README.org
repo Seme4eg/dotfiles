@@ -98,19 +98,22 @@ are blocking nouveau and if they don't - add block rule and regenerate modprobe.
 deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
 (for stickers and symbols to work)
 
-**** TODO mu4e nitbits
-First i needed to import my gpg keys (gpg2) from old machine, the process of
-which can be found in the end of this [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][article]].
+**** mu4e
+Make sure gpg is set up. Instructions can be found either in =pass= section below
+or in [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][this article]]
 
-The secret.gpg file i copied via ssh using [[https://www.freecodecamp.org/news/scp-linux-command-example-how-to-ssh-file-transfer-from-remote-to-local/][this]] article
+Then proceed to mu4e documentation of doom emacs, then open [[file:~/.doom.d/utils/mu4e.org::*Compose & send email][my notes]] file and
+follow instructions there. Just don't install /mu-git/, it's broken atm.
 
-Then [[https://stackoverflow.com/questions/33361068/gnupg-there-is-no-assurance-this-key-belongs-to-the-named-user][set trust level]].
+Things should work now.
 
-Then proceed to mu4e documentation of doom emacs.
+Fow now i am not using gmail in mu4e since i don't want to enable 2-step
+verification there. (without it google doesn't allow for external app passwords)
 
 *** pass
 - copy secret2.gpg from wherever you have it stored and run ~gpg --import
   secret2.gpg~
+- set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
 - install pass and it should work right away.
 - for browser extension [[https://github.com/passff/passff#installation][PassFF]] install its [[https://github.com/passff/passff-host][backend]] and in [[file:~/.mozilla/native-messaging-hosts/passff.py][passff.py]] script file
   add to COMMAND_ENV ~"PASSWORD_STORE_DIR":
@@ -132,16 +135,13 @@ Then proceed to mu4e documentation of doom emacs.
 Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 
 ** Todos
-- setup & *document* mu4e and isync isntallation
 - update tray thingie to *EWW*; take a look at hyprland discord server, ya'll find
   a lot there
-- gamescope with wf no workie
-- mpv and resolve all issues in my repo
 - integrate lots of stuff into bemenu
 - spawn alacritty in floating mode with binding
 - idle inhibitor - make it stop and start systemd swayidle service
 - maybe find out why fontawesome 5 icons in my waybar aren't working?
-- somehow make amixer switch default mic on headphoned connect / disconnect
+- somehow make wireplumber switch default mic on headphoned connect / disconnect
 - write a script that will reduce boring typing when installing fresh system
 - [[https://youtu.be/rMicrBPd4CM?t=544][setup]] [[https://github.com/dylanaraps/pywal][pywal]]
 - install =nvidia-vaapi-driver-git= cuz webcord keeps crashing
@@ -157,7 +157,7 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
   in systray.
 
 - https://wiki.archlinux.org/title/Dotfiles#User_repositories
-
+- gamescope with wf no workie
 - [?] setup emacsclient as $PAGER
 
 ** TODO removed apps
