@@ -130,7 +130,7 @@
         "exec-if": "exit 0",                  // always run; consider advanced run conditions
         "signal": 8
     },
-    // XXX: didn't find my 'gpu-busy-percent' file:
+    // TODO: put it into conky if i ever gonna set it up
     // https://www.reddit.com/r/swaywm/comments/ncjpfz/how_to_add_gpu_usage_to_waybar/
     // "custom/gpu-usage": {
       // "exec": "cat /sys/class/hwmon/hwmon2/device/gpu_busy_percent",

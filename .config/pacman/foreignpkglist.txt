@@ -11,6 +11,7 @@ openvpn-update-systemd-resolved
 otf-font-awesome-5
 python-pyclip
 rm-improved-git
+timeshift
 waybar-hyprland-git
 waydroid-git
 webcord-git
