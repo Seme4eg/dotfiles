@@ -120,9 +120,10 @@ verification there. (without it google doesn't allow for external app passwords)
   "/home/earthian/.local/share/password-store"~. Things should work now
 - emacs doesn't know about =$PASSWORD_STORE_DIR= env var so you can either move it
   from XDG_DATA_HOME dir to ~/ directory and omit the previous step with editing
-  passff.py file and delete the env var so everything is stock or just copy
+  passff.py file and delete the env var so everything is stock or just link
   =password-store= dir to =~/.password-store= and emacs will b fine.. (don't forget
-  to rename tho first)
+  to rename tho first) and it seems that there just needs to be a directory,
+  emacs's pass buffer is still somehow seeing proper password store dir.
 
 ** Arch notes / useful links
 [[https://wiki.archlinux.org/title/systemd][systemd commands]]
@@ -130,9 +131,6 @@ verification there. (without it google doesn't allow for external app passwords)
 *Enabled systemd services*:
 - systemd-timesyncd.service
 - plocate-updatedb.timer
-
-** learning todos
-Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI][vid]]
 
 ** Todos
 - update tray thingie to *EWW*; take a look at hyprland discord server, ya'll find
@@ -160,31 +158,6 @@ Document instllation process from [[https://www.youtube.com/watch?v=P0GISSpLlVI]
 - gamescope with wf no workie
 - [?] setup emacsclient as $PAGER
 
-** TODO removed apps
-- *pacman*:
-  - android-tools
-  - autofs
-  - fmt
-  - mpd
-  - mpv
-  - msmtp
-  - mtools
-  - playerctl
-  - scdoc
-  - seatd
-  - spdlog
-  - timeshift
-- *foreign*:
-  - checkupdates+aur
-  - discord_arch_electron_wayland
-  - grim-git
-  - mako-git
-  - mu
-  - slurp-git
-  - swayidle-git
-  - swaylock-git
-  - wev-git
-  - xkblayout-state-git
 ** TODO Guix [[https://guix.gnu.org][#link]]
 Instructions for installing a system from a Guix configuration can be found in
 the [[https://github.com/daviwil/dotfiles/blob/master/Systems.org#system-installation][System Installation]] section.
