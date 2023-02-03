@@ -1,10 +1,31 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 wp=$(find ~/Pictures/atmosphere/Wadim\ Kashin/ -type f | shuf -n 1)
 
 [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
 # remove this line if you deside to move hyprpaper to soystemd service again
-[[ -z $(pgrep hyprpaper) ]] && hyprpaper &
+[[ -z $(pgrep hyprpaper) ]] && ( hyprpaper & )
+
+# https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
+wal -n -q -i "$wp" --saturate 0.3 # pywal -q -c --saturate 1
+
+# TODO: check if pywalfox yields error - automatically run pywalfox install
+# and try to run 'update' again
+# update firefox theme
+pywalfox update # (don't forget to run 'pywalfox install' beforehand)
+
+# update emacs theme
+emacsclient -e "(load-theme 'ewal-doom-one)"
+
+# update mako theme
+. $XDG_CONFIG_HOME/mako/update-theme.sh
+
+# update webcord theme
+# wait until https://github.com/SpacingBat3/WebCord/issues/250 will be resolved
+# or manually remove this piece of code https://github.com/SpacingBat3/WebCord/blob/0cdfbf7cbbcadac49de32a6e33c55d69f77826e5/sources/code/main/modules/extensions.ts#L87
+# and fork the whole project
+# for now im updating theme with a
+# webcord --add-css-theme $XDG_DATA_HOME/webcord/wal.theme.css
 
 hyprctl hyprpaper preload "$wp"
 hyprctl hyprpaper wallpaper "eDP-1,$wp"

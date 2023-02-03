@@ -10,6 +10,8 @@ nvm-git
 openvpn-update-systemd-resolved
 otf-font-awesome-5
 python-pyclip
+python-pywalfox
+pywal-git
 rm-improved-git
 timeshift
 waybar-hyprland-git

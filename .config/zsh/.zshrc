@@ -84,6 +84,9 @@ setopt noflowcontrol
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
+# i have cat aliased to 'bat' so i need to call cat directly
+( /usr/bin/cat ~/.cache/wal/sequences & ) # pywal
+
 if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
   # init-nvm.sh contents with bash_completion excluded and nvm dir changed
   [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.config/nvm"
