@@ -199,7 +199,9 @@
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
-        <versioning>
+        <versioning type="simple">
+            <param key="cleanoutDays" val="0"></param>
+            <param key="keep" val="1"></param>
             <cleanupIntervalS>3600</cleanupIntervalS>
             <fsPath></fsPath>
             <fsType>basic</fsType>
