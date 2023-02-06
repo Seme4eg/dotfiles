@@ -47,6 +47,7 @@ noto-fonts-emoji
 nvidia
 openssh
 openvpn
+otf-font-awesome
 pacman
 pacman-contrib
 pass
