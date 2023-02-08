@@ -1,0 +1,51 @@
+(defpoll time :interval "5s"
+  :initial `date +'{"count":"%j","time":"%R","day":"%a %d/%m"}'`
+  `date +'{"count":"%j","time":"%R","day":"%a %d/%m"}'`)
+
+;; track cover script:
+;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/music.yuck
+;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/music
+(deflisten player :initial ""
+  "playerctl -F metadata -f '{{ artist }} - {{ title }}' || true")
+
+(deflisten player_state :initial ""
+  "playerctl -F metadata -f '{{ status }}' || true")
+
+
+(defwidget container_center []
+  (box
+    :class "center_container"
+    :halign "center"
+    :orientation "h"
+    ;; exmaple https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/clock.yuck
+    (overlay :class "date-box"
+      (label :text "${time.time}   ${time.day}")
+      ;; or maybe put here currently playing music title as a background idk
+      (label :text "${time.count}"))))
+    ;; tried centerbox above but i guess ima need to fix that with styles somehow
+    ;; (revealer
+    ;;   :halign "right"
+    ;;   :transition "slidedown"
+    ;;   :reveal {player != ""}
+    ;;   :duration "350ms"
+    ;;   (label :text "${player} ${player_state == 'Playing' ? '' : ''}"))))
+
+;; (defpoll volume :interval "1s"
+;;   "scripts/getvol")
+
+;; #!/bin/sh
+;; amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%' | head -1
+;; Footer
+
+;; (defwidget sidestuff []
+;;   (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+;;     (metric :label "🔊"
+;;             :value volume
+;;             :onchange "amixer -D pulse sset Master {}%")
+;;     (metric :label ""
+;;             :value {EWW_RAM.used_mem_perc}
+;;             :onchange "")
+;;     (metric :label "💾"
+;;             :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+;;             :onchange "")
+;;     time))

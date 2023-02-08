@@ -1,7 +1,7 @@
 [Unit]
 Description=handle automounting
-After=waybar.service
-Requires=waybar.service
+After=eww.service
+Requires=eww.service
 
 [Service]
 ExecStart=/usr/bin/udiskie

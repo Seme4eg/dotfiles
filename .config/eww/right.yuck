@@ -1,0 +1,109 @@
+;; vars
+(defvar show_essid false)
+
+;; listeners
+(deflisten backlight "scripts/backlight")
+(deflisten volume "scripts/volume")
+
+;; polls
+(defpoll ESSID_WLAN :interval "1m" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
+;; TODO: don't like the 3s interval below, is there a listening var possibility?
+(defpoll updates_count :interval "3600s" "checkupdates | wc -l")
+;; Weather with detailed forecast
+;; https://gist.github.com/bjesus/f8db49e1434433f78e5200dc403d58a3)
+(defpoll weather :interval "3600s" "curl 'https://wttr.in/?format=1'")
+;; FIXME: don't like the 100s thing, i'd use listening variable here or smth
+(defpoll net :interval "100s"
+  :initial 'N/A'
+  `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print $1}'`)
+
+(defwidget container_right []
+  (box
+    :class "right_container"
+    :halign "end"
+    :orientation "h"
+    :space-evenly false
+    :spacing 13
+    ;; TODO: hyprland/language
+    ;; TODO: tray
+    (_network)
+    (_audioblock)
+    ;; TODO: idle inhibitor status indicator
+    ;; "format-icons": {"activated": "", "deactivated": ""})
+    (_cpu)
+    ;; TODO: gpu usage? possible?
+    (_updates)
+    (_weather)
+    ;; TODO: weather widget
+    (_mem)
+    (_backlight)
+    (_battery :battery {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
+
+(defwidget _network []
+  (eventbox
+    :onhover "eww update show_essid=true"
+    :onhoverlost "eww update show_essid=false"
+    (box :class "net-box" :space-evenly false :spacing 8 :vexpand "false" :hexpand "false"
+      (label :text {net == "" ? "󰤮" :
+                        net < 26 ? "󰤟" :
+                        net < 51 ? "󰤢" :
+                        net < 76 ? "󰤥" : "󰤨"})
+      (revealer
+        :transition "slideright"
+        :reveal show_essid
+        :duration "350ms"
+        (label :class "module_essid" :text ESSID_WLAN :orientation "h")))))
+
+;; volicons=("" "" "")
+(defwidget _audioblock []
+  (box :class "bat-box"
+    (label :text {volume.is_vol_muted == "true" ? "󰖁" :
+                  volume.vol_level < 20 ? "󰕿" :
+                  volume.vol_level < 50 ? "󰖀" : "󰕾"})
+    (label :text {volume.is_mic_muted == "true" ? "󰍭" : "󰍬"})))
+
+(defwidget _cpu []
+  (overlay
+    (graph
+      :value {EWW_CPU.avg}
+      :thickness 3
+      :width 50
+      :time-range "30000ms"
+      :max 100
+      :dynamic true
+      :line-style "round")
+    (label :text "${EWW_TEMPS.ACPITZ_TEMP1}󰔄")))
+     ;; miter
+
+(defwidget _updates []
+  (label :text "${updates_count} "))
+
+(defwidget _weather []
+  (label :space-evenly false :halign "end" :text weather))
+
+(defwidget _mem []
+  (overlay
+    (circular-progress
+      :value {EWW_RAM.used_mem_perc}
+      :start-at 0
+      :thickness 10
+      :clockwise true)
+    (label :text "󰍛")))
+
+(defwidget _backlight []
+  (overlay
+    (circular-progress
+      :value backlight
+      :start-at 0
+      :thickness 10
+      :clockwise true)
+    (label :text {backlight < 20 ? "" : backlight < 70 ? "" : ""})))
+
+(defwidget _battery [battery]
+  (overlay
+    (label :text {EWW_BATTERY.BAT0.capacity})
+    (label :text {EWW_BATTERY.BAT0.status == 'Charging' ? "" :
+                  battery < 15 ? "" :
+                  battery < 30 ? "" :
+                  battery < 60 ? "" :
+                  battery < 80 ? "" : ""})))

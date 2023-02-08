@@ -47,7 +47,6 @@ noto-fonts-emoji
 nvidia
 openssh
 openvpn
-otf-font-awesome
 pacman
 pacman-contrib
 pass
@@ -65,6 +64,7 @@ qt6-wayland
 ripgrep
 sed
 slurp
+socat
 sof-firmware
 steam
 stow
@@ -74,6 +74,8 @@ swaylock
 syncthing
 texinfo
 tldr
+ttf-noto-nerd
+ttf-sourcecodepro-nerd
 udiskie
 udisks2
 unzip

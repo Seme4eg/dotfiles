@@ -1,6 +1,3 @@
-
-# To life reload when config gets changed enable watcher.service & watcher.path
-
 [Unit]
 Description=Bar for Wayland
 After=graphical-session.target
@@ -12,7 +9,6 @@ WantedBy=hyprland-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/waybar
-WorkingDirectory=/home/earthian/.config/waybar
-Restart=on-failure
+ExecStart=/usr/bin/eww open topbar
+# Restart=on-failure
 # RestartSec=5s

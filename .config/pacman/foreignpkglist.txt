@@ -1,6 +1,8 @@
 binder_linux-dkms
 brillo
 emacs-gcc-wayland-devel-bin
+eww-wayland-git
+gojq
 hyprland-git
 hyprpaper-git
 mbsync-git
@@ -8,13 +10,11 @@ mpv-full-git
 mu
 nvm-git
 openvpn-update-systemd-resolved
-otf-font-awesome-5
 python-pyclip
 python-pywalfox
 pywal-git
 rm-improved-git
 timeshift
-waybar-hyprland-git
 waydroid-git
 webcord-git
 wlsunset-git

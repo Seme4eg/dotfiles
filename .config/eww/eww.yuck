@@ -1,0 +1,26 @@
+(include "./left.yuck")
+(include "./center.yuck")
+(include "./right.yuck")
+
+(defwindow example
+  :monitor 0
+  :geometry (geometry
+              :x "0%"
+              :y "20px"
+              :width "99%"
+              :height "30px"
+              :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  (main_container)) ;; is it possible to pass several widgets to window?
+
+(defwidget main_container []
+  (centerbox
+    :class "container_main"
+    :style "background: transparent"
+    :orientation "h"
+    (container_left)
+    (container_center)
+    (container_right)))
+    
+

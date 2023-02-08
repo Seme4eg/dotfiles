@@ -1,0 +1,31 @@
+(deflisten workspace "scripts/workspaces")
+(deflisten window "scripts/window")
+
+(defwidget container_left []
+  (box
+    :class "left_container"
+    :halign "start"
+    :orientation "h"
+    :space-evenly false
+    :spacing 13
+    ;; (_launcher) ;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/launcher.yuck
+    (_workspaces)
+    ;; TODO: wlr/taskbar
+    (_window)))
+
+(defvar ws-icons '["一", "a", "b", "c", "d", "e", "七", "八", "九", "十"]')
+
+(defwidget _workspaces []
+  (box
+    :class "module workspaces"
+    :spacing 8
+    (for i in workspace
+      (label
+        :class "ws icon"
+        :text "${ws-icons[i.number - 1]}"))))
+
+(defwidget _window []
+  (box :class "module window"
+    (label
+      :class "ws icon"
+      :text window)))

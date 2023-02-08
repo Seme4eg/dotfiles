@@ -1,0 +1,50 @@
+#+title: Readme
+
+https://elkowar.github.io/eww/eww.html
+https://docs.gtk.org/gtk3/css-properties.html
+https://docs.gtk.org/gtk3/css-overview.html
+https://dharmx.is-a.dev/eww-powermenu/
+
+examples:
+- https://github.com/adi1090x/widgets
+- https://github.com/owenrumney/eww-bar
+- https://github.com/iSparsh/gross
+- DONE https://github.com/Saimoomedits/eww-widgets
+- https://github.com/Axarva/dotfiles-2.0
+- https://github.com/rxyhn/tokyo
+- https://github.com/elkowar/eww/tree/master/examples/eww-bar
+- https://github.com/druskus20/eugh
+
+
+*workspaces* examples:
+- [[https://github.com/pltanton/nixos-config-flake/blob/master/configuration-desktop-common/modules/home/anton/programs/modules/hyprland/eww/config/bar/scripts/workspace][script]] & [[https://github.com/pltanton/nixos-config-flake/blob/master/configuration-desktop-common/modules/home/anton/programs/modules/hyprland/eww/config/bar/eww.yuck][yuck file]] & [[https://cdn.discordapp.com/attachments/1046410379812667422/1046712849566810222/shot_221128105645.png][screenshot]]
+- [[https://gitlab.com/eyssew/dotfiles/-/blob/main/forest-gruvbox-hyprland/hypr/scripts/workspaces][python script]]
+
+css snippets:
+- https://www.bypeople.com/pure-css-gradient-background-animation
+- https://tympanus.net/codrops/
+- https://codepen.io/MaxStalker/pen/DJzybq
+- https://codepen.io/trending?cursor=ZD0wJm89MCZwPTM%3D
+- https://animate.style/
+
+Font problems:
+- https://www.nerdfonts.com/font-downloads
+- https://archlinux.org/packages/?sort=&repo=Community&q=-nerd
+- https://github.com/phosphor-icons/web/tree/master/src/fonts
+
+# install whatever font(s) u'll b using in ur system / eww bar
+
+-----
+
+waybar & hyprland animations example: [[https://www.youtube.com/watch?v=zi2Nm5-0PYY][video]] & [[https://github.com/flick0/dotfiles/blob/aurora/config/hypr/component/waybar/style.css][dots]]
+
+** Hyprland ppl dots
+- [X] https://github.com/iamverysimp1e/dots
+
+** Notes
+- [[https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/airplane][airplane mode script]]
+- [[https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/bluetooth][bluetooth script]]
+** Help with
+- [[https://github.com/Alexays/Waybar/blob/8da5425189d52ebbaab063c9289c5de5adbe0ca5/src/modules/hyprland/language.cpp][hyprland/language]]
+- [[https://github.com/Alexays/Waybar/blob/69b95e6d71f883c6aecf6d0ebbba90579f817191/src/modules/wlr/taskbar.cpp][wlr/taskbar]]
+- [[https://github.com/Alexays/Waybar/blob/2111865efe25528829c9407696a0f093bff142e2/src/modules/sni/tray.cpp][tray]]
