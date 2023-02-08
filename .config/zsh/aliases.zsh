@@ -55,13 +55,14 @@ alias nmtui="sudo nmtui" # zoxide
 
 # soystemd --user
 alias sc="systemctl"
-alias scue="sc --user enable"
-alias scud="sc --user disable"
-alias scus="sc --user start"
+alias scu="sc --user"
+alias scue="scu enable"
+alias scud="scu disable"
+alias scus="scu start"
 # there is also 'reload' but it aint applicable to all services
-alias scur="sc --user restart"
-alias scudr="sc --user daemon-reload"
-alias scuS="sc --user status"
+alias scur="scu restart"
+alias scudr="scu daemon-reload"
+alias scuS="scu status"
 function reloadUUnit() { scudr && scur $1 && scuS $1 }
 
 alias scl="sc list-units"
