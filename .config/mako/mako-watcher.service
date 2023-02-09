@@ -1,6 +1,6 @@
 [Unit]
 Description=mako notifications tester
-After=waybar.service
+After=eww.service
 
 [Service]
 Type=oneshot

@@ -92,7 +92,7 @@ are blocking nouveau and if they don't - add block rule and regenerate modprobe.
    pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard
    otf-font-awesome pacman-contrib qt5ct libva
  - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git brillo hyprpaper-git
-   webcord bemenu-git brillo hyprland-git waybar-hyprland-git
+   webcord bemenu-git brillo hyprland-git eww-wayland-git
 
 *** emacs
 deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
@@ -136,7 +136,6 @@ verification there. (without it google doesn't allow for external app passwords)
 - update tray thingie to *EWW*; take a look at hyprland discord server, ya'll find
   a lot there
 - idle inhibitor - make it stop and start systemd swayidle service
-- maybe find out why fontawesome 5 icons in my waybar aren't working?
 - somehow make wireplumber switch default mic on headphoned connect / disconnect
 - write a script that will reduce boring typing when installing fresh system
 - install =nvidia-vaapi-driver-git= cuz webcord keeps crashing
