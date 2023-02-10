@@ -25,6 +25,7 @@ grep
 grim
 groff
 grub
+gtk-layer-shell
 gzip
 htop
 intel-ucode
@@ -56,6 +57,7 @@ pipewire-alsa
 pipewire-audio
 pipewire-pulse
 pkgconf
+playerctl
 plocate
 polkit-kde-agent
 qt5-wayland
