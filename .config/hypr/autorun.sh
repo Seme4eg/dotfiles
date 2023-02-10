@@ -6,7 +6,7 @@ systemctl --user start hyprland-session.target
 /usr/lib/polkit-kde-authentication-agent-1 &
 # /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
 
-hyprctl setcursor Layan-cursors 26
+hyprctl setcursor Future-dark-cursors 26
 
 firefox &
 webcord --enable-features=UseOzonePlatform --ozone-platform=wayland &
