@@ -5,7 +5,7 @@ dmenu-wayland-git
 emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq
-hyprland-git
+hyprland
 hyprpaper-git
 mbsync-git
 mpv-full-git
