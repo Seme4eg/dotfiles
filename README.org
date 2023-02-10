@@ -133,8 +133,8 @@ verification there. (without it google doesn't allow for external app passwords)
 - plocate-updatedb.timer
 
 ** Todos
-- update tray thingie to *EWW*; take a look at hyprland discord server, ya'll find
-  a lot there
+- setup [[https://github.com/nyyManni/dmenu-wayland][dmenu-wl]] and see which [[https://tools.suckless.org/dmenu/scripts/][scripts]] and patches i might need + [[https://github.com/sentriz/cliphist][cliphist]]
+  bindings ain't finished
 - idle inhibitor - make it stop and start systemd swayidle service
 - somehow make wireplumber switch default mic on headphoned connect / disconnect
 - write a script that will reduce boring typing when installing fresh system
@@ -145,6 +145,8 @@ verification there. (without it google doesn't allow for external app passwords)
 - write a script that cheks my current location every day and updates wlsunset
   systemd service *AND* systemtime if location differs ?much? from the one that
   was yesterday.
+- take a look at [[https://www.chezmoi.io/#i-like-chezmoi-how-do-i-say-thanks][chezmoi]] dotfile manager, and one-line installer script from
+  [[https://github.com/Battlesquid/dotfiles][this repo]]
 - does my laptop support wifi 6 / 6e ? if yes how to enable it
 - tridactyl - how to enablel insert mod right away on youtube?
 - [[https://www.youtube.com/watch?v=IgvCwdinujY][setup]] conky, but first take a look at unixporn and other dots
