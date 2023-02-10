@@ -1,5 +1,7 @@
 binder_linux-dkms
 brillo
+cliphist
+dmenu-wayland-git
 emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq
