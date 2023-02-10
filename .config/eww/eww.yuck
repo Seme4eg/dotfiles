@@ -2,11 +2,11 @@
 (include "./center.yuck")
 (include "./right.yuck")
 
-(defwindow example
+(defwindow topbar
   :monitor 0
   :geometry (geometry
               :x "0%"
-              :y "20px"
+              :y "0%"
               :width "99%"
               :height "30px"
               :anchor "top center")

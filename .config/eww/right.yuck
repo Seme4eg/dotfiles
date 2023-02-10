@@ -26,33 +26,42 @@
     :spacing 13
     ;; TODO: hyprland/language
     ;; TODO: tray
-    (_network)
+    (_network :up {EWW_NET.wlp0s20f3.NET_UP} :down {EWW_NET.wlp0s20f3.NET_DOWN})
     (_audioblock)
     ;; TODO: idle inhibitor status indicator
     ;; "format-icons": {"activated": "", "deactivated": ""})
     (_cpu)
-    ;; TODO: gpu usage? possible?
+    ;; TODO: gpu
     (_updates)
     (_weather)
     ;; TODO: weather widget
     (_mem)
     (_backlight)
-    (_battery :battery {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
+    (_battery :capacity {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
 
-(defwidget _network []
+(defwidget _network [up down]
   (eventbox
     :onhover "eww update show_essid=true"
     :onhoverlost "eww update show_essid=false"
-    (box :class "net-box" :space-evenly false :spacing 8 :vexpand "false" :hexpand "false"
-      (label :text {net == "" ? "󰤮" :
-                        net < 26 ? "󰤟" :
-                        net < 51 ? "󰤢" :
-                        net < 76 ? "󰤥" : "󰤨"})
+    (box :space-evenly false :spacing 8 :vexpand "false" :hexpand "false"
+      ;; split it in 2 and wrap with v-aligned box
+      (box :orientation "v" :halign "start"
+        (label :text {up / 1024 < 1024 ?
+                      " ${round(up / 1024, 0)} Kb/s" :
+                      " ${round(up / 1048576, 0)} Kb/s"})
+        (label :text {down / 1024 < 1024 ?
+                      " ${round(down / 1024, 0)} Kb/s" :
+                      " ${round(down / 1048576, 0)} Kb/s"}))
+      (label
+        :text {net == "" ? "󰤮" :
+               net < 26 ? "󰤟" :
+               net < 51 ? "󰤢" :
+               net < 76 ? "󰤥" : "󰤨"})
       (revealer
-        :transition "slideright"
-        :reveal show_essid
-        :duration "350ms"
-        (label :class "module_essid" :text ESSID_WLAN :orientation "h")))))
+       :transition "slideright"
+       :reveal show_essid
+       :duration "350ms"
+       (label :class "module_essid" :text ESSID_WLAN :orientation "h")))))
 
 ;; volicons=("" "" "")
 (defwidget _audioblock []
@@ -68,12 +77,21 @@
       :value {EWW_CPU.avg}
       :thickness 3
       :width 50
-      :time-range "30000ms"
+      :time-range "3m"
       :max 100
       :dynamic true
       :line-style "round")
+    (graph
+      :value {EWW_TEMPS.ACPITZ_TEMP1}
+      :thickness 3
+      :width 50
+      :style "color: red"
+      :time-range "3m"
+      :min 30
+      :max 120
+      :dynamic true
+      :line-style "round")
     (label :text "${EWW_TEMPS.ACPITZ_TEMP1}󰔄")))
-     ;; miter
 
 (defwidget _updates []
   (label :text "${updates_count} "))
@@ -97,13 +115,13 @@
       :start-at 0
       :thickness 10
       :clockwise true)
-    (label :text {backlight < 20 ? "" : backlight < 70 ? "" : ""})))
+    (label :text backlight)))
 
-(defwidget _battery [battery]
+(defwidget _battery [capacity]
   (overlay
-    (label :text {EWW_BATTERY.BAT0.capacity})
-    (label :text {EWW_BATTERY.BAT0.status == 'Charging' ? "" :
-                  battery < 15 ? "" :
-                  battery < 30 ? "" :
-                  battery < 60 ? "" :
-                  battery < 80 ? "" : ""})))
+    (label :text {EWW_BATTERY.BAT0.capacity})))
+    ;; (label :text {EWW_BATTERY.BAT0.status == 'Charging' ? "" :
+    ;;               capacity < 15 ? "" :
+    ;;               capacity < 30 ? "" :
+    ;;               capacity < 60 ? "" :
+    ;;               capacity < 80 ? "" : ""})))
