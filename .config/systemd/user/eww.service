@@ -1,14 +1,12 @@
 [Unit]
-Description=Bar for Wayland
+Description=Eww Daemon
 After=graphical-session.target
 PartOf=graphical-session.target
-# StartLimitBurts=5
 
 [Install]
 WantedBy=hyprland-session.target
 
 [Service]
-Type=simple
-ExecStart=/usr/bin/eww open topbar
-# Restart=on-failure
-# RestartSec=5s
+ExecStart=/usr/bin/eww daemon --no-daemonize
+Restart=on-failure
+RestartSec=3s
