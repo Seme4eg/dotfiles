@@ -9,7 +9,7 @@ wp=$(find ~/Pictures/atmosphere/Wadim\ Kashin/ -type f | shuf -n 1)
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
 [ $1 == "light" ] &&
   wal -n -q -l -i "$wp" --saturate 0.3 ||
-  wal -n -q -i "$wp" --saturate 0.3 # -l for light theme
+  wal -n -q -i "$wp" --saturate 0.3
 
 # TODO: check if pywalfox yields error - automatically run pywalfox install
 # and try to run 'update' again
