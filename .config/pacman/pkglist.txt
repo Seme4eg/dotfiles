@@ -16,6 +16,7 @@ file
 findutils
 firefox
 flex
+font-manager
 fzf
 gawk
 gcc
@@ -60,6 +61,7 @@ pkgconf
 playerctl
 plocate
 polkit-kde-agent
+python-pip
 qt5-wayland
 qt5ct
 qt6-wayland
