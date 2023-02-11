@@ -8,7 +8,7 @@ systemctl --user start hyprland-session.target
 
 hyprctl setcursor Future-dark-cursors 26
 
-wl-paste --watch cliphist store
+wl-paste --watch cliphist store &
 
 firefox &
 webcord --enable-features=UseOzonePlatform --ozone-platform=wayland &
