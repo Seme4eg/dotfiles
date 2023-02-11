@@ -43,7 +43,4 @@ waybar & hyprland animations example: [[https://www.youtube.com/watch?v=zi2Nm5-0
 - [[https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/bluetooth][bluetooth script]]
 - [[https://github.com/Colepng/rice/blob/hyprland-winter/eww/scripts/notifications][notifications]] script example; maybe do another window with 'recent'
   notifications
-** Help with
-- [[https://github.com/Alexays/Waybar/blob/8da5425189d52ebbaab063c9289c5de5adbe0ca5/src/modules/hyprland/language.cpp][hyprland/language]]
-- [[https://github.com/Alexays/Waybar/blob/69b95e6d71f883c6aecf6d0ebbba90579f817191/src/modules/wlr/taskbar.cpp][wlr/taskbar]]
-- [[https://github.com/Alexays/Waybar/blob/2111865efe25528829c9407696a0f093bff142e2/src/modules/sni/tray.cpp][tray]]
+- [[https://github.com/RealStr1ke/dotfiles/blob/main/config/eww/hyprland/bar/modules/format.yuck][format widgets]] just in case

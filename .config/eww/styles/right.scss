@@ -1,0 +1,42 @@
+.misc-container {
+  @extend %box;
+  padding: 0 18px;
+  .layout {
+    letter-spacing: 4px;
+    font-size: 1.1em;
+  }
+
+  .updates {
+    .bg {
+      opacity: .4;
+      font-size: 2em;
+      // margin-top: -1px;
+    }
+    .fg {
+      font-size: 1.6em;
+      // color: $color3;
+      // font-weight: bold;
+    }
+  }
+}
+
+.wifi-audio {
+  @extend %box;
+  padding: 0 18px; // XXX: if it's common - move to exentable
+  .network {
+    padding: 5px 0;
+    .bg {
+      // @extend %back-text;
+      font-size: 2.4em;
+      opacity: .3;
+      margin-top: -9px;
+    }
+    .fg {
+      font-size: .8em;
+    }
+    // .essid {
+    //   margin: 0;
+    //   padding: 0;
+    // }
+  }
+}

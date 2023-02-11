@@ -27,5 +27,6 @@
 (defwidget _window []
   (box :class "module window"
     (label
-      :class "ws icon"
+      :limit-width 60
+      :show_truncated true
       :text window)))

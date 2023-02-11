@@ -1,0 +1,20 @@
+.date {
+  @extend %box;
+  padding: 0 20px;
+  .fg-left, .fg-right {
+    font-size: 1.3em;
+    letter-spacing: 3px;
+  }
+  .bg-left, .bg-center, .bg-right {
+    @extend %back-text
+  }
+  .bg-left {
+    padding-right: 8px;
+  }
+  .bg-right {
+    padding-left: 8px;
+  }
+  .bg-center {
+    margin-top: -30px;
+  }
+}

@@ -2,8 +2,10 @@
 (defvar show_essid false)
 
 ;; listeners
+(deflisten layout "scripts/layout")
 (deflisten backlight "scripts/backlight")
 (deflisten volume "scripts/volume")
+(deflisten gpu "scripts/gpu")
 
 ;; polls
 (defpoll ESSID_WLAN :interval "1m" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
@@ -24,44 +26,59 @@
     :orientation "h"
     :space-evenly false
     :spacing 13
-    ;; TODO: hyprland/language
+    (box
+      :class "misc-container"
+      :space-evenly false
+      :spacing 15
+      (_layout)
+      (_updates)
+      (_weather))
     ;; TODO: tray
-    (_network :up {EWW_NET.wlp0s20f3.NET_UP} :down {EWW_NET.wlp0s20f3.NET_DOWN})
-    (_audioblock)
+    (box :class "wifi-audio"
+      (_network :up {EWW_NET.wlp0s20f3.NET_UP} :down {EWW_NET.wlp0s20f3.NET_DOWN})
+      (_audioblock))
     ;; TODO: idle inhibitor status indicator
     ;; "format-icons": {"activated": "", "deactivated": ""})
     (_cpu)
+    (_gpu)
     ;; TODO: gpu
-    (_updates)
-    (_weather)
-    ;; TODO: weather widget
     (_mem)
     (_backlight)
     (_battery :capacity {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
+
+(defwidget _layout []
+  (label :width 35 :class "layout" :text "${layout}"))
 
 (defwidget _network [up down]
   (eventbox
     :onhover "eww update show_essid=true"
     :onhoverlost "eww update show_essid=false"
-    (box :space-evenly false :spacing 8 :vexpand "false" :hexpand "false"
-      ;; split it in 2 and wrap with v-aligned box
-      (box :orientation "v" :halign "start"
-        (label :text {up / 1024 < 1024 ?
-                      " ${round(up / 1024, 0)} Kb/s" :
-                      " ${round(up / 1048576, 0)} Kb/s"})
-        (label :text {down / 1024 < 1024 ?
-                      " ${round(down / 1024, 0)} Kb/s" :
-                      " ${round(down / 1048576, 0)} Kb/s"}))
-      (label
-        :text {net == "" ? "󰤮" :
-               net < 26 ? "󰤟" :
-               net < 51 ? "󰤢" :
-               net < 76 ? "󰤥" : "󰤨"})
+    (box
+      :class "network"
+      :space-evenly false
+      :spacing 8
+      :vexpand "false"
+      :hexpand "false"
+      (overlay :width 35
+        (box :class "fg" :visible {net != ""} :orientation "v" :halign "start"
+         (label :text {up / 1024 < 1024 ?
+                          " ${round(up / 1024, 0)} Kb" :
+                          " ${round(up / 1048576, 0)} Mb"})
+         (label :text {down / 1024 < 1024 ?
+                       " ${round(down / 1024, 0)} Kb" :
+                       " ${round(down / 1048576, 0)} Mb"}))
+        (label
+          :class "bg"
+          :text {net == "" ? "󰤮" :
+                 net < 26 ? "󰤟" :
+                 net < 51 ? "󰤢" :
+                 net < 76 ? "󰤥" : "󰤨"}))
       (revealer
-       :transition "slideright"
-       :reveal show_essid
-       :duration "350ms"
-       (label :class "module_essid" :text ESSID_WLAN :orientation "h")))))
+        :class "essid"
+        :transition "slideright"
+        :reveal show_essid
+        :duration "350ms"
+        (label :class "essid" :text ESSID_WLAN)))))
 
 ;; volicons=("" "" "")
 (defwidget _audioblock []
@@ -69,6 +86,7 @@
     (label :text {volume.is_vol_muted == "true" ? "󰖁" :
                   volume.vol_level < 20 ? "󰕿" :
                   volume.vol_level < 50 ? "󰖀" : "󰕾"})
+    (label :text {volume.vol_level})
     (label :text {volume.is_mic_muted == "true" ? "󰍭" : "󰍬"})))
 
 (defwidget _cpu []
@@ -87,14 +105,38 @@
       :width 50
       :style "color: red"
       :time-range "3m"
-      :min 30
+      :min 40
       :max 120
       :dynamic true
       :line-style "round")
     (label :text "${EWW_TEMPS.ACPITZ_TEMP1}󰔄")))
 
+(defwidget _gpu []
+  (overlay
+    (graph
+      :value {gpu.load}
+      :thickness 3
+      :width 50
+      :time-range "3m"
+      :max 100
+      :dynamic true
+      :line-style "round")
+    (graph
+      :value {gpu.temp}
+      :thickness 3
+      :width 50
+      :style "color: red"
+      :time-range "3m"
+      :min 30
+      :max 100
+      :dynamic true
+      :line-style "round")
+    (label :text "${gpu.temp}󰔄")))
+
 (defwidget _updates []
-  (label :text "${updates_count} "))
+  (overlay :class "updates" :width 40
+    (label :class "fg" :text "${updates_count}")
+    (label :class "bg" :text "")))
 
 (defwidget _weather []
   (label :space-evenly false :halign "end" :text weather))

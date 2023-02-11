@@ -1,6 +1,6 @@
 (defpoll time :interval "5s"
   :initial `date +'{"count":"%j","time":"%R","day":"%a %d/%m"}'`
-  `date +'{"count":"%j","time":"%R","day":"%a %d/%m"}'`)
+  `date +'{"count":"%j","hour":"%H","minute":"%M","day":"%a %d/%m"}'`)
 
 ;; track cover script:
 ;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/music.yuck
@@ -13,22 +13,24 @@
 
 
 (defwidget container_center []
-  (box
-    :class "center_container"
-    :halign "center"
-    :orientation "h"
-    ;; exmaple https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/clock.yuck
-    (overlay :class "date-box"
-      (label :text "${time.time}   ${time.day}")
-      ;; or maybe put here currently playing music title as a background idk
-      (label :text "${time.count}"))))
-    ;; tried centerbox above but i guess ima need to fix that with styles somehow
-    ;; (revealer
-    ;;   :halign "right"
-    ;;   :transition "slidedown"
-    ;;   :reveal {player != ""}
-    ;;   :duration "350ms"
-    ;;   (label :text "${player} ${player_state == 'Playing' ? '' : ''}"))))
+  (centerbox :class "date"
+    (overlay :width 120
+      (label :class "fg-left" :text "Day ${time.count}")
+      (label :halign "end" :class "bg-left" :text "${time.hour}"))
+    (overlay :width 20
+      (label :class "fg-center" :text "")
+      (label :class "bg-center" :text ":"))
+    (overlay :width 120
+      (label :class "fg-right" :text "${time.day}")
+      (label :halign "start" :class "bg-right" :text "${time.minute}"))))
+
+;; tried centerbox above but i guess ima need to fix that with styles somehow
+;; (revealer
+;;   :halign "right"
+;;   :transition "slidedown"
+;;   :reveal {player != ""}
+;;   :duration "350ms"
+;;   (label :text "${player} ${player_state == 'Playing' ? '' : ''}"))))
 
 ;; (defpoll volume :interval "1s"
 ;;   "scripts/getvol")

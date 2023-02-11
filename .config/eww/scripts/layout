@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+getShortName() {
+  [[ $1 =~ English.* ]] && echo 'EN' || echo 'RU'
+}
+
+# initial value to display
+layoutLine=$(hyprctl devices | grep keymap | tail --lines 1)
+getShortName ${layoutLine#*:}
+
+socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
+  [ ${line%>>*} == "activelayout" ] && getShortName ${line#*:}
+done
