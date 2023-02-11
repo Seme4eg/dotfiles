@@ -75,6 +75,7 @@ swayidle
 swaylock
 syncthing
 texinfo
+thefuck
 tldr
 ttf-noto-nerd
 ttf-sourcecodepro-nerd

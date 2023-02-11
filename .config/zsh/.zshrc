@@ -72,6 +72,8 @@ bindkey '^_' fzf-history-widget
 #                              Last things to do                              #
 ###############################################################################
 
+eval $(thefuck --alias) # https://github.com/nvbn/thefuck
+
 eval "$(zoxide init zsh)" # z / zi[nteractive] (using fzf if u have it)
 stty stop undef # disable C-s to freeze terminal
 # Nobody needs flow control anymore. Troublesome feature.
