@@ -48,17 +48,18 @@ ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # <- gets defined only after zvm sourcing
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
-# Use lf to switch directories and bind it to ctrl-o
+# https://github.com/gokcehan/lf/blob/master/etc/lfcd.sh
 lfcd () {
-    tmp="$(mktemp -uq)"
-    trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
+  tmp="$(mktemp)"
+  lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    [ -d "$dir" -a "$dir" != "$(pwd)" ] && cd "$dir"
+  fi
 }
 
+# Use lf to switch directories and bind it to ctrl-o
 bindkey -s '^o' '^ulfcd\n'
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
