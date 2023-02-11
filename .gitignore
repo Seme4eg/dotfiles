@@ -28,3 +28,7 @@ node_modules/
 /.config/neofetch/
 /.config/systemd/user/sockets.target.wants/
 /.config/systemd/user/default.target.wants/pipewire-pulse.service
+/.config/scdl/
+/.config/thefuck/
+/.config/font-manager/
+/.local/bin/scdl
