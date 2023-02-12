@@ -1,6 +1,5 @@
-.misc-container {
+.user-info {
   @extend %box;
-  padding: 0 18px;
   .layout {
     letter-spacing: 4px;
     font-size: 1.1em;
@@ -20,9 +19,8 @@
   }
 }
 
-.wifi-audio {
+.sys-info {
   @extend %box;
-  padding: 0 18px; // XXX: if it's common - move to exentable
   .network {
     padding: 5px 0;
     .bg {
@@ -39,4 +37,42 @@
     //   padding: 0;
     // }
   }
+  .backlight {
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+circular-progress {
+  color: $color6;
+  background: $color1;
+}
+.circle-text {
+  font-size: 1.3em;
+  opacity: .5;
+}
+
+.telemetery {
+  @extend %box;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  // .cpu {
+  // }
+  .load {
+    color: $foreground;
+    opacity: .5;
+  }
+  .temp {
+    color: $color6;
+    opacity: .5;
+  }
+  .temp-text {
+    font-size: 2.4em;
+    opacity: .3;
+    margin-top: -8px;
+  }
+}
+
+.volbar trough highlight {
+    background-image: linear-gradient(to right, #afcee0 30%, #92B6F4 50%, #77a5bf 100% *50);
+    border-radius: 10px;
 }

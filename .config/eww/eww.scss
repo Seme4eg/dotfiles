@@ -8,20 +8,9 @@
 .container_main {
   font-family: Noto Sans Nerd Font, Koulen;
   padding: 8px;
-  padding-bottom: 0;
   color: $foreground;
 }
 
+@import 'styles/left';
 @import 'styles/center';
 @import 'styles/right';
-
-// .sep {
-//   font-size: 1em;
-//   padding-top: 0.15em;
-//   padding-left: 0.2em;
-//   padding-right: 0.2em;
-//   font-family: Iosevka;
-//   font-weight: 400;
-// }
-
-// vim:ft=scss

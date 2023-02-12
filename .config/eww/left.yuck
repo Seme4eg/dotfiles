@@ -1,4 +1,4 @@
-(deflisten workspace "scripts/workspaces")
+(deflisten workspaces "scripts/workspaces")
 (deflisten window "scripts/window")
 
 (defwidget container_left []
@@ -16,16 +16,15 @@
 (defvar ws-icons '["一", "a", "b", "c", "d", "e", "七", "八", "九", "十"]')
 
 (defwidget _workspaces []
-  (box
+  (box :class "workspaces"
     :class "module workspaces"
     :spacing 8
-    (for i in workspace
-      (label
-        :class "ws icon"
-        :text "${ws-icons[i.number - 1]}"))))
+    (for ws in workspaces
+      (label :class {ws.active == "true" ? "active" : ""}
+        :text "${ws-icons[ws.number - 1]}"))))
 
 (defwidget _window []
-  (box :class "module window"
+  (box :class "window"
     (label
       :limit-width 60
       :show_truncated true
