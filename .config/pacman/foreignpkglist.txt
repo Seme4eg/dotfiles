@@ -2,6 +2,7 @@ binder_linux-dkms
 brillo
 cliphist
 dmenu-wayland-git
+dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq
