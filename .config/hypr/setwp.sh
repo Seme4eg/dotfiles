@@ -19,6 +19,8 @@ pywalfox update # (don't forget to run 'pywalfox install' beforehand)
 # update emacs theme
 emacsclient -e "(load-theme 'ewal-doom-one)"
 
+eww reload
+
 # update mako theme
 . $XDG_CONFIG_HOME/mako/update-theme.sh
 
