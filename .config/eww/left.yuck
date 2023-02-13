@@ -13,19 +13,23 @@
     ;; TODO: wlr/taskbar
     (_window)))
 
-(defvar ws-icons '["一", "a", "b", "c", "d", "e", "七", "八", "九", "十"]')
-
+;; (defvar ws-icons '["一", "a", "b", "c", "d"]')
 (defwidget _workspaces []
   (box :class "workspaces"
     :class "module workspaces"
-    :spacing 8
+    :spacing 13
     (for ws in workspaces
-      (label :class {ws.active == "true" ? "active" : ""}
-        :text "${ws-icons[ws.number - 1]}"))))
+      (label
+        :class {ws.active == "true" ? "active" : ""}
+        ;; :text "${ws-icons[ws.number - 1]}"
+        :width 10
+        :yalign 0.5
+        ;; :text "󰃚"))))
+        :text {ws.active == "true" ? "X" : "O"}))))
 
 (defwidget _window []
   (box :class "window"
     (label
-      :limit-width 60
+      :limit-width 30
       :show_truncated true
       :text window)))

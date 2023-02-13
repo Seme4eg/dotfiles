@@ -8,7 +8,8 @@
 
 /*ewws' transform widget works in a very weird way so here's a crutch */
 %back-text {
+  font-family: RubikGlitch;
   font-size: 4.4em;
-  opacity: .4;
-  margin-top: -24px;
+  color: color.scale($foreground, $alpha: -60%);
+  margin-top: -17px;
 }

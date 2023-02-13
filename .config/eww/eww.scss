@@ -1,9 +1,9 @@
-@import '/home/earthian/.cache/wal/colors.scss'; // pywal
-
-// @use directive works not, rip
-@import 'styles/extendables';
+@use 'sass:color';
 
 * { all: unset; }
+
+@import '/home/earthian/.cache/wal/colors.scss'; // pywal
+@import 'styles/extendables';
 
 .container_main {
   font-family: Noto Sans Nerd Font, Koulen;

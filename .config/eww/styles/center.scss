@@ -2,11 +2,17 @@
   @extend %box;
   padding: 0 20px;
   .fg-left, .fg-right {
-    font-size: 1.3em;
+    font-family: Megrim;
+    font-weight: bold;
+    font-size: 1.4em;
     letter-spacing: 3px;
+
+    // Or maybe Iceland? remove letter spacing tho
+    // font-family: Iceland;
+    // font-size: 1.9em;
   }
   .bg-left, .bg-center, .bg-right {
-    @extend %back-text
+    @extend %back-text;
   }
   .bg-left {
     padding-right: 8px;
@@ -15,6 +21,6 @@
     padding-left: 8px;
   }
   .bg-center {
-    margin-top: -30px;
+    margin-top: -20px;
   }
 }

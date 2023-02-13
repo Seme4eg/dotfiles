@@ -12,7 +12,7 @@
 (defpoll steam_running :interval "10s" "pgrep steam | wc -l") ;; for gpu
 ;; Weather with detailed forecast
 ;; https://gist.github.com/bjesus/f8db49e1434433f78e5200dc403d58a3)
-(defpoll weather :interval "3600s" "curl 'https://wttr.in/?format=1'")
+(defpoll weather :interval "3600s" "curl 'https://wttr.in/?format=1' | sed 's/  *//g'")
 
 (defpoll ESSID_WLAN :interval "1m" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
 ;; FIXME: don't like the 100s thing, i'd use listening variable here or smth
@@ -33,8 +33,7 @@
     (_sysinfo)
     ;; TODO: idle inhibitor status indicator
     ;; "format-icons": {"activated": "", "deactivated": ""})
-    (_telemetery)
-    (_battery :capacity {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
+    (_telemetery)))
 
 ;; --- misc block ---
 
@@ -56,7 +55,7 @@
     (label :class "bg" :text "")))
 
 (defwidget _weather []
-  (label :space-evenly false :halign "end" :text weather))
+  (label :class "weather" :yalign 0.56 :text weather))
 
 ;; --- System info block ---
 
@@ -98,6 +97,7 @@
                   volume.vol_level < 20 ? "󰕿" :
                   volume.vol_level < 50 ? "󰖀" : "󰕾"})
     (label :text {volume.vol_level})
+    (scale :value {volume.vol_level} :orientation "v" :style "background: #ffffff" :width 3)
     (label :text {volume.is_mic_muted == "true" ? "󰍭" : "󰍬"})))
 
 (defwidget _backlight []
@@ -112,13 +112,15 @@
 ;; --- telemetery block ---
 
 (defwidget _telemetery []
-  (box :class "telemetery" :space-evenly false
+  (box :class "telemetery" :space-evenly false :spacing 18
     ;; didn't come up with better way of doing it, 'expander' and 'revealer'
     ;; were keeping the width of a widget instead of fully hide it
     ;; (defvar telemetery_yuck )
     (_cpu)
-    (_gpu)
-    (_mem)))
+    ;; (expander :expanded {steam_running != 0}
+    ;;   (_gpu))
+    (_mem)
+    (_battery :capacity {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
 
 (defwidget _cpu []
   (overlay :class "cpu"
@@ -139,32 +141,29 @@
       :max 120
       ;; :dynamic true
       :line-style "round")
-    (label :class "temp-text" :text "${EWW_TEMPS.ACPITZ_TEMP1}°")))
+    (label :yalign 0 :xalign 1 :class "temp-text" :text "${EWW_TEMPS.ACPITZ_TEMP1}°")))
 
 (defwidget _gpu []
   (overlay :class "gpu"
-    (expander :expanded {steam_running != 0}
-      (graph :class "load"
-        :value {gpu.load}
-        :thickness 3
-        :width 50
-        :time-range "1m"
-        :max 100
-        :dynamic true
-        :line-style "round"))
-    (expander :expanded {steam_running != 0}
-      (graph :class "temp"
-        :value {gpu.temp}
-        :thickness 3
-        :width 50
-        :style "color: red"
-        :time-range "1m"
-        :min 30
-        :max 100
-        :dynamic true
-        :line-style "round"))
-    (expander :expanded {steam_running != 0}
-      (label :class "temp-text" :text "${gpu.temp}°"))))
+    (graph :class "load"
+      :value {gpu.load}
+      :thickness 3
+      :width 55
+      :time-range "1m"
+      :max 100
+      :dynamic true
+      :line-style "round")
+    (graph :class "temp"
+      :value {gpu.temp}
+      :thickness 3
+      :width 55
+      :style "color: red"
+      :time-range "1m"
+      :min 30
+      :max 100
+      :dynamic true
+      :line-style "round")
+    (label :class "temp-text" :text "${gpu.temp}°")))
 
 (defwidget _mem []
   (overlay :class "memory" :width 30
@@ -176,10 +175,6 @@
     (label :class "circle-text" :text "󰍛")))
 
 (defwidget _battery [capacity]
-  (overlay
-    (label :text {EWW_BATTERY.BAT0.capacity})))
-    ;; (label :text {EWW_BATTERY.BAT0.status == 'Charging' ? "" :
-    ;;               capacity < 15 ? "" :
-    ;;               capacity < 30 ? "" :
-    ;;               capacity < 60 ? "" :
-    ;;               capacity < 80 ? "" : ""})))
+  (label :width 40
+    :class {EWW_BATTERY.BAT0.status == 'Charging' ? "bat charging" : "bat"}
+    :text "${EWW_BATTERY.BAT0.capacity}󱐋"))

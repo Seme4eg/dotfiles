@@ -1,10 +1,6 @@
 #+title: Readme
 
-Important references:
-- https://elkowar.github.io/eww/eww.html
-- https://docs.gtk.org/gtk3/css-properties.html
-- https://docs.gtk.org/gtk3/css-overview.html
-- https://dharmx.is-a.dev/eww-powermenu/
+Important references: [[https://elkowar.github.io/eww/eww.html][eww github]], [[https://docs.gtk.org/gtk3/css-properties.html][gtk css]]
 
 examples:
 - https://github.com/adi1090x/widgets
@@ -17,7 +13,7 @@ examples:
 - https://github.com/druskus20/eugh
 
 css snippets:
-- https://www.bypeople.com/pure-css-gradient-background-animation
+- https://www.bypeople.com/css-snippets/
 - https://tympanus.net/codrops/
 - https://codepen.io/MaxStalker/pen/DJzybq
 - https://codepen.io/trending?cursor=ZD0wJm89MCZwPTM%3D
@@ -44,3 +40,9 @@ waybar & hyprland animations example: [[https://www.youtube.com/watch?v=zi2Nm5-0
 - [[https://github.com/Colepng/rice/blob/hyprland-winter/eww/scripts/notifications][notifications]] script example; maybe do another window with 'recent'
   notifications
 - [[https://github.com/RealStr1ke/dotfiles/blob/main/config/eww/hyprland/bar/modules/format.yuck][format widgets]] just in case
+** Todos
+- [ ] [[https://www.bypeople.com/css-neon-sign-effect/][implement]] blinking animation when [[https://github.com/elkowar/eww/issues/688][animation cpu]] issue will b resolved
+- [ ] make a hyprlang drop 'logo' appear on the left of my workspaces ([[https://www.bypeople.com/dissolve-css-filter-effect/][link]])
+- [ ] [[https://www.bypeople.com/aurora-boreal-footer-lights-animation-css/][this]] gradient animation under the clock?
+- [ ] [[https://www.bypeople.com/text-stroke-with-offset-shadow-css/][text stroke with offset]] for some background text elements
+- [ ] [[https://codepen.io/MaxStalker/pen/DJzybq][battery charging animation]] .. again when animations get fixed

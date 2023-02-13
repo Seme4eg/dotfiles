@@ -1,21 +1,26 @@
 .user-info {
   @extend %box;
   .layout {
+    font: 1.7em Iceland;
     letter-spacing: 4px;
-    font-size: 1.1em;
+    text-shadow: 3px 3px color.scale($foreground, $alpha: -60%);
   }
 
   .updates {
     .bg {
       opacity: .4;
       font-size: 2em;
-      // margin-top: -1px;
     }
     .fg {
-      font-size: 1.6em;
-      // color: $color3;
-      // font-weight: bold;
+      // font: bold 1.3em Megrim;
+      font-size: 1.3em;
+      color: color.scale($foreground, $saturation: 80%, $lightness: 100%);
     }
+  }
+  .weather {
+    font: bold 1.3em Megrim;
+    // font: 1.5em Iceland;
+    letter-spacing: 3px;
   }
 }
 
@@ -43,36 +48,48 @@
 }
 
 circular-progress {
-  color: $color6;
-  background: $color1;
+  color: color.scale($color6, $saturation: 60%);
+  background: color.scale($background, $lightness: 30%)
 }
 .circle-text {
   font-size: 1.3em;
   opacity: .5;
 }
 
+scale trough { padding: 0; margin: 0; min-width: 1px; };
+
 .telemetery {
   @extend %box;
   padding-top: 5px;
   padding-bottom: 5px;
-  // .cpu {
-  // }
+  padding-right: 10px;
   .load {
     color: $foreground;
     opacity: .5;
   }
   .temp {
-    color: $color6;
+    color: color.scale($color6, $saturation: 100%);
     opacity: .5;
   }
   .temp-text {
-    font-size: 2.4em;
-    opacity: .3;
-    margin-top: -8px;
+    // font-size: 2.4em;
+    font:1.4em Iceland;
+    opacity: .7;
   }
-}
+  .bat {
+    font:2em RubikWetPaint;
+    color: color.scale($foreground, $alpha: -20%);
+    &.charging {
+      text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
+                   0 0 10px color.scale($foreground, $lightness: -25%),
+                   0 0 20px color.scale($foreground, $lightness: -35%);
+      // text-shadow: 0 0 5px color.scale($foreground, $lightness: -15%),
+      //              0 0 8px color.scale($foreground, $lightness: -15%),
+      //              0 0 10px color.scale($foreground, $lightness: -15%),
+      //              0 0 15px color.scale($foreground, $lightness: -15%),
+      //              0 0 20px color.scale($foreground, $lightness: -25%);
 
-.volbar trough highlight {
-    background-image: linear-gradient(to right, #afcee0 30%, #92B6F4 50%, #77a5bf 100% *50);
-    border-radius: 10px;
+      }
+    }
+  }
 }
