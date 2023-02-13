@@ -1,7 +1,7 @@
 .user-info {
   @extend %box;
+  font: 1.7em Iceland;
   .layout {
-    font: 1.7em Iceland;
     letter-spacing: 4px;
     text-shadow: 3px 3px color.scale($foreground, $alpha: -60%);
   }
@@ -9,18 +9,19 @@
   .updates {
     .bg {
       opacity: .4;
-      font-size: 2em;
+      font-size: 2.3em;
+      margin-top: -14px;
     }
     .fg {
       // font: bold 1.3em Megrim;
-      font-size: 1.3em;
-      color: color.scale($foreground, $saturation: 80%, $lightness: 100%);
+      // color: color.scale($foreground, $saturation: 80%, $lightness: 100%);
+      text-shadow: 3px 3px color.scale($foreground, $alpha: -60%);
     }
   }
   .weather {
-    font: bold 1.3em Megrim;
     // font: 1.5em Iceland;
-    letter-spacing: 3px;
+    font-size: 0.9em;
+    letter-spacing: 2px;
   }
 }
 
@@ -31,32 +32,52 @@
     .bg {
       // @extend %back-text;
       font-size: 2.4em;
-      opacity: .3;
+      color: color.scale($foreground, $alpha: -60%);
       margin-top: -9px;
     }
     .fg {
-      font-size: .8em;
+      font: bold .9em Megrim;
     }
-    // .essid {
-    //   margin: 0;
-    //   padding: 0;
-    // }
+    .essid {
+      font: 1em Iceland;
+    }
+  }
+  .audio {
+    .volume, .mic {
+      // font: 1.2em Silkscreen;
+      font-size: .8em;
+      letter-spacing: 2px;
+      // line-height: 5px;
+    }
   }
   .backlight {
     transition: all 0.3s ease-in-out;
   }
 }
 
+progressbar {
+  padding: 6px 1px;
+  trough {
+    border-radius: 5px;
+    min-height: 1px;
+    min-width: 3px;
+    background: color.scale($background, $lightness: 30%)
+  }
+  progress {
+    border-radius: 5px;
+    min-width: 3px;
+    background: color.scale($color6, $saturation: 30%);
+  };
+}
+
 circular-progress {
-  color: color.scale($color6, $saturation: 60%);
+  color: color.scale($color6, $saturation: 30%);
   background: color.scale($background, $lightness: 30%)
 }
 .circle-text {
   font-size: 1.3em;
   opacity: .5;
 }
-
-scale trough { padding: 0; margin: 0; min-width: 1px; };
 
 .telemetery {
   @extend %box;
@@ -77,18 +98,16 @@ scale trough { padding: 0; margin: 0; min-width: 1px; };
     opacity: .7;
   }
   .bat {
-    font:2em RubikWetPaint;
+    font: 1.7em RubikWetPaint;
     color: color.scale($foreground, $alpha: -20%);
     &.charging {
-      text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
-                   0 0 10px color.scale($foreground, $lightness: -25%),
-                   0 0 20px color.scale($foreground, $lightness: -35%);
-      // text-shadow: 0 0 5px color.scale($foreground, $lightness: -15%),
-      //              0 0 8px color.scale($foreground, $lightness: -15%),
-      //              0 0 10px color.scale($foreground, $lightness: -15%),
-      //              0 0 15px color.scale($foreground, $lightness: -15%),
-      //              0 0 20px color.scale($foreground, $lightness: -25%);
-
+      text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
+                   0 0 10px color.scale($foreground, $lightness: -45%),
+                   0 0 15px color.scale($foreground, $lightness: -45%);
+      // more bright version
+      // text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
+      //              0 0 10px color.scale($foreground, $lightness: -25%),
+      //              0 0 20px color.scale($foreground, $lightness: -35%);
       }
     }
   }

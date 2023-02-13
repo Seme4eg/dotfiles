@@ -25,7 +25,9 @@ generate
 # main loop
 socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
   if [[ ${line%>>*} =~ (workspace|createworkspace|destroyworkspace) ]]; then
-    focusedws=${line#*>>}
+    # deskroyworkspace gets fires later than createworkspace, do not change
+    # focusedws on destroyworkspace, or it's gonna b bugged
+    [ ${line%>>*} != 'destroyworkspace' ] && focusedws=${line#*>>}
     generate
   fi
 done

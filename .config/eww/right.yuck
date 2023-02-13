@@ -52,7 +52,7 @@
 (defwidget _updates []
   (overlay :class "updates" :width 40
     (label :class "fg" :text "${updates_count}")
-    (label :class "bg" :text "")))
+    (label :class "bg" :text "")))
 
 (defwidget _weather []
   (label :class "weather" :yalign 0.56 :text weather))
@@ -72,12 +72,12 @@
     (box :class "network" :space-evenly false :spacing 8 :hexpand "false"
       (overlay :width 35
         (box :class "fg" :visible {net != ""} :orientation "v" :halign "start"
-         (label :text {up / 1024 < 1024 ?
-                          " ${round(up / 1024, 0)} Kb" :
-                          " ${round(up / 1048576, 0)} Mb"})
-         (label :text {down / 1024 < 1024 ?
-                       " ${round(down / 1024, 0)} Kb" :
-                       " ${round(down / 1048576, 0)} Mb"}))
+          (label :text {up / 1024 < 1024 ?
+                           " ${round(up / 1024, 0)} Kb" :
+                           " ${round(up / 1048576, 0)} Mb"})
+          (label :text {down / 1024 < 1024 ?
+                        " ${round(down / 1024, 0)} Kb" :
+                        " ${round(down / 1048576, 0)} Mb"}))
         (label
           :class "bg"
           :text {net == "" ? "󰤮" :
@@ -92,14 +92,31 @@
         (label :class "essid" :text ESSID_WLAN)))))
 
 (defwidget _audioblock []
-  (box :class "bat-box"
-    (label :text {volume.is_vol_muted == "true" ? "󰖁" :
-                  volume.vol_level < 20 ? "󰕿" :
-                  volume.vol_level < 50 ? "󰖀" : "󰕾"})
-    (label :text {volume.vol_level})
-    (scale :value {volume.vol_level} :orientation "v" :style "background: #ffffff" :width 3)
-    (label :text {volume.is_mic_muted == "true" ? "󰍭" : "󰍬"})))
-
+  (box :class "audio" :space-evenly false
+    (label
+      :class "volume"
+      :text {volume.is_vol_muted == "true" ? "󰖁" :
+             volume.vol_level < 20 ? "󰕿${volume.vol_level}" :
+             volume.vol_level < 50 ? "󰖀${volume.vol_level}" : "󰕾${volume.vol_level}"}
+      :angle 90)
+    (progress
+      :value {volume.vol_level}
+      :max 100
+      :orientation "v"
+      :flipped "true"
+      :halign "center")
+    (progress
+      :value {volume.mic_level}
+      :max 100
+      :orientation "v"
+      :flipped "true"
+      :halign "center")
+    (label
+      :class "mic"
+      :angle 270
+      :xalign 1
+      :text {volume.is_mic_muted == "true" ? "󰍭" : "${volume.mic_level}󰍬"})))
+    
 (defwidget _backlight []
   (overlay :class "backlight" :width 30
     (circular-progress

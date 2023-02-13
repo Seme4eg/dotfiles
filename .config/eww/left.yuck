@@ -32,4 +32,4 @@
     (label
       :limit-width 30
       :show_truncated true
-      :text window)))
+      :text {window == "" ? "_" : window})))
