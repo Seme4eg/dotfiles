@@ -32,3 +32,4 @@ node_modules/
 /.config/thefuck/
 /.config/font-manager/
 /.local/bin/scdl
+/.config/swaylock/

@@ -77,7 +77,6 @@ steam
 stow
 sudo
 swayidle
-swaylock
 syncthing
 texinfo
 thefuck

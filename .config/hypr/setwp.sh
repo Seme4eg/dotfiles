@@ -21,6 +21,10 @@ emacsclient -e "(load-theme 'ewal-doom-one)"
 
 eww reload
 
+# regenerate swaylock settings
+[ ! -d $XDG_CONFIG_HOME/swaylock ] && mkdir $XDG_CONFIG_HOME/swaylock
+mv -f $XDG_CACHE_HOME/wal/swaylock-config $XDG_CONFIG_HOME/swaylock/config
+
 # update mako theme
 . $XDG_CONFIG_HOME/mako/update-theme.sh
 

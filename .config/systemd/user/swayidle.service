@@ -2,7 +2,8 @@
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=/usr/bin/swayidle timeout 300 'swaylock -f -e -k -l -c 000000' timeout 600 'swaymsg "/usr/bin/hyprctl dispatch dpms off"' resume 'swaymsg "/usr/bin/hyprctl dispatch dpms on"' before-sleep '/usr/bin/swaylock -f -e -k -l -c 000000'
+# sometimes bugs out on waking up
+ExecStart=/usr/bin/swayidle timeout 300 'swaylock' timeout 600 'swaymsg "/usr/bin/hyprctl dispatch dpms off"' resume 'swaymsg "/usr/bin/hyprctl dispatch dpms on"' before-sleep '/usr/bin/swaylock'
 Type=simple
 
 [Unit]

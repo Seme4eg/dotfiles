@@ -18,6 +18,7 @@ python-pyclip
 python-pywalfox
 pywal-git
 rm-improved-git
+swaylock-effects-git
 timeshift
 waydroid-git
 webcord-git
