@@ -47,6 +47,11 @@
       letter-spacing: 2px;
       // line-height: 5px;
     }
+    .muted {
+      progress {
+        background: color.scale($color6, $lightness: -60%);
+      }
+    }
   }
   .backlight {
     transition: all 0.3s ease-in-out;

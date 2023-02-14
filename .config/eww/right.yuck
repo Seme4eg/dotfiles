@@ -43,7 +43,7 @@
   (box
       :class "user-info"
       :space-evenly false
-      :spacing 15
+      :spacing 13
       (_layout)
       (_updates)
       (_weather)))
@@ -104,12 +104,14 @@
              volume.vol_level < 50 ? "󰖀${volume.vol_level}" : "󰕾${volume.vol_level}"}
       :angle 90)
     (progress
+      :class {volume.is_vol_muted ? "muted" : ""}
       :value {volume.vol_level}
       :max 100
       :orientation "v"
       :flipped "true"
       :halign "center")
     (progress
+      :class {volume.is_mic_muted ? "muted" : ""}
       :value {volume.mic_level}
       :max 100
       :orientation "v"
