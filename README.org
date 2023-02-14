@@ -37,6 +37,9 @@
   - [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
   - *sound bs*
     - unmute audio channels in alsamixer and enable capture as well
+    - switch default mic to the one on your headphones cuz notebook mic is
+      usually crap: ~wpctl status~ - grab id of your mic (SOURCE device) - ~wpctl
+      set-default ...~
     - create =.asoundrc= to change default sound card
     - put ~options snd-sof-intel-hda-common hda_model=alc298-dell-aio~ in
       =/etc/modprobe.d/alsa-base.conf=
@@ -135,15 +138,9 @@ verification there. (without it google doesn't allow for external app passwords)
 ** Todos
 - setup [[https://github.com/nyyManni/dmenu-wayland][dmenu-wl]] and see which [[https://tools.suckless.org/dmenu/scripts/][scripts]] and patches i might need + [[https://github.com/sentriz/cliphist][cliphist]]
   bindings ain't finished
-- idle inhibitor - make it stop and start systemd swayidle service
-- somehow make wireplumber switch default mic on headphoned connect / disconnect
-- install custom [[https://aur.archlinux.org/packages?O=0&SeB=nd&K=icon-theme&outdated=&SB=n&SO=a&PP=250&submit=Go][icon theme]] (aur), then try to write a script that will output
-  json for eww with app, icon path so i can make something like 'systray'
 - write a script that will reduce boring typing when installing fresh system
-- install =nvidia-vaapi-driver-git= cuz webcord keeps crashing
 - setup bluetooth some day
 - migrate your dots to [[https://github.com/linuxpiper/ansible-arch-setup][ansible]]; juicy yamls and no nixos https://www.google.com/search?q=ansible+arch#fpstate=ive&vld=cid:06bb073a,vid:H0cpE1Q_9N0
-- life updating cursor doesn't work, need to restart compositor
 - write a script that cheks my current location every day and updates wlsunset
   systemd service *AND* systemtime if location differs ?much? from the one that
   was yesterday.
@@ -151,13 +148,10 @@ verification there. (without it google doesn't allow for external app passwords)
   [[https://github.com/Battlesquid/dotfiles][this repo]]
 - does my laptop support wifi 6 / 6e ? if yes how to enable it
 - tridactyl - how to enablel insert mod right away on youtube?
-- [[https://www.youtube.com/watch?v=IgvCwdinujY][setup]] conky, but first take a look at unixporn and other dots
 - write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
   in systray.
 
-- https://wiki.archlinux.org/title/Dotfiles#User_repositories
 - gamescope with wf no workie
-- [?] setup emacsclient as $PAGER
 
 ** TODO Guix [[https://guix.gnu.org][#link]]
 Instructions for installing a system from a Guix configuration can be found in
