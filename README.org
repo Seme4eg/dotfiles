@@ -137,6 +137,8 @@ verification there. (without it google doesn't allow for external app passwords)
   bindings ain't finished
 - idle inhibitor - make it stop and start systemd swayidle service
 - somehow make wireplumber switch default mic on headphoned connect / disconnect
+- install custom [[https://aur.archlinux.org/packages?O=0&SeB=nd&K=icon-theme&outdated=&SB=n&SO=a&PP=250&submit=Go][icon theme]] (aur), then try to write a script that will output
+  json for eww with app, icon path so i can make something like 'systray'
 - write a script that will reduce boring typing when installing fresh system
 - install =nvidia-vaapi-driver-git= cuz webcord keeps crashing
 - setup bluetooth some day

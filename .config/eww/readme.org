@@ -17,6 +17,8 @@ Fonts: [[https://www.nerdfonts.com/][nerd fonts]], [[https://archlinux.org/packa
 - [[https://github.com/Colepng/rice/blob/hyprland-winter/eww/scripts/notifications][notifications]] script example; maybe do another window with 'recent'
   notifications
 ** Todos
+- install custom [[https://aur.archlinux.org/packages?O=0&SeB=nd&K=icon-theme&outdated=&SB=n&SO=a&PP=250&submit=Go][icon theme]] (aur), then try to write a script that will output
+  json for eww with app, icon path so i can make something like 'systray'
 - [ ] write bash script that will render some kind of a taskbar matching
   application names from hyprland sockets and nerd font app icons
 - [ ] [[https://www.bypeople.com/css-neon-sign-effect/][implement]] blinking animation when [[https://github.com/elkowar/eww/issues/688][animation cpu]] issue will b resolved

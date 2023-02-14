@@ -84,11 +84,11 @@ circular-progress {
   padding-right: 10px;
   .load {
     color: $foreground;
-    opacity: .5;
+    opacity: .7;
   }
   .temp {
     color: color.scale($color6, $saturation: 100%);
-    opacity: .5;
+    opacity: .7;
   }
   .temp-text {
     // font-size: 2.4em;
