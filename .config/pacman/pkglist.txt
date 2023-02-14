@@ -7,7 +7,9 @@ bat
 bemenu-wayland
 binutils
 bison
+calf
 debugedit
+easyeffects
 efibootmgr
 entr
 fakeroot
@@ -37,6 +39,7 @@ linux
 linux-firmware
 linux-headers
 lshw
+lsp-plugins
 m4
 make
 mako
