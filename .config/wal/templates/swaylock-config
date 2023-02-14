@@ -8,8 +8,8 @@ daemonize
 ignore-empty-password
 show-keyboard-layout
 indicator-caps-lock
-font=Megrim
-font-size=40px
+font=TrainOne
+font-size=50px
 
 # Sets the indicator radius. The default value is 50.
 # indicator-radius <radius>
@@ -24,7 +24,7 @@ font-size=40px
 
 clock
 indicator
-# grace=5
+grace=5
 effect-blur=8x2 # radius x times
 
 # ------ theming ------
@@ -34,20 +34,20 @@ image={wallpaper}
 # colors ea00ff 00e1ff (for testing)
 
 # --- backspace highlight segments ---
-bs-hl-color={color5.strip}88
-caps-lock-bs-hl-color={color5.strip}88
+bs-hl-color={color5.strip}99
+caps-lock-bs-hl-color={color5.strip}99
 
 # --- key press highlight segments ---
-key-hl-color={color6.strip}88
-caps-lock-key-hl-color={color6.strip}
+key-hl-color={color6.strip}99
+caps-lock-key-hl-color={color6.strip}dd
 
 # --- inside of the indicator ---
 inside-color={background.strip}77
 inside-clear-color={background.strip}55
-inside-caps-lock-color={background.strip}aa
+inside-caps-lock-color={background.strip}99
 # verifying
-inside-ver-color={background.strip}cc
-inside-wrong-color={background.strip}ee
+inside-ver-color={background.strip}77
+inside-wrong-color={background.strip}99
 
 # --- box containing the layout text ---
 layout-bg-color=00000000
@@ -68,8 +68,9 @@ ring-color={background.strip}22
 # cleared
 ring-clear-color={background.strip}55
 ring-caps-lock-color={background.strip}22
-ring-ver-color=00000000 # verifying
-ring-wrong-color={background.strip}55
+# verifying
+ring-ver-color=00000000
+ring-wrong-color={background.strip}99
 
 # --- lines that separate highlight segments ---
 separator-color=00000000
