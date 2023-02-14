@@ -1,48 +1,23 @@
 #+title: Readme
 
-Important references: [[https://elkowar.github.io/eww/eww.html][eww github]], [[https://docs.gtk.org/gtk3/css-properties.html][gtk css]]
+Important references: [[https://elkowar.github.io/eww/eww.html][eww github]], [[https://docs.gtk.org/gtk3/css-properties.html][gtk css]], [[https://sass-lang.com/documentation/modules/color#scale][sass modules]]
 
-examples:
-- https://github.com/adi1090x/widgets
-- https://github.com/owenrumney/eww-bar
-- https://github.com/iSparsh/gross
-- DONE https://github.com/Saimoomedits/eww-widgets
-- https://github.com/Axarva/dotfiles-2.0
-- https://github.com/rxyhn/tokyo
-- https://github.com/elkowar/eww/tree/master/examples/eww-bar
-- https://github.com/druskus20/eugh
+How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]]
 
-css snippets:
-- https://www.bypeople.com/css-snippets/
-- https://tympanus.net/codrops/
-- https://codepen.io/MaxStalker/pen/DJzybq
-- https://codepen.io/trending?cursor=ZD0wJm89MCZwPTM%3D
-- https://animate.style/
+css ideas: [[https://www.bypeople.com/css-snippets/][bypeople]]
 
-Font problems:
-- https://www.nerdfonts.com/font-downloads
-- https://archlinux.org/packages/?sort=&repo=Community&q=-nerd
-- https://github.com/phosphor-icons/web/tree/master/src/fonts
-
-# install whatever font(s) u'll b using in ur system / eww bar
-
------
-
-waybar & hyprland animations example: [[https://www.youtube.com/watch?v=zi2Nm5-0PYY][video]] & [[https://github.com/flick0/dotfiles/blob/aurora/config/hypr/component/waybar/style.css][dots]]
+Fonts: [[https://www.nerdfonts.com/][nerd fonts]], [[https://archlinux.org/packages/?sort=&repo=Community&q=-nerd][nerd fonts aur]]
 
 ** Hyprland ppl dots
 - [X] https://github.com/iamverysimp1e/dots
 - [X] https://github.com/Colepng/rice/tree/hyprland-winter/eww
 
 ** Notes
-- [[https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/airplane][airplane mode script]]
 - [[https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/bluetooth][bluetooth script]]
 - [[https://github.com/Colepng/rice/blob/hyprland-winter/eww/scripts/notifications][notifications]] script example; maybe do another window with 'recent'
   notifications
-- [[https://github.com/RealStr1ke/dotfiles/blob/main/config/eww/hyprland/bar/modules/format.yuck][format widgets]] just in case
 ** Todos
+- [ ] write bash script that will render some kind of a taskbar matching
+  application names from hyprland sockets and nerd font app icons
 - [ ] [[https://www.bypeople.com/css-neon-sign-effect/][implement]] blinking animation when [[https://github.com/elkowar/eww/issues/688][animation cpu]] issue will b resolved
-- [ ] make a hyprlang drop 'logo' appear on the left of my workspaces ([[https://www.bypeople.com/dissolve-css-filter-effect/][link]])
-- [ ] [[https://www.bypeople.com/aurora-boreal-footer-lights-animation-css/][this]] gradient animation under the clock?
 - [ ] [[https://www.bypeople.com/text-stroke-with-offset-shadow-css/][text stroke with offset]] for some background text elements
-- [ ] [[https://codepen.io/MaxStalker/pen/DJzybq][battery charging animation]] .. again when animations get fixed

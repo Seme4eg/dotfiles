@@ -2,26 +2,24 @@
   @extend %box;
   font: 1.7em Iceland;
   .layout {
+    @extend %shadow-text;
     letter-spacing: 4px;
-    text-shadow: 3px 3px color.scale($foreground, $alpha: -60%);
   }
 
   .updates {
     .bg {
       opacity: .4;
       font-size: 2.3em;
-      margin-top: -14px;
+      margin-top: -15px;
     }
     .fg {
-      // font: bold 1.3em Megrim;
-      // color: color.scale($foreground, $saturation: 80%, $lightness: 100%);
-      text-shadow: 3px 3px color.scale($foreground, $alpha: -60%);
+      @extend %shadow-text;
     }
   }
   .weather {
     // font: 1.5em Iceland;
-    font-size: 0.9em;
-    letter-spacing: 2px;
+    font-size: 0.7em;
+    letter-spacing: 1px;
   }
 }
 

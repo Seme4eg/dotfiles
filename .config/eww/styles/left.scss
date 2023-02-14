@@ -44,6 +44,19 @@
   // animation: blink 12s infinite;
 }
 
+.player {
+  @extend %box;
+  &_hidden {
+    background: transparent;
+    box-shadow: none;
+  }
+  label {
+    @extend %shadow-text;
+    font: bold 1.2em Megrim;
+    letter-spacing: 2px;
+  }
+}
+
 @keyframes fontsize {
   100% {
     font-size: 2em;

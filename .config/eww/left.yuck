@@ -1,6 +1,16 @@
 (deflisten workspaces "scripts/workspaces")
 (deflisten window "scripts/window")
 
+;; track cover script:
+;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/music.yuck
+;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/music
+(deflisten player :initial ""
+  "playerctl -F metadata -f '{{ artist }} - {{ title }}' || true")
+
+(deflisten player_state :initial ""
+  "playerctl -F metadata -f '{{ status }}' || true")
+
+
 (defwidget container_left []
   (box
     :class "left_container"
@@ -11,7 +21,8 @@
     ;; (_launcher) ;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/launcher.yuck
     (_workspaces)
     ;; TODO: wlr/taskbar
-    (_window)))
+    (_window)
+    (_player)))
 
 ;; (defvar ws-icons '["一", "a", "b", "c", "d"]')
 (defwidget _workspaces []
@@ -33,3 +44,17 @@
       :limit-width 30
       :show_truncated true
       :text {window == "" ? "_" : window})))
+
+(defwidget _player []
+  (_revealer
+    ;; :class {player_state == 'Playing' ? "player" : "player player_hidden"}
+    ;; :revealvar {player_state == 'Playing'}
+    :class {player_state != "" ? "player" : "player player_hidden"}
+    :revealvar {player_state != ""}
+    :transition "crossfade"
+    (box)
+    (label
+      :limit-width 30
+      :show-truncated true
+      :width 100
+      :text "${player_state == 'Playing' ? '' : ''} ${player}")))

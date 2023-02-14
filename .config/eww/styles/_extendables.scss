@@ -13,3 +13,7 @@
   color: color.scale($foreground, $alpha: -60%);
   margin-top: -17px;
 }
+
+%shadow-text {
+  text-shadow: 3px 3px color.scale($foreground, $alpha: -60%);
+}

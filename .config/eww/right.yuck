@@ -10,13 +10,14 @@
 ;; polls
 (defpoll updates_count :interval "3600s" "checkupdates | wc -l")
 (defpoll steam_running :interval "10s" "pgrep steam | wc -l") ;; for gpu
-;; Weather with detailed forecast
-;; https://gist.github.com/bjesus/f8db49e1434433f78e5200dc403d58a3)
-(defpoll weather :interval "3600s" "curl 'https://wttr.in/?format=1' | sed 's/  *//g'")
+;; https://github.com/chubin/wttr.in#one-line-output
+;; (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=j2'") ;; JSON
+;; %f for 'feels like' and %w for wind and arrow-direction
+(defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=%x+%t+%w'")
 
 (defpoll ESSID_WLAN :interval "1m" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
-;; FIXME: don't like the 100s thing, i'd use listening variable here or smth
-(defpoll net :interval "100s"
+(defpoll vpnstatus :interval "3s" "systemctl is-active openvpn-client@client.service")
+(defpoll net :interval "10s"
   :initial 'N/A'
   `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print $1}'`)
 
@@ -55,7 +56,8 @@
     (label :class "bg" :text "")))
 
 (defwidget _weather []
-  (label :class "weather" :yalign 0.56 :text weather))
+  (label :class "weather"
+    :text {weather}))
 
 ;; --- System info block ---
 
@@ -81,6 +83,7 @@
         (label
           :class "bg"
           :text {net == "" ? "󰤮" :
+                 vpnstatus == "active" ? "󰖂" :
                  net < 26 ? "󰤟" :
                  net < 51 ? "󰤢" :
                  net < 76 ? "󰤥" : "󰤨"}))
@@ -130,12 +133,9 @@
 
 (defwidget _telemetery []
   (box :class "telemetery" :space-evenly false :spacing 18
-    ;; didn't come up with better way of doing it, 'expander' and 'revealer'
-    ;; were keeping the width of a widget instead of fully hide it
-    ;; (defvar telemetery_yuck )
-    (_cpu)
-    ;; (expander :expanded {steam_running != 0}
-    ;;   (_gpu))
+    (_revealer :revealvar {steam_running != 0}
+      (_cpu)
+      (_gpu))
     (_mem)
     (_battery :capacity {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
 
@@ -147,7 +147,6 @@
       :width 55
       :time-range "30s"
       :max 100
-      ;; :dynamic true
       :line-style "round")
     (graph :class "temp"
       :value {EWW_TEMPS.ACPITZ_TEMP1}
@@ -156,7 +155,6 @@
       :time-range "30s"
       :min 40
       :max 120
-      ;; :dynamic true
       :line-style "round")
     (label :yalign 0 :xalign 1 :class "temp-text" :text "${EWW_TEMPS.ACPITZ_TEMP1}°")))
 
@@ -168,19 +166,17 @@
       :width 55
       :time-range "1m"
       :max 100
-      :dynamic true
       :line-style "round")
     (graph :class "temp"
       :value {gpu.temp}
       :thickness 3
       :width 55
-      :style "color: red"
+      :style "color: cyan"
       :time-range "1m"
       :min 30
       :max 100
-      :dynamic true
       :line-style "round")
-    (label :class "temp-text" :text "${gpu.temp}°")))
+    (label :class "temp-text" :yalign 0 :xalign 1 :text "${gpu.temp}°")))
 
 (defwidget _mem []
   (overlay :class "memory" :width 30
