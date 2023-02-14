@@ -4,7 +4,6 @@ autoconf
 automake
 base
 bat
-bemenu-wayland
 binutils
 bison
 calf

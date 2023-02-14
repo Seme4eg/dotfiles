@@ -1,7 +1,6 @@
 binder_linux-dkms
 brillo
 cliphist
-dmenu-wayland-git
 dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
 eww-wayland-git
@@ -18,6 +17,7 @@ python-pyclip
 python-pywalfox
 pywal-git
 rm-improved-git
+rofi-lbonn-wayland-git
 swaylock-effects-git
 timeshift
 waydroid-git

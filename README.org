@@ -81,7 +81,7 @@ Wants=graphical-session-pre.target;
 After=graphical-session-pre.target;
 #+end_src
 
-*Nvidia* setup: *DO NOT FOLLOW HYPRLAND WIKI*, first try to install just normal,
+*Nvidia* setup: *DO NOT FOLLOW HYPRLAND WIKI* yet, first try to install just normal,
 proprietary =nvidia= package, do not add anything in grub conf or mkinitcpio, JUST
 TRY TO LAUNCH IT WITH NVIDIA (using ~starthl~ ofc). If it runs, then enable drm in
 grub conf and you're done.
@@ -89,13 +89,6 @@ grub conf and you're done.
 there are 2 checks in aliases, 1st one should show 2 vda things, on your gpu the
 'driver' field must show NOT nouveau, if it does - check both modprobes if those
 are blocking nouveau and if they don't - add block rule and regenerate modprobe.
-
-- *dependencies*:
- - *pacman*: alacritty grim slurp swaylock swayidle mako
-   pipewire wireplumber polkit-kde-agent qt5-wayland qt6-wayland wl-clipboard
-   otf-font-awesome pacman-contrib qt5ct libva
- - *yay*: xdg-desktop-portal-hyprland-git wlsunset-git brillo hyprpaper-git
-   webcord bemenu-git brillo hyprland-git eww-wayland-git
 
 *** emacs
 deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
@@ -136,22 +129,24 @@ verification there. (without it google doesn't allow for external app passwords)
 - plocate-updatedb.timer
 
 ** Todos
-- setup [[https://github.com/nyyManni/dmenu-wayland][dmenu-wl]] and see which [[https://tools.suckless.org/dmenu/scripts/][scripts]] and patches i might need + [[https://github.com/sentriz/cliphist][cliphist]]
-  bindings ain't finished
-- write a script that will reduce boring typing when installing fresh system
-- setup bluetooth some day
-- migrate your dots to [[https://github.com/linuxpiper/ansible-arch-setup][ansible]]; juicy yamls and no nixos https://www.google.com/search?q=ansible+arch#fpstate=ive&vld=cid:06bb073a,vid:H0cpE1Q_9N0
-- write a script that cheks my current location every day and updates wlsunset
-  systemd service *AND* systemtime if location differs ?much? from the one that
-  was yesterday.
-- take a look at [[https://www.chezmoi.io/#i-like-chezmoi-how-do-i-say-thanks][chezmoi]] dotfile manager, and one-line installer script from
-  [[https://github.com/Battlesquid/dotfiles][this repo]]
-- does my laptop support wifi 6 / 6e ? if yes how to enable it
+- setup rofi, port [[https://github.com/sentriz/cliphist][cliphist]] to it and setup bindings for it
 - tridactyl - how to enablel insert mod right away on youtube?
-- write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
-  in systray.
+- write pacman hook which will check if i have sda connected and timeshift
+  detects it's backup image on it and before updating packages will overwrite a
+  backup
 
 - gamescope with wf no workie
+- setup bluetooth some day
+- maybe some day move to [[https://www.chezmoi.io/#i-like-chezmoi-how-do-i-say-thanks][chezmoi]] dotfile manager, to be able to ~chezmoi init
+  --apply https://github.com/Battlesquid/dotfiles.git~. Tho for now i am not
+  super hyped bout this thing cuz symlinks work fine for me.
+- scripts to write:
+  - write a script that will reduce boring typing when installing fresh system
+  - write a script that cheks my current location every day and updates wlsunset
+    systemd service *AND* systemtime if location differs ?much? from the one that
+    was yesterday.
+  - write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
+    in systray.
 
 ** TODO Guix [[https://guix.gnu.org][#link]]
 Instructions for installing a system from a Guix configuration can be found in
