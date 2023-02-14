@@ -10,6 +10,7 @@
 ;; polls
 (defpoll updates_count :interval "3600s" "checkupdates | wc -l")
 (defpoll steam_running :interval "10s" "pgrep steam | wc -l") ;; for gpu
+(defpoll swayidle_status :interval "10000s" "systemctl --user is-active swayidle.service")
 ;; https://github.com/chubin/wttr.in#one-line-output
 ;; (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=j2'") ;; JSON
 ;;%x for text icon of weather; %f for 'feels like' and %w for wind and arrow-direction
@@ -121,13 +122,16 @@
       :text {volume.is_mic_muted == "true" ? "󰍭" : "${volume.mic_level}󰍬"})))
     
 (defwidget _backlight []
-  (overlay :class "backlight" :width 30
-    (circular-progress
-      :value backlight
-      :start-at 0
-      :thickness 3
-      :clockwise true)
-    (label :class "circle-text" :text "󰃝")))
+  (eventbox :onclick "toggle-idling"
+    (overlay :class "backlight" :width 30
+      (circular-progress
+        :value backlight
+        :start-at 0
+        :thickness 3
+        :clockwise true)
+      (label
+        :class "circle-text yes"
+        :text {swayidle_status == 'active' ? "󰃝" : ""}))))
 
 ;; --- telemetery block ---
 
