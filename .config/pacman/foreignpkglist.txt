@@ -20,6 +20,7 @@ rm-improved-git
 rofi-lbonn-wayland-git
 swaylock-effects-git
 timeshift
+timeshift-autosnap
 waydroid-git
 webcord-git
 wlsunset-git
