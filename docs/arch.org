@@ -1,0 +1,132 @@
+#+title: Arch
+
+** Installation & post-install configuring
+- follow official arch installation guide
+- Connect to the internet step
+  - activate wifi adapter - ~ip link set <adapter_name (wlan0?)> up~
+  - if it's blocked - ~rfkill unblock wifi~
+  - repeat 1st step
+  - connmanctl -> scan wifi -> services
+  - register the agent to handle user requests - ~agent on~
+  - connect wifi_<tab>_<first3numbers><tab>
+- disk partitioning -> see the child header below
+- on pacstrap step i did: ~pacstrap -K /mnt base base-devel linux linux-firmware
+  linux-headers sof-firmware networkmanager vim man-db man-pages texinfo~
+  - on pacstrap step there is an instruction 'userspace utilities for the
+    management of file systems that will be used on the system' which links to
+    file systems article, where i didn't find much info, but might've missed
+    smth
+- ...
+- bootloader step:
+  - pacman -S grub efibootmgr
+  - install =amd-ucode= or =intel-ucode= And rerun ~grub-mkconfig -o
+    /boot/grub/grub.cfg~
+- *after reboot*:
+  - systemctl enable --now NetworkManager -> nmtui
+  - pacman -S zsh fzf wget zoxide
+  - useradd -m -G wheel -s /bin/zsh earthian
+  - passwd earthian
+  - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
+  - (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
+    something won't work go to 'udev' page from this link
+  - ~EDITOR=vim visudo~ -> uncomment wheel
+  - uncomment Color, VerbosePkgLists & ParallelDownloads in /etc/pacman.conf
+  - pacman -S git openssh, [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]], clone dotfiles, install and run
+    ~mkdir ~/.local && stow .~ cuz we don't wana steam and other apps flood our
+    local/share folder so emacs project caching rips
+  - [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
+  - *sound bs*
+    - unmute audio channels in alsamixer and enable capture as well
+    - switch default mic to the one on your headphones cuz notebook mic is
+      usually crap: ~wpctl status~ - grab id of your mic (SOURCE device) - ~wpctl
+      set-default ...~
+    - create =.asoundrc= to change default sound card
+    - put ~options snd-sof-intel-hda-common hda_model=alc298-dell-aio~ in
+      =/etc/modprobe.d/alsa-base.conf=
+    - but still webcord is dumb and better install pavucontrol and see in record
+      and input tabs what you can do to make webcord use external mic
+
+*** Partition the disks
+- check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
+  loop or airoot may be ignored.)
+
+**** Using cfdisk
+- cfdisk /dev/sd<something>?
+- delete all partitions
+- write -> yes
+- new -> 512M -> type -> EFI system
+- choose free space -> new -> <enter> -> type remains linux filesystem
+- write -> yes -> quit
+
+**** Using fdisk
+- ~p~ - list all partitions that u currently have
+- ~g~ - create new gpt-partition table (or ~d~ to delete particular ones)
+- ~n[ew]~ -> 1 (default) -> 2048 (default) -> +1G (efi partition) (tho wiki
+  recommends +512M)
+- ~n~ -> 3x enter (root partition)
+- ~t[ype]~ -> 1st partition (efi one) -> l[ist] to get all available types ->
+  choose EFI system
+- set root partition type to /Linux filesystem/
+- ~p~ -> check which partitions you ended up with
+- ~w[rite]~ if everything is as u want
+
+*** hyprland
+create =/etc/systemd/system/hyprland-session.target= with contents:
+#+begin_src
+[Unit]
+Description=Hyprland Compositor Session;
+Documentation=man:systemd.special(7);
+BindsTo=graphical-session.target;
+Wants=graphical-session-pre.target;
+After=graphical-session-pre.target;
+#+end_src
+
+*Nvidia* setup: *DO NOT FOLLOW HYPRLAND WIKI* yet, first try to install just normal,
+proprietary =nvidia= package, do not add anything in grub conf or mkinitcpio, JUST
+TRY TO LAUNCH IT WITH NVIDIA (using ~starthl~ ofc). If it runs, then enable drm in
+grub conf and you're done.
+
+there are 2 checks in aliases, 1st one should show 2 vda things, on your gpu the
+'driver' field must show NOT nouveau, if it does - check both modprobes if those
+are blocking nouveau and if they don't - add block rule and regenerate modprobe.
+
+*** emacs
+deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
+(for stickers and symbols to work)
+
+**** mu4e
+Make sure gpg is set up. Instructions can be found either in =pass= section below
+or in [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][this article]]
+
+Then proceed to mu4e documentation of doom emacs, then open [[file:~/.doom.d/utils/mu4e.org::*Compose & send email][my notes]] file and
+follow instructions there. Just don't install /mu-git/, it's broken atm.
+
+Things should work now.
+
+Fow now i am not using gmail in mu4e since i don't want to enable 2-step
+verification there. (without it google doesn't allow for external app passwords)
+
+*** pass
+- copy secret2.gpg from wherever you have it stored and run ~gpg --import
+  secret2.gpg~
+- set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
+- install pass and it should work right away.
+- for browser extension [[https://github.com/passff/passff#installation][PassFF]] install its [[https://github.com/passff/passff-host][backend]] and in [[file:~/.mozilla/native-messaging-hosts/passff.py][passff.py]] script file
+  add to COMMAND_ENV ~"PASSWORD_STORE_DIR":
+  "/home/earthian/.local/share/password-store"~. Things should work now
+- emacs doesn't know about =$PASSWORD_STORE_DIR= env var so you can either move it
+  from XDG_DATA_HOME dir to ~/ directory and omit the previous step with editing
+  passff.py file and delete the env var so everything is stock or just link
+  =password-store= dir to =~/.password-store= and emacs will b fine.. (don't forget
+  to rename tho first) and it seems that there just needs to be a directory,
+  emacs's pass buffer is still somehow seeing proper password store dir.
+*** fingerprint sensor
+https://wiki.archlinux.org/title/fprint
+
+my xiaomi notebook pro x 2021 fingerprint sensor won't prob ever b supported
+tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
+
+*** Enabled systemd services:
+- systemd-timesyncd.service
+- plocate-updatedb.timer
+- all user services in config/systemd folder, enable those with ~scue --now all~
