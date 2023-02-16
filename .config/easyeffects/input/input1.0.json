@@ -184,7 +184,7 @@
                 },
                 "band20": {
                     "frequency": 1680.47,
-                    "gain": -8.37,
+                    "gain": -26.37,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 4.36,
@@ -511,7 +511,7 @@
                 },
                 "band20": {
                     "frequency": 1680.47,
-                    "gain": -8.37,
+                    "gain": -26.37,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 4.36,
@@ -711,13 +711,27 @@
             "output-gain": 0.0,
             "resonance": -3.0
         },
+        "pitch#0": {
+            "bypass": true,
+            "cents": 0,
+            "detector": "Compound",
+            "formant": "Shifted",
+            "input-gain": 0.0,
+            "mode": "HighSpeed",
+            "octaves": 0,
+            "output-gain": 0.0,
+            "phase": "Laminar",
+            "semitones": 10,
+            "transients": "Crisp"
+        },
         "plugins_order": [
             "compressor#0",
             "filter#0",
             "speex#0",
             "rnnoise#0",
             "deesser#0",
-            "equalizer#0"
+            "equalizer#0",
+            "pitch#0"
         ],
         "rnnoise#0": {
             "bypass": false,
@@ -727,16 +741,16 @@
         },
         "speex#0": {
             "bypass": false,
-            "enable-agc": false,
+            "enable-agc": true,
             "enable-denoise": true,
-            "enable-dereverb": false,
+            "enable-dereverb": true,
             "input-gain": 0.0,
             "noise-suppression": -40,
-            "output-gain": 5.0,
+            "output-gain": 0.0,
             "vad": {
                 "enable": true,
                 "probability-continue": 90,
-                "probability-start": 90
+                "probability-start": 95
             }
         }
     }
