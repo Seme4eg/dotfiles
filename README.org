@@ -1,24 +1,22 @@
 #+title: dots never come to a dot..
 
+** TODO 'How it looks' section + what's used
 ** TODO Bootstrapping
 
-** Todos
-- setup rofi, port [[https://github.com/sentriz/cliphist][cliphist]] to it and setup bindings for it
-- [[https://github.com/ammen99/wf-recorder][wf-recorder]] and share setup
-- tridactyl - how to enablel insert mod right away on youtube?
-- write pacman hook which will check if i have sda connected and timeshift
-  detects it's backup image on it and before updating packages will overwrite a
-  backup
+** Todos [0/5]
+*** TODO setup rofi, port [[https://github.com/sentriz/cliphist][cliphist]] to it and setup bindings for it
+*** TODO [[https://github.com/ammen99/wf-recorder][wf-recorder]] and share setup
+*** TODO tridactyl - how to enablel insert mod right away on youtube?
+*** TODO setup bluetooth some day (with rofi?)
+*** TODO scripts to write
+- [ ] write a script that cheks my current location every day and updates wlsunset
+  systemd service *AND* systemtime if location differs ?much? from the one that
+  was yesterday.
+- [ ] write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
+  in systray.
 
-- gamescope with wf no workie
-- setup bluetooth some day
-- maybe some day move to [[https://www.chezmoi.io/#i-like-chezmoi-how-do-i-say-thanks][chezmoi]] dotfile manager, to be able to ~chezmoi init
+*** Long term 'todos'
+- [ ] gamescope with wf no workie
+- [ ] maybe some day move to [[https://www.chezmoi.io/#i-like-chezmoi-how-do-i-say-thanks][chezmoi]] dotfile manager, to be able to ~chezmoi init
   --apply https://github.com/Battlesquid/dotfiles.git~. Tho for now i am not
   super hyped bout this thing cuz symlinks work fine for me.
-- scripts to write:
-  - write a script that cheks my current location every day and updates wlsunset
-    systemd service *AND* systemtime if location differs ?much? from the one that
-    was yesterday.
-  - write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
-    in systray.
-
