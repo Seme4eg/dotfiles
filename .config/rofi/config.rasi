@@ -1,0 +1,37 @@
+configuration {
+	// cache-dir: ; // passing from binding cuz no $XDG_.. here
+	combi-modes: "window,drun,run";
+	drun-show-actions: false;
+  icon {
+      theme: "hicolor";
+  }
+
+	kb-accept-entry: "Control+m,Return,KP_Enter";
+/*	kb-cancel: "Escape,Control+g,Control+bracketleft";*/
+	kb-mode-next: "Control+Shift+j,Control+Tab";
+	kb-mode-previous: "Shift+Control+n,Control+ISO_Left_Tab";
+	kb-remove-to-eol: ""; // needed to unset for 'down' binding to work
+	kb-row-down: "Control+j,Control+n";
+	kb-row-up: "Control+k,Control+p";
+/*	kb-screenshot: "Alt+S";*/
+
+// monitor to display on
+	matching: "normal"; // fuzzy
+	max-history-size: 150;
+	modes: "combi,run,keys";
+	scroll-method: 1;
+	show-icons: false;
+	sidebar-mode: true;
+/*	sort: false;*/
+/*	sorting-method: "normal";*/
+/*	steal-focus: false;*/
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+}
+
+// @import "~/.cache/wal/colors-rofi-dark"
+// @import "~/.cache/wal/colors-rofi-light"
+
+@import "styles.rasi"

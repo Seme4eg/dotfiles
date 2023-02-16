@@ -1,0 +1,8 @@
+
+window {
+	font: "Hubballi 16";
+  padding:       8;
+  border:        3;
+  border-radius: 13px;
+  transparency: "real";
+}
