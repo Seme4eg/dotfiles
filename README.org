@@ -120,6 +120,11 @@ verification there. (without it google doesn't allow for external app passwords)
   =password-store= dir to =~/.password-store= and emacs will b fine.. (don't forget
   to rename tho first) and it seems that there just needs to be a directory,
   emacs's pass buffer is still somehow seeing proper password store dir.
+*** fingerprint sensor
+https://wiki.archlinux.org/title/fprint
+
+my xiaomi notebook pro x 2021 fingerprint sensor won't prob ever b supported
+tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
 
 ** Arch notes / useful links
 [[https://wiki.archlinux.org/title/systemd][systemd commands]]
@@ -130,6 +135,7 @@ verification there. (without it google doesn't allow for external app passwords)
 
 ** Todos
 - setup rofi, port [[https://github.com/sentriz/cliphist][cliphist]] to it and setup bindings for it
+- [[https://github.com/ammen99/wf-recorder][wf-recorder]] and share setup
 - tridactyl - how to enablel insert mod right away on youtube?
 - write pacman hook which will check if i have sda connected and timeshift
   detects it's backup image on it and before updating packages will overwrite a
