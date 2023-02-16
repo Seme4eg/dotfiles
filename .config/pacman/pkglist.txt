@@ -17,7 +17,6 @@ file
 findutils
 firefox
 flex
-font-manager
 fzf
 gawk
 gcc
