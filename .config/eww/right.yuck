@@ -16,7 +16,7 @@
 ;;%x for text icon of weather; %f for 'feels like' and %w for wind and arrow-direction
 (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=%t+%w'")
 
-(defpoll ESSID_WLAN :interval "1m" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
+(defpoll ESSID_WLAN :interval "3s" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
 (defpoll vpnstatus :interval "3s" "systemctl is-active openvpn-client@client.service")
 (defpoll net :interval "10s"
   :initial 'N/A'
