@@ -1,0 +1,136 @@
+* {{
+  background: {background}dd;
+  foreground: {foreground}ee;
+  accent-a: {color5};
+  accent-a-op: {color5}99;
+  accent-b: {color6};
+  accent-b-op: {color6}99;
+  border-color: {foreground}88;
+  text-color: @foreground;
+
+  // font: "Hubballi 16";
+  // font: "Source Code Pro 12";
+  font: "Silkscreen 13";
+}}
+
+#window {{
+  background-color: @background;
+  border: 1;
+  border-color: @accent-a-op;
+  border-radius: 13px;
+  padding: 8;
+}}
+
+#mainbox {{
+  border: 0;
+  padding: 0;
+}}
+
+#message {{
+  border: 2px 0px 0px;
+  border-color: @border-color;
+  padding: 1px;
+}}
+
+#textbox {{
+  text-color: @foreground;
+}}
+
+#inputbar {{
+  padding: 8 0 14 0;
+  children: [ textbox-prompt-colon,entry,case-indicator ];
+}}
+
+entry {{
+  cursor: text;
+  spacing: 0;
+  placeholder-color: #a1bfe755;
+  placeholder: "";
+}}
+
+#textbox-prompt-colon {{
+  expand: false;
+  str: "┻┳|･_･)ﾉ";
+  margin: 0em 0.3em 0em 0em;
+  text-color: @accent-a;
+}}
+
+#listview {{
+  fixed-height: 0;
+  border: 1px dash 0px 0px;
+  border-color: @border-color;
+  spacing: 0px;
+  scrollbar: false;
+  padding: 2px 0px 0px;
+  lines: 8;
+}}
+
+#element {{
+  padding: 12px;
+}}
+
+#element-text, element-icon {{
+  background-color: transparent;
+  text-color:       inherit;
+}}
+
+element.normal.normal, element.alternate.normal {{
+  background-color: inherit;
+  text-color: @foreground;
+}}
+
+element.normal.urgent, element.alternate.urgent {{
+  background-color: inherit;
+  /* text-color: @urgent-foreground; */
+}}
+
+element.normal.active, element.alternate.active {{
+  background-color: inherit;
+  text-color: @accent-b-op;
+}}
+
+element.selected.normal, element.selected.active {{
+  border: 0 0 0 3;
+  border-color: @accent-b;
+  background-color: inherit;
+  text-color: @accent-b;
+  border-color: @accent-b;
+}}
+
+#element.selected.active {{
+  text-color: @accent-b-op;
+}}
+
+#sidebar {{
+  border: 2px 0px 0px;
+  border-color: @border-color;
+}}
+
+#case-indicator {{
+  spacing: 0;
+}}
+
+#entry {{
+  spacing: 0;
+  text-color: @foreground;
+}}
+
+#button {{
+  padding: 3 0;
+  margin: 4 0 0 0;
+  border-radius: 4px;
+  border: 1;
+  border-color: transparent;
+  text-color: inherit;
+}}
+
+#button.selected {{
+  background-color: inherit;
+  border-color: @accent-a-op;
+  text-color: inherit;
+}}
+
+#prompt {{
+  spacing: 0;
+  text-color: @foreground;
+}}

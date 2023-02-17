@@ -1,15 +1,28 @@
+// 'rofi -dump-theme' to see all config keys
+
 configuration {
 	// cache-dir: ; // passing from binding cuz no $XDG_.. here
 	combi-modes: "window,drun,run";
 	drun-show-actions: false;
+  lines: 5;
   icon {
       theme: "hicolor";
   }
+	display-window: "[w]";
+	display-run: "[r]";
+	display-drun: "[d]";
+	window-format: "{w}{c}{t}";
+
+/*	display-combi: ;*/
+	display-keys: "[k]";
+/*	display-filebrowser: ;*/
 
 	kb-accept-entry: "Control+m,Return,KP_Enter";
 /*	kb-cancel: "Escape,Control+g,Control+bracketleft";*/
-	kb-mode-next: "Control+Shift+j,Control+Tab";
-	kb-mode-previous: "Shift+Control+n,Control+ISO_Left_Tab";
+  kb-mode-complete: ""; // ctrl+l was here
+	kb-mode-next: "Control+l,Control+Tab";
+	kb-remove-char-back: "BackSpace,Shift+BackSpace"; // ctrl+h was here
+	kb-mode-previous: "Control+h,Control+ISO_Left_Tab";
 	kb-remove-to-eol: ""; // needed to unset for 'down' binding to work
 	kb-row-down: "Control+j,Control+n";
 	kb-row-up: "Control+k,Control+p";
@@ -17,21 +30,21 @@ configuration {
 
 // monitor to display on
 	matching: "normal"; // fuzzy
-	max-history-size: 150;
+	// max-history-size: 25;
 	modes: "combi,run,keys";
 	scroll-method: 1;
 	show-icons: false;
 	sidebar-mode: true;
 /*	sort: false;*/
 /*	sorting-method: "normal";*/
-/*	steal-focus: false;*/
+	steal-focus: false;
   timeout {
       action: "kb-cancel";
       delay:  0;
   }
 }
 
-// @import "~/.cache/wal/colors-rofi-dark"
-// @import "~/.cache/wal/colors-rofi-light"
+// @theme "/dev/null"
 
-@import "styles.rasi"
+@import "~/.cache/wal/rofi-v2.rasi"
+// @import "test" // test theme
