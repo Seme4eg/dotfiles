@@ -1,13 +1,22 @@
 #!/bin/bash
 
-wp=$(find ~/Pictures/atmosphere/Wadim\ Kashin/ -type f | shuf -n 1)
+theme=dark # default to dark theme
+wp=
+
+while getopts ":w:l" Option; do case $Option in
+  l) theme=light;;
+  w) wp=$OPTARG;;
+esac done
+
+[ -z "$wp" ] &&
+  wp=$(find ~/Pictures/atmosphere/Wadim\ Kashin/ -type f | shuf -n 1)
 
 [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
 # remove this line if you deside to move hyprpaper to soystemd service again
 [[ -z $(pgrep hyprpaper) ]] && ( hyprpaper & )
 
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
-[ $1 == "light" ] &&
+[ $theme = light ] &&
   wal -n -q -l -i "$wp" --saturate 0.3 ||
   wal -n -q -i "$wp" --saturate 0.3
 
