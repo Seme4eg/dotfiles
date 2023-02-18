@@ -72,6 +72,7 @@ entry {{
 #element-text, element-icon {{
   background-color: transparent;
   text-color:       inherit;
+  vertical-align: 0.5;
 }}
 
 element.normal.normal, element.alternate.normal {{
@@ -134,3 +135,12 @@ element.selected.normal, element.selected.active {{
   spacing: 0;
   text-color: @foreground;
 }}
+
+// for choose wallpaper script
+element-icon {
+    padding: -25px 0px;
+    border-radius: 10;
+    size: 100;
+}
+
+element-icon selected {}

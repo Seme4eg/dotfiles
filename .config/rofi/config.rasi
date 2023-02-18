@@ -29,7 +29,7 @@ configuration {
 /*	kb-screenshot: "Alt+S";*/
 
 // monitor to display on
-	matching: "normal"; // fuzzy
+	matching: "fuzzy"; // fuzzy
 	// max-history-size: 25;
 	modes: "combi,run,keys";
 	scroll-method: 1;
