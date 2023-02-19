@@ -1,6 +1,7 @@
 #!/bin/sh
 
 // repo: https://github.com/fogine/udiskie-dmenu
+// launch as follows: {this-file-name} -matching regex -dmenu -i -no-custom -multi-select
 
 ':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
 

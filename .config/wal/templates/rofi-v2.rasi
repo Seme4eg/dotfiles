@@ -1,6 +1,7 @@
 * {{
   background: {background}dd;
   foreground: {foreground}ee;
+  foreground-op: {foreground}55;
   accent-a: {color5};
   accent-a-op: {color5}99;
   accent-b: {color6};
@@ -45,7 +46,7 @@
 entry {{
   cursor: text;
   spacing: 0;
-  placeholder-color: #a1bfe755;
+  placeholder-color: @foreground-op;
   placeholder: ". . .";
 }}
 
@@ -139,10 +140,10 @@ element.selected.normal, element.selected.active {{
 }}
 
 // for choose wallpaper script
-element-icon {
-    padding: -25px 0px;
-    border-radius: 10;
-    size: 100;
-}
+element-icon {{
+  padding: -25px 0px;
+  border-radius: 10;
+  size: 100;
+}}
 
-element-icon selected {}
+// element-icon selected {{}}
