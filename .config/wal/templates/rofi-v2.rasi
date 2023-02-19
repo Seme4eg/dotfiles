@@ -37,26 +37,28 @@
 }}
 
 #inputbar {{
-  padding: 8 0 14 0;
-  children: [ textbox-prompt-colon,entry,case-indicator ];
+  padding: 8 0;
+  // prompt
+  children: [ textbox-prompt-colon,entry ];
 }}
 
 entry {{
   cursor: text;
   spacing: 0;
   placeholder-color: #a1bfe755;
-  placeholder: "";
+  placeholder: ". . .";
 }}
 
 #textbox-prompt-colon {{
   expand: false;
   str: "┻┳|･_･)ﾉ";
-  margin: 0em 0.3em 0em 0em;
+  margin: 0em 0.8em 0em 0em;
   text-color: @accent-a;
 }}
 
 #listview {{
   fixed-height: 0;
+  margin: 6 0 0 0;
   border: 1px dash 0px 0px;
   border-color: @border-color;
   spacing: 0px;

@@ -4,7 +4,7 @@ configuration {
 	// cache-dir: ; // passing from binding cuz no $XDG_.. here
 	combi-modes: "window,drun,run";
 	drun-show-actions: false;
-  lines: 5;
+  fixed-num-lines: false;
   icon {
       theme: "hicolor";
   }
@@ -29,7 +29,7 @@ configuration {
 /*	kb-screenshot: "Alt+S";*/
 
 // monitor to display on
-	matching: "fuzzy"; // fuzzy
+	matching: "normal"; // fuzzy
 	// max-history-size: 25;
 	modes: "combi,run,keys";
 	scroll-method: 1;
@@ -37,7 +37,7 @@ configuration {
 	sidebar-mode: true;
 /*	sort: false;*/
 /*	sorting-method: "normal";*/
-	steal-focus: false;
+	steal-focus: true;
   timeout {
       action: "kb-cancel";
       delay:  0;
