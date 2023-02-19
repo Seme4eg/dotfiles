@@ -81,10 +81,11 @@ texinfo
 thefuck
 tldr
 ttf-daddytime-mono-nerd
-ttf-firacode-nerd
-ttf-mononoki-nerd
-ttf-noto-nerd
+ttf-hack-nerd
+ttf-jetbrains-mono-nerd
+ttf-monoid-nerd
 ttf-sourcecodepro-nerd
+ttf-space-mono-nerd
 udiskie
 udisks2
 unzip

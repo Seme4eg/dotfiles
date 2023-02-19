@@ -111,19 +111,15 @@
 font:
   # Normal (roman) font face
   normal:
-    # Font family
-    #
-    # Default:
-    #   - (macOS) Menlo
-    #   - (Linux/BSD) monospace
-    #   - (Windows) Consolas
     family: daddytimemono nerd font # top 1
-    # family: mononoki nerd font # top 2, worse than daddy cuz of smaller line height
     # family: saucecodepro nerd font
     # family: hasklug nerd font # copy of source code pro but with better composite glyphs
+    # family: hack nerd font # not much spacing idk
+    # family: jetbrainsmono nerd font # also works for console but boring
+    family: spacemono nerd font # yes, size 12
 
     # The `style` can be specified to pick a specific face.
-    #style: Regular
+    style: Regular
 
   # Bold font face
   #bold:
