@@ -11,6 +11,7 @@ Fonts: [[https://www.nerdfonts.com/][nerd fonts]], [[https://archlinux.org/packa
 ** Hyprland ppl dots
 - [X] https://github.com/iamverysimp1e/dots
 - [X] https://github.com/Colepng/rice/tree/hyprland-winter/eww
+- [ ] https://github.com/end-4/dots-hyprland ([[https://discord.com/channels/961691461554950145/1073944402751406080/1073944402751406080][demo]])
 
 ** Notes
 - [[https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/bluetooth][bluetooth script]]

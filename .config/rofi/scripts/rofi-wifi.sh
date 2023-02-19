@@ -2,9 +2,7 @@
 
 # notify-send -a $(whoami) "Getting list of available Wi-Fi networks..."
 
-# some maybe useful fields
-# ACTIVE
-FIELDS=IN-USE,SSID,SECURITY,FREQ,RATE,SIGNAL,BARS
+FIELDS=IN-USE,SSID,SECURITY,FREQ,RATE,SIGNAL,BARS # ACTIVE
 
 # awk NF to filter empty lines from output
 wifi_list=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
@@ -53,6 +51,8 @@ notify_success() {
       "You are now connected to the Wi-Fi network \"$chosen_ssid\"."
 }
 
+# chosen_ssid might b empty in case we chose 'enable/disable wifi' row
+# so we don't check for it's emptyness
 if [ -z "$chosen_row" ]; then exit
 elif [ "$chosen_row" = "$enable_row" ]; then
   nmcli radio wifi on
