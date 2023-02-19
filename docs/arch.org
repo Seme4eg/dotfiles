@@ -1,6 +1,6 @@
 #+title: Arch
 
-** Installation & post-install configuring
+** Installation
 - follow official arch installation guide
 - Connect to the internet step
   - activate wifi adapter - ~ip link set <adapter_name (wlan0?)> up~
@@ -70,7 +70,7 @@
 - ~p~ -> check which partitions you ended up with
 - ~w[rite]~ if everything is as u want
 
-*** hyprland
+** hyprland
 create =/etc/systemd/system/hyprland-session.target= with contents:
 #+begin_src
 [Unit]
@@ -90,11 +90,11 @@ there are 2 checks in aliases, 1st one should show 2 vda things, on your gpu the
 'driver' field must show NOT nouveau, if it does - check both modprobes if those
 are blocking nouveau and if they don't - add block rule and regenerate modprobe.
 
-*** emacs
+** emacs
 deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
 (for stickers and symbols to work)
 
-**** mu4e
+*** mu4e
 Make sure gpg is set up. Instructions can be found either in =pass= section below
 or in [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][this article]]
 
@@ -106,7 +106,7 @@ Things should work now.
 Fow now i am not using gmail in mu4e since i don't want to enable 2-step
 verification there. (without it google doesn't allow for external app passwords)
 
-*** pass
+** pass
 - copy secret2.gpg from wherever you have it stored and run ~gpg --import
   secret2.gpg~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
@@ -120,13 +120,15 @@ verification there. (without it google doesn't allow for external app passwords)
   =password-store= dir to =~/.password-store= and emacs will b fine.. (don't forget
   to rename tho first) and it seems that there just needs to be a directory,
   emacs's pass buffer is still somehow seeing proper password store dir.
-*** fingerprint sensor
+** fingerprint sensor
 https://wiki.archlinux.org/title/fprint
 
 my xiaomi notebook pro x 2021 fingerprint sensor won't prob ever b supported
 tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
 
-*** Enabled systemd services:
+** Enabled systemd services:
 - systemd-timesyncd.service
 - plocate-updatedb.timer
 - all user services in config/systemd folder, enable those with ~scue --now all~
+** pip packages
+https://github.com/mmabrouk/chatgpt-wrapper
