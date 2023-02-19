@@ -41,7 +41,7 @@
 (defwidget _window []
   (box :class "window"
     (label
-      :limit-width 30
+      :limit-width 27
       :show_truncated true
       :text {window == "" ? "_" : window})))
 
