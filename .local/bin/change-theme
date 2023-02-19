@@ -9,7 +9,7 @@ while getopts ":w:l" Option; do case $Option in
 esac done
 
 [ -z "$wp" ] &&
-  wp=$(find ~/Pictures/wps/pc/wadim_kashin/ -maxdepth 1 -type f | shuf -n 1)
+  wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
 
 [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
 # remove this line if you deside to move hyprpaper to soystemd service again
@@ -32,6 +32,7 @@ eww reload
 
 # regenerate swaylock settings
 [ ! -d $XDG_CONFIG_HOME/swaylock ] && mkdir $XDG_CONFIG_HOME/swaylock
+# ik its a crutch but swaylock doesn't support multiple config files
 mv -f $XDG_CACHE_HOME/wal/swaylock-config $XDG_CONFIG_HOME/swaylock/config
 
 # update mako theme
