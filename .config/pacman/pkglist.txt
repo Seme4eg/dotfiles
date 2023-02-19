@@ -50,6 +50,7 @@ noto-fonts-emoji
 nvidia
 openssh
 openvpn
+otf-hasklig-nerd
 pacman
 pacman-contrib
 pass
@@ -79,6 +80,9 @@ syncthing
 texinfo
 thefuck
 tldr
+ttf-daddytime-mono-nerd
+ttf-firacode-nerd
+ttf-mononoki-nerd
 ttf-noto-nerd
 ttf-sourcecodepro-nerd
 udiskie
