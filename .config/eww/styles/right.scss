@@ -10,9 +10,10 @@
     .bg {
       opacity: .4;
       font-size: 2.3em;
-      margin-top: -15px;
+      margin-top: -12px;
     }
     .fg {
+      margin-top: 2px;
       @extend %shadow-text;
     }
   }
@@ -55,6 +56,10 @@
   }
   .backlight {
     transition: all 0.3s ease-in-out;
+    .circle-text {
+      margin-right: 6px;
+      margin-top: 1px;
+    }
   }
 }
 
@@ -100,6 +105,10 @@ circular-progress {
     font:1.4em Iceland;
     opacity: .7;
   }
+  .circle-text {
+    margin-right: 3px;
+    margin-top: 1px;
+  }
   .bat {
     font: 1.7em RubikWetPaint;
     color: color.scale($foreground, $alpha: -20%);
@@ -111,7 +120,7 @@ circular-progress {
       // text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
       //              0 0 10px color.scale($foreground, $lightness: -25%),
       //              0 0 20px color.scale($foreground, $lightness: -35%);
-      }
     }
   }
+}
 }

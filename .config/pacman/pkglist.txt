@@ -83,7 +83,6 @@ tldr
 ttf-daddytime-mono-nerd
 ttf-hack-nerd
 ttf-jetbrains-mono-nerd
-ttf-monoid-nerd
 ttf-sourcecodepro-nerd
 ttf-space-mono-nerd
 udiskie
