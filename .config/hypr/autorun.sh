@@ -7,6 +7,8 @@ systemctl --user start hyprland-session.target
 # /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
 
 gsettings set org.gnome.desktop.interface cursor-theme Future-dark-cursors
+gsettings set org.gnome.desktop.interface gtk-theme Dracula
+
 hyprctl setcursor Future-dark-cursors 26
 
 wl-paste --watch cliphist store &
