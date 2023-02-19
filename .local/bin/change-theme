@@ -9,7 +9,7 @@ while getopts ":w:l" Option; do case $Option in
 esac done
 
 [ -z "$wp" ] &&
-  wp=$(find ~/Pictures/atmosphere/Wadim\ Kashin/ -maxdepth 1 -type f | shuf -n 1)
+  wp=$(find ~/Pictures/wps/pc/wadim_kashin/ -maxdepth 1 -type f | shuf -n 1)
 
 [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
 # remove this line if you deside to move hyprpaper to soystemd service again
