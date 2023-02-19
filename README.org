@@ -3,7 +3,7 @@
 ** TODO 'How it looks' section + what's used
 ** TODO Bootstrapping
 
-** Todos [0/8]
+** Todos [0/11]
 *** TODO setup rofi, port [[https://github.com/sentriz/cliphist][cliphist]] to it and setup bindings for it
 Scripts undefined:
 aur/rofi-mpd-git r74.5cad30c-1 (+1 0.00)
@@ -14,6 +14,11 @@ aur/rofi-mpc 1.2.2-2 (+2 0.00)
 *** TODO see maybe i'll like other notification tools more
 *** TODO wlsunset service not starting on hyprland startup
 *** TODO make 2nd notebook sound better with easyeffects
+*** TODO eww widget to view recent notifications
+*** TODO maybe some interesting scrpts [[https://github.com/justchokingaround/dotfiles/tree/main/scripts][here]]
+*** TODO find other fonts for terminal and emacs
+which will be monospace and support russian letters (prob for emacs it's gotta
+be some nerd font), idk bout terminal yet
 *** TODO tridactyl - how to enablel insert mod right away on youtube?
 *** TODO setup bluetooth some day (with rofi?)
 [[https://github.com/nickclyde/rofi-bluetooth][rofi script 1]],
