@@ -13,7 +13,6 @@
       margin-top: -12px;
     }
     .fg {
-      margin-top: 2px;
       @extend %shadow-text;
     }
   }
@@ -32,7 +31,8 @@
       // @extend %back-text;
       font-size: 2.4em;
       color: color.scale($foreground, $alpha: -60%);
-      margin-top: -9px;
+      margin-top: -6px;
+      margin-right: 10px;
     }
     .fg {
       font: bold .9em Megrim;

@@ -74,7 +74,7 @@
     :onhoverlost "eww update show_essid=false"
     (box :class "network" :space-evenly false :spacing 8 :hexpand "false"
       (overlay :width 35
-        (box :class "fg" :visible {net != ""} :orientation "v" :halign "start"
+        (box :class "fg" :visible {net != ""} :orientation "v" :halign "center"
           (label :text {up / 1024 < 1024 ?
                            " ${round(up / 1024, 0)} Kb" :
                            " ${round(up / 1048576, 0)} Mb"})
