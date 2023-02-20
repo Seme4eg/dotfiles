@@ -8,8 +8,11 @@ while getopts ":w:l" Option; do case $Option in
   w) wp=$OPTARG;;
 esac done
 
-[ -z "$wp" ] &&
-  wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
+if [ -z "$wp" ]; then
+  [ ! -d ~/Pictures ] &&
+    wp=$(find ~/.config/hypr/assets/ -type f | shuf -n 1) ||
+    wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
+fi
 
 [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
 # remove this line if you deside to move hyprpaper to soystemd service again
