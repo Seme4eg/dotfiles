@@ -2,39 +2,36 @@
 
 ** Installation
 - follow official arch installation guide
-- Connect to the internet step
-  - activate wifi adapter - ~ip link set <adapter_name (wlan0?)> up~
-  - if it's blocked - ~rfkill unblock wifi~
-  - repeat 1st step
-  - connmanctl -> scan wifi -> services
-  - register the agent to handle user requests - ~agent on~
-  - connect wifi_<tab>_<first3numbers><tab>
 - disk partitioning -> see the child header below
 - on pacstrap step i did: ~pacstrap -K /mnt base base-devel linux linux-firmware
-  linux-headers sof-firmware networkmanager vim man-db man-pages texinfo~
-  - on pacstrap step there is an instruction 'userspace utilities for the
-    management of file systems that will be used on the system' which links to
-    file systems article, where i didn't find much info, but might've missed
-    smth
+  linux-headers sof-firmware networkmanager vim man-db man-pages texinfo
+  intel-ucode~
 - ...
 - bootloader step:
-  - pacman -S grub efibootmgr
-  - install =amd-ucode= or =intel-ucode= And rerun ~grub-mkconfig -o
-    /boot/grub/grub.cfg~
+  - ~pacman -S grub efibootmgr~
+  - ~grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub~
+  - ~grub-mkconfig -o /boot/grub/grub.cfg~
 - *after reboot*:
   - systemctl enable --now NetworkManager -> nmtui
   - pacman -S zsh fzf wget zoxide
   - useradd -m -G wheel -s /bin/zsh earthian
   - passwd earthian
+  - ~EDITOR=vim visudo~ -> uncomment wheel
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
   - (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
     something won't work go to 'udev' page from this link
-  - ~EDITOR=vim visudo~ -> uncomment wheel
-  - uncomment Color, VerbosePkgLists & ParallelDownloads in /etc/pacman.conf
-  - pacman -S git openssh, [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]], clone dotfiles, install and run
-    ~mkdir ~/.local && stow .~ cuz we don't wana steam and other apps flood our
-    local/share folder so emacs project caching rips
+  - pacman -S git openssh stow, [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]], clone dotfiles
+    - ~mkdir -p ~/.local/share~ - cuz we don't wana steam and other apps flood our
+      local/share folder so emacs project caching rips
+    - ~stow .~ from =dotfiles= dir
   - [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
+  - add =Include = /home/earthian/.config/pacman/pacman.conf= to [options] section
+    in etc/pacman.conf. Do not uncomment 'Hooks' line because otherwise it will
+    overwrite out pkglist files. Uncomment =[multilib]= section in =/etc/pacman.conf=
+  - yi - < ~/.config/pacman/foreignpkglist.txt (important to install pacmages
+    from yay first to avoid further conflicts)
+  - pmi - < ~/.config/pacman/pkglist.txt
+  - now uncomment that hooks line.
   - *sound bs*
     - unmute audio channels in alsamixer and enable capture as well
     - switch default mic to the one on your headphones cuz notebook mic is
@@ -50,14 +47,6 @@
 - check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
   loop or airoot may be ignored.)
 
-**** Using cfdisk
-- cfdisk /dev/sd<something>?
-- delete all partitions
-- write -> yes
-- new -> 512M -> type -> EFI system
-- choose free space -> new -> <enter> -> type remains linux filesystem
-- write -> yes -> quit
-
 **** Using fdisk
 - ~p~ - list all partitions that u currently have
 - ~g~ - create new gpt-partition table (or ~d~ to delete particular ones)
@@ -69,6 +58,14 @@
 - set root partition type to /Linux filesystem/
 - ~p~ -> check which partitions you ended up with
 - ~w[rite]~ if everything is as u want
+
+**** Using cfdisk
+- cfdisk /dev/sd<something>?
+- delete all partitions
+- write -> yes
+- new -> 512M -> type -> EFI system
+- choose free space -> new -> <enter> -> type remains linux filesystem
+- write -> yes -> quit
 
 ** hyprland
 create =/etc/systemd/system/hyprland-session.target= with contents:
@@ -129,6 +126,8 @@ tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
 ** Enabled systemd services:
 - systemd-timesyncd.service
 - plocate-updatedb.timer
-- all user services in config/systemd folder, enable those with ~scue --now all~
+- enable systemd user services with:
+  - ~find $XDG_CONFIG_HOME/systemd/user/ -type f -printf "%f\n" | xargs -I {}
+    systemctl --user enable --now {}~
 ** pip packages
 https://github.com/mmabrouk/chatgpt-wrapper
