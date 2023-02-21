@@ -1,15 +1,19 @@
 alacritty
 alsa-utils
 base
+base-devel
 bat
 calf
+cmake
 easyeffects
 efibootmgr
 entr
 fd
+ffmpeg
 firefox
 fzf
 git
+gperf
 grim
 grub
 gtk-layer-shell
@@ -35,6 +39,7 @@ openvpn
 otf-hasklig-nerd
 pacman-contrib
 pass
+passff-host
 pavucontrol
 pipewire-alsa
 pipewire-audio
