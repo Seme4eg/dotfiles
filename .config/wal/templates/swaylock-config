@@ -12,7 +12,6 @@ ignore-empty-password
 show-keyboard-layout
 indicator-caps-lock
 font=TrainOne
-font-size=50px
 indicator-radius=90
 indicator-thickness=6
 
