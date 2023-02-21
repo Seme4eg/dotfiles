@@ -3,6 +3,18 @@
 ** TODO 'How it looks' section + what's used
 ** TODO Bootstrapping
 ** Notes
+i have 2 machines but they configs don't differ that much to use somethings like
+shezmoi. But they do have different resolution for hyprland and id for
+syncthing.
+
+So i've just updated git index to 'untrack' files that differ and don't change.
+
+: git update-index --assume-unchanged ./.config/mako/config ./.config/syncthing/config.xml ./config/hypr/scale.conf
+
+To get any of those files 'back on track':
+
+: git update-index --no-assume-unchanged {files}
+
 *** rofi
 scripts that might be useful later:
 - https://github.com/carnager/rofi-pass

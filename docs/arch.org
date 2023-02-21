@@ -58,6 +58,28 @@
 - choose free space -> new -> <enter> -> type remains linux filesystem
 - write -> yes -> quit
 
+
+** sound
+If there's no sound, maybe you've several sound cards and default one got set
+incorrectly, then create ~/.asoundrc to change default sound card:
+#+begin_src
+defaults.ctl.card 1
+defaults.pcm.card 1
+#+end_src
+
+If your soundcard doens't correctly detect microphone plugged in a 4-pin 3.5mm
+(TRRS) jack, find your soundcard name (easy to do using alsamixer) and go
+[[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Correctly_detect_microphone_plugged_in_a_4-pin_3.5mm_(TRRS)_jack][research]]. (Maybe you just need to switch to in in pavucontrol..). Just examples
+of what previously worked for me on different machines (file
+=/etc/modprobe.d/alsa-base.conf=):
+- options snd-sof-intel-hda-common hda_model=alc298-dell-aio
+- options snd-hda-intel model=alc298-dell-aio
+- options snd-hda-intel model=dell-headset-multi
+
+- switch default mic to the one on your headphones cuz notebook mic is
+  usually crap: ~wpctl status~ - grab id of your mic (SOURCE device) - ~wpctl
+  set-default ...~
+
 ** hyprland
 create =/etc/systemd/system/hyprland-session.target= with contents:
 #+begin_src
@@ -74,15 +96,13 @@ proprietary =nvidia= package, do not add anything in grub conf or mkinitcpio, JU
 TRY TO LAUNCH IT WITH NVIDIA (using ~starthl~ ofc). If it runs, then enable drm in
 grub conf and you're done.
 
+# GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia_drm.modeset=1"
+
 there are 2 checks in aliases, 1st one should show 2 vda things, on your gpu the
 'driver' field must show NOT nouveau, if it does - check both modprobes if those
 are blocking nouveau and if they don't - add block rule and regenerate modprobe.
 
-** emacs
-deps: fd ripgrep plocate libvterm (for vterm) cmake [[https://zevlg.github.io/telega.el/#building-tdlib][tdlib]] noto-fonts-emoji
-(for stickers and symbols to work)
-
-*** mu4e
+** emacs mu4e
 Make sure gpg is set up. Instructions can be found either in =pass= section below
 or in [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][this article]]
 
@@ -95,19 +115,19 @@ Fow now i am not using gmail in mu4e since i don't want to enable 2-step
 verification there. (without it google doesn't allow for external app passwords)
 
 ** pass
+- clone pass repo to =$XDG_DATA_HOME/password-store=
 - copy secret2.gpg from wherever you have it stored and run ~gpg --import
   secret2.gpg~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
 - install pass and it should work right away.
 - for browser extension [[https://github.com/passff/passff#installation][PassFF]] install its [[https://github.com/passff/passff-host][backend]] and in [[file:~/.mozilla/native-messaging-hosts/passff.py][passff.py]] script file
-  add to COMMAND_ENV ~"PASSWORD_STORE_DIR":
-  "/home/earthian/.local/share/password-store"~. Things should work now
+  add to COMMAND_ENV "PASSWORD_STORE_DIR":
+  "/home/earthian\/.local/share/password-store". Things should work now
 - emacs doesn't know about =$PASSWORD_STORE_DIR= env var so you can either move it
   from XDG_DATA_HOME dir to ~/ directory and omit the previous step with editing
-  passff.py file and delete the env var so everything is stock or just link
-  =password-store= dir to =~/.password-store= and emacs will b fine.. (don't forget
-  to rename tho first) and it seems that there just needs to be a directory,
-  emacs's pass buffer is still somehow seeing proper password store dir.
+  passff.py file and delete the env var so everything is stock or just ~ln -s
+  ~/.local/share/password-store ~/.password-store~ and emacs will b fine..
+
 ** fingerprint sensor
 https://wiki.archlinux.org/title/fprint
 
@@ -115,10 +135,16 @@ my xiaomi notebook pro x 2021 fingerprint sensor won't prob ever b supported
 tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
 
 ** Enabled systemd services:
+*system*:
 - systemd-timesyncd.service
 - plocate-updatedb.timer
+
+*user*:
 - enable systemd user services with:
   - ~find $XDG_CONFIG_HOME/systemd/user/ -type f -printf "%f\n" | xargs -I {}
     systemctl --user enable --now {}~
+- syncthing.service
+- udiskie.service
+
 ** pip packages
 https://github.com/mmabrouk/chatgpt-wrapper
