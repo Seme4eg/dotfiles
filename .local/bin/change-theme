@@ -9,7 +9,7 @@ while getopts ":w:l" Option; do case $Option in
 esac done
 
 if [ -z "$wp" ]; then
-  [ ! -d ~/Pictures ] &&
+  [ ! -d ~/Pictures/wps ] &&
     wp=$(find ~/.config/hypr/assets/ -type f | shuf -n 1) ||
     wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
 fi
@@ -23,13 +23,9 @@ fi
   wal -n -q -l -i "$wp" --saturate 0.3 ||
   wal -n -q -i "$wp" --saturate 0.3
 
-# TODO: check if pywalfox yields error - automatically run pywalfox install
-# and try to run 'update' again
-# update firefox theme
-pywalfox update # (don't forget to run 'pywalfox install' beforehand)
+pywalfox update # update firefox theme
 
-# update emacs theme
-emacsclient -e "(load-theme 'ewal-doom-one)"
+emacsclient -e "(load-theme 'ewal-doom-one)" # update emacs theme
 
 eww reload
 
