@@ -19,6 +19,7 @@ pywal-git
 rm-improved-git
 rofi-lbonn-wayland-git
 swaylock-effects-git
+telegram-tdlib-git
 timeshift
 timeshift-autosnap
 waydroid-git
