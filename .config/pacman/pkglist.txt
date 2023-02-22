@@ -57,6 +57,7 @@ socat
 sof-firmware
 steam
 stow
+swaybg
 swayidle
 syncthing
 texinfo

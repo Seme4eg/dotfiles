@@ -14,9 +14,8 @@ if [ -z "$wp" ]; then
     wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
 fi
 
-[[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
 # remove this line if you deside to move hyprpaper to soystemd service again
-[[ -z $(pgrep hyprpaper) ]] && ( hyprpaper -n & ) # -n for 'contain:' to work
+# [[ -z $(pgrep hyprpaper) ]] && ( hyprpaper -n & ) # -n for 'contain:' to work
 
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
 [ $theme = light ] &&
@@ -45,7 +44,10 @@ eww reload
 # for now im updating theme with a
 # webcord --add-css-theme $XDG_DATA_HOME/webcord/wal.theme.css
 
-hyprctl hyprpaper preload "$wp"
-hyprctl hyprpaper wallpaper "eDP-1,$wp"
+# hyprctl hyprpaper preload "$wp"
+# hyprctl hyprpaper wallpaper "eDP-1,$wp"
+# [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
+
+swaybg -m fill -i "$wp"
 
 prev_wallpaper=$wp
