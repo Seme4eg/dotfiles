@@ -11,7 +11,7 @@
               :height "30px"
               :anchor "top center")
   :stacking "fg"
-  :exclusive true
+  ;; :exclusive true
   (main_container)) ;; is it possible to pass several widgets to window?
 
 (defwidget main_container []
