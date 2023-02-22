@@ -10,10 +10,11 @@
     .bg {
       opacity: .4;
       font-size: 2.3em;
-      margin-top: -12px;
+      margin-top: -14px;
     }
     .fg {
       @extend %shadow-text;
+      margin-right: 2px;
     }
   }
   .weather {
@@ -35,7 +36,7 @@
       margin-right: 10px;
     }
     .fg {
-      font: bold .9em Megrim;
+      font: bold .8em Megrim;
     }
     .essid {
       font: 1em Iceland;
