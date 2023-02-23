@@ -13,7 +13,7 @@ show-keyboard-layout
 indicator-caps-lock
 font=TrainOne
 indicator-radius=90
-indicator-thickness=6
+indicator-thickness=7
 
 # Use the inside color for the line between the inside and ring.
 # line-uses-inside
@@ -65,7 +65,7 @@ line-wrong-color=00000000
 
 # --- ring of the indicator ---
 # typing or idle
-ring-color={background.strip}22
+ring-color={background.strip}77
 # cleared
 ring-clear-color={background.strip}55
 ring-caps-lock-color={background.strip}22
