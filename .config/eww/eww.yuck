@@ -16,8 +16,7 @@
 
 (defwidget main_container []
   (centerbox
-    :class "container_main"
-    :style "background: transparent"
+    :class "container_main" ;; add 'slim' to make status bar 'slim'
     :orientation "h"
     (container_left)
     (container_center)

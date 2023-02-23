@@ -1,0 +1,14 @@
+.container_main.slim {
+  margin: 0;
+  margin-bottom: 8px;
+  background: $background;
+  box-shadow: 0 0 5px 2px $background;
+  opacity: .8;
+
+  %box {
+    background: transparent;
+    border-radius: 0;
+    padding: 0 13px;
+    box-shadow: none;
+  }
+}

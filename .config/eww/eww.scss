@@ -8,10 +8,12 @@
 .container_main {
   // saucecodepro nerd font
   font-family:hasklug nerd font;
-  padding: 8px;
+  margin: 6px;
   color: $foreground;
+  background: transparent;
 }
 
 @import 'styles/left';
 @import 'styles/center';
 @import 'styles/right';
+@import 'styles/slim';
