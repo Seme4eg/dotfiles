@@ -19,8 +19,8 @@ Some screenshots:
 
 ** Bootstrapping
 For now stow symlinks work fine for me, but if it's a fresh install - create
-~/.local/share first, otherwise steam and other apps quickly flood it and my
-emacs project indexing rips. Then just ~stow .~
+$HOME/.local/share first, otherwise steam and other apps quickly flood it and my
+emacs project indexing rips. Also i'd create $HOME/.local/bin. Then just ~stow .~
 
 ** Notes
 i have 2 machines but they configs don't differ that much to use somethings like
