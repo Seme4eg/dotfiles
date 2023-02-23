@@ -22,6 +22,8 @@ fi
   wal -n -q -l -i "$wp" --saturate 0.3 ||
   wal -n -q -i "$wp" --saturate 0.3
 
+swaybg -m fill -i "$wp" &
+
 pywalfox update # update firefox theme
 
 emacsclient -e "(load-theme 'ewal-doom-one)" # update emacs theme
@@ -47,7 +49,5 @@ eww reload
 # hyprctl hyprpaper preload "$wp"
 # hyprctl hyprpaper wallpaper "eDP-1,$wp"
 # [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
-
-swaybg -m fill -i "$wp"
 
 prev_wallpaper=$wp
