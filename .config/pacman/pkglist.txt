@@ -3,6 +3,8 @@ alsa-utils
 base
 base-devel
 bat
+bluez
+bluez-utils
 calf
 cmake
 easyeffects

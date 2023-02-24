@@ -41,11 +41,9 @@ scripts that might be useful later:
 - aur/rofi-mpd-git - A Rofi menu for interacting with MPD written in Python.
 - aur/rofi-mpc - Fast graphical Rofi-Interface for controlling MPD
 
-** Todos [0/8]
+** Todos [0/3]
 *** TODO wlsunset service not starting on hyprland startup
 *** TODO eww widget to view recent notifications
-*** TODO setup bluetooth some day (with rofi?)
-[[https://github.com/nickclyde/rofi-bluetooth][rofi script 1]],
 *** TODO scripts to write
 - [ ] write a script that cheks my current location every day and updates wlsunset
   systemd service *AND* systemtime if location differs ?much? from the one that
