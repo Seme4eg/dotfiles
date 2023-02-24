@@ -59,10 +59,11 @@ toggle_scan() {
     if scan_on; then
         kill $(pgrep -f "bluetoothctl scan on")
         bluetoothctl scan off
+        notify-send -a $(whoami) "Scanning turned off..."
         show_menu
     else
         bluetoothctl scan on &
-        echo "Scanning..."
+        notify-send -t 5000 -a $(whoami) "Scanning for pairable bluetooth devices..."
         sleep 5
         show_menu
     fi
@@ -186,10 +187,6 @@ print_status() {
         printf ''
 
         paired_devices_cmd="devices Paired"
-        # Check if an outdated version of bluetoothctl is used to preserve backwards compatibility
-        if (( $(echo "$(bluetoothctl version | cut -d ' ' -f 2) < 5.65" | bc -l) )); then
-            paired_devices_cmd="paired-devices"
-        fi
 
         mapfile -t paired_devices < <(bluetoothctl $paired_devices_cmd | grep Device | cut -d ' ' -f 2)
         counter=0

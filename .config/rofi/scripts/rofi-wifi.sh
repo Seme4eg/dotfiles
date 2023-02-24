@@ -31,44 +31,71 @@ get_ssid() {
     done
 }
 
-disable_row="睊  Disable Wi-Fi"
-enable_row="睊  Enable Wi-Fi"
-# Really janky way of telling if there is currently a connection
-[[ $(nmcli -fields WIFI g) =~ "enabled" ]] &&
-  TOGGLE="$disable_row" || TOGGLE="$enable_row"
-
-# force monospace font to not get those fields messy
-chosen_row=$(echo -e "$TOGGLE\n$wifi_list" |
-                uniq -u |
-                rofi -dmenu -selected-row 2 \
-                  -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }' \
-                  -theme-str '* { font: "Source Code Pro 13"; }')
-chosen_ssid=$(get_ssid "$chosen_row")
-
-notify_success() {
-  grep "successfully" &&
-    notify-send -a $(whoami) "Connection Established" \
-      "You are now connected to the Wi-Fi network \"$chosen_ssid\"."
+is_enabled() {
+  # Really janky way of telling if there is currently a connection
+  if nmcli -fields WIFI g | grep -q "enabled"; then
+    echo "睊  Disable Wi-Fi"
+    return 0
+  else
+    echo "睊  Enable Wi-Fi"
+    return 1
+  fi
 }
 
-# chosen_ssid might b empty in case we chose 'enable/disable wifi' row
-# so we don't check for it's emptyness
-if [ -z "$chosen_row" ]; then exit
-elif [ "$chosen_row" = "$enable_row" ]; then
-  nmcli radio wifi on
-elif [ "$chosen_row" = "$disable_row" ]; then
-  nmcli radio wifi off
-else
-  # Parses the list of known connections to see if it already contains the
-  # chosen SSID.
-  # nmcli connection show -- more detailed list of saved networks
-  if [[ ! -z $(nmcli -g NAME connection | grep -wx "$chosen_ssid") ]]; then
-    nmcli connection up id "$chosen_ssid" --ask | notify_success
+toggle_enabled() {
+  if is_enabled; then
+    nmcli radio wifi off
+    notify-send -a $(whoami) "Wifi turned off"
   else
-    [[ "$chosen_row" =~ "WPA2" ]] &&
+    nmcli radio wifi on
+    notify-send -a $(whoami) "Wifi turned on"
+  fi
+}
+
+connect() {
+
+  notify_success() {
+    grep "successfully" &&
+      notify-send -a $(whoami) "Connected to $1."
+  }
+
+  connecting() {
+    notify-send -t 2000 -a $(whoami) "Connecting to $1..."
+  }
+
+  ssid=$(get_ssid "$1")
+
+  # Parses the list of known connections to see if it already contains the SSID.
+  # nmcli connection show -- more detailed list of saved networks
+  if nmcli -g NAME connection | grep -wx "$ssid"; then
+    connecting "$ssid"
+    nmcli connection up id "$ssid" --ask | notify_success "$ssid"
+  else
+    [[ "$1" =~ "WPA2" ]] &&
       wifi_pass=$(rofi -dmenu -password  \
         -theme-str '#entry { placeholder: "password .."; }')
-    nmcli device wifi connect "$chosen_ssid" password "$wifi_pass" |
-      notify_success
+    connecting "$ssid"
+    nmcli device wifi connect "$ssid" password "$wifi_pass" |
+      notify_success "$ssid"
   fi
-fi
+}
+
+show_menu() {
+  state=$(is_enabled)
+  # force monospace font to not get those fields messy
+  chosen_row=$(echo -e "$state\n$wifi_list" | uniq -u |
+                 rofi -dmenu -selected-row 2 \
+                   -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }' \
+                   -theme-str '* { font: "Source Code Pro 13"; }')
+
+  # chosen_ssid might b empty in case we chose 'enable/disable wifi' row
+  # so we don't check for it's emptyness
+  if [ -z "$chosen_row" ]; then exit
+  elif [ "$chosen_row" = "$state" ]; then
+    toggle_enabled
+  else
+    connect "$chosen_row"
+  fi
+}
+
+show_menu
