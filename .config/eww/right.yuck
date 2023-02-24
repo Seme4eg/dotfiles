@@ -64,7 +64,10 @@
 
 (defwidget _sysinfo []
   (box :class "sys-info" :space-evenly false :spacing 8
-    (_network :up {EWW_NET.wlp0s20f3.NET_UP} :down {EWW_NET.wlp0s20f3.NET_DOWN})
+    (_network
+      ;; 2 of my laptops have it named differently
+      :up {EWW_NET.wlp0s20f3?.NET_UP ?: EWW_NET.wlp2s0.NET_UP}
+      :down {EWW_NET.wlp0s20f3?.NET_DOWN ?: EWW_NET.wlp2s0.NET_DOWN})
     (_audioblock)
     (_backlight)))
 
