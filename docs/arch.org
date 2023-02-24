@@ -131,6 +131,9 @@ https://wiki.archlinux.org/title/fprint
 my xiaomi notebook pro x 2021 fingerprint sensor won't prob ever b supported
 tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
 
+xiaomi 2016 has a supported fprint sensor but enrolled prints never match.. so
+the whole fprint thing to me appeared as unreliable.
+
 ** Enabled systemd services:
 *system*:
 - systemd-timesyncd.service
