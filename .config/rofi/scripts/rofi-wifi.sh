@@ -8,10 +8,12 @@ FIELDS=IN-USE,SSID,SECURITY,FREQ,RATE,SIGNAL,BARS # ACTIVE
 wifi_list=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
 # get ssids list, -t flag returns list without 1st 'header' line
 wifi_ssids=$(nmcli -t --fields SSID device wifi list | awk NF)
+# will b empty if no active connection
+initial_ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
 
-# Getting ssid of the chosen row by mapping list or rows and list of ssids
-# to each other. Reason for this function is that i didn't know find another way
-# to parse row to get it's ssid. Because of possible spaces in ssids.
+# Getting ssid of the chosen row by mapping list or rows and list of ssids to
+# each other. Reason for this function is that i didn't find another way to
+# parse row to get it's ssid. Because of possible spaces in ssids.
 get_ssid() {
   # start with 0 index cuz we are also iterating over 'headers' line first
   index=0
@@ -32,8 +34,7 @@ get_ssid() {
 }
 
 is_enabled() {
-  # Really janky way of telling if there is currently a connection
-  if nmcli -fields WIFI g | grep -q "enabled"; then
+  if [ ! -z "$initial_ssid" ]; then
     echo "睊  Disable Wi-Fi"
     return 0
   else
@@ -53,14 +54,14 @@ toggle_enabled() {
 }
 
 connect() {
-
   notify_success() {
-    grep "successfully" &&
-      notify-send -a $(whoami) "Connected to $1."
+    notify-send -a $(whoami) "Connected to $1."
   }
-
   connecting() {
     notify-send -t 2000 -a $(whoami) "Connecting to $1..."
+  }
+  rip() {
+    notify-send -a $(whoami) "Failed to connect"
   }
 
   ssid=$(get_ssid "$1")
@@ -69,15 +70,39 @@ connect() {
   # nmcli connection show -- more detailed list of saved networks
   if nmcli -g NAME connection | grep -wx "$ssid"; then
     connecting "$ssid"
-    nmcli connection up id "$ssid" --ask | notify_success "$ssid"
+    nmcli connection up id "$ssid" && notify_success "$ssid" || rip
   else
-    [[ "$1" =~ "WPA2" ]] &&
-      wifi_pass=$(rofi -dmenu -password  \
-        -theme-str '#entry { placeholder: "password .."; }')
-    connecting "$ssid"
-    nmcli device wifi connect "$ssid" password "$wifi_pass" |
-      notify_success "$ssid"
+    if [[ "$1" =~ "WPA2" ]]; then
+      connect_protected "$ssid" && notify_success || rip
+    else
+      # unprotected wifi network
+      connecting "$ssid"
+      nmcli device wifi connect "$ssid" password "" &&
+        notify_success "$ssid" || rip
+    fi
   fi
+}
+
+connect_protected() {
+  # get password
+  wifi_pass=$(rofi -dmenu -password  \
+    -theme-str '#entry { placeholder: "password .."; }')
+  # if no password provided - quit that script and restore initial connection
+  # maybe show return to main menu instead?
+  if [ ! "$wifi_pass" ]; then
+    nmcli connection up id "$initial_ssid"
+    notify-send -a $(whoami) "Restored connection to $initial_ssid."
+    exit 1
+  fi
+  nmcli device wifi connect "$1" password "$wifi_pass"
+  # if connection failed - prompt again and remove attempted connection from
+  # saved ones (cuz it does save connection even if wrong pass was provided)
+  if [ $? -gt 0 ]; then
+    nmcli connection delete id "$1"
+    connect_protected "$1"
+  fi
+  # required to show success notif
+  return 0
 }
 
 show_menu() {
@@ -99,3 +124,5 @@ show_menu() {
 }
 
 show_menu
+
+exit 0
