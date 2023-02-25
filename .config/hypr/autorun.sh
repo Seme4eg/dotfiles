@@ -17,5 +17,8 @@ firefox &
 webcord --enable-features=UseOzonePlatform --ozone-platform=wayland &
 emacs &
 
+# change theme on each session unlock
+~/.config/swaylock/unlock-change-theme &
+
 pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I

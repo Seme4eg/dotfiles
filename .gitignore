@@ -31,5 +31,5 @@ node_modules/
 /.config/scdl/
 /.config/thefuck/
 /.local/bin/scdl
-/.config/swaylock/
+/.config/swaylock/config
 /.local/bin/chatgpt
