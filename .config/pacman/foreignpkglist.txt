@@ -7,6 +7,7 @@ eww-wayland-git
 gojq
 hyprland
 hyprpaper-git
+katago-cpu
 mbsync-git
 mpv-full-git
 mu

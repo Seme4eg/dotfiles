@@ -147,4 +147,5 @@ the whole fprint thing to me appeared as unreliable.
 - udiskie.service
 
 ** pip packages
-https://github.com/mmabrouk/chatgpt-wrapper
+- https://github.com/mmabrouk/chatgpt-wrapper
+- https://github.com/sanderland/katrain
