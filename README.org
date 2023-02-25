@@ -41,7 +41,7 @@ scripts that might be useful later:
 - aur/rofi-mpd-git - A Rofi menu for interacting with MPD written in Python.
 - aur/rofi-mpc - Fast graphical Rofi-Interface for controlling MPD
 
-** Todos [0/3]
+** Todos [0/4]
 *** TODO wlsunset service not starting on hyprland startup
 *** TODO eww widget to view recent notifications
 *** TODO scripts to write
@@ -50,4 +50,4 @@ scripts that might be useful later:
   was yesterday.
 - [ ] write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
   in systray.
-
+*** TODO arch lags when plugging in charging

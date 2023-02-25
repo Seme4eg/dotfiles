@@ -47,6 +47,7 @@ alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 
 alias startvm="cd ~/utils/terminal-app-vm && qemu-system-x86_64 -net nic -net user,smb=/home/earthian/git/terminal-app -cpu host -enable-kvm -m 4096 -smp 4 -drive file=terminal-vm.qcow2,format=qcow2"
+alias vedroid="waydroid session stop && waydroid session start &"
 
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
