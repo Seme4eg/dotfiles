@@ -2,11 +2,19 @@
 
 theme=dark # default to dark theme
 wp=
+delete_current=false
 
 while getopts ":w:l" Option; do case $Option in
   l) theme=light;;
   w) wp=$OPTARG;;
+  d) delete_current=true;;
 esac done
+
+if [[ $delete_current ]]; then
+  source ~/.cache/wal/colors.sh # import current theme to get cur wp path
+  /usr/bin/rip "$wallpaper" move it to graveyard
+  notify-send -a $(whoami) "Theme changed" "Previous wallpaper moved to graveyard"
+fi
 
 if [ -z "$wp" ]; then
   [ ! -d ~/Pictures/wps ] &&
