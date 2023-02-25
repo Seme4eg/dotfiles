@@ -1,8 +1,9 @@
 .container_main.slim {
   margin: 0;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   background: $background;
   box-shadow: 0 0 5px 2px $background;
+  // border-radius: 11px;
   opacity: .8;
 
   %box {

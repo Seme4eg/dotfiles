@@ -1,3 +1,5 @@
+(defvar window_lim 27)
+
 (deflisten workspaces "scripts/workspaces")
 (deflisten window "scripts/window")
 
@@ -40,8 +42,9 @@
 
 (defwidget _window []
   (box :class "window"
+    ;; :style {strlength(window) < window_lim ? "min-width: ${strlength(window)*10}px;" : ""}
     (label
-      :limit-width 27
+      :limit-width window_lim
       :show_truncated true
       :text {window == "" ? "_" : window})))
 
