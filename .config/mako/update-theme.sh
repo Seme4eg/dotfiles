@@ -7,7 +7,7 @@ conffile="$XDG_CONFIG_HOME/mako/config"
 # Associative array, color name -> color code.
 declare -A colors
 colors=(
-    ["background-color"]="${background}aa"
+    ["background-color"]="${background}bb"
     ["text-color"]="$foreground"
     ["border-color"]="$color13"
 )
@@ -19,4 +19,7 @@ done
 
 sed -i "s/\(^format=.\{1,10\}color=\"\).\{4,9\}\(\".\{30,60\}color=\"\).\{4,9\}\(\".*\)/\1${color3}\2${color8}\3/" $conffile
 
-sh $XDG_CONFIG_HOME/mako/reload.sh
+# for testing purposes
+# sh $XDG_CONFIG_HOME/mako/reload.sh
+
+makoctl reload
