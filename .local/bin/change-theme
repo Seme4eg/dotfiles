@@ -2,12 +2,12 @@
 
 theme=dark # default to dark theme
 wp=
-delete_current=false
+delete_current=
 
-while getopts ":w:l" Option; do case $Option in
+while getopts ":w:l:d" Option; do case $Option in
   l) theme=light;;
   w) wp=$OPTARG;;
-  d) delete_current=true;;
+  d) delete_current=1;;
 esac done
 
 if [[ $delete_current ]]; then
