@@ -59,7 +59,6 @@
     transition: all 0.3s ease-in-out;
     .circle-text {
       margin-right: 6px;
-      margin-top: 1px;
     }
   }
 }
@@ -84,7 +83,7 @@ circular-progress {
   background: color.scale($background, $lightness: 30%)
 }
 .circle-text {
-  font-size: 1.3em;
+  font-size: 1.4em;
   opacity: .5;
 }
 
@@ -102,13 +101,11 @@ circular-progress {
     opacity: .7;
   }
   .temp-text {
-    // font-size: 2.4em;
-    font:1.4em Iceland;
+    font: 1.1em Iceland;
     opacity: .7;
   }
   .circle-text {
-    margin-right: 3px;
-    margin-top: 1px;
+    margin-right: 2px;
   }
   .bat {
     font: 1.7em RubikWetPaint;
@@ -117,10 +114,12 @@ circular-progress {
       text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
                    0 0 10px color.scale($foreground, $lightness: -45%),
                    0 0 15px color.scale($foreground, $lightness: -45%);
+    }
+    &.low {
       // more bright version
-      // text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
-      //              0 0 10px color.scale($foreground, $lightness: -25%),
-      //              0 0 20px color.scale($foreground, $lightness: -35%);
+      text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
+                   0 0 10px color.scale($foreground, $lightness: -25%),
+                   0 0 20px color.scale($foreground, $lightness: -35%);
     }
   }
 }

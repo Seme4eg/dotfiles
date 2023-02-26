@@ -130,7 +130,7 @@
   ;; eww is started with soystemd so it doesn't know about my local/bin and i
   ;; don't want to pass it there, that's why hardcoded path
   (eventbox :onclick "sh /home/earthian/.local/bin/toggle-idling"
-    (overlay :class "backlight" :width 30
+    (overlay :class "backlight" :width 31
       (circular-progress
         :value backlight
         :start-at 0
@@ -153,46 +153,52 @@
     (_battery :capacity {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
 
 (defwidget _cpu []
-  (overlay :class "cpu"
-    (graph :class "load"
-      :value {EWW_CPU.avg}
-      :thickness 3
-      :width 55
-      :time-range "30s"
-      :max 100
-      :line-style "round")
-    (graph :class "temp"
-      :value {EWW_TEMPS.ACPITZ_TEMP1}
-      :thickness 3
-      :width 55
-      :time-range "30s"
-      :min 40
-      :max 120
-      :line-style "round")
-    (label :yalign 0 :xalign 1 :class "temp-text" :text "${EWW_TEMPS.ACPITZ_TEMP1}°")))
+  (box :orientation "v" :space-evenly true :spacing 0
+    (box :valign "start"
+      (label :yalign 1 :xalign 0 :class "temp-text" :text "CPU")
+      (label :yalign 1 :xalign 1 :class "temp-text" :text "${EWW_TEMPS.ACPITZ_TEMP1}°"))
+    (overlay :class "cpu"
+      (graph :class "load"
+        :value {EWW_CPU.avg}
+        :thickness 3
+        :width 55
+        :time-range "30s"
+        :max 100
+        :line-style "round")
+      (graph :class "temp"
+        :value {EWW_TEMPS.ACPITZ_TEMP1}
+        :thickness 3
+        :width 55
+        :time-range "30s"
+        :min 40
+        :max 120
+        :line-style "round"))))
 
 (defwidget _gpu []
-  (overlay :class "gpu"
-    (graph :class "load"
-      :value {gpu.load}
-      :thickness 3
-      :width 55
-      :time-range "1m"
-      :max 100
-      :line-style "round")
-    (graph :class "temp"
-      :value {gpu.temp}
-      :thickness 3
-      :width 55
-      :style "color: cyan"
-      :time-range "1m"
-      :min 30
-      :max 100
-      :line-style "round")
-    (label :class "temp-text" :yalign 0 :xalign 1 :text "${gpu.temp}°")))
+  (box :orientation "v" :space-evenly true :spacing 0
+    (box
+      (label :class "temp-text" :yalign 1 :xalign 0 :text "GPU")
+      (label :class "temp-text" :yalign 1 :xalign 1 :text "${gpu.temp}°"))
+    (overlay :class "gpu"
+      (graph :class "load"
+        :value {gpu.load}
+        :thickness 3
+        :width 55
+        :time-range "1m"
+        :max 100
+        :line-style "round")
+      (graph :class "temp"
+        :value {gpu.temp}
+        :thickness 3
+        :width 55
+        :style "color: cyan"
+        :time-range "1m"
+        :min 30
+        :max 100
+        :line-style "round"))))
 
 (defwidget _mem []
-  (overlay :class "memory" :width 30
+  (overlay :class "memory" :width 31
     (circular-progress
       :value {EWW_RAM.used_mem_perc}
       :start-at 0
@@ -202,5 +208,6 @@
 
 (defwidget _battery [capacity]
   (label :width 40
-    :class {EWW_BATTERY.BAT0.status == 'Charging' ? "bat charging" : "bat"}
+    :class {EWW_BATTERY.BAT0.status == 'Charging' ? "bat charging" :
+             EWW_BATTERY.BAT0.capacity < 15 ? "bat low" : "bat"}
     :text "${EWW_BATTERY.BAT0.capacity}󱐋"))
