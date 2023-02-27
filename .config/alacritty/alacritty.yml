@@ -111,11 +111,12 @@
 font:
   # Normal (roman) font face
   normal:
-    family: daddytimemono nerd font # top 1
+    family: daddytimemono nerd font # yes
     # family: saucecodepro nerd font
     # family: hasklug nerd font # copy of source code pro but with better composite glyphs
     # family: hack nerd font # not much spacing idk
-    family: spacemono nerd font # yes, size 12
+    # family: spacemono nerd font # yes, size 12
+    family: nova mono # yes
 
     # The `style` can be specified to pick a specific face.
     style: Regular
