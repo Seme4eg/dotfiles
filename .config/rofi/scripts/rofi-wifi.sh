@@ -111,7 +111,7 @@ show_menu() {
   chosen_row=$(echo -e "$state\n$wifi_list" | uniq -u |
                  rofi -dmenu -selected-row 2 \
                    -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }' \
-                   -theme-str '* { font: "Source Code Pro 13"; }')
+                   -theme-str '* { font: "syne mono 13"; }')
 
   # chosen_ssid might b empty in case we chose 'enable/disable wifi' row
   # so we don't check for it's emptyness
