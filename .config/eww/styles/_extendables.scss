@@ -1,6 +1,5 @@
 %box {
-  background: $background;
-  opacity: .8;
+  background: color.scale($background, $alpha: -20%);
   border-radius: 11px;
   padding: 0 16px;
   box-shadow: 0 0 3px 2px color.scale($background, $alpha: -20%);
@@ -10,9 +9,17 @@
 /*ewws' transform widget works in a very weird way so here's a crutch */
 %back-text {
   font-family: RubikGlitch;
-  font-size: 4.4em;
-  color: color.scale($foreground, $alpha: -60%);
-  margin-top: -17px;
+  font-size: 2.4em;
+
+  // red green blue saturation lightness whiteness blackness alpha
+
+  // either this
+  // color: color.scale($foreground, $lightness: -60%, $saturation: -70%);
+  // color: color.scale($background, $lightness: 35%);
+
+  // or this
+  color: $background;
+  text-shadow: 0 0 2px $foreground;
 }
 
 %shadow-text {

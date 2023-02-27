@@ -14,13 +14,10 @@
     }
     .fg {
       @extend %shadow-text;
-      margin-right: 2px;
     }
   }
   .weather {
-    // font: 1.5em Iceland;
-    font-size: 0.7em;
-    letter-spacing: 1px;
+    font: 0.7em jura;
   }
 }
 
@@ -60,6 +57,9 @@
     .circle-text {
       margin-right: 6px;
     }
+  }
+  .bt {
+    font: 1.1em daddytimemono nerd font;
   }
 }
 

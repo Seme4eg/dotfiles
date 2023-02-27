@@ -14,13 +14,8 @@
   .bg-left, .bg-center, .bg-right {
     @extend %back-text;
   }
-  .bg-left {
-    padding-right: 8px;
-  }
-  .bg-right {
-    padding-left: 8px;
-  }
   .bg-center {
+    font-size: 4.4em;
     margin-top: -20px;
   }
 }

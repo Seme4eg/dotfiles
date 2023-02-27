@@ -5,12 +5,27 @@
 (defwidget container_center []
   (centerbox :class "date"
     (overlay :width 120
-      (label :class "fg-left" :text "Day ${time.count}")
-      (label :halign "end" :class "bg-left" :text "${time.hour}"))
+      (box
+        (transform
+          :class "bg-left"
+          :hexpand true
+          :scale-x "193%"
+          :translate-x "-22%"
+          :scale-y "193%"
+          :translate-y "-25%"
+          {time.hour}))
+      (label :class "fg-left" :text "Day ${time.count}"))
     (overlay :width 20
       (label :class "fg-center" :text "")
       (label :class "bg-center" :text ":"))
     (overlay :width 120
-      (label :class "fg-right" :text "${time.day}")
-      (label :halign "start" :class "bg-right" :text "${time.minute}"))))
-
+      (box :halign "start" :width 100
+        (transform
+          :class "bg-right"
+          :hexpand true
+          :scale-x "193%"
+          :translate-x "-22%"
+          :scale-y "193%"
+          :translate-y "-25%"
+          {time.minute}))
+      (label :class "fg-right" :text "${time.day}"))))

@@ -16,6 +16,8 @@
 ;;%x for text icon of weather; %f for 'feels like' and %w for wind and arrow-direction
 (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=%t+%w'")
 
+(defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
+
 (defpoll ESSID_WLAN :interval "3s" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
 (defpoll vpnstatus :interval "3s" "systemctl is-active openvpn-client@client.service")
 (defpoll net :interval "10s"
@@ -33,8 +35,6 @@
     (_userinfo)
     ;; TODO: tray
     (_sysinfo)
-    ;; TODO: idle inhibitor status indicator
-    ;; "format-icons": {"activated": "", "deactivated": ""})
     (_telemetery)))
 
 ;; --- misc block ---
@@ -47,6 +47,7 @@
       (_layout)
       (_updates)
       (_weather)))
+      
 
 (defwidget _layout []
   (label :width 35 :class "layout" :text "${layout}"))
@@ -60,6 +61,10 @@
   (label :class "weather"
     :text {weather}))
 
+(defwidget _bt []
+  (label :width 14 :xalign 1 :class "bt" :text "${bt_status}"))
+
+
 ;; --- System info block ---
 
 (defwidget _sysinfo []
@@ -69,13 +74,18 @@
       :up {EWW_NET.wlp0s20f3?.NET_UP ?: EWW_NET.wlp2s0.NET_UP}
       :down {EWW_NET.wlp0s20f3?.NET_DOWN ?: EWW_NET.wlp2s0.NET_DOWN})
     (_audioblock)
-    (_backlight)))
+    (_backlight)
+    (_bt)))
 
 (defwidget _network [up down]
   (eventbox
     :onhover "eww update show_essid=true"
     :onhoverlost "eww update show_essid=false"
-    (box :class "network" :space-evenly false :spacing 8 :hexpand "false"
+    (box
+      :class "network"
+      :space-evenly false
+      :spacing {show_essid ? 8 : 0}
+      :hexpand "false"
       (overlay :width 35
         (box :class "fg" :visible {net != ""} :orientation "v" :halign "center"
           (label :text {up / 1024 < 1024 ?
