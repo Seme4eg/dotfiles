@@ -8,7 +8,8 @@
 
   .updates {
     .bg {
-      opacity: .4;
+      color: color.scale($background, $lightness: 30%);
+      opacity: .6;
       font-size: 2.3em;
       margin-top: -14px;
     }

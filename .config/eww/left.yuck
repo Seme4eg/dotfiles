@@ -46,7 +46,7 @@
     (label
       :limit-width window_lim
       :show_truncated true
-      :text {window == "" ? "_" : window})))
+      :text {window == "" ? "(-_-)" : window})))
 
 (defwidget _player []
   (_revealer

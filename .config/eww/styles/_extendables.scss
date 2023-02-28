@@ -10,6 +10,7 @@
 %back-text {
   font-family: RubikGlitch;
   font-size: 2.4em;
+  letter-spacing: 1px;
 
   // red green blue saturation lightness whiteness blackness alpha
 
@@ -19,7 +20,7 @@
 
   // or this
   color: $background;
-  text-shadow: 0 0 2px $foreground;
+  text-shadow: 0 0 2px color.scale($foreground, $lightness: -20%);
 }
 
 %shadow-text {

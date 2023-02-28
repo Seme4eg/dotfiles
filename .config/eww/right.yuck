@@ -62,13 +62,13 @@
     :text {weather}))
 
 (defwidget _bt []
-  (label :width 14 :xalign 1 :class "bt" :text "${bt_status}"))
+  (label :xalign 1 :class "bt" :text "${bt_status}"))
 
 
 ;; --- System info block ---
 
 (defwidget _sysinfo []
-  (box :class "sys-info" :space-evenly false :spacing 8
+  (box :class "sys-info" :space-evenly false :spacing 13
     (_network
       ;; 2 of my laptops have it named differently
       :up {EWW_NET.wlp0s20f3?.NET_UP ?: EWW_NET.wlp2s0.NET_UP}
@@ -118,7 +118,8 @@
       :class "volume"
       :text {volume.is_vol_muted == "true" ? "󰖁" :
              volume.vol_level < 20 ? "󰕿${volume.vol_level}" :
-             volume.vol_level < 50 ? "󰖀${volume.vol_level}" : "󰕾${volume.vol_level}"}
+             volume.vol_level < 50 ? "󰖀${volume.vol_level}" :
+             "󰕾${volume.vol_level}"}
       :angle 90)
     (progress
       :class {volume.is_vol_muted ? "muted" : ""}

@@ -12,9 +12,9 @@
     margin-top: -2px;
     color: $background;
     // text-shadow: 0 0 2px $foreground;
-    text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
-                 0 0 10px color.scale($foreground, $lightness: -35%),
-                 0 0 20px color.scale($foreground, $lightness: -45%);
+    text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
+                 0 0 10px color.scale($foreground, $lightness: -25%),
+                 0 0 20px color.scale($foreground, $lightness: -35%);
     &.active {
       color: $foreground;
       text-shadow: 0 0 5px color.scale($foreground, $lightness: -15%),
@@ -22,10 +22,6 @@
                    0 0 10px color.scale($foreground, $lightness: -25%),
                    0 0 15px color.scale($foreground, $lightness: -25%),
                    0 0 20px color.scale($foreground, $lightness: -35%);
-
-      // XXX: uncomment when eww will fix animations & cpu
-      // animation: fontsize .15s ease-out;
-      // animation-fill-mode: forwards; // keep animation styles
     }
   }
 }
@@ -55,6 +51,7 @@
   label {
     @extend %shadow-text;
     font: bold 1em Megrim;
+    margin-top: 2px;
     letter-spacing: 2px;
   }
 }
