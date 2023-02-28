@@ -14,7 +14,7 @@
           :scale-y "193%"
           :translate-y "-25%"
           {time.hour}))
-      (label :class "fg-left" :text "Day ${time.count}"))
+      (label :visible {theme == "dark"} :class "fg-left" :text "Day ${time.count}"))
     (overlay :width 20
       (label :class "fg-center" :text "")
       (label :class "bg-center" :text ":"))
@@ -28,4 +28,4 @@
           :scale-y "193%"
           :translate-y "-25%"
           {time.minute}))
-      (label :class "fg-right" :text "${time.day}"))))
+      (label :visible {theme == "dark"} :class "fg-right" :text "${time.day}"))))

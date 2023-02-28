@@ -2,6 +2,8 @@
 (include "./center.yuck")
 (include "./right.yuck")
 
+(defvar theme "dark")
+
 (defwindow topbar
   :monitor 0
   :geometry (geometry
@@ -16,7 +18,7 @@
 
 (defwidget main_container []
   (centerbox
-    :class "container_main" ;; add 'slim' to make status bar 'slim'
+    :class "container_main ${theme}" ;; add 'slim' to make status bar 'slim'
     :orientation "h"
     (container_left)
     (container_center)

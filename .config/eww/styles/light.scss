@@ -1,0 +1,17 @@
+// light theme specific styles
+
+// left section
+.light {
+  .window {
+    text-shadow: none;
+  }
+}
+
+// right section
+.light {
+  .telemetery .bat {
+    &.charging, &.low {
+      color: $background;
+    }
+  }
+}
