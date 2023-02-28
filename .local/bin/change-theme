@@ -4,7 +4,7 @@ theme=dark # default to dark theme
 wp=
 delete_current=
 
-while getopts ":w:l:d" Option; do case $Option in
+while getopts ":w:ld" Option; do case $Option in
   l) theme=light;;
   w) wp=$OPTARG;;
   d) delete_current=1;;
