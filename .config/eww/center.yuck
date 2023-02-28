@@ -9,23 +9,23 @@
         (transform
           :class "bg-left"
           :hexpand true
-          :scale-x "193%"
-          :translate-x "-22%"
-          :scale-y "193%"
-          :translate-y "-25%"
+          :scale-x "215%"
+          :translate-x "-27%"
+          :scale-y "195%"
+          :translate-y "-23%"
           {time.hour}))
       (label :visible {theme == "dark"} :class "fg-left" :text "Day ${time.count}"))
     (overlay :width 20
       (label :class "fg-center" :text "")
       (label :class "bg-center" :text ":"))
     (overlay :width 120
-      (box :halign "start" :width 100
+      (box
         (transform
           :class "bg-right"
           :hexpand true
-          :scale-x "193%"
-          :translate-x "-22%"
-          :scale-y "193%"
-          :translate-y "-25%"
+          :scale-x "215%"
+          :translate-x "-27%"
+          :scale-y "195%"
+          :translate-y "-23%"
           {time.minute}))
       (label :visible {theme == "dark"} :class "fg-right" :text "${time.day}"))))
