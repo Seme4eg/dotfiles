@@ -10,17 +10,10 @@
   .bg {
     font-family: RubikGlitch;
     font-size: 2.4em;
-
-    // red green blue saturation lightness whiteness blackness alpha
-
-    // either this
-    // color: color.scale($foreground, $lightness: -60%, $saturation: -70%);
-
-    // or this
     color: $background;
     text-shadow: 0 0 2px color.scale($foreground, $lightness: -20%);
   }
   .colon {
-    margin: -1px 3px 0;
+    margin: -3px 3px 0;
   }
 }

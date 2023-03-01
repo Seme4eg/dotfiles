@@ -84,7 +84,8 @@ progressbar {
   .backlight {
     transition: all 0.3s ease-in-out;
     .circle-text {
-      margin-right: 6px;
+      font-size: 1.2em;
+      margin-right: 5px;
     }
   }
   .bt {
