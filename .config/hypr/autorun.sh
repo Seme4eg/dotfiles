@@ -14,7 +14,7 @@ hyprctl setcursor Future-dark-cursors 26
 wl-paste --watch cliphist store &
 
 firefox &
-webcord --enable-features=UseOzonePlatform --ozone-platform=wayland &
+gtk-launch webcord.desktop &
 emacs &
 
 # change theme on each session unlock
