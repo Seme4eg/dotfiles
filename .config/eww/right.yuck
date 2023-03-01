@@ -180,57 +180,12 @@
 (defwidget _telemetery []
   (box :class "telemetery" :space-evenly false :spacing 18
     (_revealer
-      :revealvar {steam_running != 0}
-      :spacing {steam_running != 0 ? 8 : 0}
-      (_cpu)
-      (_gpu))
+      :revealvar {steam_running == 0}
+      :spacing {steam_running == 0 ? 8 : 0}
+      (_graph :type "CPU")
+      (_graph :type "GPU"))
     (_mem)
-    (_battery :capacity {EWW_BATTERY.BAT0.capacity}))) ;; style it beautifully
-
-(defwidget _cpu []
-  (box :orientation "v" :space-evenly true :spacing 0
-    (box :valign "start"
-      (label :yalign 1 :xalign 0 :class "temp-text" :text "CPU")
-      (label :yalign 1 :xalign 1 :class "temp-text" :text "${EWW_TEMPS.ACPITZ_TEMP1}°"))
-    (overlay :class "cpu"
-      (graph :class "load"
-        :value {EWW_CPU.avg}
-        :thickness 3
-        :width 55
-        :time-range "30s"
-        :max 100
-        :line-style "round")
-      (graph :class "temp"
-        :value {EWW_TEMPS.ACPITZ_TEMP1}
-        :thickness 3
-        :width 55
-        :time-range "30s"
-        :min 40
-        :max 120
-        :line-style "round"))))
-
-(defwidget _gpu []
-  (box :orientation "v" :space-evenly true :spacing 0
-    (box
-      (label :class "temp-text" :yalign 1 :xalign 0 :text "GPU")
-      (label :class "temp-text" :yalign 1 :xalign 1 :text "${gpu.temp}°"))
-    (overlay :class "gpu"
-      (graph :class "load"
-        :value {gpu.load}
-        :thickness 3
-        :width 55
-        :time-range "1m"
-        :max 100
-        :line-style "round")
-      (graph :class "temp"
-        :value {gpu.temp}
-        :thickness 3
-        :width 55
-        :style "color: cyan"
-        :time-range "1m"
-        :min 30
-        :max 100
-        :line-style "round"))))
+    (_battery :capacity {EWW_BATTERY.BAT0.capacity})))
 
 (defwidget _mem []
   (overlay :class "memory" :width 31
@@ -242,7 +197,7 @@
     (label :class "circle-text" :text "󰍛")))
 
 (defwidget _battery [capacity]
-  (label :width 40
+  (label
     :class {EWW_BATTERY.BAT0.status == 'Charging' ? "bat charging" :
              EWW_BATTERY.BAT0.capacity < 15 ? "bat low" : "bat"}
     :text "${EWW_BATTERY.BAT0.capacity}󱐋"))

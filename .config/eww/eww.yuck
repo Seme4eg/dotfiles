@@ -36,3 +36,29 @@
       :transition {transition ?: "slideright"}
       :duration {duration ?: "500ms"}
       (children :nth 1))))
+
+;; used type gpu and cpu info, 'type' can be either CPU or GPU
+(defwidget _graph [type]
+  (box :orientation "v" :spacing 0 :class type
+    (box :valign "start" :class "temp-text"
+      (label :xalign 0 :text type)
+      (label
+        :class "temp-value"
+        :xalign 1
+        :text "${type == "CPU" ? EWW_TEMPS.ACPITZ_TEMP1 : gpu.temp}°"))
+    (overlay
+      (graph :class "load"
+        :value {type == "CPU" ? EWW_CPU.avg : gpu.load}
+        :thickness 2
+        :width 55
+        :time-range {type == "CPU" ? "30s" : "1m"}
+        :max 100
+        :line-style "round")
+      (graph :class "temp"
+        :value {type == "CPU" ? EWW_TEMPS.ACPITZ_TEMP1 : gpu.temp}
+        :thickness 2
+        :width 55
+        :time-range {type == "CPU" ? "30s" : "1m"}
+        :min {type == "CPU" ? 40 : 35}
+        :max {type == "CPU" ? 120 : 100}
+        :line-style "round"))))
