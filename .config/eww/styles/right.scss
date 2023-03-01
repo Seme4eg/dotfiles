@@ -1,3 +1,6 @@
+$_background: color.scale($color5, $saturation: -50%, $lightness: -30%);
+$_accent: color.scale($color6, $saturation: 30%);
+
 .user-info {
   @extend %box;
   font: 1.7em Iceland;
@@ -27,12 +30,12 @@ progressbar {
     border-radius: 5px;
     min-height: 1px;
     min-width: 3px;
-    background: color.scale($background, $lightness: 30%)
+    background: $_background;
   }
   progress {
     border-radius: 5px;
     min-width: 3px;
-    background: color.scale($color6, $saturation: 30%);
+    background: $_accent;
   };
 }
 
@@ -94,8 +97,8 @@ progressbar {
 }
 
 circular-progress {
-  color: color.scale($color6, $saturation: 30%);
-  background: color.scale($background, $lightness: 30%)
+  color: $_accent;
+  background: $_background;
 }
 .circle-text {
   font-size: 1.4em;
@@ -109,15 +112,23 @@ circular-progress {
   padding-right: 10px;
   .load {
     color: $foreground;
-    opacity: .7;
+    opacity: .9;
   }
   .temp {
-    color: color.scale($color6, $saturation: 100%);
-    opacity: .7;
+    color: $_accent;
   }
   .temp-text {
-    font: 1.1em Iceland;
-    opacity: .7;
+    font: bold .8em Megrim;
+    color: color.scale($foreground, $alpha: -20%);
+    letter-spacing: 2px;
+    .temp-value {
+      color: $foreground;
+    }
+  }
+  .GPU {
+    .temp {
+      color: color.scale($color5, $saturation: 30%);
+    }
   }
   .circle-text {
     margin-right: 2px;
