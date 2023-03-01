@@ -1,6 +1,3 @@
-$_background: color.scale($color5, $saturation: -50%, $lightness: -30%);
-$_accent: color.scale($color6, $saturation: 30%);
-
 .user-info {
   @extend %box;
   font: 1.7em Iceland;

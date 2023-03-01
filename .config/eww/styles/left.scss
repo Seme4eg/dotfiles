@@ -44,6 +44,10 @@
 
 .player {
   @extend %box;
+  text-shadow: 3px 3px $_background;
+  .icon {
+    color: $_accent;
+  }
   &_hidden {
     background: transparent;
     box-shadow: none;

@@ -5,6 +5,9 @@
 @import '/home/earthian/.cache/wal/colors.scss'; // pywal
 @import 'styles/extendables';
 
+$_accent: color.scale($color6, $saturation: 30%);
+$_background: color.scale($color5, $saturation: -50%, $lightness: -40%);
+
 .container_main {
   // saucecodepro nerd font
   font-family:hasklug nerd font;

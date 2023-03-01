@@ -178,10 +178,10 @@
 ;; --- telemetery block ---
 
 (defwidget _telemetery []
-  (box :class "telemetery" :space-evenly false :spacing 18
+  (box :class "telemetery" :space-evenly false :spacing 15
     (_revealer
-      :revealvar {steam_running == 0}
-      :spacing {steam_running == 0 ? 8 : 0}
+      :revealvar {steam_running != 0}
+      :spacing {steam_running != 0 ? 8 : 0}
       (_graph :type "CPU")
       (_graph :type "GPU"))
     (_mem)

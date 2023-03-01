@@ -11,10 +11,11 @@
           :scale-x "216%"
           :translate-x "-27%"
           :scale-y "195%"
-          :translate-y "-23%"
+          :translate-y "-25%"
           ;; center around colon + colon needs to b raised a bit
           (centerbox :space-evenly false
             (label :halign "end" :class "hour" :text {time.hour})
-            (label :class "colon" :yalign 0 :text ":")
+            (transform :translate-y "-5%"
+              (label :class "colon" :text ":"))
             (label :halign "start" :class "minute" :text {time.minute}))))
       (label :class "fg" :text "#${time.count} ${time.day}"))))

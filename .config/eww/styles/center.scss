@@ -1,6 +1,5 @@
 .date {
   @extend %box;
-  // padding: 0 23px;
   .fg {
     font-family: Megrim;
     font-weight: bold;
@@ -14,6 +13,6 @@
     text-shadow: 0 0 2px color.scale($foreground, $lightness: -20%);
   }
   .colon {
-    margin: -3px 3px 0;
+    margin: 0 3px;
   }
 }

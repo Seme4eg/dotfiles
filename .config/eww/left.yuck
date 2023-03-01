@@ -50,14 +50,10 @@
 
 (defwidget _player []
   (_revealer
-    ;; :class {player_state == 'Playing' ? "player" : "player player_hidden"}
-    ;; :revealvar {player_state == 'Playing'}
     :class {player_state != "" ? "player" : "player player_hidden"}
     :revealvar {player_state != ""}
     :transition "crossfade"
     (box)
-    (label
-      :limit-width 30
-      :show-truncated true
-      :width 100
-      :text "${player_state == 'Playing' ? '' : ''} ${player}")))
+    (box :space-evenly false :spacing 10
+      (label :class "icon" :text "${player_state == 'Playing' ? '' : ''}")
+      (label :limit-width 30 :show-truncated true :text "${player}"))))
