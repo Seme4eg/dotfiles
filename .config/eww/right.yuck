@@ -1,5 +1,6 @@
 ;; vars
 (defvar show_essid false)
+(defvar show_wind false)
 
 ;; listeners
 (deflisten layout "scripts/layout")
@@ -14,7 +15,8 @@
 ;; https://github.com/chubin/wttr.in#one-line-output
 ;; (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=j2'") ;; JSON
 ;;%x for text icon of weather; %f for 'feels like' and %w for wind and arrow-direction
-(defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=%t+%w'")
+(defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=%t'")
+(defpoll wind :interval "3600s" "curl 'https://wttr.in/Becici?format=%w'")
 
 (defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
 
@@ -58,8 +60,20 @@
     (label :class "bg" :text "")))
 
 (defwidget _weather []
-  (label :class "weather"
-    :text {weather}))
+  (eventbox
+    :onhover "eww update show_wind=true"
+    :onhoverlost "eww update show_wind=false"
+    (box
+      :class "weather"
+      :space-evenly false
+      :spacing {show_wind ? 8 : 0}
+      :hexpand "false"
+      (label :text weather)
+      (revealer
+        :transition "slideright"
+        :reveal show_wind
+        :duration "350ms"
+        (label :text wind)))))
 
 (defwidget _bt []
   (label :xalign 1 :class "bt" :text "${bt_status}"))
