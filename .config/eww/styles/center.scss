@@ -1,21 +1,26 @@
 .date {
   @extend %box;
-  padding: 0 20px;
-  .fg-left, .fg-right {
+  // padding: 0 23px;
+  .fg {
     font-family: Megrim;
     font-weight: bold;
     font-size: 1.2em;
-    letter-spacing: 5px;
+    letter-spacing: 10px;
+  }
+  .bg {
+    font-family: RubikGlitch;
+    font-size: 2.4em;
 
-    // Or maybe Iceland? remove letter spacing tho
-    // font-family: Iceland;
-    // font-size: 1.9em;
+    // red green blue saturation lightness whiteness blackness alpha
+
+    // either this
+    // color: color.scale($foreground, $lightness: -60%, $saturation: -70%);
+
+    // or this
+    color: $background;
+    text-shadow: 0 0 2px color.scale($foreground, $lightness: -20%);
   }
-  .bg-left, .bg-center, .bg-right {
-    @extend %back-text;
-  }
-  .bg-center {
-    font-size: 4.4em;
-    margin-top: -20px;
+  .colon {
+    margin: -1px 3px 0;
   }
 }

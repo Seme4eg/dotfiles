@@ -1,13 +1,20 @@
 // light theme specific styles
 
-// left section
+// left block
 .light {
   .window {
     text-shadow: none;
   }
 }
 
-// right section
+// center block
+.date {
+  .fg {
+    // TODO: different BOLD font
+  }
+}
+
+// right block
 .light {
   .telemetery .bat {
     &.charging, &.low {

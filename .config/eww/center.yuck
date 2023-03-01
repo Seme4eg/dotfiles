@@ -3,29 +3,18 @@
   `date +'{"count":"%j","hour":"%H","minute":"%M","day":"%a %d/%m"}'`)
 
 (defwidget container_center []
-  (centerbox :class "date"
-    (overlay :width 120
-      (box
+  (box :class "date"
+    (overlay
+      (box :halign "center" :class "bg" 
         (transform
-          :class "bg-left"
-          :hexpand true
-          :scale-x "215%"
+          :width 260
+          :scale-x "216%"
           :translate-x "-27%"
           :scale-y "195%"
           :translate-y "-23%"
-          {time.hour}))
-      (label :visible {theme == "dark"} :class "fg-left" :text "Day ${time.count}"))
-    (overlay :width 20
-      (label :class "fg-center" :text "")
-      (label :class "bg-center" :text ":"))
-    (overlay :width 120
-      (box
-        (transform
-          :class "bg-right"
-          :hexpand true
-          :scale-x "215%"
-          :translate-x "-27%"
-          :scale-y "195%"
-          :translate-y "-23%"
-          {time.minute}))
-      (label :visible {theme == "dark"} :class "fg-right" :text "${time.day}"))))
+          ;; center around colon + colon needs to b raised a bit
+          (centerbox :space-evenly false
+            (label :halign "end" :class "hour" :text {time.hour})
+            (label :class "colon" :yalign 0 :text ":")
+            (label :halign "start" :class "minute" :text {time.minute}))))
+      (label :class "fg" :text "#${time.count} ${time.day}"))))

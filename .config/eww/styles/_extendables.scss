@@ -6,23 +6,6 @@
   transition: all 0.5s ease-in-out;
 }
 
-/*ewws' transform widget works in a very weird way so here's a crutch */
-%back-text {
-  font-family: RubikGlitch;
-  font-size: 2.4em;
-  letter-spacing: 1px;
-
-  // red green blue saturation lightness whiteness blackness alpha
-
-  // either this
-  // color: color.scale($foreground, $lightness: -60%, $saturation: -70%);
-  // color: color.scale($background, $lightness: 35%);
-
-  // or this
-  color: $background;
-  text-shadow: 0 0 2px color.scale($foreground, $lightness: -20%);
-}
-
 %shadow-text {
   text-shadow: 3px 3px color.scale($foreground, $alpha: -60%);
 }
