@@ -22,25 +22,53 @@
   }
 }
 
+progressbar {
+  trough {
+    border-radius: 5px;
+    min-height: 1px;
+    min-width: 3px;
+    background: color.scale($background, $lightness: 30%)
+  }
+  progress {
+    border-radius: 5px;
+    min-width: 3px;
+    background: color.scale($color6, $saturation: 30%);
+  };
+}
+
 .sys-info {
   @extend %box;
   .network {
-    padding: 5px 0;
-    .bg {
-      // @extend %back-text;
-      font-size: 2.4em;
-      color: color.scale($foreground, $alpha: -60%);
-      margin-top: -6px;
-      margin-right: 10px;
+    .vpn {
+      font-size: 1.3em;
+    }
+    .disconnected {
+      font-size: 1.4em;
     }
     .fg {
-      font: bold .8em Megrim;
+      // font: .8em syne mono;
+      // font: .8em bellota;
+      font: .8em shantell sans;
+      .bold {
+        font-weight: bold;
+      }
     }
     .essid {
       font: 1em Iceland;
     }
+    progressbar {
+      trough {
+        min-height: 4px;
+      }
+      progress {
+        min-height: 4px;
+      }
+    }
   }
   .audio {
+    progressbar {
+      padding: 6px 1px;
+    }
     .volume, .mic {
       // font: 1.2em Silkscreen;
       font-size: .8em;
@@ -62,21 +90,6 @@
   .bt {
     font: 1.1em daddytimemono nerd font;
   }
-}
-
-progressbar {
-  padding: 6px 1px;
-  trough {
-    border-radius: 5px;
-    min-height: 1px;
-    min-width: 3px;
-    background: color.scale($background, $lightness: 30%)
-  }
-  progress {
-    border-radius: 5px;
-    min-width: 3px;
-    background: color.scale($color6, $saturation: 30%);
-  };
 }
 
 circular-progress {

@@ -92,39 +92,45 @@
     (_bt)))
 
 (defwidget _network [up down]
-  (eventbox
-    :onhover "eww update show_essid=true"
-    :onhoverlost "eww update show_essid=false"
-    (box
-      :class "network"
-      :space-evenly false
-      :spacing {show_essid ? 8 : 0}
-      :hexpand "false"
-      (overlay :width 35
-        (box
-          :class "fg"
-          :visible {net != "" && theme == "dark"}
-          :orientation "v"
-          :halign "center"
-          (label :text {up / 1024 < 1024 ?
-                           " ${round(up / 1024, 0)} Kb" :
-                           " ${round(up / 1048576, 0)} Mb"})
-          (label :text {down / 1024 < 1024 ?
-                        " ${round(down / 1024, 0)} Kb" :
-                        " ${round(down / 1048576, 0)} Mb"}))
-        (label
-          :class "bg"
-          :text {net == "" ? "󰤮" :
-                 vpnstatus == "active" ? "󰖂" :
-                 net < 26 ? "󰤟" :
-                 net < 51 ? "󰤢" :
-                 net < 76 ? "󰤥" : "󰤨"}))
-      (revealer
-        :class "essid"
-        :transition "slideright"
-        :reveal show_essid
-        :duration "350ms"
-        (label :class "essid" :text ESSID_WLAN)))))
+  (box :space-evenly false :class "network"
+    (revealer
+      :reveal {vpnstatus == "active"}
+      :spacing {vpnstatus == "active" ? 5 : 0}
+      :transition "slideleft"
+      (label :width 24 :xalign 0 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
+    (eventbox
+      :onhover "eww update show_essid=true"
+      :onhoverlost "eww update show_essid=false"
+      (box
+        :space-evenly false
+        :spacing {show_essid ? 8 : 0}
+        :hexpand "false"
+        (overlay :width 35
+          (box
+            :class "fg"
+            :visible {net != ""}
+            :orientation "v"
+            :valign "center"
+            :halign "center"
+            :space-evenly false
+            (label
+              :class {up / 1024 > 1024 ? "bold" : ""}
+              :text {up / 1024 < 1024 ?
+                        " ${round(up / 1024, 0)}" :
+                        " ${round(up / 1048576, 0)}"})
+            (progress :value net :width 38 :max 100 :orientation "h")
+            (label
+              :class {down / 1024 > 1024 ? "bold" : ""}
+              :text {down / 1024 < 1024 ?
+                     " ${round(down / 1024, 0)}" :
+                     " ${round(down / 1048576, 0)}"}))
+          (label :class "disconnected" :text {net == "" ? "󰤮" : ""}))
+        (revealer
+          :class "essid"
+          :transition "slideright"
+          :reveal show_essid
+          :duration "350ms"
+          (label :class "essid" :text ESSID_WLAN))))))
 
 (defwidget _audioblock []
   (box :class "audio" :space-evenly false
