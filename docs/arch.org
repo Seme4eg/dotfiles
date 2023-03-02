@@ -81,16 +81,6 @@ of what previously worked for me on different machines (file
   set-default ...~
 
 ** hyprland
-create =/etc/systemd/system/hyprland-session.target= with contents:
-#+begin_src
-[Unit]
-Description=Hyprland Compositor Session;
-Documentation=man:systemd.special(7);
-BindsTo=graphical-session.target;
-Wants=graphical-session-pre.target;
-After=graphical-session-pre.target;
-#+end_src
-
 *Nvidia* setup: *DO NOT FOLLOW HYPRLAND WIKI* yet, first try to install just normal,
 proprietary =nvidia= package, do not add anything in grub conf or mkinitcpio, JUST
 TRY TO LAUNCH IT WITH NVIDIA (using ~starthl~ ofc). If it runs, then enable drm in
