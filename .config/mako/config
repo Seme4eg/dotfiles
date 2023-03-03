@@ -7,10 +7,11 @@
 
 # https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html
 # font=BellotaText 13
-font=Comfortaa 13
-# font=ShantellSans Light 13
-background-color=#0E0F08aa
-text-color=#a2c3dd
+# font=Comfortaa 13
+font=ShantellSans Light 13
+# font=Jura 14
+# font=montserrat alternates 13
+
 width=470
 height=150
 # outer-margin=0,0,40,0
@@ -22,6 +23,7 @@ border-radius=10
 # progress-color=over #ffffff
 icons=1
 max-icon-size=48
+icon-path=/usr/share/icons/Numix-Circle
 icon-location=right
 # actions=1 # default
 
