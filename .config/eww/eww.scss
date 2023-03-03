@@ -16,8 +16,8 @@ $_background: color.scale($color5, $saturation: -50%, $lightness: -40%);
   background: transparent;
 }
 
+@import 'styles/light';
 @import 'styles/left';
 @import 'styles/center';
 @import 'styles/right';
 @import 'styles/slim';
-@import 'styles/light';
