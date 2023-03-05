@@ -4,9 +4,9 @@ After=eww.service
 Requires=eww.service
 
 [Service]
-ExecStart=/usr/bin/udiskie
+ExecStart=udiskie
 #to unmount run 'udisksctl unmount -b /dev/sdc1'
-#ExecStart=/usr/bin/env udiskie --tray --appindicator
+#ExecStart=env udiskie --tray --appindicator
 Restart=always
 
 [Install]

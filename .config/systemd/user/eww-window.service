@@ -9,9 +9,9 @@ After=eww.service
 PartOf=eww.service
 
 [Service]
-ExecStartPre=/usr/bin/eww ping
-ExecStart=/usr/bin/eww open topbar
-ExecStop=/usr/bin/eww close topbar
+ExecStartPre=eww ping
+ExecStart=eww open topbar
+ExecStop=eww close topbar
 Type=oneshot
 RemainAfterExit=true
 Restart=on-failure

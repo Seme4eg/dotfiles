@@ -7,6 +7,6 @@ PartOf=graphical-session.target
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=/usr/bin/eww daemon --no-daemonize
-Restart=on-failure
+ExecStart=eww daemon --no-daemonize
+Restart=always
 RestartSec=3s
