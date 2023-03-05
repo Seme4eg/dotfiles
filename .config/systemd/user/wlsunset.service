@@ -6,7 +6,7 @@ PartOf=graphical-session.target
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=/home/earthian/.local/bin/screen_temp
+ExecStart=/home/earthian/.local/bin/wlsunset-wrapper
 Slice=session.slice
 Restart=always
 RestartSec=3s
