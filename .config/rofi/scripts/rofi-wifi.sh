@@ -34,9 +34,7 @@ get_ssid() {
 }
 
 is_enabled() {
-  cmd=$(nmcli device status | grep -e "\swifi\s.*connected")
-  # if [ ! -z "$cmd" ]; then
-  if "$cmd"; then
+  if [ $(nmcli radio wifi) = "enabled" ]; then
     echo "睊  Disable Wi-Fi"
     return 0
   else
