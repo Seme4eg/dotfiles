@@ -9,7 +9,7 @@ To *change* cursor theme you need to change it's name in 3 places:
 - [[file:default/index.theme]]
 - [[file:~/dotfiles/.config/gtk-3.0/settings.ini]]
 
-*NOTE*: cursor theme is name of its folder in =~/.icons=
+*NOTE*: cursor theme is name of its folder
 
 Already *installed* cursor themes can be viewed with the command:
 

@@ -1,13 +1,15 @@
 #!/usr/sh
 
 # NOTE: check path in case you change it
-files=$(ls ~/apps/arch/cursors | grep -E '.*\.tar..z$')
+cursor_path=$HOME/apps/arch/cursors
+files=$(ls $cursor_path | grep -E '.*\.tar..z$')
 # Set $IFS to eliminate whitespace in pathnames.
 IFS="$(printf '\n\t')"
+DIR=$HOME/.local/share/icons
 
-[ ! -d "$DIR" ] && mkdir ~/.icons # ~/.local/share/icons
+[ ! -d "$DIR" ] && mkdir $DIR
 
 for file in $files; do
   echo "Extracting $file .."
-  tar xf "$file" -C ~/.icons # ~/.local/share/icons
+  tar xf "$cursor_path/$file" -C $DIR
 done
