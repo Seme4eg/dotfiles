@@ -1,10 +1,12 @@
 [Unit]
-Description=screen temperature
+Description=Day/night gamma adjustments for Wayland compositors
 PartOf=graphical-session.target
 
 [Install]
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=/usr/bin/wlsunset -l 55.7 -L 37.6 -t 3000
-Type=simple
+ExecStart=/home/earthian/.local/bin/screen_temp
+Slice=session.slice
+Restart=always
+RestartSec=3s

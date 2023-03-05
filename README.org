@@ -46,8 +46,7 @@ scripts that might be useful later:
 *** TODO eww widget to view recent notifications
 [[https://github.com/taylor85345/neon-hyprland-theme/blob/main/eww/scripts/notifications][example]]
 *** TODO scripts to write
-- [ ] write a script that cheks my current location every day and updates wlsunset
-  systemd service *AND* systemtime if location differs ?much? from the one that
+- [ ] update systemtime hourly if location differs ?much? from the one that
   was yesterday.
 - [ ] write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
   in systray.
