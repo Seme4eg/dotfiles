@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set_timezone() {
+  # Get the current timezone from the system
+  current_tz=$(timedatectl | grep "Time zone" | awk '{print $3}')
+
+  # Get the timezone of the current location based on the IP address
+  location_tz=$(curl -s http://ip-api.com/line/?fields=timezone)
+
+  # Check if the current timezone and location timezone are the same
+  if [ "$current_tz" != "$location_tz" ]; then
+    # If they're different, set the system timezone to the location timezone
+    sudo timedatectl set-timezone "$location_tz"
+    notify-send -a $(whoami) "System timezone set to $location_tz"
+    return 0 # 0 as in 'successfully set'
+  else
+    return 1
+  fi
+}
+
+set_coordinates() {
+  coordinates=$(curl -s https://ipinfo.io/loc)
+  if [ ! -z $coordinates ]; then
+    notify-send -a $(whoami) "Coordinates data updated"
+    echo $coordinates > $XDG_CACHE_HOME/last_known_coordinates.txt
+  else
+    notify-send -a $(whoami) "Fetching new coordinates failed, using old ones"
+  fi
+}
+
+# if set_timezone performed timezone update it returns
+# success & set_coords also fires
+set_timezone && set_coordinates
