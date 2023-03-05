@@ -30,6 +30,5 @@ node_modules/
 /.config/systemd/user/default.target.wants/
 /.config/scdl/
 /.config/thefuck/
-/.local/bin/scdl
 /.config/swaylock/config
 /.local/bin/chatgpt

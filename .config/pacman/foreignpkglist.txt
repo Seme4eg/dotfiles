@@ -20,6 +20,7 @@ python-pywalfox
 pywal-git
 rm-improved-git
 rofi-lbonn-wayland-git
+soundcloud-dl-git
 swaylock-effects-git
 telegram-tdlib-git
 timeshift
