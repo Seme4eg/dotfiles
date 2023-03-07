@@ -1,17 +1,21 @@
 * {{
   background: {background}dd;
   foreground: {foreground}ee;
-  foreground-op: {foreground}55;
+  foreground-op: {foreground}aa;
   accent-a: {color5};
   accent-a-op: {color5}99;
   accent-b: {color6};
-  accent-b-op: {color6}99;
+  accent-b-op: {color6}bb;
   border-color: {foreground}88;
   text-color: @foreground;
 
+  // bellota comfortaa shantell sans
+  // font: "bellotatext 16";
+  font: "jura 16";
+
   // font: "Hubballi 16";
   // font: "Source Code Pro 12";
-  font: "Silkscreen 13";
+  // font: "Silkscreen 13";
 }}
 
 #window {{
@@ -69,7 +73,8 @@ entry {{
 }}
 
 #element {{
-  padding: 12px;
+  padding: 2 12 6;
+  margin: 8px;
 }}
 
 #element-text, element-icon {{
