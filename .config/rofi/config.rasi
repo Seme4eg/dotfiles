@@ -46,5 +46,5 @@ configuration {
 
 // @theme "/dev/null"
 
-@import "~/.cache/wal/rofi-v2.rasi"
+@import "~/.cache/wal/rofi.rasi"
 // @import "test" // test theme

@@ -10,7 +10,10 @@ list_wps() {
 }
 
 rofi_dmenu() {
-  rofi -dmenu -show-icons -theme-str '#entry { placeholder: "Wallpaper to apply.."; }'
+  # handwriting fonts: caveat #1 swankyandmoomoo #2 longcang #3
+  rofi -dmenu -show-icons \
+    -theme-str '#element-text { font: "caveat 17"; }' \
+    -theme-str '#entry { placeholder: "Wallpaper to apply.."; }'
 }
 
 wp=$( list_wps | rofi_dmenu )

@@ -1,19 +1,23 @@
 * {{
   background: {background}dd;
-  foreground: {foreground};
+  foreground: {foreground}ee;
+  foreground-op: {foreground}55;
   accent-a: {color5};
+  accent-a-op: {color5}99;
   accent-b: {color6};
   accent-b-op: {color6}99;
   border-color: {foreground}88;
   text-color: @foreground;
 
-  font: "Hubballi 16";
+  // font: "Hubballi 16";
+  // font: "Source Code Pro 12";
+  font: "Silkscreen 13";
 }}
 
 #window {{
   background-color: @background;
   border: 1;
-  border-color: @accent-a;
+  border-color: @accent-a-op;
   border-radius: 13px;
   padding: 8;
 }}
@@ -34,36 +38,45 @@
 }}
 
 #inputbar {{
-  padding: 4 0 10 0;
-  children: [ textbox-prompt-colon,entry,case-indicator ];
+  padding: 8 0;
+  // prompt
+  children: [ textbox-prompt-colon,entry ];
 }}
 
+entry {{
+  cursor: text;
+  spacing: 0;
+  placeholder-color: @foreground-op;
+  placeholder: ". . .";
+}}
 
 #textbox-prompt-colon {{
   expand: false;
-  str: "~";
-  margin: 0em 0.3em 0em 0em;
+  str: "┻┳|･_･)ﾉ";
+  margin: 0em 0.8em 0em 0em;
   text-color: @accent-a;
 }}
 
 #listview {{
   fixed-height: 0;
+  margin: 6 0 0 0;
   border: 1px dash 0px 0px;
   border-color: @border-color;
   spacing: 0px;
   scrollbar: false;
   padding: 2px 0px 0px;
+  lines: 8;
 }}
 
 #element {{
-  border: 0 0 1 0;
-  border-color: @border-color;
-  padding: 8px;
+  padding: 12px;
 }}
 
 #element-text, element-icon {{
+  // horizontal-align: 0.5; // center text
   background-color: transparent;
   text-color:       inherit;
+  vertical-align: 0.5;
 }}
 
 element.normal.normal, element.alternate.normal {{
@@ -81,21 +94,16 @@ element.normal.active, element.alternate.active {{
   text-color: @accent-b-op;
 }}
 
-#element.selected.normal {{
-  background-color: @background;
+element.selected.normal, element.selected.active {{
+  border: 0 0 0 3;
+  border-color: @accent-b;
+  background-color: inherit;
   text-color: @accent-b;
   border-color: @accent-b;
 }}
 
-#element.selected.urgent {{
-  /* background-color: @selected-urgent-background; */
-  /* text-color: @selected-urgent-foreground; */
-}}
-
 #element.selected.active {{
-  background-color: @background;
   text-color: @accent-b-op;
-  border-color: @accent-b;
 }}
 
 #sidebar {{
@@ -123,7 +131,7 @@ element.normal.active, element.alternate.active {{
 
 #button.selected {{
   background-color: inherit;
-  border-color: @accent-a;
+  border-color: @accent-a-op;
   text-color: inherit;
 }}
 
@@ -131,3 +139,13 @@ element.normal.active, element.alternate.active {{
   spacing: 0;
   text-color: @foreground;
 }}
+
+// for choose wallpaper script
+element-icon {{
+  padding: -25px 0px;
+  border-radius: 10;
+  size: 100;
+  margin: 0 10 0 0;
+}}
+
+// element-icon selected {{}}
