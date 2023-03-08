@@ -2,6 +2,7 @@
 
 .light {
   $_accent: color.scale($color6, $saturation: 30%, $lightness: -50%);
+  $_accent2: color.scale($color5, $saturation: 30%, $lightness: -40%);
   $_background: color.scale($color5, $saturation: 0%, $lightness: 30%);
 
   // left block
@@ -17,15 +18,11 @@
   .date {
     .fg {
       font: bold 1.2em shantell sans;
-      letter-spacing: 8px;
+      letter-spacing: 7px;
     }
   }
 
   // right block
-  .telemetery .bat {
-    &.charging, &.low {color: $background;}
-  }
-
   progressbar {
     trough {background: $_background;}
     progress {background: $_accent;};
@@ -34,6 +31,16 @@
   circular-progress {
     color: $_accent;
     background: $_background;
+  }
+
+  .sys-info .audio progressbar.vol_progress {
+    progress {
+      background: $_accent2;
+    };
+  }
+
+  .telemetery .bat {
+    &.charging, &.low {color: $background;}
   }
 
   .telemetery {

@@ -142,7 +142,7 @@
              "󰖀${volume.vol_level}"} ;; 󰕾
       :angle 90)
     (progress
-      :class {volume.is_vol_muted ? "muted" : ""}
+      :class {volume.is_vol_muted ? "vol_progress muted" : "vol_progress"}
       :value {volume.vol_level}
       :max 100
       :orientation "v"

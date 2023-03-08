@@ -5,7 +5,8 @@
 @import '/home/earthian/.cache/wal/colors.scss'; // pywal
 @import 'styles/extendables';
 
-$_accent: color.scale($color6, $saturation: 30%);
+$_accent: color.scale($color6, $saturation: 15%);
+$_accent2: color.scale($color5, $saturation: 40%);
 $_background: color.scale($color5, $saturation: -50%, $lightness: -40%);
 
 .container_main {

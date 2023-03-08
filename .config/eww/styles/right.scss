@@ -75,7 +75,12 @@ progressbar {
       letter-spacing: 2px;
       // line-height: 5px;
     }
-    .muted {
+    progressbar.vol_progress {
+      progress {
+        background: $_accent2;
+      };
+    }
+    progressbar.muted {
       progress {
         background: color.scale($color6, $lightness: -60%);
       }
