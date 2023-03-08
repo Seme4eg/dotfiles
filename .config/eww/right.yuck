@@ -139,7 +139,7 @@
       :text {volume.is_vol_muted == "true" ? "󰖁" :
              volume.vol_level < 20 ? "󰕿${volume.vol_level}" :
              volume.vol_level < 50 ? "󰖀${volume.vol_level}" :
-             "󰕾${volume.vol_level}"}
+             "󰖀${volume.vol_level}"} ;; 󰕾
       :angle 90)
     (progress
       :class {volume.is_vol_muted ? "muted" : ""}
