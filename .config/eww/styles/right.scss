@@ -10,10 +10,11 @@
     .bg {
       color: color.scale($color6, $saturation: 30%);
       opacity: .6;
-      font-size: 2.3em;
-      margin-top: -14px;
+      font-size: 2.1em;
+      margin-top: -11px;
     }
     .fg {
+      font-size: .9em;
       @extend %shadow-text;
     }
   }
@@ -70,8 +71,9 @@ progressbar {
       padding: 6px 1px;
     }
     .volume, .mic {
-      // font: 1.2em Silkscreen;
-      font-size: .8em;
+      // any nerd font
+      font: 1em daddytimemono nerd font;
+      font-size: .7em;
       letter-spacing: 2px;
       // line-height: 5px;
     }
