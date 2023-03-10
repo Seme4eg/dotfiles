@@ -15,6 +15,7 @@ numix-circle-icon-theme-git
 nvidia-vaapi-driver-git
 nvm-git
 openvpn-update-systemd-resolved
+otf-symbola
 python-pyclip
 python-pywalfox
 pywal-git
