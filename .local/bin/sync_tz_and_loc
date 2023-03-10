@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# do nothing it wasn't wakup from sleep, for more info check swayidle.service
-[ ! -s $XDG_CACHE_HOME/slept ] && exit 0
-
-sleep 10 # wait till internet connects
+sleep 20 # wait till internet connects
 
 set_timezone() {
   # Get the current timezone from the system
@@ -36,7 +33,5 @@ set_coordinates() {
 # if set_timezone performed timezone update it returns
 # success & set_coords also fires
 set_timezone && set_coordinates
-
-rm $XDG_CACHE_HOME/slept
 
 exit 0
