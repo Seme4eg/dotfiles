@@ -1,6 +1,5 @@
 #!/bin/bash
 
-notify-send -a yes HI
 coordinates=$(cat $XDG_CACHE_HOME/last_known_coordinates.txt)
 lat=$(echo $coordinates | awk -F ',' '{printf "%.1f", $1}')
 lon=$(echo $coordinates | awk -F ',' '{printf "%.1f", $2}')
