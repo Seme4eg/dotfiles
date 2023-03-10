@@ -17,8 +17,5 @@ firefox &
 gtk-launch webcord.desktop &
 emacs &
 
-# change theme on each session unlock
-~/.config/swaylock/unlock-change-theme &
-
 pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I

@@ -2,8 +2,18 @@
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=swayidle timeout 300 'swaylock' timeout 600 'swaymsg "hyprctl dispatch dpms off"' resume 'swaymsg "hyprctl dispatch dpms on"' before-sleep 'swaylock --grace 0'
-Type=simple
+ExecStart=swayidle -w \
+  # HACK: 'unlock' event doesn't run for me for likely several reasons, moving
+  # it to system level services is meh, so here's a hack to run something on
+  # system wakeup from sleep
+  timeout 300 'swaylock' resume '/home/earthian/.local/bin/sync_tz_and_loc' \
+  # '5' is grace period for swaylock, cuz i wana change theme only if grace
+  # period has passed. Changes theme on each unlock.
+  timeout 305 'echo something' resume '/home/earthian/.local/bin/change-theme' \
+  timeout 600 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' \
+  # create a temporary file that will indicate that system was in sleep; file
+  # will be read (for now) only by the 'sync' script that runs on resume above
+  before-sleep 'swaylock --grace 0; echo "slept" > /home/earthian/.cache/slept'
 
 [Unit]
 Description=Idle manager for Wayland
