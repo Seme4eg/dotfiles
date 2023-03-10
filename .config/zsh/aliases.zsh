@@ -48,14 +48,8 @@ alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 
 alias startvm="cd ~/utils/terminal-app-vm && qemu-system-x86_64 -net nic -net user,smb=/home/earthian/git/terminal-app -cpu host -enable-kvm -m 4096 -smp 4 -drive file=terminal-vm.qcow2,format=qcow2"
 alias vedroid="waydroid session stop && waydroid session start &"
-
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
-# XXX: remove it and make system to automount
-# alias mount="sudo mount -t ntfs3" # /dev/sda1 ~/media/usb
-alias check1="sudo lshw -C display"
-alias check2="lspci -vnnn | perl -lne 'print if /^\d+\:.+(\[\S+\:\S+\])/' | grep VGA"
-alias nmtui="sudo nmtui" # zoxide
 
 # soystemd --user
 alias sc="systemctl"
@@ -64,8 +58,7 @@ alias scue="scu enable"
 alias scud="scu disable"
 alias scus="scu start"
 # there is also 'reload' but it aint applicable to all services
-alias scur="scu restart"
-alias scudr="scu daemon-reload"
+alias scur="scu daemon-reload && systemctl --user restart"
 alias scuS="scu status"
 function reloadUUnit() { scudr && scur $1 && scuS $1 }
 
@@ -79,8 +72,9 @@ alias ssc="sudo systemctl"
 alias ssce="ssc enable"
 alias sscd="ssc disable"
 alias sscs="ssc start"
-alias sscr="ssc restart"
+alias sscr="ssc daemon-reload && systemctl restart"
 alias sscS="ssc status"
+alias ssclt="systemctl list-units --type=target"
 
 # --- openvpn service aliases ---
 alias vpns="ssc start openvpn-client@client.service"
