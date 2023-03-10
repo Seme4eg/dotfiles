@@ -33,3 +33,4 @@ node_modules/
 /.config/thefuck/
 /.config/swaylock/config
 /.local/bin/chatgpt
+/.config/fontforge/
