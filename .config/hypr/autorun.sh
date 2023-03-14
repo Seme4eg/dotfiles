@@ -11,6 +11,8 @@ gsettings set org.gnome.desktop.interface gtk-theme Dracula
 
 hyprctl setcursor Future-dark-cursors 26
 
+change-theme
+
 wl-paste --watch cliphist store &
 
 firefox &

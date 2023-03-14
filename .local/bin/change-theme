@@ -10,11 +10,13 @@ while getopts ":w:ld" Option; do case $Option in
   d) delete_current=1;;
 esac done
 
+source ~/.cache/wal/colors.sh # import current theme to get cur wp path
 if [[ $delete_current ]]; then
-  source ~/.cache/wal/colors.sh # import current theme to get cur wp path
   /usr/bin/rip "$wallpaper" move it to graveyard
   notify-send -a $(whoami) "Theme changed" "Previous wallpaper moved to graveyard"
 fi
+
+[[ -z $(pgrep hyprpaper) ]] && hyprpaper -n & # -n for 'contain:' to work
 
 if [ -z "$wp" ]; then
   # wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
@@ -25,9 +27,6 @@ if [ -z "$wp" ]; then
     wp=$(find ~/Pictures/wps/pc/ -type f | sort --random-sort | head -n 1)
 fi
 
-# remove this line if you deside to move hyprpaper to soystemd service again
-# [[ -z $(pgrep hyprpaper) ]] && ( hyprpaper -n & ) # -n for 'contain:' to work
-
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
 [ $theme = light ] &&
   wal -n -q -l -i "$wp" --saturate 0.3 ||
@@ -36,7 +35,10 @@ fi
 eww reload
 eww update theme=$theme
 
-swaybg -m fill -i "$wp" &
+hyprctl hyprpaper preload "$wp"
+hyprctl hyprpaper wallpaper "eDP-1,$wp"
+[[ $wallpaper ]] && hyprctl hyprpaper unload "$wallpaper"
+# swaybg -m fill -i "$wp" & # in case hyprpaper starts to lag again
 
 pywalfox update # update firefox theme
 
@@ -57,9 +59,3 @@ emacsclient -e "(load-theme 'ewal-doom-one)" # update emacs theme
 # and fork the whole project
 # for now im updating theme with a
 # webcord --add-css-theme $XDG_DATA_HOME/webcord/wal.theme.css
-
-# hyprctl hyprpaper preload "$wp"
-# hyprctl hyprpaper wallpaper "eDP-1,$wp"
-# [[ $prev_wallpaper ]] && hyprctl hyprpaper unload "$prev_wallpaper"
-
-prev_wallpaper=$wp
