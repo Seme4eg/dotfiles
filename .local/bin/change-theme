@@ -17,9 +17,12 @@ if [[ $delete_current ]]; then
 fi
 
 if [ -z "$wp" ]; then
+  # wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
+  # testing sort instead of shuf cuz latter seems to quite often repeat
+  # same results
   [ ! -d ~/Pictures/wps ] &&
     wp=$(find ~/.config/hypr/assets/ -type f | shuf -n 1) ||
-    wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
+    wp=$(find ~/Pictures/wps/pc/ -type f | sort --random-sort | head -n 1)
 fi
 
 # remove this line if you deside to move hyprpaper to soystemd service again
