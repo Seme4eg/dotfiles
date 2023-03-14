@@ -9,13 +9,11 @@
 - Notifications:mako
 - Terminal:Alacritty
 
-[[https://youtu.be/-y-OE9myZqw][Youtube demo]] where i show mostly theming and not much more, but hyprland is
+[[https://www.youtube.com/watch?v=mtrwJsSsXVs][Youtube demo]] where i show mostly theming and not much more, but hyprland is
 capable of many more nice-looking things, most of which i have on keybindings
 and use heavily, but didn't show cuz otherwise it would make vid too long.
 
-Some screenshots:
-
-[[.config/hypr/demo/2023_02_22_15:33:47_grim.png]] [[.config/hypr/demo/2023_02_22_15:14:06_grim.png]]
+[[.config/hypr/demo/demo.png]]
 
 ** Bootstrapping
 For now stow symlinks work fine for me, but if it's a fresh install - create
