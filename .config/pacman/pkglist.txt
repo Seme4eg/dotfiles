@@ -75,6 +75,7 @@ udiskie
 udisks2
 unzip
 vim
+wf-recorder
 wget
 wireplumber
 wl-clipboard
