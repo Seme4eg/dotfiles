@@ -11,7 +11,6 @@ easyeffects
 efibootmgr
 entr
 fd
-ffmpeg
 firefox
 fzf
 git
@@ -31,6 +30,7 @@ lsp-plugins
 mako
 man-db
 man-pages
+mpv
 ncdu
 neofetch
 networkmanager

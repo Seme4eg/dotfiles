@@ -10,7 +10,6 @@ hyprland
 hyprpaper-git
 katago-cpu
 mbsync-git
-mpv-full-git
 mu
 numix-circle-icon-theme-git
 nvidia-vaapi-driver-git
