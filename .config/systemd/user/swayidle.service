@@ -15,8 +15,11 @@ ExecStart=swayidle -w \
   # this only delays sleeping up to the limit set in logind.conf(5) by the
   # option InhibitDelayMaxSec (default 5). A command that has not finished by
   # then will continue running after resuming from sleep.
+  # sleep 300 is needed since if im in new place i prob won't have net at first
+  # which will take some time to find & connect to, so i start sync script
+  # only 5 mins after waking up from sleep
   before-sleep 'swaylock --grace 0; sleep 8; \
-    hyprctl dispatch exec change-theme; \
+    hyprctl dispatch exec change-theme; sleep 300; \
     hyprctl dispatch exec sync_tz_and_loc'
 
 [Unit]
