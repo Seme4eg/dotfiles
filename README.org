@@ -42,7 +42,5 @@ scripts that might be useful later:
 ** Todos [0/3]
 *** TODO eww widget to view recent notifications
 [[https://github.com/taylor85345/neon-hyprland-theme/blob/main/eww/scripts/notifications][example]]
-*** TODO scripts to write
-- [ ] write [[https://github.com/cdown/tzupdate/blob/develop/tzupdate.py][it]] in bash, update automatically system timezone and output double time
-  in systray.
 *** TODO arch lags when plugging in charging
+*** TODO rewrite udiskie rofi script on bash
