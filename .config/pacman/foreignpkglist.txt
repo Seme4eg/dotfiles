@@ -6,9 +6,10 @@ dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq
-hyprland
+hyprland-git
 hyprpaper-git
 katago-cpu
+libdisplay-info
 mbsync-git
 mu
 numix-circle-icon-theme-git
