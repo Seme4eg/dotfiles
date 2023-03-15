@@ -2,15 +2,6 @@
 
 idlerStatus=`systemctl --user is-active swayidle.service`
 me=`whoami`
-# id of window that script should anime for to resume idle timer on its closing
-window_id=
-
-if [ $1 = "--anime" ]; then
-  # script will most likely launch before anixart is started
-  sleep 2
-  window_id=$(hyprctl clients -j | gojq -r '.[] | select(.title == "Anixart") | .address')
-  window_id=${window_id:2} # strip 1st 2 symbols (0x)
-fi
 
 start() {
   systemctl --user start swayidle.service
@@ -26,13 +17,3 @@ stop() {
 
 [ $idlerStatus = 'active' ] && stop || start
 
-if [ $1 = "--anime" ]; then
-  socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
-    if [ "$line" == "closewindow>>$window_id" ];then
-       start
-       exit 0
-    fi
-  done
-else
-  exit 0
-fi

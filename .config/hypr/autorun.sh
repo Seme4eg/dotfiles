@@ -1,4 +1,5 @@
 /usr/lib/polkit-kde-authentication-agent-1 &
+# TODO: move to envd in hyprland.conf
 dbus-update-activation-environment --systemd \
   DISPLAY WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_CURRENT_DESKTOP
 
