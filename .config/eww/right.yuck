@@ -6,11 +6,10 @@
 (deflisten layout "scripts/layout")
 (deflisten backlight "scripts/backlight")
 (deflisten volume "scripts/volume")
-(deflisten gpu "scripts/gpu")
 
 ;; polls
+(defpoll gpu :interval "3s" "scripts/gpu")
 (defpoll updates_count :interval "3600s" "checkupdates | wc -l")
-(defpoll steam_running :interval "10s" "pgrep steam | wc -l") ;; for gpu
 (defpoll swayidle_status :interval "10000s" "systemctl --user is-active swayidle.service")
 ;; https://github.com/chubin/wttr.in#one-line-output
 ;; (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=j2'") ;; JSON
@@ -180,8 +179,8 @@
 (defwidget _telemetery []
   (box :class "telemetery" :space-evenly false :spacing 15
     (_revealer
-      :revealvar {steam_running != 0}
-      :spacing {steam_running != 0 ? 8 : 0}
+      :revealvar {gpu.temp != 0}
+      :spacing {gpu.temp != 0 ? 8 : 0}
       (_graph :type "CPU")
       (_graph :type "GPU"))
     (_mem)

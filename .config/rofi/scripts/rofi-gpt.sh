@@ -10,7 +10,7 @@ zenity --progress --text="Waiting for an answer" --pulsate &
 
 PID=$!
 
-ANSWER=$(chatgpt "${INPUT}")
+ANSWER=$(chatgpt -p api "${INPUT}")
 
 kill $PID
 zenity --info --text="$ANSWER"

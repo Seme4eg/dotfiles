@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# for 'deflisten' in eww, but it always ticks
 # $6 for memory load
-nvidia-smi dmon -s pu |
-  awk 'NR>2 {print "{\"temp\": " $3 ", \"load\": " $5 "}"; fflush()}'
+# nvidia-smi dmon -s pu |
+#   awk 'NR>2 {print "{\"temp\": " $3 ", \"load\": " $5 "}"; fflush()}'
+
+# for defpoll, much more efficient
+if pidof steam > /dev/null; then
+    nvidia-smi -i 0 --query-gpu=temperature.gpu,utilization.gpu --format=csv,noheader,nounits |
+      awk -F', ' '{print "{\"temp\": " $1 ", \"load\": " $2 "}"; fflush()}'
+else
+    echo '{"temp": 0, "load": 0}'
+fi
