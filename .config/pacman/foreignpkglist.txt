@@ -7,7 +7,6 @@ emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq
 hyprland-git
-hyprpaper-git
 katago-cpu
 libdisplay-info
 mbsync-git

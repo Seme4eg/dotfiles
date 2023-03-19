@@ -16,8 +16,6 @@ if [[ $delete_current ]]; then
   notify-send -a $(whoami) "Theme changed" "Previous wallpaper moved to graveyard"
 fi
 
-[[ -z $(pgrep hyprpaper) ]] && hyprpaper -n & # -n for 'contain:' to work
-
 if [ -z "$wp" ]; then
   # wp=$(find ~/Pictures/wps/pc/ -type f | shuf -n 1)
   # testing sort instead of shuf cuz latter seems to quite often repeat
@@ -35,10 +33,7 @@ fi
 eww reload
 eww update theme=$theme
 
-hyprctl hyprpaper preload "$wp"
-hyprctl hyprpaper wallpaper "eDP-1,$wp"
-[[ $wallpaper ]] && hyprctl hyprpaper unload "$wallpaper"
-# swaybg -m fill -i "$wp" & # in case hyprpaper starts to lag again
+swaybg -m fill -i "$wp" &
 
 pywalfox update # update firefox theme
 
