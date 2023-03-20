@@ -34,3 +34,5 @@ node_modules/
 /.config/swaylock/config
 /.local/bin/chatgpt
 /.config/fontforge/
+/.config/emacs/
+/.config/doom/
