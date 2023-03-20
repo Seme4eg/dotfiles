@@ -1,13 +1,20 @@
-typeset -U path PATH
-path=(~/.local/bin ~/.config/rofi/scripts $path) # (~/.local/bin .. .. $path)
-export PATH
-export EDITOR=emacsclient
-export TERMINAL=alacritty
-export BROWSER=firefox
+export GOPATH=$HOME/git/go
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
+
+typeset -U path PATH
+path=($HOME/.local/bin
+      $GOPATH/bin
+      $XDG_CONFIG_HOME/emacs/bin # $EMACSDIR? not defined
+      $XDG_CONFIG_HOME/rofi/scripts
+      $path)
+export PATH
+
+export EDITOR=emacsclient
+export TERMINAL=alacritty
+export BROWSER=firefox
 
 export MAKEFLAGS="-j$(nproc)" # for yay
 
