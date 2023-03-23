@@ -55,7 +55,9 @@
 
 (defwidget _updates []
   (overlay :class "updates" :width 40
-    (label :class "fg" :text "${updates_count}")
+    (label
+      :class {updates_count > 99 ? "fg small" : "fg"}
+      :text "${updates_count}")
     (label :class "bg" :text "")))
 
 (defwidget _weather []
