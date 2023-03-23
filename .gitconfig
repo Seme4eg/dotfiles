@@ -5,3 +5,5 @@
 	excludesfile = ~/.gitignore
 [github]
 	user = seme4eg
+[pull]
+	rebase = true
