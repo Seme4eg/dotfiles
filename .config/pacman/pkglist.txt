@@ -21,6 +21,7 @@ grub
 gtk-layer-shell
 htop
 intel-ucode
+iptables-nft
 lf
 libva
 linux
@@ -51,6 +52,7 @@ playerctl
 plocate
 polkit-kde-agent
 python-pip
+qemu-desktop
 qt5-wayland
 qt5ct
 qt6-wayland
@@ -76,6 +78,7 @@ udiskie
 udisks2
 unzip
 vim
+virt-manager
 wf-recorder
 wget
 wireplumber
