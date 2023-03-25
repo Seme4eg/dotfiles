@@ -18,7 +18,6 @@ wl-paste --watch cliphist store &
 
 firefox &
 gtk-launch webcord.desktop &
-emacs --daemon &
 
 pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I
