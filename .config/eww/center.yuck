@@ -7,7 +7,7 @@
     (overlay
       (box :halign "center" :class "bg" 
         (transform
-          :width 260
+          :width 295
           :scale-x "216%"
           :translate-x "-27%"
           :scale-y "195%"

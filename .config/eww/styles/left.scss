@@ -11,17 +11,14 @@
     font: 1.7em Silkscreen;
     margin-top: -2px;
     color: $background;
-    // text-shadow: 0 0 2px $foreground;
-    text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
-                 0 0 10px color.scale($foreground, $lightness: -25%),
-                 0 0 20px color.scale($foreground, $lightness: -35%);
+    text-shadow: 0 0 2px color.scale($foreground, $lightness: -25%),
+                 0 0 5px color.scale($foreground, $lightness: -25%),
+                 0 0 10px color.scale($foreground, $lightness: -35%);
     &.active {
       color: $foreground;
-      text-shadow: 0 0 5px color.scale($foreground, $lightness: -15%),
+      text-shadow: 0 0 4px color.scale($foreground, $lightness: -15%),
                    0 0 8px color.scale($foreground, $lightness: -25%),
-                   0 0 10px color.scale($foreground, $lightness: -25%),
-                   0 0 15px color.scale($foreground, $lightness: -25%),
-                   0 0 20px color.scale($foreground, $lightness: -35%);
+                   0 0 15px color.scale($foreground, $lightness: -35%);
     }
   }
 }
@@ -29,17 +26,10 @@
 .window {
   @extend %box;
   font: bold 1.2em Jura; // Comfortaa; Unbounded;
-  color: $foreground;
-  text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
-               0 0 10px color.scale($foreground, $lightness: -25%),
-               0 0 20px color.scale($foreground, $lightness: -35%);
-
-  // text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
-  // color: #fff6a9;
-  // color: #fccaff;
-  // text-shadow: 0 0 5px #f562ff, 0 0 10px #f562ff, 0 0 20px #890092;
-
-  // animation: blink 12s infinite;
+  color: color.scale($foreground, $lightness: -15%);
+  text-shadow: 0 0 2px color.scale($foreground, $lightness: -25%),
+               0 0 5px color.scale($foreground, $lightness: -25%),
+               0 0 8px color.scale($foreground, $lightness: -35%);
 }
 
 .player {

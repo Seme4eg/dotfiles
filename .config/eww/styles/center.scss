@@ -1,5 +1,6 @@
 .date {
   @extend %box;
+  padding: 0;
   .fg {
     font-family: Megrim;
     font-weight: bold;
