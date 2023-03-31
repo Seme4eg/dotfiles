@@ -1,0 +1,11 @@
+#+title: Setup
+
+=user.js= is taken from [[https://github.com/yokoffing/Betterfox][here]], append your overrides in 'MY OVERRIDES' section.
+([[https://github.com/yokoffing/Betterfox/issues/87][common overrides]]). Create a symlink (ln -s \~/.config/firefox/user.js
+\~/.mozilla/firefox/hk8uasrp.default-release/) to this file from your mozilla
+user profile folder which you can find out on ~about:profiles~.
+
+ln -s ~/.config/firefox/chrome/ ~/.mozilla/firefox/hk8uasrp.default-release/
+
+=enhancer-for-youtube.json= <- import on 'enhancer for youtube' extension settings
+page.
