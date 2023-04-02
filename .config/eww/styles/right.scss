@@ -1,8 +1,8 @@
 .user-info {
   @extend %box;
-  font: 1.7em Iceland;
   .layout {
     @extend %shadow-text;
+    font: 1.5em Iceland;
     letter-spacing: 4px;
   }
 
@@ -10,19 +10,20 @@
     .bg {
       color: color.scale($color6, $saturation: 30%);
       opacity: .6;
-      font-size: 2.1em;
-      margin-top: -11px;
+      font-size: 2.4em;
+      margin-top: -1px;
+      margin-right: 13px;
     }
     .fg {
-      font-size: .9em;
+      font-size: 1.2em;
       @extend %shadow-text;
       &.small {
-        font-size: .6em;
+        font-size: .9em;
       }
     }
   }
   .weather {
-    font: 0.7em jura;
+    font: 1.2em jura;
   }
 }
 

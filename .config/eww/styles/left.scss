@@ -26,7 +26,7 @@
 .window {
   @extend %box;
   font: bold 1.2em Jura; // Comfortaa; Unbounded;
-  color: color.scale($foreground, $lightness: -15%);
+  color: color.scale($foreground, $lightness: -10%);
   text-shadow: 0 0 2px color.scale($foreground, $lightness: -25%),
                0 0 5px color.scale($foreground, $lightness: -25%),
                0 0 8px color.scale($foreground, $lightness: -35%);

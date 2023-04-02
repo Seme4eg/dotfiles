@@ -54,7 +54,7 @@
   (label :width 35 :class "layout" :text "${layout}"))
 
 (defwidget _updates []
-  (overlay :class "updates" :width 40
+  (overlay :class "updates" :width 35
     (label
       :class {updates_count > 99 ? "fg small" : "fg"}
       :text "${updates_count}")
