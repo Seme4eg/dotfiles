@@ -5,7 +5,9 @@
 \~/.mozilla/firefox/hk8uasrp.default-release/) to this file from your mozilla
 user profile folder which you can find out on ~about:profiles~.
 
-ln -s ~/.config/firefox/chrome/ ~/.mozilla/firefox/hk8uasrp.default-release/
+SOURCE: https://github.com/MrOtherGuy/firefox-csshacks
+
+ln -s ~/.config/firefox/chrome/userChrome.css ~/.mozilla/firefox/hk8uasrp.default-release/chrome/
 
 =enhancer-for-youtube.json= <- import on 'enhancer for youtube' extension settings
 page.
