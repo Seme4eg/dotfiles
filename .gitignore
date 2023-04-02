@@ -36,3 +36,7 @@ node_modules/
 /.config/fontforge/
 /.config/emacs/
 /.config/doom/
+/.config/cava/
+/.config/libvirt/
+/.config/exercism/
+/.config/terminal/
