@@ -198,6 +198,7 @@ show_menu() {
     toggle_wifi
   elif [ "$chosen_row" = 'refresh' ]; then
     wifi_list=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+    wifi_ssids=$(nmcli -t --fields SSID device wifi list | awk NF)
     show_menu
   else
     ssid_menu "$ssid"
