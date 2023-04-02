@@ -11,5 +11,3 @@ Type=forking
 ExecStart=emacs --daemon
 ExecStop=emacsclient --eval "(kill-emacs)"
 Restart=on-failure
-# Restart=always
-# RestartSec=3s

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sleep 20 # wait till internet connects
-
 set_timezone() {
   # Get the current timezone from the system
   current_tz=$(timedatectl | grep "Time zone" | awk '{print $3}')
@@ -30,8 +28,9 @@ set_coordinates() {
   fi
 }
 
-# if set_timezone performed timezone update it returns
+# first - wait untill wifi appears
+# then if set_timezone performed timezone update it returns
 # success & set_coords also fires
-set_timezone && set_coordinates
+waitwifi && set_timezone && set_coordinates
 
 exit 0
