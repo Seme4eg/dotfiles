@@ -283,7 +283,7 @@ show_menu() {
         discoverable=$(discoverable_on)
 
         options="$power\n$scan\n$pairable\n$discoverable\nExit"
-        [ "$devices" ] && options="$devices\n$divider\n"+"$options"
+        [ "$devices" ] && options="$devices\n$divider\n$options"
     else
         power="Power: off"
         options="$power\nExit"
