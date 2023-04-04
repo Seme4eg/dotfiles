@@ -9,13 +9,17 @@
 
 ;; polls
 (defpoll gpu :interval "3s" "scripts/gpu")
-(defpoll updates_count :interval "3600s" "checkupdates | wc -l")
+(defpoll updates_count :interval "3600s"
+  "/home/earthian/.local/bin/waitwifi && checkupdates | wc -l")
 (defpoll swayidle_status :interval "10000s" "systemctl --user is-active swayidle.service")
 ;; https://github.com/chubin/wttr.in#one-line-output
 ;; (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=j2'") ;; JSON
 ;;%x for text icon of weather; %f for 'feels like' and %w for wind and arrow-direction
-(defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=%t'")
-(defpoll wind :interval "3600s" "curl 'https://wttr.in/Becici?format=%w'")
+;; not using json cuz too heavy, 2 separate requests seem to be much lighter
+(defpoll weather :interval "3600s"
+  "/home/earthian/.local/bin/waitwifi && curl 'https://wttr.in/Becici?format=%t'")
+(defpoll wind :interval "3600s"
+  "/home/earthian/.local/bin/waitwifi && curl 'https://wttr.in/Becici?format=%w'")
 
 (defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
 

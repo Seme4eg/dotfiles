@@ -23,14 +23,17 @@ set_coordinates() {
   if [ ! -z $coordinates ]; then
     notify-send -a $(whoami) "Coordinates data updated"
     echo $coordinates > $XDG_CACHE_HOME/last_known_coordinates.txt
+    exit 0
   else
     notify-send -a $(whoami) "Fetching new coordinates failed, using old ones"
+    exit 1
   fi
 }
 
 # first - wait untill wifi appears
 # then if set_timezone performed timezone update it returns
 # success & set_coords also fires
-waitwifi && set_timezone && set_coordinates
+waitwifi && set_timezone && set_coordinates &&
+  systemctl --user restart wlsunset.service
 
 exit 0

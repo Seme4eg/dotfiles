@@ -1,11 +1,5 @@
 #!/bin/bash
 
 while true; do
-  if ping -q -c 1 -w 2 -W 1 archwiki.org >/dev/null; then
-    notify-send "Internet connection detected. Exiting script."
-    exit 0
-  else
-    notify-send "Waiting for internet connection..."
-    sleep 5
-  fi
+  ping -q -c 1 -w 2 -W 1 archwiki.org >/dev/null && exit 0 || sleep 5
 done
