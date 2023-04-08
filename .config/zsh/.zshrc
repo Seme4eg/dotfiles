@@ -82,7 +82,7 @@ stty stop undef # disable C-s to freeze terminal
 setopt noflowcontrol
 
 # --- Sourcing ---
-. ~/.config/zsh/aliases.zsh
+for file in ~/.config/zsh/aliases/*; do source "$file"; done
 
 # for now using powerlevel10k instead
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
