@@ -140,3 +140,5 @@ the whole fprint thing to me appeared as unreliable.
 ** pip packages
 - https://github.com/mmabrouk/chatgpt-wrapper
 - https://github.com/sanderland/katrain
+** system files changed
+=/etc/systemd/journald.conf= <- SystemMaxUse=50M

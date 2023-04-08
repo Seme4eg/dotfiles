@@ -15,6 +15,7 @@ export PATH
 export EDITOR=emacsclient
 export TERMINAL=alacritty
 export BROWSER=firefox
+export SYSTEMD_LESS=FRXMK
 
 export MAKEFLAGS="-j$(nproc)" # for yay
 
