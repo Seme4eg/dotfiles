@@ -29,7 +29,7 @@
 
 ;; Revealer using children
 (defwidget _revealer [revealvar ?class ?spacing ?duration ?transition]
-  (box :space-evenly false :spacing {spacing} :class {class}
+  (box :space-evenly false :spacing {spacing ?: 0} :class {class}
     (children :nth 0)
     (revealer
       :reveal revealvar

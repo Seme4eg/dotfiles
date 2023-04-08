@@ -4,12 +4,14 @@
 
 ;; listeners
 (deflisten layout "scripts/layout")
-(deflisten backlight "scripts/backlight")
-(deflisten volume "scripts/volume")
+(deflisten backlight :initial "0.0" "scripts/backlight")
+(deflisten volume
+  :initial '{ "is_vol_muted": "true", "vol_level": 0, "is_mic_muted": "true", "mic_level": 0}'
+  "scripts/volume")
 
 ;; polls
-(defpoll gpu :interval "3s" "scripts/gpu")
-(defpoll updates_count :interval "3600s"
+(defpoll gpu :interval "3s" :initial "{\"temp\": 0, \"load\": 0}" "scripts/gpu")
+(defpoll updates_count :initial 0 :interval "3600s"
   "/home/earthian/.local/bin/waitwifi && checkupdates | wc -l")
 (defpoll swayidle_status :interval "10000s" "systemctl --user is-active swayidle.service")
 ;; https://github.com/chubin/wttr.in#one-line-output
@@ -25,8 +27,7 @@
 
 (defpoll ESSID_WLAN :interval "3s" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
 (defpoll vpnstatus :interval "3s" "systemctl is-active openvpn-client@client.service")
-(defpoll net :interval "10s"
-  :initial 'N/A'
+(defpoll net :interval "10s" :initial 0
   `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print $1}'`)
 
 
@@ -97,10 +98,12 @@
     (_bt)))
 
 (defwidget _network [up down]
-  (box :space-evenly false :class "network"
+  (box
+    :space-evenly false
+    :class "network"
+    :spacing {vpnstatus == "active" ? 5 : 0}
     (revealer
       :reveal {vpnstatus == "active"}
-      :spacing {vpnstatus == "active" ? 5 : 0}
       :transition "slideleft"
       (label :width 24 :xalign 0 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
     (eventbox
@@ -123,7 +126,7 @@
               :text {up / 1024 < 1024 ?
                         " ${round(up / 1024, 0)}" :
                         " ${round(up / 1048576, 0)}"})
-            (progress :value net :width 38 :max 100 :orientation "h")
+            (progress :value net :width 38 :orientation "h")
             (label
               :class {down / 1024 > 1024 ? "bold" : ""}
               :text {down / 1024 < 1024 ?
@@ -149,14 +152,12 @@
     (progress
       :class {volume.is_vol_muted ? "vol_progress muted" : "vol_progress"}
       :value {volume.vol_level}
-      :max 100
       :orientation "v"
       :flipped "true"
       :halign "center")
     (progress
       :class {volume.is_mic_muted ? "muted" : ""}
       :value {volume.mic_level}
-      :max 100
       :orientation "v"
       :flipped "true"
       :halign "center")

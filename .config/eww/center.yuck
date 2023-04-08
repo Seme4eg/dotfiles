@@ -1,11 +1,11 @@
 (defpoll time :interval "5s"
-  :initial `date +'{"count":"%j","time":"%R","day":"%a %d/%m"}'`
+  :initial '{"count":"000","time":{"hour": 13, "minute": 13},"day":"Mon 13/13"}'
   `date +'{"count":"%j","hour":"%H","minute":"%M","day":"%a %d/%m"}'`)
 
 (defwidget container_center []
   (box :class "date"
     (overlay
-      (box :halign "center" :class "bg" 
+      (box :halign "center" :class "bg" :space-evenly false
         (transform
           :width 295
           :scale-x "216%"
@@ -13,7 +13,7 @@
           :scale-y "195%"
           :translate-y "-25%"
           ;; center around colon + colon needs to b raised a bit
-          (centerbox :space-evenly false
+          (centerbox
             (label :halign "end" :class "hour" :text {time.hour})
             (transform :translate-y "-5%"
               (label :class "colon" :text ":"))

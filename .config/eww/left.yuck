@@ -1,6 +1,6 @@
 (defvar window_lim 27)
 
-(deflisten workspaces "scripts/workspaces")
+(deflisten workspaces :initial '[]' "scripts/workspaces")
 (deflisten window "scripts/window")
 
 ;; track cover script:
@@ -37,7 +37,6 @@
         ;; :text "${ws-icons[ws.number - 1]}"
         :width 10
         :yalign 0.5
-        ;; :text "󰃚"))))
         :text {ws.active == "true" ? "X" : "O"}))))
 
 (defwidget _window []
@@ -45,7 +44,6 @@
     ;; :style {strlength(window) < window_lim ? "min-width: ${strlength(window)*10}px;" : ""}
     (label
       :limit-width window_lim
-      :show_truncated true
       :text {window == "" ? "(-_-)" : window})))
 
 (defwidget _player []
