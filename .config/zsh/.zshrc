@@ -1,7 +1,5 @@
 # -*- mode: sh; sh-shell: zsh -*-
 
-# NOTE: to get keys for defining binding: cat -v , sir
-
 . $ZDOTDIR/config.zsh
 
 # Install & source grml-zsh-config
@@ -45,6 +43,8 @@ ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # <- gets defined only after zvm sourcing
 #                                   Utility                                   #
 ###############################################################################
 
+# NOTE: to get keys for defining binding: cat -v , sir
+
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
@@ -67,7 +67,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
-bindkey '^_' fzf-history-widget
+bindkey '^[^_' fzf-history-widget
 
 ###############################################################################
 #                              Last things to do                              #
