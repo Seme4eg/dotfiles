@@ -6,7 +6,6 @@ alias cat="bat"
 # - https://github.com/andreafrancia/trash-cli
 # - https://github.com/PhrozenByte/rmtrash
 alias rm="rip -i" # https://github.com/nivekuil/rip
-alias cd="z" # zoxide
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
