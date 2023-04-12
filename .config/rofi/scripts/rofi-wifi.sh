@@ -158,7 +158,7 @@ ssid_menu() {
       options="$connected\n$goback"
 
   # Open rofi menu, read chosen option
-  chosen="$(echo -e "$options" | rofi -dmenu \
+  chosen="$(echo -e "$options" | rofi -dmenu -i \
     -theme-str "#entry { placeholder: \"$ssid:\"; }" \
     -theme-str '* { font: "syne mono 13"; }')"
 
@@ -184,7 +184,7 @@ show_menu() {
   wifi_on && options="$state\n$wifi_list" || options="$state"
   # force monospace font to not get those fields messy
   chosen_row=$(echo -e "$options\nrefresh" | uniq -u |
-                 rofi -dmenu -selected-row 2 \
+                 rofi -dmenu -i -selected-row 2 \
                    -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }' \
                    -theme-str '* { font: "syne mono 13"; }')
 

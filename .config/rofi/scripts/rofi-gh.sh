@@ -23,7 +23,7 @@ all_my_repositories_short_name(){
 }
 
 rofi_dmenu(){
-  rofi -dmenu -matching fuzzy -theme-str '#entry { placeholder: "Choose a repo to clone.."; }'
+  rofi -dmenu -i -matching fuzzy -theme-str '#entry { placeholder: "Choose a repo to clone.."; }'
 }
 
 repository=$(all_my_repositories_short_name | rofi_dmenu )
