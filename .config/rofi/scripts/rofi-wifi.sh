@@ -84,9 +84,18 @@ forget_ssid() {
 
 toggle_ssid() {
   ssid="$1"
+  vpnstatus=`systemctl is-active openvpn-client@client.service`
+  if [ $vpnstatus == 'active' ]; then
+    sudo systemctl stop openvpn-client@client.service
+    vpnneedsactivation=0
+  fi
 
   _success() {
     notify-send -a $(whoami) "Connected to $1."
+    if [ $vpnneedsactivation ]; then
+      sleep 5
+      sudo systemctl start openvpn-client@client.service
+    fi
   }
   _connecting() {
     notify-send -t 2000 -a $(whoami) "Connecting to $1..."
