@@ -9,6 +9,7 @@ alias pmlo="pm -Qdt" # list orphaned
 # If no orphans were found, the output is error: argument '-' specified with
 # empty stdin. This is expected as no arguments were passed to pacman -Rns.
 alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
+alias pmrao="pacman -Qqd | sudo pacman -Rsu -" # remove ALL orphaned
 alias pms="pm -Syy" # sync
 alias pmU="pm -Syyu"
 alias pmu="pm -Syu"
