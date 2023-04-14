@@ -23,7 +23,6 @@ grub
 gtk-layer-shell
 htop
 intel-ucode
-iptables-nft
 lf
 libdisplay-info
 libva
