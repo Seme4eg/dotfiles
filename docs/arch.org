@@ -24,15 +24,7 @@
     - ~mkdir -p ~/.local/share~ - cuz we don't wana steam and other apps flood our
       local/share folder so emacs project caching rips
     - ~stow .~ from =dotfiles= dir
-  - [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
-  - add =Include = /home/earthian/.config/pacman/pacman.conf= to [options] section
-    in etc/pacman.conf. *Comment* 'Hooks' line in =pacman.conf= because otherwise it
-    will overwrite our pkglist files. Uncomment =[multilib]= section in
-    =/etc/pacman.conf=
-  - yi - < ~/.config/pacman/foreignpkglist.txt (important to install pacmages
-    from yay first to avoid further conflicts)
-  - pmi - < ~/.config/pacman/pkglist.txt
-  - now uncomment that hooks line.
+  - now follow [[file:~/dotfiles/.config/pacman/readme.org::*System boostrap][System boostrap]] section of pacman readme.
 
 *** Partition the disks
 - check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,

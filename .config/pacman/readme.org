@@ -1,28 +1,24 @@
 #+title: Pacman
 #+SOURCE: hooks source - https://forum.manjaro.org/t/creating-useful-pacman-hooks/55020
 
-Read [[https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#List_of_installed_packages][list of installed packages]] and sections below to install backups.
+- Before updating ~HooksDir~ move there all hooks from hooks from previous hooks
+  dir. (cuz it removed all my artix hooks when i changed it)
+- use [[https://archlinux.org/mirrorlist/?country=RU&protocol=https&ip_version=4&ip_version=7][pacman mirrorlist generator]] to get links relevant for your location. (Hook
+  files syntax documentation links: [[https://man.archlinux.org/man/core/pacman/alpm-hooks.5.en][man 5 alpm-hooks]], [[https://wiki.archlinux.org/title/Pacman#Hooks][pacman@hooks #archlinux]])
 
-To setup hooks in =hooks= *set* its' directory to ~HookDir~ in =pacman.conf=, beware
-tho, there is no way to specify multiple directories in .conf file, i tried and
-it deleted all my preinstalled with artix hooks, that were in
-=/etc/pacman.d/hooks/=  dir... So just specify single path and *move* there all
-hooks from previous one.
-
-#+NAME: in pacman.conf
-: HookDir     = $HOME/.config/pacman/hooks/
-
-*NOTEs*:
-- '$HOME' might not be known to pacman so you might need to explicitly state
-  your user home dir
-- don't forget to check username and path in those hooks in case you changed any
-  of those
-
------
-
-To improve download speeds [[https://wiki.archlinux.org/title/Pacman#Enabling_parallel_downloads][enable]] parallel downloads and use [[https://archlinux.org/mirrorlist/?country=RU&protocol=https&ip_version=4&ip_version=7][pacman mirrorlist
-generator]] to get links relevant for your location.
-
-And maybe ya'll want 'Color' option uncommented in =pacman.conf=.
-
-Hook files syntax documentation links: [[https://man.archlinux.org/man/core/pacman/alpm-hooks.5.en][man 5 alpm-hooks]], [[https://wiki.archlinux.org/title/Pacman#Hooks][pacman@hooks #archlinux]]
+** Setting up powerpill
+- yi powerpill
+- pmi reflector (also optionally rsync)
+- change ~"args.unused"~ to ~"args"~ to use default reflector flags in
+  =/etc/powerpill/powerpill.json=
+** System boostrap
+- [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
+- add =Include = /home/earthian/.config/pacman/pacman.conf= to [options] section
+  in etc/pacman.conf. *Comment* 'Hooks' line in =pacman.conf= because otherwise it
+  will overwrite our pkglist files. Uncomment =[multilib]= section in
+  =/etc/pacman.conf=
+- yi - < ~/.config/pacman/foreignpkglist.txt (important to install pacmages
+  from yay first to avoid further conflicts)
+- [[*Setting up powerpill][Set up powerpill]]
+- pmi - < ~/.config/pacman/pkglist.txt
+- now uncomment that hooks line.

@@ -58,6 +58,7 @@ qemu-desktop
 qt5-wayland
 qt5ct
 qt6-wayland
+reflector
 ripgrep
 slurp
 socat
