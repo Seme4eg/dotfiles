@@ -6,7 +6,9 @@ bat
 bluez
 bluez-utils
 calf
+cliphist
 cmake
+docker
 easyeffects
 efibootmgr
 entr
@@ -23,6 +25,7 @@ htop
 intel-ucode
 iptables-nft
 lf
+libdisplay-info
 libva
 linux
 linux-firmware

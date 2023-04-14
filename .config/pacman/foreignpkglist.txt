@@ -1,14 +1,13 @@
 binder_linux-dkms
 brillo
 cava
-cliphist
 dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq
+golangci-lint-bin
 hyprland-git
 katago-cpu
-libdisplay-info
 mbsync-git
 mu
 numix-circle-icon-theme-git
