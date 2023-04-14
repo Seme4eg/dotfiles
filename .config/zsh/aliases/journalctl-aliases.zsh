@@ -19,7 +19,7 @@
 # number/log level is used, journalctl -p 3, then all higher priority log levels
 # are also included (i.e. 0 to 3 in this case).
 
-alias jc="journalctl" 
+alias jc="journalctl -b"
 alias jclb="jc --list-boots" # list of boots with their numbers
 alias jclc="jc --list-catalogs"
 alias jcst="jc --since" # .. "20 min ago"
