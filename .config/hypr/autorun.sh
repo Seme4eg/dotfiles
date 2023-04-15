@@ -13,6 +13,7 @@ gsettings set org.gnome.desktop.interface gtk-theme Dracula
 hyprctl setcursor Future-dark-cursors 26
 
 change-theme &
+sync_tz_and_loc &
 
 wl-paste --watch cliphist store &
 
