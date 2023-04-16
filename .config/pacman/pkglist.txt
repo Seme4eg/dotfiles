@@ -65,6 +65,7 @@ socat
 sof-firmware
 steam
 stow
+sway
 swaybg
 swayidle
 syncthing
