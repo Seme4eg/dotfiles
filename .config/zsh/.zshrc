@@ -67,7 +67,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
-bindkey '^[^_' fzf-history-widget
+bindkey '^[^_' fzf-history-widget # ctrl + alt + /
 
 ###############################################################################
 #                              Last things to do                              #
