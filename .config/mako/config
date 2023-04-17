@@ -12,6 +12,8 @@ font=ShantellSans Light 13
 # font=Jura 14
 # font=montserrat alternates 13
 
+background-color=#0C1929dd
+text-color=#c8cbde
 width=470
 height=150
 # outer-margin=0,0,40,0
@@ -34,14 +36,13 @@ format=<span color="#6a9a52" size="13pt" line_height="1.3"><b>%a</b></span>\n<sp
 # text-alignment=left|center|right
 default-timeout=3000
 ignore-timeout=0
-# or by summary?
-group-by=app-name
+group-by=summary
 # max-visible=5 # default
 layer=overlay
-# anchor=top-right # default
+anchor=center-right
 
 [grouped]
-format=<span size="13pt" line_height="1.3"><b>(%g) %a</b></span>\n%b
+format=<span size="13pt" line_height="1.3"><b>(%g) %a</b></span>\n<span><i>// %s</i></span>\n%b
 border-size=3
 
 [urgency=high]
@@ -50,6 +51,6 @@ border-color=#ffffff
 background-color=#00000089
 text-color=#eeeeee
 
-[category=mpd]
-default-timeout=2000
-group-by=category
+# [category=mpd]
+# default-timeout=2000
+# group-by=category
