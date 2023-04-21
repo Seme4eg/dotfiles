@@ -23,6 +23,7 @@ grub
 gtk-layer-shell
 htop
 intel-ucode
+jq
 lf
 libdisplay-info
 libva
