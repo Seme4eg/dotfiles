@@ -67,7 +67,6 @@ steam
 stow
 sway
 swaybg
-swayidle
 syncthing
 texinfo
 thefuck

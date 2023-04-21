@@ -21,6 +21,7 @@ pywal-git
 rm-improved-git
 rofi-lbonn-wayland-git
 soundcloud-dl-git
+swayidle-git
 swaylock-effects-git
 telegram-tdlib-git
 timeshift
