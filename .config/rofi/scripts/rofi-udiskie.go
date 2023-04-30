@@ -120,9 +120,19 @@ func Prettify(devices map[string]Device) (out string) {
 	// here might also be some 'alignment' code that adds extra spaces so things
 	// are in column
 	for _, d := range devices {
-		out += mountedPrefixes[d.Mounted] + d.UiLabel + " " + d.MounthPath + "\n"
+		out += MountedPrefix(d, devices) + d.UiLabel + " " + d.MounthPath + "\n"
 	}
 	return strings.TrimSpace(out)
+}
+
+func MountedPrefix(device Device, devices map[string]Device) (prefix string) {
+	// check if device is media (has partitions) and has them mounted
+	for _, d := range devices {
+		if strings.HasPrefix(device.DevPath, d.DevPath) {
+			return mountedPrefixes["True"]
+		}
+	}
+	return mountedPrefixes[device.Mounted]
 }
 
 func NotifyError(message string) {
@@ -151,9 +161,6 @@ func GetSelection(options string, devices map[string]Device) (device Device, err
 	if err := menu.Start(); err != nil {
 		return Device{}, err
 	}
-
-	// TODO: make signal here
-
 	if err := echo.Wait(); err != nil {
 		return Device{}, err
 	}
