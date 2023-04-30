@@ -3,9 +3,9 @@
 FIELDS=IN-USE,SSID,SECURITY,FREQ,RATE,SIGNAL,BARS # ACTIVE
 
 # awk NF to filter empty lines from output
-wifi_list=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
 # get ssids list, -t flag returns list without 1st 'header' line
-wifi_ssids=$(nmcli -t --fields SSID device wifi list | awk NF)
+ssids=$(nmcli -t --fields SSID device wifi list | awk NF)
 # will b empty if no active connection
 initial_ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
 
@@ -16,10 +16,10 @@ get_ssid() {
   # start with 0 index cuz we are also iterating over 'headers' line first
   index=0
 
-  echo "$wifi_list" |
+  echo "$networks" |
     while read row; do
       # get 'index'th line from the list of ssids
-      ssid=$(echo "$wifi_ssids" | awk NR==$index)
+      ssid=$(echo "$ssids" | awk NR==$index)
 
       # remove all spaces from both strings, maybe not best way to do it idk
       if [ ${row// /} = ${1// /} ]; then
@@ -188,14 +188,33 @@ ssid_menu() {
   esac
 }
 
+# autoupdate network list
+function update_networks() {
+  while true; do
+    sleep 1
+    _networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+    _count=`echo "$_networks" | wc -l`
+    count=`echo "$networks" | wc -l`
+
+    [ $_count -ne $count ] &&
+      notify-send -t 2000 -a $(whoami) "Networks changed, refresh"
+  done
+}
+
 show_menu() {
   state=$(wifi_on)
-  wifi_on && options="$state\n$wifi_list" || options="$state"
+
+  # start background networks list updating, and kill it later by pid
+  update_networks & update_pid=$!
+
+  wifi_on && options="$state\n$networks" || options="$state"
   # force monospace font to not get those fields messy
   chosen_row=$(echo -e "$options\nrefresh" | uniq -u |
                  rofi -dmenu -i -selected-row 2 \
                    -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }' \
                    -theme-str '* { font: "syne mono 13"; }')
+
+  kill $update_pid
 
   # chosen_ssid might b empty in case we chose 'enable/disable wifi' row
   # so we don't check for it's emptyness
@@ -206,8 +225,8 @@ show_menu() {
   if [ "$chosen_row" = "$state" ]; then
     toggle_wifi
   elif [ "$chosen_row" = 'refresh' ]; then
-    wifi_list=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
-    wifi_ssids=$(nmcli -t --fields SSID device wifi list | awk NF)
+    networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+    ssids=$(nmcli -t --fields SSID device wifi list | awk NF)
     show_menu
   else
     ssid_menu "$ssid"
