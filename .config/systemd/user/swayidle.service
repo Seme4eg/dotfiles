@@ -1,11 +1,18 @@
 [Install]
 WantedBy=hyprland-session.target
 
+
 [Service]
-ExecStart=swayidle -w timeout 300 'swaylock' \
-  # '5' is grace period for swaylock, cuz i wana change theme only if grace
-  # period has passed. Changes theme on each unlock after idling.
-  timeout 305 'hyprctl dispatch exec change-theme'
+
+# '5' is grace period for swaylock, cuz i wana change theme only if grace
+# period has passed. Changes theme on each unlock after idling.
+
+# ExecStart=swayidle -w timeout 300 'swaylock' \
+#   timeout 305 'hyprctl dispatch exec change-theme'
+
+# no locking version
+ExecStart=swayidle -w timeout 305 'hyprctl dispatch exec change-theme'
+
 
 [Unit]
 Description=Idle manager for Wayland
