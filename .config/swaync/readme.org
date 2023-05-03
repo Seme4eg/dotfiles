@@ -13,8 +13,7 @@ Control Center Shortcuts
     Left click button / actions: Activate notification action
     Right click notification: Close notification
 
-** Live reloading
-put [[file:swaync-watcher.service]] & [[file:swaync-watcher.path]] to
-=~./config/systemd/user/=  dir and ~enable --now~ both of them, then whenever you
-change either sh script or mako config the service will send you test
-notification.
+** Todo
+- icon-location=right?
+- outer-margin=0,0,40,0 ?
+- [grouped] border-size=3
