@@ -32,7 +32,6 @@ linux-firmware
 linux-headers
 lshw
 lsp-plugins
-mako
 man-db
 man-pages
 mpv

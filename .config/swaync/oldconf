@@ -1,0 +1,56 @@
+# man 5 mako
+# man makoctl (to control mako during runtime)
+
+# --- global options ---
+# max-history=5 # default
+# sort=-time # default
+
+# https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html
+# font=BellotaText 13
+# font=Comfortaa 13
+font=ShantellSans Light 13
+# font=Jura 14
+# font=montserrat alternates 13
+
+background-color=#371a10dd
+text-color=#cfe1e3
+width=470
+height=150
+# outer-margin=0,0,40,0
+margin=13,11
+padding=8,10
+border-size=1
+border-color=#92bac4
+border-radius=10
+# progress-color=over #ffffff
+icons=1
+max-icon-size=48
+icon-path=/usr/share/icons/Numix-Circle
+icon-location=right
+# actions=1 # default
+
+# Default: <b>%s</b>\n%b    Default when grouped: (%g) <b>%s</b>\n%b
+# Pango markup documentation: https://www.chordpro.org/chordpro/pango_markup/
+format=<span color="#86b7bd" size="13pt" line_height="1.3"><b>%a</b></span>\n<span color="#909d9e"><i>%s</i></span>\n%b
+
+# text-alignment=left|center|right
+default-timeout=3000
+ignore-timeout=0
+group-by=summary
+# max-visible=5 # default
+layer=overlay
+anchor=center-right
+
+[grouped]
+format=<span size="13pt" line_height="1.3"><b>(%g) %a</b></span>\n<span><i>// %s</i></span>\n%b
+border-size=3
+
+[urgency=high]
+default-timeout=5000
+border-color=#ffffff
+background-color=#00000089
+text-color=#eeeeee
+
+# [category=mpd]
+# default-timeout=2000
+# group-by=category

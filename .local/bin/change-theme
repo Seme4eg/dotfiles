@@ -46,8 +46,8 @@ emacsclient -e "(load-theme 'ewal-doom-one)" # update emacs theme
 [ -f $XDG_CACHE_HOME/wal/swaylock-config ] &&
   mv -f $XDG_CACHE_HOME/wal/swaylock-config $XDG_CONFIG_HOME/swaylock/config
 
-# update mako theme
-. $XDG_CONFIG_HOME/mako/update-theme.sh
+# XXX: update swaync theme
+# . $XDG_CONFIG_HOME/mako/update-theme.sh
 
 # update webcord theme
 # wait until https://github.com/SpacingBat3/WebCord/issues/250 will be resolved

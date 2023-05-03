@@ -6,7 +6,7 @@
 - Status bar :: eww
 - Screen locker :: swaylock-effects
 - Theme changing :: pywal&scripts
-- Notifications :: mako
+- Notifications :: swaync
 - Terminal :: Alacritty
 
 [[https://www.youtube.com/watch?v=mtrwJsSsXVs][Youtube demo]]
@@ -25,7 +25,7 @@ syncthing.
 
 So i've just updated git index to 'untrack' files that differ and don't change.
 
-: git update-index --assume-unchanged ./.config/mako/config ./.config/syncthing/config.xml ./.config/hypr/scale.conf
+: git update-index --assume-unchanged ./.config/syncthing/config.xml ./.config/hypr/scale.conf
 
 To get any of those files 'back on track':
 
@@ -38,8 +38,6 @@ scripts that might be useful later:
 - aur/rofi-mpc - Fast graphical Rofi-Interface for controlling MPD
 
 ** Todos [0/3]
-*** TODO eww widget to view recent notifications
-[[https://github.com/taylor85345/neon-hyprland-theme/blob/main/eww/scripts/notifications][example]]
 *** TODO animate eww somewhere?
 idk yet, eww animations are glitchy
-*** TODO rewrite udiskie rofi script on bash
+*** TODO fix eww trashing logs when no network (and its nonet-slowdowns)

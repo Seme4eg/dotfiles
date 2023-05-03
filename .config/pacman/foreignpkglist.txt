@@ -23,6 +23,7 @@ rofi-lbonn-wayland-git
 soundcloud-dl-git
 swayidle-git
 swaylock-effects-git
+swaync-git
 telegram-tdlib-git
 timeshift
 timeshift-autosnap

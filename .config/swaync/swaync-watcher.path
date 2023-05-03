@@ -2,7 +2,7 @@
 # YES, you need to enable this path service as well !
 
 [Path]
-PathModified=/home/earthian/.config/mako
+PathModified=/home/earthian/.config/swaync
 
 [Install]
 WantedBy=hyprland-session.target

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # '-i firefox' to test notification with an icon
-makoctl reload
+swaync-client -R
 # to test 'high' urgency notificatoin add '-u critical '
 notify-send -i distributor-logo-archlinux -a "Theme changed" -t 5000 "<summary line>" "Here is an example of how single (not grouped) notification will look with these theme colors"
 # grouped

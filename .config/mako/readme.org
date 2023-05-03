@@ -1,4 +1,0 @@
-put [[file:mako-watcher.service]] & [[file:mako-watcher.path]] to
-=~./config/systemd/user/=  dir and ~enable --now~ both of them, then whenever you
-change either sh script or mako config the service will send you test
-notification.

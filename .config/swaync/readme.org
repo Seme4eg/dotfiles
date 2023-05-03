@@ -1,0 +1,20 @@
+
+Control Center Shortcuts
+
+    Up/Down: Navigate notifications
+    Home: Navigate to the latest notification
+    End: Navigate to the oldest notification
+    Escape/Caps_Lock: Close notification panel
+    Return: Execute default action or close notification if none
+    Delete/BackSpace: Close notification
+    Shift+C: Close all notifications
+    Shift+D: Toggle Do Not Disturb
+    Buttons 1-9: Execute alternative actions
+    Left click button / actions: Activate notification action
+    Right click notification: Close notification
+
+** Live reloading
+put [[file:swaync-watcher.service]] & [[file:swaync-watcher.path]] to
+=~./config/systemd/user/=  dir and ~enable --now~ both of them, then whenever you
+change either sh script or mako config the service will send you test
+notification.
