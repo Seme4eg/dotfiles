@@ -1,0 +1,69 @@
+
+/* DND widget */
+.widget-dnd {
+  padding: 13px;
+  padding-left: 20px;
+  padding-bottom: 16px;
+  margin: 0;
+  color: @foreground;
+  background: alpha(@background, .9);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  font: bold 1em Megrim;
+}
+.widget-dnd > switch {
+  border-radius: 12px;
+  background: alpha(@background, .9);
+  border: 1px solid @color6;
+}
+.widget-dnd > switch:checked {
+  background: @color6;
+}
+.widget-dnd > switch slider {
+  background: @color5;
+  border-radius: 12px;
+}
+
+
+/* Mpris widget */
+.widget-mpris {
+  /* The parent to all players */
+  color: @foreground;
+}
+.widget-mpris-player {
+  padding: 8px;
+  margin: 8px;
+  color: @foreground;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.widget-mpris-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: @foreground;
+  letter-spacing: 2px;
+  font: bold 1em Megrim;
+}
+.widget-mpris-subtitle {
+  font-size: 1;
+  color: @foreground;
+}
+
+
+/* Inhibitors widget */
+.widget-inhibitors {
+  margin: 8px;
+  font-size: 1.5rem;
+}
+.widget-inhibitors > button {
+  font-size: initial;
+  color: @foreground;
+  text-shadow: none;
+  background: @background;
+  border: 1px solid @color6;
+  box-shadow: none;
+  border-radius: 12px;
+}
+.widget-inhibitors > button:hover {
+  /* background: @noti-bg-hover; */
+}

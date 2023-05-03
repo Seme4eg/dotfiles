@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
-# '-i firefox' to test notification with an icon
+# swaync-client -C
+swaync-client -rs
 swaync-client -R
-# to test 'high' urgency notificatoin add '-u critical '
-notify-send -i distributor-logo-archlinux -a "Theme changed" -t 5000 "<summary line>" "Here is an example of how single (not grouped) notification will look with these theme colors"
-# grouped
-# notify-send -a "Grouped notification test" -t 5000 "<grouped summary line>" "Here is an example of how grouped notification will look with these theme colors"
-# notify-send -a "Grouped notification test" -t 5000 "<grouped summary line>" "Here is an example of how grouped notification will look with these theme colors"
-# notify-send -a "Grouped notification test" -t 5000 "<grouped summary line>" "Here is an example of how grouped notification will look with these theme colors"
+# swaync-client -t
+
+# -u critical
+# -t 5000
+# notify-send -i telegram "Test notification" "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum gravida. Sed mollis neque felis, quis rutrum risus porttitor vel. Duis finibus lorem nec massa lacinia, quis vehicula est ultricies. Suspendisse consectetur orci a quam fringilla, id malesuada quam posuere. Vestibulum non ipsum consequat, venenatis turpis nec, viverra mi. Sed bibendum odio vel augue luctus congue."
