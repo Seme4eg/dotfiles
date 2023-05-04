@@ -11,7 +11,8 @@ daemonize
 ignore-empty-password
 show-keyboard-layout
 indicator-caps-lock
-font=TrainOne
+# nova mono, rubik glitch, rubik wet paint
+font=rubik wet paint
 indicator-radius=90
 indicator-thickness=7
 
