@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-# execute this script with bash, not with zsh
 
 set -Eeuo pipefail
 die() { echo -e "$0" ERROR: "$@" >&2; exit 1; }
@@ -12,13 +10,12 @@ repos_dir=$HOME/git
 # Associative array, repo name -> directory.
 declare -A repos
 repos=(
-    ["pass"]="$XDG_DATA_HOME/password-store"
     ["tea"]="$repos_dir/tea"
     # ["Bash-lang"]="$repos_dir/bash"
     # ["elisp"]="$repos_dir/elisp"
     ["archive"]="$repos_dir/archive"
     ["vim"]="$repos_dir/vim"
-    [".doom.d"]="$HOME/.doom.d"
+    [".doom.d"]="$XDG_CONFIG_HOME/doom"
 )
 
 for repo in "${!repos[@]}"; do
