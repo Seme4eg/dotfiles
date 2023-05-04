@@ -54,6 +54,7 @@ playerctl
 plocate
 polkit-kde-agent
 python-pip
+python-pywal
 qemu-desktop
 qt5-wayland
 qt5ct

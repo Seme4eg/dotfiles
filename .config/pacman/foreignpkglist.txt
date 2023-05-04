@@ -17,7 +17,6 @@ openvpn-update-systemd-resolved
 otf-symbola
 python-pyclip
 python-pywalfox
-pywal-git
 rm-improved-git
 rofi-lbonn-wayland-git
 soundcloud-dl-git
