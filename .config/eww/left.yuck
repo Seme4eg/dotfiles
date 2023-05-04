@@ -20,7 +20,6 @@
     :orientation "h"
     :space-evenly false
     :spacing 13
-    ;; (_launcher) ;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/launcher.yuck
     (_workspaces)
     ;; TODO: wlr/taskbar
     (_window)

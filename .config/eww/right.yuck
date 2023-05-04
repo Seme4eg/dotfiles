@@ -23,8 +23,6 @@
 (defpoll wind :interval "3600s"
   "/home/earthian/.local/bin/waitwifi && curl 'https://wttr.in/?format=%w'")
 (defpoll notifs_count :interval "3s" :initial "0" "swaync-client -c")
-;; true / false
-(defpoll notifs_dnd :interval "3s" :initial "false" "swaync-client -D")
 
 (defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
 
@@ -53,55 +51,53 @@
   (box
     :class "user-info"
     :space-evenly false
-    ;; don't need spacing here since notifications widget is appearring
-    ;; conditionally, doing 'spacing' manually
-    ;; :spacing 13
+    :spacing 15
     (_layout)
     (_updates)
-    (_weather)
-    (_notifs)))
+    ;; notifications widget is part of 'weather' widget cuz less crutches
+    (_weather)))
 
 
-(defwidget _layout []
-  (label :width 35 :class "layout" :text "${layout}"))
+(defwidget _layout [] (label :class "layout" :text "${layout}"))
 
 (defwidget _updates []
-  (overlay :class "updates" :width 55
+  (overlay :class "updates" :width 35
     (label
       :class {updates_count > 99 ? "fg small" : "fg"}
       :text "${updates_count}")
     (label :class "bg" :text "")))
 
 (defwidget _weather []
-  (eventbox
-    :onhover "eww update show_wind=true"
-    :onhoverlost "eww update show_wind=false"
-    (box
-      :class "weather"
-      :space-evenly false
-      :spacing {show_wind ? 8 : 0}
-      :hexpand "false"
-      (label :text weather)
-      (revealer
-        :transition "slideright"
-        :reveal show_wind
-        :duration "350ms"
-        (label :text wind)))))
-
-(defwidget _notifs []
   (box
     :class "notifs"
     :space-evenly false
-    :spacing {notifs_count > 0 ? 8 : 0}
+    :spacing {notifs_count > 0 ? 15 : 0}
     :hexpand "false"
-    (label :text "")
-    (revealer
-      :transition "slideright"
-      :reveal {notifs_count > 0}
-      :duration "350ms"
-      (overlay :class "notifs" :width 35
-        (label :class "fg" :text {notifs_dnd ? "" : notifs_count})
-        (label :class "bg" :text "󱥂")))))
+    (eventbox
+      :onhover "eww update show_wind=true"
+      :onhoverlost "eww update show_wind=false"
+      (box
+        :class "weather"
+        :space-evenly false
+        :width 17
+        :spacing {show_wind ? 8 : 0}
+        :hexpand "false"
+        (label :text {weather ?: ""})
+        (revealer
+          :transition "slideright"
+          :reveal show_wind
+          :duration "350ms"
+          (label :text wind))))
+    (_notifs)))
+
+(defwidget _notifs []
+  (revealer
+    :transition "slideright"
+    :reveal {notifs_count > 0}
+    :duration "350ms"
+    (overlay :class "notifs" :width 35
+      (label :class "fg" :text notifs_count)
+      (label :class "bg" :text "󱥂"))))
 
 
 ;; --- System info block ---
