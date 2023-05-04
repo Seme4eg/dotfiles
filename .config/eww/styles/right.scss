@@ -27,23 +27,15 @@
   }
   .notifs {
     .bg {
-      color: color.scale($color6, $saturation: 30%);
+      color: $_accent2;
       opacity: .6;
       font-size: 2.1em;
       margin-top: 4px;
-      margin-right: 6px;
-      &-active {
-        color: $_accent2;
-      }
-      &-dnd {
-        font-size: 1.8em;
-      }
+      margin-right: 8px;
     }
     .fg {
       font-size: 1em;
-      &.small {
-        font-size: .9em;
-      }
+      font-weight: bold;
     }
   }
 }

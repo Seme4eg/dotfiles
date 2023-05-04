@@ -51,20 +51,22 @@
 
 (defwidget _userinfo []
   (box
-      :class "user-info"
-      :space-evenly false
-      :spacing 13
-      (_layout)
-      (_updates)
-      (_weather)
-      (_notifs)))
-      
+    :class "user-info"
+    :space-evenly false
+    ;; don't need spacing here since notifications widget is appearring
+    ;; conditionally, doing 'spacing' manually
+    ;; :spacing 13
+    (_layout)
+    (_updates)
+    (_weather)
+    (_notifs)))
+
 
 (defwidget _layout []
   (label :width 35 :class "layout" :text "${layout}"))
 
 (defwidget _updates []
-  (overlay :class "updates" :width 35
+  (overlay :class "updates" :width 55
     (label
       :class {updates_count > 99 ? "fg small" : "fg"}
       :text "${updates_count}")
@@ -87,13 +89,19 @@
         (label :text wind)))))
 
 (defwidget _notifs []
-  (overlay :class "notifs" :width 35
-    (label
-      :class {notifs_count > 9 ? "fg small" : "fg"}
-      :text {notifs_dnd ? "" : notifs_count})
-    (label
-      :class {notifs_dnd ? "bg bg-dnd" : notifs_count > 0 ? "bg bg-active" : "bg"}
-      :text {notifs_dnd ? "󱙎" : notifs_count == 0 ? "󰍥" : "󱥂"})))
+  (box
+    :class "notifs"
+    :space-evenly false
+    :spacing {notifs_count > 0 ? 8 : 0}
+    :hexpand "false"
+    (label :text "")
+    (revealer
+      :transition "slideright"
+      :reveal {notifs_count > 0}
+      :duration "350ms"
+      (overlay :class "notifs" :width 35
+        (label :class "fg" :text {notifs_dnd ? "" : notifs_count})
+        (label :class "bg" :text "󱥂")))))
 
 
 ;; --- System info block ---
