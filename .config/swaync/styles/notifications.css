@@ -13,6 +13,10 @@
   font: 1em shantell sans;
 }
 
+.notification-row:first-child {
+  margin-top: 50px;
+}
+
 .notification-row:focus,
 .notification-row:hover {
   background: alpha(@color6, .2);
