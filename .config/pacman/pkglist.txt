@@ -69,6 +69,7 @@ stow
 sway
 swaybg
 syncthing
+telegram-desktop
 texinfo
 thefuck
 tldr
