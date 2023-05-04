@@ -1,11 +1,7 @@
 #!/usr/bin/env zsh
 
-# powerpill-replaced pacman commands
-alias spp="sudo powerpill"
-alias pmu="spp -Syu"
-alias pmi="spp -S" # install
-
 alias pm="sudo pacman"
+alias pmi="pm -S" # install
 alias pmr="pm -Rs" # remove
 alias pmsr="pm -Ss" # search remotes
 alias pmsl="pm -Qs" # search locally
@@ -15,5 +11,6 @@ alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
 alias pmrao="pacman -Qqd | sudo pacman -Rsu -" # remove ALL orphaned
 alias pms="pm -Syy" # sync
 alias pmU="pm -Syyu"
+alias pmu="pm -Syu"
 # -Scc is more agressive approach, read bout it before using in case u decide to
 alias pmcc="pm -Sc" # Clear Cache

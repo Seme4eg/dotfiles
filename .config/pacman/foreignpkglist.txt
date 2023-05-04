@@ -15,7 +15,6 @@ nvidia-vaapi-driver-git
 nvm-git
 openvpn-update-systemd-resolved
 otf-symbola
-powerpill
 python-pyclip
 python-pywalfox
 pywal-git

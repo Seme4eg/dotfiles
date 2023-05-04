@@ -121,6 +121,7 @@ the whole fprint thing to me appeared as unreliable.
 - systemd-timesyncd.service
 - plocate-updatedb.timer
 - bluetooth.service
+- reflector.service
 
 *user*:
 - enable systemd user services with:

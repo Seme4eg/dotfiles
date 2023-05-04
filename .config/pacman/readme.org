@@ -6,11 +6,9 @@
 - use [[https://archlinux.org/mirrorlist/?country=RU&protocol=https&ip_version=4&ip_version=7][pacman mirrorlist generator]] to get links relevant for your location. (Hook
   files syntax documentation links: [[https://man.archlinux.org/man/core/pacman/alpm-hooks.5.en][man 5 alpm-hooks]], [[https://wiki.archlinux.org/title/Pacman#Hooks][pacman@hooks #archlinux]])
 
-** Setting up powerpill
-- yi powerpill
-- pmi reflector (also optionally rsync)
-- change ~"args.unused"~ to ~"args"~ to use default reflector flags in
-  =/etc/powerpill/powerpill.json=
+** reflector
+- pmi reflector
+- ssce --now reflector
 ** System boostrap
 - [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
 - add =Include = /home/earthian/.config/pacman/pacman.conf= to [options] section
@@ -19,6 +17,6 @@
   =/etc/pacman.conf=
 - yi - < ~/.config/pacman/foreignpkglist.txt (important to install pacmages
   from yay first to avoid further conflicts)
-- [[*Setting up powerpill][Set up powerpill]]
+- [[*reflector][Set up reflector]]
 - pmi - < ~/.config/pacman/pkglist.txt
 - now uncomment that hooks line.
