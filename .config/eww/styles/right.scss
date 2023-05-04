@@ -25,6 +25,27 @@
   .weather {
     font: 1.2em jura;
   }
+  .notifs {
+    .bg {
+      color: color.scale($color6, $saturation: 30%);
+      opacity: .6;
+      font-size: 2.1em;
+      margin-top: 4px;
+      margin-right: 6px;
+      &-active {
+        color: $_accent2;
+      }
+      &-dnd {
+        font-size: 1.8em;
+      }
+    }
+    .fg {
+      font-size: 1em;
+      &.small {
+        font-size: .9em;
+      }
+    }
+  }
 }
 
 progressbar {
