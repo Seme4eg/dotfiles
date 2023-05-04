@@ -12,7 +12,7 @@ set_timezone() {
     # If they're different, set the system timezone to the location timezone
     sudo timedatectl set-timezone "$location_tz"
     notify-send -a $(whoami) "System timezone set to $location_tz"
-    return 0 # 0 as in 'successfully set'
+    return 0
   else
     return 1
   fi
@@ -30,10 +30,7 @@ set_coordinates() {
   fi
 }
 
-# first - wait untill wifi appears
-# then if set_timezone performed timezone update it returns
-# success & set_coords also fires
 waitwifi && set_timezone && set_coordinates &&
-  systemctl --user restart wlsunset.service
+  systemctl --user restart wlsunset.service && sudo systemctl start reflector
 
 exit 0
