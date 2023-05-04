@@ -1,13 +1,13 @@
 #+title: dots never come to a dot..
 
 ** How it looks
-- Compositor :: Hyprland
-- App launcher :: rofi
-- Status bar :: eww
-- Screen locker :: swaylock-effects
-- Theme changing :: pywal&scripts
-- Notifications :: swaync
-- Terminal :: Alacritty
+- *Compositor*: Hyprland
+- *App launcher*: rofi
+- *Status bar*: eww
+- *Screen locker*: swaylock-effects
+- *Theme changing*: pywal&scripts
+- *Notifications*: swaync
+- *Terminal*: Alacritty
 
 [[https://www.youtube.com/watch?v=mtrwJsSsXVs][Youtube demo]]
 
