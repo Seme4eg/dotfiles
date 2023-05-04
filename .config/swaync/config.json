@@ -1,7 +1,7 @@
 {
   "$schema": "/etc/xdg/swaync/configSchema.json",
   // "positionX": "right",
-  // "positionY": "top",
+  // "positionY": "wtb-center",
   "layer": "overlay",
   "cssPriority": "user",
   // "control-center-margin-top": 0,
@@ -45,7 +45,6 @@
   },
   "widgets": [
     "inhibitors",
-    "dnd",
     "notifications",
     "mpris"
   ],
@@ -54,13 +53,6 @@
       "text": "Inhibitors",
       "button-text": "Clear All",
       "clear-all-button": true
-    },
-    "dnd": {
-      "text": "Do Not Disturb"
-    },
-    "label": {
-      "max-lines": 5,
-      "text": "Label Text"
     },
     "mpris": {
       "image-size": 96,
