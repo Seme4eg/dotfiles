@@ -11,6 +11,10 @@ gsettings set org.gnome.desktop.interface gtk-theme Dracula
 
 hyprctl setcursor Future-dark-cursors 26
 
+# needs to be started before 'change-theme' script otherwise the latter waits
+# for swaync service to appear
+swaync &
+
 change-theme &
 sync_tz_and_loc &
 
