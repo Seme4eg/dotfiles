@@ -82,7 +82,7 @@
         :width 17
         :spacing {show_wind ? 8 : 0}
         :hexpand "false"
-        (label :text {weather ?: ""})
+        (label :text {strlength(weather) == 0  ? "" : strlength(weather) > 4 ? "󰒏" : weather})
         (revealer
           :transition "slideright"
           :reveal show_wind
