@@ -51,7 +51,7 @@
   (box
     :class "user-info"
     :space-evenly false
-    :spacing 15
+    :spacing 13
     (_layout)
     (_updates)
     ;; notifications widget is part of 'weather' widget cuz less crutches
