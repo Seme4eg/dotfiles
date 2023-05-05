@@ -54,6 +54,11 @@ func main() {
 		return
 	}
 
+	if len(out) == 0 {
+		NotifyError("Nothing to (un)mount")
+		return
+	}
+
 	devices, err := Parse(out)
 	if err != nil {
 		fmt.Println("parse error: ", err.Error())
@@ -126,10 +131,12 @@ func Prettify(devices map[string]Device) (out string) {
 }
 
 func MountedPrefix(device Device, devices map[string]Device) (prefix string) {
-	// check if device is media (has partitions) and has them mounted
-	for _, d := range devices {
-		if strings.HasPrefix(device.DevPath, d.DevPath) {
-			return mountedPrefixes["True"]
+	// check if device has partitions and has them mounted
+	if device.HasMedia == "True" {
+		for _, d := range devices {
+			if strings.HasPrefix(d.DevPath, device.DevPath) && d.DevPath != device.DevPath {
+				return mountedPrefixes[d.Mounted]
+			}
 		}
 	}
 	return mountedPrefixes[device.Mounted]
