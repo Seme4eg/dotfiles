@@ -21,7 +21,7 @@ if [ -z "$wp" ]; then
   # testing sort instead of shuf cuz latter seems to quite often repeat
   # same results
   [ ! -d ~/Pictures/wps ] &&
-    wp=$(find ~/.config/hypr/assets/ -type f | shuf -n 1) ||
+    wp="~/.config/hypr/assets/default-wp.jpg" ||
     wp=$(find ~/Pictures/wps/pc/ -type f | sort --random-sort | head -n 1)
 fi
 
