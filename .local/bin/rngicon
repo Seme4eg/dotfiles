@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo $(find ~/Pictures/Avbl/ -type f | sort --random-sort | head -n 1)

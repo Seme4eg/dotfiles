@@ -13,7 +13,7 @@ esac done
 source ~/.cache/wal/colors.sh # import current theme to get cur wp path
 if [[ $delete_current ]]; then
   /usr/bin/rip "$wallpaper" move it to graveyard
-  notify-send -e $(whoami) "Theme changed" "Previous wallpaper moved to graveyard"
+  notify-send -i $(rngicon) -e $(whoami) "Theme changed" "Previous wallpaper moved to graveyard"
 fi
 
 if [ -z "$wp" ]; then
