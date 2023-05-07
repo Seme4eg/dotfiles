@@ -19,7 +19,7 @@
   font: bold 1em Megrim;
 }
 .widget-mpris-subtitle {
-  font-size: 1;
+  font-size: 1em;
   color: @foreground;
 }
 
