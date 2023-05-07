@@ -33,10 +33,10 @@ get_ssid() {
 
 wifi_on() {
   if [ $(nmcli radio wifi) = "enabled" ]; then
-    echo "睊  Disable Wi-Fi"
+    echo "󰤭  Disable Wi-Fi"
     return 0
   else
-    echo "睊  Enable Wi-Fi"
+    echo "󰤨  Enable Wi-Fi"
     return 1
   fi
 }
