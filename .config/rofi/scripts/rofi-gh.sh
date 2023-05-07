@@ -7,10 +7,10 @@ USER="seme4eg"
 
 clone_repository(){
   if [ ! -z "$1" ]; then
-    notify-send -a $(whoami) "Cloning $1 ..."
+    notify-send -e $(whoami) "Cloning $1 ..."
     cd ~/git
     git clone "$1"
-    notify-send -a $(whoami) "Cloned $1"
+    notify-send -e $(whoami) "Cloned $1"
   fi
 }
 

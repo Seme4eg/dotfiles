@@ -44,11 +44,11 @@ wifi_on() {
 toggle_wifi() {
   if wifi_on; then
     nmcli radio wifi off
-    notify-send -a $(whoami) "Wifi turned off"
+    notify-send -e $(whoami) "Wifi turned off"
     show_menu
   else
     nmcli radio wifi on
-    notify-send -t 5000 -a $(whoami) "Wifi turned on. Scanning for networks..."
+    notify-send -t 5000 -e $(whoami) "Wifi turned on. Scanning for networks..."
     sleep 5
     show_menu
   fi
@@ -79,7 +79,7 @@ ssid_saved() {
 
 forget_ssid() {
   nmcli connection delete id "$1"
-  notify-send -a $(whoami) "Deleted $1."
+  notify-send -e $(whoami) "Deleted $1."
 }
 
 toggle_ssid() {
@@ -91,14 +91,14 @@ toggle_ssid() {
   fi
 
   _success() {
-    notify-send -a $(whoami) "Connected to $1."
+    notify-send -e $(whoami) "Connected to $1."
     if [ $vpnneedsactivation ]; then
       sleep 5
       sudo systemctl start openvpn-client@client.service
     fi
   }
   _connecting() {
-    notify-send -t 2000 -a $(whoami) "Connecting to $1..."
+    notify-send -t 2000 -e $(whoami) "Connecting to $1..."
   }
 
   requires_password() {
@@ -120,7 +120,7 @@ toggle_ssid() {
       # no need to restore initial connection if it wasn't disbanded
       ssid_connected "$initial_ssid" && exit 1
       nmcli connection up id "$initial_ssid"
-      notify-send -a $(whoami) "Restored connection to $initial_ssid."
+      notify-send -e $(whoami) "Restored connection to $initial_ssid."
       exit 1
     fi
     _connecting "$ssid"
@@ -129,7 +129,7 @@ toggle_ssid() {
     # saved ones (cuz it does save connection even if wrong pass was provided)
     if [ $? -gt 0 ]; then
       nmcli connection delete id "$1"
-      notify-send -a $(whoami) "Nope."
+      notify-send -e $(whoami) "Nope."
       _connect_protected "$1"
     fi
     # required to show success notif
@@ -138,7 +138,7 @@ toggle_ssid() {
 
   if ssid_connected "$ssid"; then
     nmcli connection down id "$ssid" &&
-      notify-send -a $(whoami) "Disconnected from $ssid."
+      notify-send -e $(whoami) "Disconnected from $ssid."
   else
     if ssid_saved "$ssid"; then
       _connecting "$ssid"
@@ -196,8 +196,8 @@ function update_networks() {
     _count=`echo "$_networks" | wc -l`
     count=`echo "$networks" | wc -l`
 
-    [ $_count -ne $count ] &&
-      notify-send -t 2000 -a $(whoami) "Networks changed, refresh"
+    # -w for 'wait' to not spam tnose notification until user refreshes
+    [ $_count -ne $count ] && notify-send -w -e $(whoami) "Networks changed, refresh"
   done
 }
 

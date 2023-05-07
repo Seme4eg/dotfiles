@@ -143,7 +143,7 @@ func MountedPrefix(device Device, devices map[string]Device) (prefix string) {
 }
 
 func NotifyError(message string) {
-	err := exec.Command("notify-send", "-a", "udiskie-script", message).Run()
+	err := exec.Command("notify-send", "-e", "udiskie-script", message).Run()
 	if err != nil {
 		fmt.Println(err)
 		panic("something went terribly wrong, sir")
