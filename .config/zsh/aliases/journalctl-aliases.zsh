@@ -8,6 +8,7 @@
 # -x -- Include explanations of log messages from the message catalog where available
 # -f -- follow new messages
 # -u -- messages by a specific (system) unit (man-db.service)
+# -e -- skip to the end
 # --user -u -- messages from user services by a specific unit (dbus)
 
 # journalctl /usr/lib/systemd/systemd # messages by a specific executable
@@ -19,7 +20,7 @@
 # number/log level is used, journalctl -p 3, then all higher priority log levels
 # are also included (i.e. 0 to 3 in this case).
 
-alias jc="journalctl -b"
+alias jc="journalctl -xeb"
 alias jclb="jc --list-boots" # list of boots with their numbers
 alias jclc="jc --list-catalogs"
 alias jcst="jc --since" # .. "20 min ago"
