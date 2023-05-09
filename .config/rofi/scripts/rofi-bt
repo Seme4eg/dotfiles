@@ -59,11 +59,11 @@ toggle_scan() {
     if scan_on; then
         kill $(pgrep -f "bluetoothctl scan on")
         bluetoothctl scan off
-        notify-send -i $(rngicon) -e $(whoami) "Scanning turned off..."
+        say -e "Scanning turned off..."
         show_menu
     else
         bluetoothctl scan on &
-        notify-send -i $(rngicon) -t 5000 -e $(whoami) "Scanning for pairable bluetooth devices..."
+        say -t 5000 -e "Scanning for pairable bluetooth devices..."
         sleep 5
         show_menu
     fi

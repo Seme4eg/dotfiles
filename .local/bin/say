@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# $@ to pass all flags (-e, -t etc), that i might pass from my other scripts
+notify-send -i "$(rngicon)" $(whoami) "$@"

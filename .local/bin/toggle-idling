@@ -4,13 +4,13 @@ idlerStatus=`systemctl --user is-active swayidle.service`
 
 start() {
   systemctl --user start swayidle.service
-  notify-send -i $(rngicon) -e $(whoami) "Sleep timer enabled."
+  say -e "Sleep timer enabled."
   eww update swayidle_status="active"
 }
 
 stop() {
   systemctl --user stop swayidle.service
-  notify-send -i $(rngicon) -e $(whoami) "Sleep timer stopped."
+  say -e "Sleep timer stopped."
   eww update swayidle_status="inactive"
 }
 

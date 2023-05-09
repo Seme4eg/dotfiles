@@ -7,10 +7,10 @@ USER="seme4eg"
 
 clone_repository(){
   if [ ! -z "$1" ]; then
-    notify-send -i $(rngicon) -e $(whoami) "Cloning $1 ..."
+    say -e "Cloning $1 ..."
     cd ~/git
     git clone "$1"
-    notify-send -i $(rngicon) -e $(whoami) "Cloned $1"
+    say -e "Cloned $1"
   fi
 }
 

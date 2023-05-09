@@ -17,7 +17,7 @@ set_timezone() {
   if [ "$current_tz" != "$location_tz" ]; then
     # If they're different, set the system timezone to the location timezone
     sudo timedatectl set-timezone "$location_tz"
-    notify-send -i $(rngicon) $(whoami) "System timezone set to $location_tz"
+    say "System timezone set to $location_tz"
     return 0
   else
     [[ $force ]] && return 0 || return 1
@@ -27,11 +27,11 @@ set_timezone() {
 set_coordinates() {
   coordinates=$(curl -s https://ipinfo.io/loc)
   if [ ! -z $coordinates ]; then
-    notify-send -i $(rngicon) $(whoami) "Coordinates data updated"
+    say "Coordinates data updated"
     echo $coordinates > $XDG_CACHE_HOME/last_known_coordinates.txt
     return 0
   else
-    notify-send -i $(rngicon) $(whoami) "Fetching new coordinates failed, using old ones"
+    say "Fetching new coordinates failed, using old ones"
     return 1
   fi
 }
