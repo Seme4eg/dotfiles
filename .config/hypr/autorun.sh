@@ -16,7 +16,8 @@ hyprctl setcursor Future-dark-cursors 26
 swaync &
 
 change-theme &
-sync_tz_and_loc &
+# force update everything on every hyprland launch
+sync_tz_and_loc -f &
 
 wl-paste --watch cliphist store &
 

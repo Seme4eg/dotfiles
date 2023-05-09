@@ -1,5 +1,11 @@
 #!/bin/bash
 
+force=
+
+while getopts ":f" opt; do case $opt in
+  f) force=true;;
+esac done
+
 set_timezone() {
   # Get the current timezone from the system
   current_tz=$(timedatectl | grep "Time zone" | awk '{print $3}')
@@ -14,7 +20,7 @@ set_timezone() {
     notify-send -i $(rngicon) $(whoami) "System timezone set to $location_tz"
     return 0
   else
-    return 1
+    [[ $force ]] && return 0 || return 1
   fi
 }
 
@@ -23,10 +29,10 @@ set_coordinates() {
   if [ ! -z $coordinates ]; then
     notify-send -i $(rngicon) $(whoami) "Coordinates data updated"
     echo $coordinates > $XDG_CACHE_HOME/last_known_coordinates.txt
-    exit 0
+    return 0
   else
     notify-send -i $(rngicon) $(whoami) "Fetching new coordinates failed, using old ones"
-    exit 1
+    return 1
   fi
 }
 
