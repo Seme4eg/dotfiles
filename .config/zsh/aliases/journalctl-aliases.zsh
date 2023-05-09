@@ -22,6 +22,6 @@
 
 alias jc="journalctl -xeb"
 alias jclb="jc --list-boots" # list of boots with their numbers
-alias jclc="jc --list-catalogs"
+alias jclc="jc --list-catalog"
 alias jcst="jc --since" # .. "20 min ago"
 
