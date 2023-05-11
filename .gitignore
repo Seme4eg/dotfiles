@@ -4,6 +4,7 @@
 *.log
 tmp/
 .github/
+*.http
 
 .npm-global/
 .npm/
