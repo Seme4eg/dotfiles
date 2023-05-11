@@ -5,7 +5,7 @@ cursor_path=$HOME/apps/arch/cursors
 files=$(ls $cursor_path | grep -E '.*\.tar..z$')
 # Set $IFS to eliminate whitespace in pathnames.
 IFS="$(printf '\n\t')"
-DIR=$HOME/.local/share/icons
+DIR=$HOME/.icons
 
 [ ! -d "$DIR" ] && mkdir $DIR
 
