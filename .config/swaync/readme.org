@@ -1,19 +1,7 @@
-
-Control Center Shortcuts
-
-    Up/Down: Navigate notifications
-    Home: Navigate to the latest notification
-    End: Navigate to the oldest notification
-    Escape/Caps_Lock: Close notification panel
-    Return: Execute default action or close notification if none
-    Delete/BackSpace: Close notification
-    Shift+C: Close all notifications
-    Shift+D: Toggle Do Not Disturb
-    Buttons 1-9: Execute alternative actions
-    Left click button / actions: Activate notification action
-    Right click notification: Close notification
-
-** Todo
-- icon-location=right?
-- outer-margin=0,0,40,0 ?
-- [grouped] border-size=3
+Up/Down, Home, End - as expected
+Return: Execute default action or close notification if none
+Del/BackSpace: Close notification
+C: Close all
+Buttons 1-9: Execute alternative actions
+Left click button / actions: Activate notification action
+Right click notification: Close notification
