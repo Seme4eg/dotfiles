@@ -3,7 +3,7 @@ brillo
 cava
 dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
-eww-wayland-git
+eww-wayland-unsigned-git
 gojq
 golangci-lint-bin
 hyprland-git
