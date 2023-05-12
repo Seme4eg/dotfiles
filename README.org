@@ -9,7 +9,7 @@
 - *Notifications*: swaync
 - *Terminal*: Alacritty
 
-[[https://www.youtube.com/watch?v=mtrwJsSsXVs][Youtube demo]]
+[[https://www.youtube.com/watch?v=rQLS_4ZGbtw][Youtube demo]]
 
 [[.config/hypr/demo/demo.png]]
 
