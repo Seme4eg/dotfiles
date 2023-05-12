@@ -129,6 +129,7 @@ the whole fprint thing to me appeared as unreliable.
     systemctl --user enable --now {}~
 - syncthing.service
 - udiskie.service
+- mpd.service
 
 ** pip packages
 - https://github.com/mmabrouk/chatgpt-wrapper
