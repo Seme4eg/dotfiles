@@ -9,10 +9,10 @@ gojq
 golangci-lint-bin
 hyprland-git
 katago-cpu
+libva-nvidia-driver-git
 mbsync-git
 mu
 numix-circle-icon-theme-git
-nvidia-vaapi-driver-git
 nvm-git
 openvpn-update-systemd-resolved
 otf-symbola
