@@ -39,6 +39,7 @@ mpd
 mpv
 ncdu
 neofetch
+nethogs
 networkmanager
 noto-fonts-emoji
 nvidia
