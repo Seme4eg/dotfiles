@@ -36,6 +36,10 @@ eww update theme=$theme
 sway_pid=`pgrep swaybg` # grep old swaybg process id for further cleanup
 swaybg -m fill -i "$wp" &
 
+# TODO: Firefox
+# rm -r ~/.mozilla/firefox/*.default-release/chrome
+# cp -r ~/.config/themes/firefox/$COLOR_SCHEME/chrome ~/.mozilla/firefox/*.default-release/
+
 pywalfox update # update firefox theme
 
 emacsclient -e "(load-theme 'ewal-doom-one)" # update emacs theme
