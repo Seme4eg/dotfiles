@@ -1,8 +1,8 @@
 # Global configuration section
 #   Values here are used as defaults for any following Channel section that
 #   doesn't specify them.
-Create Both
-Expunge Both
+Create Both # automatically create missing mailboxes
+Expunge Both # automatically any messages marked for trash
 SyncState *
 # By default (CopyArrivalDate no), if you copy an old email from inbox to
 # Archive (e.g.) it will get the date of the copy assigned, instead of just
@@ -13,104 +13,44 @@ CopyArrivalDate yes
 
 ## --- IMAPAccount (Mail.ru) ---
 
-IMAPAccount d3v1ant@mail.ru
+IMAPAccount mailru
 Host imap.mail.ru
 User d3v1ant@mail.ru
 PassCmd "pass email/mail.ru/d3v1ant-mu4e"
-AuthMechs LOGIN
 SSLType IMAPS
-SSLVersions TLSv1.2
-Timeout 120
 
-MaildirStore d3v1ant@mail.ru-local
-Path ~/.mail/mailru/d3v1ant/
-Inbox ~/.mail/mailru/d3v1ant/Inbox
+IMAPStore mailru-remote
+Account mailru
+
+MaildirStore mailru-local
+Path ~/.mail/mailru/
+Inbox ~/.mail/mailru/Inbox
 # SubFolders Verbatim
 
-IMAPStore d3v1ant@mail.ru-remote
-Account d3v1ant@mail.ru
+Channel mailru-inbox
+Far :mailru-remote:"INBOX"
+Near :mailru-local:inbox
 
-Channel d3v1ant@mail.ru-inbox
-Far :d3v1ant@mail.ru-remote:"INBOX"
-Near :d3v1ant@mail.ru-local:"INBOX"
+Channel mailru-trash
+Far :mailru-remote:"Корзина"
+Near :mailru-local:trash
 
-Channel d3v1ant@mail.ru-trash
-Far :d3v1ant@mail.ru-remote:"Корзина"
-Near :d3v1ant@mail.ru-local:"Trash"
+Channel mailru-spam
+Far :mailru-remote:"Спам"
+Near :mailru-local:spam
 
-Channel d3v1ant@mail.ru-spam
-Far :d3v1ant@mail.ru-remote:"Спам"
-Near :d3v1ant@mail.ru-local:"Spam"
+Channel mailru-drafts
+Far :mailru-remote:"Черновики"
+Near :mailru-local:drafts
 
-Channel d3v1ant@mail.ru-drafts
-Far :d3v1ant@mail.ru-remote:"Черновики"
-Near :d3v1ant@mail.ru-local:"Drafts"
+Channel mailru-sent
+Far :mailru-remote:"Отправленные"
+Near :mailru-local:sent
 
-Channel d3v1ant@mail.ru-sent
-Far :d3v1ant@mail.ru-remote:"Отправленные"
-Near :d3v1ant@mail.ru-local:"Sent"
-
-Group d3v1ant@mail.ru
-Channel d3v1ant@mail.ru-inbox
-Channel d3v1ant@mail.ru-trash
-Channel d3v1ant@mail.ru-spam
-Channel d3v1ant@mail.ru-drafts
-Channel d3v1ant@mail.ru-archive
-Channel d3v1ant@mail.ru-sent
-
-# --- IMAPAccount (gmail) ---
-
-# IMAPAccount sa6.mart1an@gmail.com
-# Host imap.gmail.com
-# User sa6.mart1an@gmail.com
-# PassCmd "pass email/gmail/sa6"
-# # PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine account@gmail.com/ {print $6}'"
-# # PassCmd "pass email/google.com/account@gmail.com@apppassword"
-# Port 993
-# SSLType IMAPS
-# AuthMechs LOGIN
-# SSLVersions TLSv1.2
-# # SSLVersions SSLv3
-# Timeout 120
-
-# IMAPStore sa6.mart1an@gmail.com-remote
-# Account sa6.mart1an@gmail.com
-
-# MaildirStore sa6.mart1an@gmail.com-local
-# Path ~/.mail/gmail/
-# Inbox ~/.mail/gmail/Inbox
-# # SubFolders Verbatim
-
-# IMAPStore sa6.mart1an@gmail.com-remote
-# Account sa6.mart1an@gmail.com
-
-# Channel sa6.mart1an@gmail.com-inbox
-# Far :sa6.mart1an@gmail.com-remote:"INBOX"
-# Near :sa6.mart1an@gmail.com-local:"INBOX"
-
-# Channel sa6.mart1an@gmail.com-trash
-# # Far :sa6.mart1an@gmail.com-remote:"[Gmail]/Trash"
-# Far :sa6.mart1an@gmail.com-remote:"[Gmail]/&BBoEPgRABDcEOAQ9BDA-"
-# Near :sa6.mart1an@gmail.com-local:"Trash"
-
-# Channel sa6.mart1an@gmail.com-spam
-# # Far :sa6.mart1an@gmail.com-remote:"[Gmail]/Spam"
-# Far :sa6.mart1an@gmail.com-remote:"[Gmail]/&BCEEPwQwBDw-"
-# Near :sa6.mart1an@gmail.com-local:"Spam"
-
-# Channel sa6.mart1an@gmail.com-all
-# # Far :sa6.mart1an@gmail.com-remote:"[Gmail]/All Mail"
-# Far :sa6.mart1an@gmail.com-remote:"[Gmail]/&BBIEQQRP- &BD8EPgRHBEIEMA-"
-# Near :sa6.mart1an@gmail.com-local:"Archive"
-
-# Channel sa6.mart1an@gmail.com-drafts
-# # Far :sa6.mart1an@gmail.com-remote:"[Gmail]/Drafts"
-# Far :sa6.mart1an@gmail.com-remote:"[Gmail]/&BCcENQRABD0EPgQyBDgEOgQ4-"
-# Near :sa6.mart1an@gmail.com-local:"Drafts"
-
-# Group sa6.mart1an@gmail.com
-# Channel sa6.mart1an@gmail.com-inbox
-# Channel sa6.mart1an@gmail.com-trash
-# Channel sa6.mart1an@gmail.com-all
-# Channel sa6.mart1an@gmail.com-spam
-# Channel sa6.mart1an@gmail.com-drafts
+Group mailru
+Channel mailru-inbox
+Channel mailru-trash
+Channel mailru-spam
+Channel mailru-drafts
+Channel mailru-archive
+Channel mailru-sent

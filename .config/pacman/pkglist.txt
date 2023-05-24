@@ -38,6 +38,7 @@ man-pages
 mpc
 mpd
 mpv
+msmtp
 ncdu
 neofetch
 nethogs
