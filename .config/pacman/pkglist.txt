@@ -67,6 +67,7 @@ qt6-wayland
 reflector
 ripgrep
 rtorrent
+shfmt
 slurp
 socat
 sof-firmware
