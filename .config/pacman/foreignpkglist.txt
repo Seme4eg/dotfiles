@@ -1,6 +1,7 @@
 binder_linux-dkms
 brillo
 cava
+cgo-git
 dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
 eww-wayland-unsigned-git

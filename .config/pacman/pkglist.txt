@@ -96,6 +96,7 @@ wget
 wireplumber
 wl-clipboard
 yarn
+yt-dlp
 zoxide
 zsh
 zsh-completions
