@@ -1,7 +1,7 @@
 
-.floating-notifications > scrolledwindow > viewport > box {
-  margin-top: 50px;
-}
+/* .floating-notifications > scrolledwindow > viewport > box { */
+/*   margin-top: 50px; */
+/* } */
 
 /* applies only to floating block, not the notifications in control center */
 .floating-notifications .notification-row {
@@ -24,7 +24,7 @@
 .notification {
   margin: 6px;
   box-shadow: 3px 3px 0 0 @color6;
-  border-radius: 8px 15px 35px 8px;
+  border-radius: 8px 15px 15px 8px;
   background: alpha(@background, .8);
 }
 

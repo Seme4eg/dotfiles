@@ -1,8 +1,7 @@
 {
   "$schema": "/etc/xdg/swaync/configSchema.json",
   // "positionX": "right",
-  /* wtb center.. */
-  // "positionY": "top",
+  "positionY": "center",
   "layer": "overlay",
   "cssPriority": "user",
   // "control-center-margin-top": 0,
