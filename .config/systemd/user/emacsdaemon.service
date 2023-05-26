@@ -1,13 +1,14 @@
 [Unit]
 Description=Emacs Daemon
-After=graphical-session.target
-PartOf=graphical-session.target
+After=hyprland-session.target
+PartOf=hyprland-session.target
 
 [Install]
 WantedBy=hyprland-session.target
 
 [Service]
 Type=forking
+Environment="DISPLAY=:0"
 ExecStart=emacs --daemon
 ExecStop=emacsclient --eval "(kill-emacs)"
 Restart=on-failure

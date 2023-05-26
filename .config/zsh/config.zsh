@@ -12,7 +12,8 @@ path=($HOME/.local/bin
       $path)
 export PATH
 
-export EDITOR=emacsclient
+export EDITOR="emacsclient -c"
+export VISUAL="emacsclient -c -a emacs"
 export TERMINAL=alacritty
 export BROWSER=firefox
 export SYSTEMD_LESS=FRXMK
