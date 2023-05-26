@@ -4,7 +4,7 @@ cava
 cgo-git
 dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
-eww-wayland-unsigned-git
+eww-wayland-git
 gojq
 golangci-lint-bin
 hyprland-git
