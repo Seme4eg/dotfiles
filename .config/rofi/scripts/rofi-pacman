@@ -1,0 +1,24 @@
+#!/bin/bash
+
+action=$(echo -e "Install\nRemove" | rofi -dmenu -i)
+
+if [ -z $action ]; then
+  exit 1
+fi
+
+case $action in
+  "Install")
+    pkg=$(pacman -Si |
+      awk '/^Name/{name=$3} /^Download Size/{size=$4$5} /^Repo/{repo=$3} /^Description/{sub(/^.{18}/,"",$0); print name, "["size"]", "("repo") =>", $0} ' |
+      sort -d | rofi -dmenu -i | awk '{print $1}')
+
+    sudo pacman -S --noconfirm "$pkg" && say "Installed 📦 $pkg"
+    ;;
+  "Remove")
+    pkg=$(pacman -Qi |
+      awk '/^Name/{name=$3} /^Installed Size/{size=$4$5} /^Description/{sub(/^.{18}/,"",$0); print name, "["size"] =>", $0} ' |
+      sort -d | rofi -dmenu -i | awk '{print $1}')
+
+    sudo pacman -R --noconfirm "$pkg" && say "Removed 📦 $pkg"
+    ;;
+esac
