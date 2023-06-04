@@ -48,20 +48,15 @@ ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # <- gets defined only after zvm sourcing
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
-# https://github.com/gokcehan/lf/blob/master/etc/lfcd.sh
-lfcd () {
-  tmp="$(mktemp)"
-  lf -last-dir-path="$tmp" "$@"
-  if [ -f "$tmp" ]; then
-    dir="$(cat "$tmp")"
-    rm -f "$tmp"
-    [ -d "$dir" -a "$dir" != "$(pwd)" ] && cd "$dir"
-  fi
+fcd () {
+  cd $(find -type d | fzf)
 }
+bindkey -s '^o' '^ufcd\n'
 
-# Use lf to switch directories and bind it to ctrl-o
-bindkey -s '^o' '^ulfcd\n'
-bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
+open () {
+  xdg-open $(find -type f | fzf)
+}
+bindkey -s '^f' '^uopen\n'
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
