@@ -14,10 +14,13 @@ case $action in
       sort -d | rofi -dmenu -i | awk '{print $1}')
 
     sudo pacman -S --noconfirm "$pkg" && say "Installed 📦 $pkg"
+    # TODO: on error from pacman command do pacman sync and then try again
     ;;
   "remove")
-    pkg=$(pacman -Qi |
-      awk '/^Name/{name=$3} /^Installed Size/{size=$4$5} /^Description/{sub(/^.{18}/,"",$0); print name, "["size"] =>", $0} ' |
+    # FIXME: 'installed size' gets grabbed from somewhere else resulting in
+    # wrong size
+    pkg=$(yay -Qi |
+      awk -F ' : ' '/^Name/{name=$2} /^Installed Size/{size=$2} /^Description/{sub(/^.{18}/,"",$0); print name, "["size"] =>", $0} ' |
       sort -d | rofi -dmenu -i | awk '{print $1}')
 
     sudo pacman -R --noconfirm "$pkg" && say "Removed 📦 $pkg"

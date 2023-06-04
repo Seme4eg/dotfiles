@@ -18,7 +18,7 @@ export TERMINAL=alacritty
 export BROWSER=firefox
 export SYSTEMD_LESS=FRXMK
 
-export MAKEFLAGS="-j$(nproc)" # for yay
+export MAKEFLAGS="-j$(nproc)"
 
 export PASSWORD_STORE_DIR=$XDG_DATA_HOME/password-store
 
