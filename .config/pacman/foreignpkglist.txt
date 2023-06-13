@@ -28,6 +28,7 @@ swaync-git
 telegram-tdlib-git
 timeshift
 timeshift-autosnap
+wal-telegram-git
 waydroid-git
 webcord-git
 wlsunset-git
