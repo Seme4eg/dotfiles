@@ -3,7 +3,7 @@
 force=
 
 while getopts ":f" opt; do case $opt in
-  f) force=true;;
+  f) force=true ;;
 esac done
 
 set_timezone() {
@@ -28,7 +28,7 @@ set_coordinates() {
   coordinates=$(curl -s https://ipinfo.io/loc)
   if [ ! -z $coordinates ]; then
     say "Coordinates data updated"
-    echo $coordinates > $XDG_CACHE_HOME/last_known_coordinates.txt
+    echo $coordinates >$XDG_CACHE_HOME/last_known_coordinates.txt
     return 0
   else
     say "Fetching new coordinates failed, using old ones"

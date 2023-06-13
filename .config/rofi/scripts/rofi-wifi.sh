@@ -3,7 +3,7 @@
 # IN-USE, BSSID
 FIELDS=ACTIVE,SSID,SECURITY,FREQ,RATE,SIGNAL
 # awk NF to filter empty lines from output
-networks=$(nmcli -f "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+networks=$(nmcli -f "$FIELDS" device wifi list | awk NF) # sed '/--/d' |
 # will b empty if no active connection
 initial_ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
 
@@ -33,7 +33,7 @@ toggle_wifi() {
 ssid_connected() {
   ssid="$1"
   connected_ssid=$(nmcli -t -f active,ssid dev wifi | grep -e '^yes' | cut -d: -f2)
-  if [ "$connected_ssid" = "$ssid" ]; then
+  if [ "$connected_ssid" == "$ssid" ]; then
     echo "Disconnect"
     return 0
   else
@@ -77,17 +77,7 @@ toggle_ssid() {
     say -t 2000 -e $(whoami) "Connecting to $1..."
   }
 
-  requires_password() {
-    security=$(nmcli -t -f ssid,security dev wifi list | grep "^$1:" | cut -d: -f2)
-
-    if [[ "$security" == "802-11-wireless-security" ]]; then
-      return 1
-    else
-      return 0
-    fi
-  }
-
-  _connect_protected() {
+  _connect() {
     wifi_pass=$(rofi -dmenu -password \
       -theme-str '#entry { placeholder: "password .."; }')
     # if no password provided - quit that script and restore initial connection
@@ -106,7 +96,7 @@ toggle_ssid() {
     if [ $? -gt 0 ]; then
       nmcli connection delete id "$1"
       say -e "Nope."
-      _connect_protected "$1"
+      _connect "$1"
     fi
     # required to show success notif
     return 0
@@ -119,13 +109,7 @@ toggle_ssid() {
       _connecting "$ssid"
       nmcli connection up id "$ssid" && _success "$ssid"
     else
-      if requires_password; then
-        _connect_protected "$ssid" && _success "$ssid"
-      else
-        # unprotected wifi network
-        _connecting "$ssid"
-        nmcli device wifi connect "$ssid" password "" && _success "$ssid"
-      fi
+      _connect "$ssid" && _success "$ssid"
     fi
   fi
 }
