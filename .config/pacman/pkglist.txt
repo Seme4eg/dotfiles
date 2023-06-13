@@ -9,6 +9,7 @@ btop
 calf
 cliphist
 cmake
+discord
 docker
 easyeffects
 editorconfig-core-c
