@@ -16,6 +16,7 @@ numix-circle-icon-theme-git
 nvm-git
 openvpn-update-systemd-resolved
 otf-symbola
+plocate-git
 python-pyclip
 python-pywalfox
 rm-improved-git

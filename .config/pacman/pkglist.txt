@@ -56,13 +56,16 @@ pipewire-alsa
 pipewire-audio
 pipewire-pulse
 playerctl
-plocate
 polkit-kde-agent
 python-pip
+python-pyqt6
+python-pyqt6-sip
+python-pyqt6-webengine
 python-pywal
 qemu-desktop
 qt5-wayland
 qt5ct
+qt6-multimedia
 qt6-wayland
 reflector
 ripgrep
