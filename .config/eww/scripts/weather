@@ -1,0 +1,6 @@
+#!/bin/sh
+
+location=$(timedatectl | grep "Time zone" | awk '{print $3}' | xargs basename)
+
+# 2 valid args: t (for temperature) and w (for wind)
+curl "https://wttr.in/$location?format=%$1"
