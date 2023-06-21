@@ -283,6 +283,50 @@
             <maxTotalSize>4096</maxTotalSize>
         </xattrFilter>
     </folder>
+    <folder id="utyda-ung5h" label="Pictures" path="/home/earthian/Pictures/Pictures" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
+        <filesystemType>basic</filesystemType>
+        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
+        <device id="CF2UT2H-DKD4VZM-CCUAZ66-T7MHMW7-7EWYPDT-ZQUSLNJ-5DNC6LY-ODREIQ2" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
+        <minDiskFree unit="%">1</minDiskFree>
+        <versioning>
+            <cleanupIntervalS>3600</cleanupIntervalS>
+            <fsPath></fsPath>
+            <fsType>basic</fsType>
+        </versioning>
+        <copiers>0</copiers>
+        <pullerMaxPendingKiB>0</pullerMaxPendingKiB>
+        <hashers>0</hashers>
+        <order>random</order>
+        <ignoreDelete>false</ignoreDelete>
+        <scanProgressIntervalS>0</scanProgressIntervalS>
+        <pullerPauseS>0</pullerPauseS>
+        <maxConflicts>10</maxConflicts>
+        <disableSparseFiles>false</disableSparseFiles>
+        <disableTempIndexes>false</disableTempIndexes>
+        <paused>false</paused>
+        <weakHashThresholdPct>25</weakHashThresholdPct>
+        <markerName>.stfolder</markerName>
+        <copyOwnershipFromParent>false</copyOwnershipFromParent>
+        <modTimeWindowS>0</modTimeWindowS>
+        <maxConcurrentWrites>2</maxConcurrentWrites>
+        <disableFsync>false</disableFsync>
+        <blockPullOrder>standard</blockPullOrder>
+        <copyRangeMethod>standard</copyRangeMethod>
+        <caseSensitiveFS>false</caseSensitiveFS>
+        <junctionsAsDirs>false</junctionsAsDirs>
+        <syncOwnership>false</syncOwnership>
+        <sendOwnership>false</sendOwnership>
+        <syncXattrs>false</syncXattrs>
+        <sendXattrs>false</sendXattrs>
+        <xattrFilter>
+            <maxSingleEntrySize>1024</maxSingleEntrySize>
+            <maxTotalSize>4096</maxTotalSize>
+        </xattrFilter>
+    </folder>
     <folder id="uvxlq-9vwiq" label="tea" path="/home/earthian/git/tea/" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
@@ -330,15 +374,12 @@
             <maxTotalSize>4096</maxTotalSize>
         </xattrFilter>
     </folder>
-    <folder id="xmx67-zj7wg" label="Pictures" path="/home/earthian/Pictures" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
+    <folder id="xmx67-zj7wg" label="DCIM" path="/home/earthian/Pictures/DCIM" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <device id="CF2UT2H-DKD4VZM-CCUAZ66-T7MHMW7-7EWYPDT-ZQUSLNJ-5DNC6LY-ODREIQ2" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="O2LO757-7S6JJOG-TF3KJTG-RCK3TUP-2EAF7BG-EJYQESB-T623RYG-5RULPQJ" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
@@ -386,9 +427,6 @@
             <encryptionPassword></encryptionPassword>
         </device>
         <device id="O2LO757-7S6JJOG-TF3KJTG-RCK3TUP-2EAF7BG-EJYQESB-T623RYG-5RULPQJ" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="5M5M3GZ-572BXOJ-RAIKARW-VJD2ZKJ-KZZTM2R-CANEUAG-YV326KK-RPMAFA5" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
@@ -447,7 +485,7 @@
         <untrusted>false</untrusted>
         <remoteGUIPort>0</remoteGUIPort>
     </device>
-    <device id="O2LO757-7S6JJOG-TF3KJTG-RCK3TUP-2EAF7BG-EJYQESB-T623RYG-5RULPQJ" name="ether" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
+    <device id="CMPZMRA-EYFLKCK-MLY2I7Q-EWUWYLB-TSRBOIA-VLBT2BW-SXVKGPR-I3XZBQ4" name="oldchost" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
         <address>dynamic</address>
         <paused>false</paused>
         <autoAcceptFolders>false</autoAcceptFolders>
@@ -457,7 +495,7 @@
         <untrusted>false</untrusted>
         <remoteGUIPort>0</remoteGUIPort>
     </device>
-    <device id="5M5M3GZ-572BXOJ-RAIKARW-VJD2ZKJ-KZZTM2R-CANEUAG-YV326KK-RPMAFA5" name="SM-G998B" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
+    <device id="O2LO757-7S6JJOG-TF3KJTG-RCK3TUP-2EAF7BG-EJYQESB-T623RYG-5RULPQJ" name="ether" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
         <address>dynamic</address>
         <paused>false</paused>
         <autoAcceptFolders>false</autoAcceptFolders>
@@ -521,6 +559,12 @@
         <connectionLimitEnough>0</connectionLimitEnough>
         <connectionLimitMax>0</connectionLimitMax>
         <insecureAllowOldTLSVersions>false</insecureAllowOldTLSVersions>
+        <connectionPriorityTcpLan>10</connectionPriorityTcpLan>
+        <connectionPriorityQuicLan>20</connectionPriorityQuicLan>
+        <connectionPriorityTcpWan>30</connectionPriorityTcpWan>
+        <connectionPriorityQuicWan>40</connectionPriorityQuicWan>
+        <connectionPriorityRelay>50</connectionPriorityRelay>
+        <connectionPriorityUpgradeThreshold>0</connectionPriorityUpgradeThreshold>
     </options>
     <defaults>
         <folder id="" label="" path="~" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
