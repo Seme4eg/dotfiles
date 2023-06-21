@@ -14,7 +14,7 @@ set_timezone() {
   location_tz=$(curl -s http://ip-api.com/line/?fields=timezone)
 
   # Check if the current timezone and location timezone are the same
-  if [ "$current_tz" != "$location_tz" ]; then
+  if [ "$current_tz" != "$location_tz" ] && [ -n "$location_tz" ]; then
     # If they're different, set the system timezone to the location timezone
     sudo timedatectl set-timezone "$location_tz"
     say "System timezone set to $location_tz"
