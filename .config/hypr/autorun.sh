@@ -24,6 +24,7 @@ wl-paste --watch cliphist store &
 firefox &
 doom env && emacs &
 gtk-launch webcord.desktop &
+foot --server
 
 pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I

@@ -17,6 +17,7 @@ efibootmgr
 entr
 fd
 firefox
+foot
 fzf
 git
 go
