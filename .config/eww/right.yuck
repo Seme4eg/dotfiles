@@ -25,7 +25,7 @@
 
 (defpoll ESSID_WLAN :interval "3s" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
 (defpoll vpnstatus :interval "3s"
-  "/home/earthian/.local/bin/waitwifi && systemctl is-active openvpn-client@client.service")
+  "timeout 5s /home/earthian/.local/bin/waitwifi && systemctl is-active openvpn-client@client.service || echo 0")
 (defpoll net :interval "10s" :initial 0
   `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print $1}'`)
 
