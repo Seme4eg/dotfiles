@@ -10,10 +10,7 @@
 - pmi reflector
 - ssce --now reflector
 ** System boostrap
-- install baph
-  - ~git clone https://bitbucket.org/natemaia/baph.git~
-  - cd baph
-  - make install
+- [[https://www.makeuseof.com/install-and-use-yay-arch-linux/#how-to-install-yay-on-arch-linux][install yay]]
 - add =Include = /home/earthian/.config/pacman/pacman.conf= to [options] section
   in etc/pacman.conf. *Comment* 'Hooks' line in =pacman.conf= because otherwise it
   will overwrite our pkglist files. Uncomment =[multilib]= section in

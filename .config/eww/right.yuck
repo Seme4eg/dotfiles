@@ -11,8 +11,7 @@
 
 ;; polls
 (defpoll gpu :interval "3s" :initial "{\"temp\": 0, \"load\": 0}" "scripts/gpu")
-(defpoll updates_count :initial 0 :interval "3600s"
-  "/home/earthian/.local/bin/waitwifi && baph -c | awk '{print $1+$2}'")
+(defpoll updates_count :initial 0 :interval "3600s" "yay -S && yay -Qu | wc -l || echo 0")
 (defpoll swayidle_status :interval "10000s" "systemctl --user is-active swayidle.service")
 ;; https://github.com/chubin/wttr.in#one-line-output
 ;; (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=j2'") ;; JSON
