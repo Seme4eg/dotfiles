@@ -20,11 +20,7 @@
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
   - (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
     something won't work go to 'udev' page from this link
-  - pacman -S git openssh stow, [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh][setup ssh for git]], clone dotfiles
-    - ~mkdir -p ~/.local/share~ - cuz we don't wana steam and other apps flood our
-      local/share folder so emacs project caching rips
-    - ~stow .~ from =dotfiles= dir
-  - now follow [[file:~/dotfiles/.config/pacman/readme.org::*System boostrap][System boostrap]] section of pacman readme.
+  - ~make all~
 
 *** Partition the disks
 - check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
@@ -93,9 +89,6 @@ follow instructions there. Just don't install /mu-git/, it's broken atm.
 
 Things should work now.
 
-Fow now i am not using gmail in mu4e since i don't want to enable 2-step
-verification there. (without it google doesn't allow for external app passwords)
-
 ** pass
 - clone pass repo to =$XDG_DATA_HOME/password-store=
 - copy secret2.gpg from wherever you have it stored and run ~gpg --import
@@ -116,26 +109,8 @@ tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
 xiaomi 2016 has a supported fprint sensor but enrolled prints never match.. so
 the whole fprint thing to me appeared as unreliable.
 
-** Enabled systemd services:
-*system*:
-- systemd-timesyncd.service
-- plocate-updatedb.timer
-- bluetooth.service
-- reflector.service
-
-*user*:
-- enable systemd user services with:
-  - ~find $XDG_CONFIG_HOME/systemd/user/ -type f -printf "%f\n" | xargs -I {}
-    systemctl --user enable --now {}~
-- syncthing.service
-- udiskie.service
-- mpd.service
-
 ** pip packages
-- https://github.com/mmabrouk/chatgpt-wrapper
 - https://github.com/sanderland/katrain
-** system files changed
-=/etc/systemd/journald.conf= <- SystemMaxUse=50M
 ** stow
 ~find . -xtype l -delete~ - removes all broken symlinks recursively, useful when
 removed some file(s) from repo and don't want to remove the symlinks by hand
