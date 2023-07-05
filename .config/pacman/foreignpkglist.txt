@@ -7,6 +7,7 @@ emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq
 golangci-lint-bin
+heroic-games-launcher-bin
 hyprland-git
 katago-cpu
 libva-nvidia-driver-git
