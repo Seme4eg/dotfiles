@@ -41,3 +41,6 @@ node_modules/
 /.config/libvirt/
 /.config/exercism/
 /.config/terminal/
+/.config/heroic/*
+!/.config/heroic/config.json
+/.config/legendary/

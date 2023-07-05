@@ -2,11 +2,11 @@
   "defaultSettings": {
     "checkUpdatesInterval": 10,
     "enableUpdates": false,
-    "addDesktopShortcuts": false,
-    "addStartMenuShortcuts": false,
+    "addDesktopShortcuts": true,
+    "addStartMenuShortcuts": true,
     "autoInstallDxvk": true,
     "autoInstallVkd3d": true,
-    "addSteamShortcuts": false,
+    "addSteamShortcuts": true,
     "preferSystemLibs": false,
     "checkForUpdatesOnStartup": true,
     "autoUpdateGames": false,
@@ -19,10 +19,10 @@
     "language": "en",
     "maxWorkers": 0,
     "minimizeOnLaunch": false,
-    "nvidiaPrime": false,
+    "nvidiaPrime": true,
     "enviromentOptions": [],
     "wrapperOptions": [],
-    "showFps": false,
+    "showFps": true,
     "useGameMode": false,
     "userInfo": {
       "name": "earthian"
@@ -30,10 +30,11 @@
     "wineCrossoverBottle": "Heroic",
     "winePrefix": "/home/earthian/Games/Heroic/Prefixes/default",
     "wineVersion": {
-      "bin": "",
-      "name": "Default Wine - Not Found",
-      "type": "wine"
-    }
+      "bin": "/home/earthian/.local/share/Steam/steamapps/common/Proton 8.0/proton",
+      "name": "Proton - Proton 8.0",
+      "type": "proton"
+    },
+    "discordRPC": true
   },
   "version": "v0"
 }
