@@ -1,4 +1,33 @@
 #!/bin/bash
 
+# TODO: integrate this thing with stable diffusion instead of wallhaven
+
+seed=$(tr </dev/urandom -dc A-Za-z0-9 | head -c6)
+# tempdir=~/tmp/wallhaven
+# icon=
+
+# [[ ! -d $tempdir ]] && mkdir -p $tempdir
+
+# if [ -z "$(ls -A ~/tmp/wallhaven)" ]; then
+icon=$(find ~/Pictures/DCIM/Avbl/ -type f | sort --random-sort | head -n 1)
+# else
+#   icon=$tempdir/*
+# fi
+
 # $@ to pass all flags (-e, -t etc), that i might pass from my other scripts
-notify-send -i "$(rngicon)" $(whoami) "$@"
+notify-send -i "$icon" $(whoami) "$@"
+
+# /bin/rm $tempdir/*
+
+# geticon() {
+#   # download new icon for future unconditionally
+#   # ratios=portrait&
+#   url=$(curl -s "https://wallhaven.cc/api/v1/search?q=men&categories=010&ratios=9x16%2C1x1%2C10x16%2C3x2%2C9x18%2C4x3%2C5x4&sorting=random&seed=$seed" |
+#     jq -r '.data[0].path')
+#   echo "rngicon: downloading $url"
+#   wget -qP $tempdir "$url"
+# }
+
+# geticon &
+
+exit 0
