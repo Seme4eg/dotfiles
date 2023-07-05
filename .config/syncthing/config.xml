@@ -236,53 +236,6 @@
             <maxTotalSize>4096</maxTotalSize>
         </xattrFilter>
     </folder>
-    <folder id="th5g5-5t9vc" label="books" path="/home/earthian/git/archive/" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
-        <filesystemType>basic</filesystemType>
-        <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="CF2UT2H-DKD4VZM-CCUAZ66-T7MHMW7-7EWYPDT-ZQUSLNJ-5DNC6LY-ODREIQ2" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <device id="O2LO757-7S6JJOG-TF3KJTG-RCK3TUP-2EAF7BG-EJYQESB-T623RYG-5RULPQJ" introducedBy="">
-            <encryptionPassword></encryptionPassword>
-        </device>
-        <minDiskFree unit="%">1</minDiskFree>
-        <versioning>
-            <cleanupIntervalS>3600</cleanupIntervalS>
-            <fsPath></fsPath>
-            <fsType>basic</fsType>
-        </versioning>
-        <copiers>0</copiers>
-        <pullerMaxPendingKiB>0</pullerMaxPendingKiB>
-        <hashers>0</hashers>
-        <order>random</order>
-        <ignoreDelete>false</ignoreDelete>
-        <scanProgressIntervalS>0</scanProgressIntervalS>
-        <pullerPauseS>0</pullerPauseS>
-        <maxConflicts>10</maxConflicts>
-        <disableSparseFiles>false</disableSparseFiles>
-        <disableTempIndexes>false</disableTempIndexes>
-        <paused>false</paused>
-        <weakHashThresholdPct>25</weakHashThresholdPct>
-        <markerName>.stfolder</markerName>
-        <copyOwnershipFromParent>false</copyOwnershipFromParent>
-        <modTimeWindowS>0</modTimeWindowS>
-        <maxConcurrentWrites>2</maxConcurrentWrites>
-        <disableFsync>false</disableFsync>
-        <blockPullOrder>standard</blockPullOrder>
-        <copyRangeMethod>standard</copyRangeMethod>
-        <caseSensitiveFS>false</caseSensitiveFS>
-        <junctionsAsDirs>false</junctionsAsDirs>
-        <syncOwnership>false</syncOwnership>
-        <sendOwnership>false</sendOwnership>
-        <syncXattrs>false</syncXattrs>
-        <sendXattrs>false</sendXattrs>
-        <xattrFilter>
-            <maxSingleEntrySize>1024</maxSingleEntrySize>
-            <maxTotalSize>4096</maxTotalSize>
-        </xattrFilter>
-    </folder>
     <folder id="utyda-ung5h" label="Pictures" path="/home/earthian/Pictures/Pictures" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="AXKVL3U-RBYTJKC-ZQMEPZX-YPOTS2L-V64BSUN-D47GUQI-IZNAG4W-RELQAAW" introducedBy="">
