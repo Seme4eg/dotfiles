@@ -1,0 +1,39 @@
+{
+  "defaultSettings": {
+    "checkUpdatesInterval": 10,
+    "enableUpdates": false,
+    "addDesktopShortcuts": false,
+    "addStartMenuShortcuts": false,
+    "autoInstallDxvk": true,
+    "autoInstallVkd3d": true,
+    "addSteamShortcuts": false,
+    "preferSystemLibs": false,
+    "checkForUpdatesOnStartup": true,
+    "autoUpdateGames": false,
+    "customWinePaths": [],
+    "defaultInstallPath": "/home/earthian/Games/Heroic",
+    "libraryTopSection": "disabled",
+    "defaultSteamPath": "/home/earthian/.steam/steam",
+    "defaultWinePrefix": "/home/earthian/Games/Heroic/Prefixes/default",
+    "hideChangelogsOnStartup": false,
+    "language": "en",
+    "maxWorkers": 0,
+    "minimizeOnLaunch": false,
+    "nvidiaPrime": false,
+    "enviromentOptions": [],
+    "wrapperOptions": [],
+    "showFps": false,
+    "useGameMode": false,
+    "userInfo": {
+      "name": "earthian"
+    },
+    "wineCrossoverBottle": "Heroic",
+    "winePrefix": "/home/earthian/Games/Heroic/Prefixes/default",
+    "wineVersion": {
+      "bin": "",
+      "name": "Default Wine - Not Found",
+      "type": "wine"
+    }
+  },
+  "version": "v0"
+}
