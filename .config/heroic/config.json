@@ -34,7 +34,12 @@
       "name": "Proton - Proton 8.0",
       "type": "proton"
     },
-    "discordRPC": true
+    "discordRPC": true,
+    "enableEsync": true,
+    "enableFsync": true,
+    "enableDXVKFpsLimit": true,
+    "DXVKFpsCap": "60",
+    "useSteamRuntime": true
   },
   "version": "v0"
 }
