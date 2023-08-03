@@ -54,9 +54,7 @@ pacman-contrib
 pass
 passff-host
 pavucontrol
-pipewire-alsa
 pipewire-audio
-pipewire-pulse
 playerctl
 polkit-kde-agent
 python-pip
