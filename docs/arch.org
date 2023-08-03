@@ -55,6 +55,8 @@ defaults.ctl.card 1
 defaults.pcm.card 1
 #+end_src
 
+: man pactl
+
 If your soundcard doens't correctly detect microphone plugged in a 4-pin 3.5mm
 (TRRS) jack, find your soundcard name (easy to do using alsamixer) and go
 [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Correctly_detect_microphone_plugged_in_a_4-pin_3.5mm_(TRRS)_jack][research]]. (Maybe you just need to switch to in in pavucontrol..). Just examples
