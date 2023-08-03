@@ -11,5 +11,6 @@ alias pml="pm -Ql"  # list package
 alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
 alias pmrao="pacman -Qqd | sudo pacman -Rsu -" # remove ALL orphaned
 alias pms="pm -Syy"                            # sync
+alias pmu="pm -Syyu"                           # update
 # -Scc is more agressive approach, read bout it before using in case u decide to
 alias pmcc="pm -Sc" # Clear Cache
