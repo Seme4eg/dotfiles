@@ -21,9 +21,7 @@ sync_tz_and_loc -f &
 
 wl-paste --watch cliphist store &
 
-firefox &
-doom env && emacs &
-gtk-launch webcord.desktop &
+doom env
 foot --server
 
 pkexec /usr/bin/brillo -c 2
