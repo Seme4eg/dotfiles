@@ -11,6 +11,7 @@
 
 ;; polls
 (defpoll gpu :interval "3s" :initial "{\"temp\": 0, \"load\": 0}" "scripts/gpu")
+;; /home/earthian/.local/bin/waitwifi && checkupdates | wc -l
 (defpoll updates_count :initial 0 :interval "3600s" "yay -S && yay -Qu | wc -l || echo 0")
 (defpoll swayidle_status :interval "10000s" "systemctl --user is-active swayidle.service")
 ;; https://github.com/chubin/wttr.in#one-line-output
