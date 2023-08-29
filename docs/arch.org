@@ -70,6 +70,9 @@ of what previously worked for me on different machines (file
   usually crap: ~wpctl status~ - grab id of your mic (SOURCE device) - ~wpctl
   set-default ...~
 
+When encountering problems with sound: ~/usr/bin/rm -r
+~/.local/state/wireplumber/~, ~scur wireplumber.service~
+
 ** hyprland
 *Nvidia* setup: *DO NOT FOLLOW HYPRLAND WIKI* yet, first try to install just normal,
 proprietary =nvidia= package, do not add anything in grub conf or mkinitcpio, JUST
