@@ -58,6 +58,7 @@ pipewire-audio
 pipewire-pulse
 playerctl
 polkit-kde-agent
+poppler-glib
 python-pip
 python-pyqt6
 python-pyqt6-sip
