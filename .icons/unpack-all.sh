@@ -1,7 +1,7 @@
 #!/usr/sh
 
 # NOTE: check path in case you change it
-cursor_path=$HOME/apps/arch/cursors
+cursor_path=$HOME/Documents/stuff/arch_cursors
 files=$(ls $cursor_path | grep -E '.*\.tar..z$')
 # Set $IFS to eliminate whitespace in pathnames.
 IFS="$(printf '\n\t')"
