@@ -13,17 +13,18 @@ node_modules/
 # dotfiles specific
 .antidote
 /.config/zsh/.zdirs
+/.config/zsh/.grmlrc
+/.config/zsh/plugins.zsh
+/.config/zsh/.cache/
 .zcompdump
 /.config/htop/
 /.config/pulse/
 /.config/WebCord/
 /.config/syncthing/*
 !/.config/syncthing/config.xml
-/.config/zsh/.grmlrc
 /.config/dconf/
 /.config/discord/
 /.config/nvm/
-/.config/zsh/plugins.zsh
 /.config/systemd/user/hyprland-session.target.wants/
 /.config/pavucontrol.ini
 /.config/cef_user_data/
@@ -44,3 +45,5 @@ node_modules/
 /.config/heroic/*
 !/.config/heroic/config.json
 /.config/legendary/
+/.config/CrossOver/*
+!/.config/CrossOver/preferences.json

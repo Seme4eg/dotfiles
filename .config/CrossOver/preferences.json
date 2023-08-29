@@ -1,0 +1,64 @@
+{
+    "crosshair": {
+        "crosshair": "/opt/CrossOver/resources/app.asar/src/static/crosshairs/Crossdot Broken/Cyan-+-Orange.png",
+        "color": "#442ac6",
+        "size": 74,
+        "opacity": 100,
+        "reticle": "dot",
+        "reticleScale": 1,
+        "fillColor": "#1df0ff",
+        "strokeColor": "#2be4fd",
+        "strokeWidth": 20
+    },
+    "actions": {
+        "followMouse": [],
+        "hideOnMouse": "-1",
+        "tiltEnable": [],
+        "tiltToggle": [],
+        "tiltAngle": 25,
+        "hideOnKey": "",
+        "tiltLeft": "",
+        "tiltRight": ""
+    },
+    "app": {
+        "theme": "dark",
+        "appBgColor": "unset",
+        "appHighlightColor": "unset",
+        "alerts": [],
+        "notify": [
+            "notify"
+        ],
+        "updates": [
+            "updates"
+        ],
+        "sounds": [],
+        "gpu": [
+            "gpu"
+        ],
+        "startUnlocked": [],
+        "boot": [],
+        "appSize": "normal"
+    },
+    "keybinds": {
+        "reset": "Control+Shift+Alt+R",
+        "lock": "Control+Shift+Alt+X",
+        "center": "Control+Shift+Alt+C",
+        "hide": "Control+Shift+Alt+H",
+        "duplicate": "Control+Shift+Alt+D",
+        "changeDisplay": "Control+Shift+Alt+M",
+        "moveUp": "Control+Shift+Alt+Up",
+        "moveDown": "Control+Shift+Alt+Down",
+        "moveLeft": "Control+Shift+Alt+Left",
+        "moveRight": "Control+Shift+Alt+Right",
+        "about": "Control+Shift+Alt+A"
+    },
+    "hidden": {
+        "frame": false,
+        "locked": true,
+        "showSettings": false,
+        "positionX": 912,
+        "positionY": 570,
+        "tilted": false
+    },
+    "about": {}
+}
