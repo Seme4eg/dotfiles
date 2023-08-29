@@ -26,6 +26,7 @@ grub
 gtk-layer-shell
 intel-ucode
 jq
+languagetool
 lf
 libdisplay-info
 libva
