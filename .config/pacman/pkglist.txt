@@ -1,4 +1,3 @@
-alacritty
 alsa-utils
 base
 base-devel
