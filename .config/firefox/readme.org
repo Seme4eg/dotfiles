@@ -1,13 +1,12 @@
 #+title: Setup
 
-=user.js= is taken from [[https://github.com/yokoffing/Betterfox][here]], append your overrides in 'MY OVERRIDES' section.
-([[https://github.com/yokoffing/Betterfox/issues/87][common overrides]]). Create a symlink (ln -s \~/.config/firefox/user.js
-\~/.mozilla/firefox/hk8uasrp.default-release/) to this file from your mozilla
-user profile folder which you can find out on ~about:profiles~.
-
-SOURCE: https://github.com/MrOtherGuy/firefox-csshacks
-
-ln -s ~/.config/firefox/chrome/userChrome.css ~/.mozilla/firefox/hk8uasrp.default-release/chrome/
+1. [[https://github.com/yokoffing/Betterfox#getting-started][user.js]]
+2. [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
+   settings page
+3. [optional] [[https://my.nextdns.io/4c7229/setup][setup nextdns]]
+4. [[[https://github.com/MrOtherGuy/firefox-csshacks][firefox-csshacks]]] - symlink [[file:chrome/userChrome.css][userChrome.css]] to /chrome folder in browser cur.
+   profile
+5. Tridactyl - :nativeinstall -> :native -> :source
 
 =enhancer-for-youtube.json= <- import on 'enhancer for youtube' extension settings
 page.
