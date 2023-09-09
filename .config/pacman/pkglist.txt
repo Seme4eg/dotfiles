@@ -86,6 +86,7 @@ syncthing
 telegram-desktop
 texinfo
 thefuck
+timeshift
 tldr
 ttf-daddytime-mono-nerd
 ttf-firacode-nerd
