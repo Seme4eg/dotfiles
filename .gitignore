@@ -47,3 +47,4 @@ node_modules/
 /.config/legendary/
 /.config/CrossOver/*
 !/.config/CrossOver/preferences.json
+/.config/gthumb/
