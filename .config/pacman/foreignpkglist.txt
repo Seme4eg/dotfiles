@@ -1,6 +1,5 @@
 binder_linux-dkms
 brillo
-cava
 cgo-git
 crossover-overlay-bin
 dracula-gtk-theme
