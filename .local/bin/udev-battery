@@ -1,0 +1,44 @@
+#!/bin/bash
+
+subsystem= # we only need 'power_supply', no mouse events, etc ..
+# don't use POWER_SUPPLY_STATUS cuz it updates only on 2nd tick
+old_charging=0 # hardcode cuz when starting more often its gonna be..
+charging=      # 0 / 1
+old_capacity=  # to compare with since we r getting multiple events
+capacity=      # current charge level
+
+# filter lines before they get processed otherwise inefficient
+udevadm monitor -p -u |
+  rg --line-buffered -e '^(SUBSYSTEM|POWER_SUPPLY_ONLINE|POWER_SUPPLY_CAPACITY)=' |
+  while read -r line; do
+    [[ $line == SUBSYSTEM=* ]] && subsystem=$(echo "$line" | cut -d '=' -f 2)
+    # do not process events from mouses, keyboards and other external stuff
+    [ "$subsystem" != 'power_supply' ] && continue
+
+    if [[ $line == POWER_SUPPLY_ONLINE=* ]]; then
+      charging=$(echo "$line" | cut -d '=' -f 2)
+      [ "$old_charging" == "0" -a "$charging" == "1" ] &&
+        $HOME/.local/bin/say 'Charging'
+      old_charging=$charging
+      # charging line goes before line with capacity, don't do anythinig just yet
+      continue
+    elif [[ $line == POWER_SUPPLY_CAPACITY=* ]]; then
+      capacity=$(echo "$line" | cut -d '=' -f 2)
+      [ "$capacity" == "$old_capacity" ] && continue # filter same events
+      old_capacity=$capacity
+    else
+      continue # continue on all lines except the capacity one
+    fi
+
+    if [ "$charging" == "0" ]; then
+      case $capacity in
+        "15" | "10") $HOME/.local/bin/say "$capacity% charge left" ;;
+        "6") $HOME/.local/bin/say "Hybernating very soon" ;;
+        "5") systemctl suspend ;;
+      esac
+    elif [ "$charging" == "1" ]; then
+      case $capacity in
+        "80" | "85") $HOME/.local/bin/say "$capacity% charged, unplug" ;;
+      esac
+    fi
+  done
