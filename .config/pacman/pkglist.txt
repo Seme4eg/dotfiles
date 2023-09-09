@@ -29,17 +29,18 @@ jq
 languagetool
 lf
 libdisplay-info
+libsixel
 libva
 linux
 linux-firmware
 linux-headers
 lshw
 lsp-plugins
+lua52
 man-db
 man-pages
 mpc
 mpd
-mpv
 msmtp
 ncdu
 neofetch
@@ -74,6 +75,7 @@ ripgrep
 rtorrent
 shfmt
 slurp
+sndio
 socat
 sof-firmware
 steam

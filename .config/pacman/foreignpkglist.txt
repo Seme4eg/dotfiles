@@ -13,6 +13,7 @@ hyprland-git
 katago-cpu
 libva-nvidia-driver-git
 mbsync-git
+mpv-vapoursynth-git
 mu
 numix-circle-icon-theme-git
 nvm-git
