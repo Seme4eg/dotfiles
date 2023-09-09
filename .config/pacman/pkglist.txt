@@ -23,6 +23,7 @@ go
 gperf
 grim
 grub
+gthumb
 gtk-layer-shell
 intel-ucode
 jq
