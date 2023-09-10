@@ -1,6 +1,6 @@
 #!/bin/bash
 
-subsystem= # we only need 'power_supply', no mouse events, etc ..
+name= # we only need 'ADP0' and 'BAT0' events, no mouse events, etc ..
 # don't use POWER_SUPPLY_STATUS cuz it updates only on 2nd tick
 old_charging=0 # hardcode cuz when starting more often its gonna be..
 charging=      # 0 / 1
@@ -9,16 +9,16 @@ capacity=      # current charge level
 
 # filter lines before they get processed otherwise inefficient
 udevadm monitor -p -u |
-  rg --line-buffered -e '^(SUBSYSTEM|POWER_SUPPLY_ONLINE|POWER_SUPPLY_CAPACITY)=' |
+  rg --line-buffered -e '^POWER_SUPPLY_(NAME|ONLINE|CAPACITY)=' |
   while read -r line; do
-    [[ $line == SUBSYSTEM=* ]] && subsystem=$(echo "$line" | cut -d '=' -f 2)
+    [[ $line == POWER_SUPPLY_NAME=* ]] && name=$(echo "$line" | cut -d '=' -f 2)
     # do not process events from mouses, keyboards and other external stuff
-    [ "$subsystem" != 'power_supply' ] && continue
+    [ "$name" != ADP0 -a "$name" != BAT0 ] && continue
 
     if [[ $line == POWER_SUPPLY_ONLINE=* ]]; then
       charging=$(echo "$line" | cut -d '=' -f 2)
       [ "$old_charging" == "0" -a "$charging" == "1" ] &&
-        $HOME/.local/bin/say 'Charging'
+        $HOME/.local/bin/say -e 'Charging'
       old_charging=$charging
       # charging line goes before line with capacity, don't do anythinig just yet
       continue
