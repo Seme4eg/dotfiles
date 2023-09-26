@@ -1,14 +1,12 @@
 binder_linux-dkms
 brillo
 cgo-git
-crossover-overlay-bin
 emacs-gcc-wayland-devel-bin
 eww-tray-wayland-git
 gojq
 golangci-lint-bin
 heroic-games-launcher-bin
 hyprland-git
-katago-cpu
 libva-nvidia-driver-git
 mbsync-git
 mpv-vapoursynth-git
@@ -20,9 +18,7 @@ otf-symbola
 plocate-git
 python-pyclip
 python-pywalfox
-rm-improved-git
 rofi-lbonn-wayland-git
-soundcloud-dl-git
 swayidle-git
 swaylock-effects-git
 swaync-git
