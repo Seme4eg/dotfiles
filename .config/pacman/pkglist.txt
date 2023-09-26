@@ -82,7 +82,6 @@ sof-firmware
 steam
 stow
 sway
-swaybg
 syncthing
 telegram-desktop
 texinfo

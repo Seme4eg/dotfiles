@@ -24,6 +24,13 @@ if [ -z "$wp" ]; then
     wp=$(find ~/Pictures/DCIM/wps/pc/ -type f | sort --random-sort | head -n 1)
 fi
 
+swww img "$wp" -t=any \
+  --transition-duration=2 \
+  --transition-step=255 \
+  --transition-bezier=0,0,1,1 \
+  --transition-fps=30 &
+# -f=Mitchell \
+
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
 [ $theme = light ] &&
   wal -n -q -l -i "$wp" --saturate 0.3 ||
@@ -31,9 +38,6 @@ fi
 
 eww reload
 eww update theme=$theme
-
-sway_pid=$(pgrep swaybg) # grep old swaybg process id for further cleanup
-swaybg -m fill -i "$wp" &
 
 # TODO: Firefox
 # rm -r ~/.mozilla/firefox/*.default-release/chrome
@@ -65,5 +69,3 @@ cp $XDG_DATA_HOME/webcord/wal.theme.css $XDG_CONFIG_HOME/WebCord/Themes/wal
 # Telegram (https://github.com/guillaumeboehm/wal-telegram#set-the-color-palette)
 # -g for blur background
 wal-telegram -g &
-
-[ -n "$sway_pid" ] && kill $sway_pid

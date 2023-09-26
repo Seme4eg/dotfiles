@@ -27,6 +27,7 @@ soundcloud-dl-git
 swayidle-git
 swaylock-effects-git
 swaync-git
+swww
 telegram-tdlib-git
 wal-telegram-git
 waydroid-git

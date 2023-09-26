@@ -15,6 +15,8 @@ hyprctl setcursor Future-dark-cursors 26
 # for swaync service to appear
 swaync &
 
+swww init
+
 change-theme &
 # force update everything on every hyprland launch
 sync_tz_and_loc -f &
