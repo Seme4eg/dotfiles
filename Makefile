@@ -142,6 +142,14 @@ firefox: ## symlinks user.js and userChrome.css files to default firefox profile
 	curl -fsSl https://raw.githubusercontent.com/tridactyl/native_messenger/master/installers/install.sh \
 		-o /tmp/trinativeinstall.sh && sh /tmp/trinativeinstall.sh 1.23.0
 
+mpv:
+	emacsclient -e '(progn (require (quote org)) (org-babel-tangle-file "$(XDG_CONFIG_HOME)/$@/README.org"))'
+# previous command creates .emacs.d, lazy to find out why so just delete it
+	rm -rf ${HOME}/.emacs.d
+	cd $(XDG_CONFIG_HOME)/$@
+	./mpvmanager
+
+# ------------  Other  ------------
 
 # system files changed
 sysoptions:
