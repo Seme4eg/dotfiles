@@ -151,6 +151,10 @@ mpv:
 	cd $(XDG_CONFIG_HOME)/$@
 	./mpvmanager
 
+mpd:
+	mkdir -p ${HOME}/.$@
+	systemctl --user restart $@.service
+
 # ------------  Other  ------------
 
 # system files changed
