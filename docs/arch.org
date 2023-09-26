@@ -38,15 +38,6 @@
 - ~p~ -> check which partitions you ended up with
 - ~w[rite]~ if everything is as u want
 
-**** Using cfdisk
-- cfdisk /dev/sd<something>?
-- delete all partitions
-- write -> yes
-- new -> 512M -> type -> EFI system
-- choose free space -> new -> <enter> -> type remains linux filesystem
-- write -> yes -> quit
-
-
 ** sound
 If there's no sound, maybe you've several sound cards and default one got set
 incorrectly, then create ~/.asoundrc to change default sound card:
@@ -85,25 +76,11 @@ there are 2 checks in aliases, 1st one should show 2 vda things, on your gpu the
 'driver' field must show NOT nouveau, if it does - check both modprobes if those
 are blocking nouveau and if they don't - add block rule and regenerate modprobe.
 
-** emacs mu4e
-Make sure gpg is set up. Instructions can be found either in =pass= section below
-or in [[https://medium.com/@chasinglogic/the-definitive-guide-to-password-store-c337a8f023a1][this article]]
-
-Then proceed to mu4e documentation of doom emacs, then open [[file:~/.doom.d/utils/mu4e.org::*Compose & send email][my notes]] file and
-follow instructions there. Just don't install /mu-git/, it's broken atm.
-
-Things should work now.
-
-** pass
-- clone pass repo to =$XDG_DATA_HOME/password-store=
+** gpg
 - copy secret2.gpg from wherever you have it stored and run ~gpg --import
   secret2.gpg~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
-- install pass and it should work right away.
-- emacs doesn't know about =$PASSWORD_STORE_DIR= env var so you can either move it
-  from XDG_DATA_HOME dir to ~/ directory and omit the previous step with editing
-  passff.py file and delete the env var so everything is stock or just ~ln -s
-  ~/.local/share/password-store ~/.password-store~ and emacs will b fine..
+- ~make pass~
 
 ** fingerprint sensor
 https://wiki.archlinux.org/title/fprint
@@ -114,8 +91,3 @@ tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
 xiaomi 2016 has a supported fprint sensor but enrolled prints never match.. so
 the whole fprint thing to me appeared as unreliable.
 
-** pip packages
-- https://github.com/sanderland/katrain
-** stow
-~find . -xtype l -delete~ - removes all broken symlinks recursively, useful when
-removed some file(s) from repo and don't want to remove the symlinks by hand
