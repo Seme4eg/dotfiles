@@ -92,8 +92,7 @@ install: reflector yay pacman ## Install all packages
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
-# TODO:
-postinstall: sysoptions zsh systemd emacs pass mail
+postinstall: sysoptions zsh systemd emacs pass mail firefox mpv mpd
 
 
 # ------------  Packages  ------------
