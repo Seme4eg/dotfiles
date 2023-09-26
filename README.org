@@ -38,4 +38,10 @@ scripts that might be useful later:
 - aur/rofi-mpc - Fast graphical Rofi-Interface for controlling MPD
 
 ** Todos [0/1]
-*** TODO move all readmes possible to makefile
+*** IDEA migrate from pacman hooks to Makefile
+on next fresh install don't autoinstall all packages from pkg files, do
+everything by hand and via makefile targets. Do not remove hooks, just don't
+commit the change without a Makefile target. Reason - things will be more
+organized and instead of blaming to see why i installed something i will see it
+in makefile target.
+
