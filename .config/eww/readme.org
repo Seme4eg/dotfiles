@@ -1,28 +1,9 @@
 #+title: Readme
 
-Important references: [[https://elkowar.github.io/eww/configuration.html][configuration wiki]], [[https://docs.gtk.org/gtk3/css-properties.html][gtk css]], [[https://sass-lang.com/documentation/modules/color#scale][sass modules]]
+- Important references: [[https://elkowar.github.io/eww/configuration.html][configuration wiki]], [[https://docs.gtk.org/gtk3/css-properties.html][gtk css]], [[https://sass-lang.com/documentation/modules/color#scale][sass modules]]
+- How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]]
+- css ideas: [[https://www.bypeople.com/css-snippets/][bypeople]]
 
-# color.scale: red green blue saturation lightness whiteness blackness alpha
-
-How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]]
-
-css ideas: [[https://www.bypeople.com/css-snippets/][bypeople]]
-
-Fonts: [[https://www.nerdfonts.com/][nerd fonts]], [[https://archlinux.org/packages/?sort=&repo=Community&q=-nerd][nerd fonts aur]]
-
-** Hyprland ppl dots
-- [X] https://github.com/iamverysimp1e/dots
-- [X] https://github.com/Colepng/rice/tree/hyprland-winter/eww
-- [ ] https://github.com/end-4/dots-hyprland ([[https://discord.com/channels/961691461554950145/1073944402751406080/1073944402751406080][demo]])
-
-** Notes
-- [[https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/bluetooth][bluetooth script]]
-- [[https://github.com/Colepng/rice/blob/hyprland-winter/eww/scripts/notifications][notifications]] script example; maybe do another window with 'recent'
-  notifications
 ** Todos
-- install custom [[https://aur.archlinux.org/packages?O=0&SeB=nd&K=icon-theme&outdated=&SB=n&SO=a&PP=250&submit=Go][icon theme]] (aur), then try to write a script that will output
-  json for eww with app, icon path so i can make something like 'systray'
-- [ ] write bash script that will render some kind of a taskbar matching
-  application names from hyprland sockets and nerd font app icons
 - [ ] [[https://www.bypeople.com/css-neon-sign-effect/][implement]] blinking animation when [[https://github.com/elkowar/eww/issues/688][animation cpu]] issue will b resolved
 - [ ] [[https://www.bypeople.com/text-stroke-with-offset-shadow-css/][text stroke with offset]] for some background text elements
