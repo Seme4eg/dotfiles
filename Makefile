@@ -143,6 +143,8 @@ firefox: ## symlinks user.js and userChrome.css files to default firefox profile
 		-o /tmp/trinativeinstall.sh && sh /tmp/trinativeinstall.sh 1.23.0
 
 mpv:
+	git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \
+		-c color.ui\=false -c color.diff\=false submodule update --init -- .config/mpv
 	emacsclient -e '(progn (require (quote org)) (org-babel-tangle-file "$(XDG_CONFIG_HOME)/$@/README.org"))'
 # previous command creates .emacs.d, lazy to find out why so just delete it
 	rm -rf ${HOME}/.emacs.d
