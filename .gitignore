@@ -32,7 +32,6 @@ node_modules/
 /.config/systemd/user/sockets.target.wants/
 /.config/systemd/user/default.target.wants/
 /.config/scdl/
-/.config/thefuck/
 /.config/swaylock/config
 /.local/bin/chatgpt
 /.config/fontforge/
