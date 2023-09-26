@@ -1,10 +1,6 @@
 #!/usr/bin/env zsh
 
 alias cat="bat"
-# alternatives to rip:
-# - https://github.com/andreafrancia/trash-cli
-# - https://github.com/PhrozenByte/rmtrash
-alias rm="rip -i" # https://github.com/nivekuil/rip
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
