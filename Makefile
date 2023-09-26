@@ -131,8 +131,17 @@ mail: pass ## install, sync and index mail with mu and mbsync
 	sh ${HOME}/secrets/index
 	mu index
 
-# TODO:
-# postinstall: zsh systemd
+# https://github.com/yokoffing/Betterfox
+# https://github.com/MrOtherGuy/firefox-csshacks
+firefox: ## symlinks user.js and userChrome.css files to default firefox profile
+	find ${HOME}/.mozilla/firefox/ -maxdepth 1 -type d -name '*.default-release' \
+		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
+	find ${HOME}/.mozilla/firefox/ -maxdepth 1 -type d -name '*.default-release' \
+		-exec ln -s $(XDG_CONFIG_HOME)/firefox/chrome {}/chrome \;
+# to get newer command run ':nativeinstall' in browser
+	curl -fsSl https://raw.githubusercontent.com/tridactyl/native_messenger/master/installers/install.sh \
+		-o /tmp/trinativeinstall.sh && sh /tmp/trinativeinstall.sh 1.23.0
+
 
 # system files changed
 sysoptions:

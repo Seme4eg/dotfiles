@@ -1,12 +1,10 @@
 #+title: Setup
 
-1. [[https://github.com/yokoffing/Betterfox#getting-started][user.js]]
-2. [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
+1. [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
    settings page
+2. Tridactyl: run ~:source~ in browser
 3. [optional] [[https://my.nextdns.io/4c7229/setup][setup nextdns]]
-4. [[[https://github.com/MrOtherGuy/firefox-csshacks][firefox-csshacks]]] - symlink [[file:chrome/userChrome.css][userChrome.css]] to /chrome folder in browser cur.
-   profile
-5. Tridactyl - :nativeinstall -> :native -> :source
+
 
 =enhancer-for-youtube.json= <- import on 'enhancer for youtube' extension settings
 page.
