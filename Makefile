@@ -1,3 +1,5 @@
+# nice makefile example: https://github.com/masasam/dotfiles
+
 # run this file with 'sudo -E' to preserve env vars (ie. pwd)
 # also there is this var
 # .EXPORT_ALL_VARIABLES:
