@@ -36,7 +36,8 @@ swww img "$wp" -t=any \
   wal -n -q -l -i "$wp" --saturate 0.3 ||
   wal -n -q -i "$wp" --saturate 0.3
 
-eww reload
+eww reload # might be slow sometimes
+# systemctl --user restart eww.service
 eww update theme=$theme
 
 # TODO: Firefox
