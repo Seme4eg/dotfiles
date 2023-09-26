@@ -2,7 +2,6 @@ binder_linux-dkms
 brillo
 cgo-git
 crossover-overlay-bin
-dracula-gtk-theme
 emacs-gcc-wayland-devel-bin
 eww-wayland-git
 gojq

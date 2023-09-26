@@ -1,4 +1,5 @@
 alsa-utils
+arc-gtk-theme
 base
 base-devel
 bat
