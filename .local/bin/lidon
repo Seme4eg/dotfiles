@@ -1,6 +1,0 @@
-#!/bin/bash
-
-change-theme
-sync_tz_and_loc
-systemctl --user restart wlsunset
-hyprctl keyword monitor "eDP-1,highrr,0x0,1.7"
