@@ -83,12 +83,12 @@ pacman: ## add user pacman config to [options] section, add community and multil
 reflector:
 	$(PACMAN) reflector
 	$(SSEN) reflector
-	sudo pacman -Syy
 
 PACMAN_DIR := ${HOME}/.config/pacman
-install: yay pacman ## Install all packages
+install: reflector yay pacman ## Install all packages
 	cp $(PACMAN_DIR)/pkglist.txt $(PACMAN_DIR)/temp1.txt
 	cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
+	sudo pacman -Syy
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
