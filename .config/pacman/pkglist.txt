@@ -42,6 +42,7 @@ neofetch
 networkmanager
 noto-fonts-emoji
 nvidia
+nvidia-prime
 openssh
 openvpn
 otf-hasklig-nerd
