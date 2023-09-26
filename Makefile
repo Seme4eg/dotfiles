@@ -92,6 +92,12 @@ install: reflector yay pacman ## Install all packages
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
+# TODO:
+postinstall: sysoptions zsh systemd emacs pass mail
+
+
+# ------------  Packages  ------------
+
 zsh:
 	chsh -s /usr/bin/zsh
 
@@ -117,7 +123,7 @@ pass:
 
 # Make sure gpg is set up.
 # If any problems refer to mu4e documentation of doom emacs.
-# Just don't install /mu-git/, it's broken atm.
+# Just don't install mu-git, it's broken atm.
 mail: pass ## install, sync and index mail with mu and mbsync
 	mkdir -p ${HOME}/.$@/mailru
 	mkdir -p ${HOME}/.$@/zimbra
