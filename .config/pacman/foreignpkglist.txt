@@ -3,7 +3,7 @@ brillo
 cgo-git
 crossover-overlay-bin
 emacs-gcc-wayland-devel-bin
-eww-wayland-git
+eww-tray-wayland-git
 gojq
 golangci-lint-bin
 heroic-games-launcher-bin
