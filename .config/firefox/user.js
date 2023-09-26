@@ -262,6 +262,8 @@ user_pref("permissions.default.desktop-notification", 0);
 
 user_pref("privacy.history.custom", false);
 
+user_pref("browser.tabs.insertAfterCurrent", true);
+
 /****************************************************************************
  * END: BETTERFOX                                                           *
 ****************************************************************************/
