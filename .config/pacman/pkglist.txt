@@ -106,6 +106,7 @@ wf-recorder
 wget
 wireplumber
 wl-clipboard
+xdg-desktop-portal-hyprland
 yarn
 yt-dlp
 zoxide

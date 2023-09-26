@@ -28,5 +28,4 @@ wal-telegram-git
 waydroid-git
 webcord-git
 wlsunset-git
-xdg-desktop-portal-hyprland-git
 yay
