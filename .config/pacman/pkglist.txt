@@ -1,4 +1,5 @@
 alsa-utils
+android-tools
 arc-gtk-theme
 base
 base-devel
