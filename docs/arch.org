@@ -20,7 +20,9 @@
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
   - (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
     something won't work go to 'udev' page from this link
-  - ~make all~
+  - ~make install~
+  - setup [[*gpg][gpg]]
+  - ~make postinstall~
 
 *** Partition the disks
 - check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
