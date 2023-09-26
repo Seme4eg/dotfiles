@@ -10,8 +10,8 @@ while getopts ":w:ld" Option; do case $Option in
   d) delete_current=1 ;;
 esac done
 
-source ~/.cache/wal/colors.sh # import current theme to get cur wp path
 if [[ $delete_current ]]; then
+  source ~/.cache/wal/colors.sh # import current theme to get cur wp path
   /usr/bin/rip "$wallpaper" move it to graveyard
   say -e "Theme changed, previous wallpaper moved to graveyard"
 fi
@@ -20,7 +20,7 @@ if [ -z "$wp" ]; then
   # wp=$(find ~/Pictures/DCIM/wps/pc/ -type f | shuf -n 1)
   # sort instead of shuf cuz latter seems to quite often repeat same results
   [ ! -d ~/Pictures/DCIM/wps ] &&
-    wp="~/.config/hypr/assets/default-wp.jpg" ||
+    wp="$HOME/.config/hypr/assets/default-wp.jpg" ||
     wp=$(find ~/Pictures/DCIM/wps/pc/ -type f | sort --random-sort | head -n 1)
 fi
 
