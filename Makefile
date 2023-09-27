@@ -92,7 +92,7 @@ install: reflector yay pacman ## Install all packages
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh systemd emacs pass mail firefox mpv mpd
+postinstall: sysoptions zsh systemd emacs pass mail firefox mpv mpd waydroid
 
 
 # ------------  Packages  ------------
@@ -153,6 +153,14 @@ mpv:
 mpd:
 	mkdir -p ${HOME}/.$@
 	systemctl --user restart $@.service
+
+# TODO: need better testing
+waydroid:
+	sudo waydroid init
+	wget -P ${HOME}/Downloads https://dl.anixart.tv/anixart.apk
+	$@ session start
+	$@ app install ${HOME}/Downloads/anixart.apk
+	@echo 'Now you need a reboot'
 
 # ------------  Other  ------------
 
