@@ -3,9 +3,8 @@
 ** Installation
 - follow official arch installation guide
 - disk partitioning -> see the child header below
-- on pacstrap step i did: ~pacstrap -K /mnt base base-devel linux linux-firmware
-  linux-headers sof-firmware networkmanager vim man-db man-pages texinfo
-  intel-ucode~
+- _pacstrap_: ~pacstrap -K /mnt base base-devel linux linux-firmware linux-headers
+  sof-firmware networkmanager wget vim man-db man-pages texinfo intel-ucode~
 - ...
 - bootloader step:
   - pacman -S grub efibootmgr
@@ -13,22 +12,24 @@
   - grub-mkconfig -o /boot/grub/grub.cfg
 - *after reboot*:
   - systemctl enable --now NetworkManager -> nmtui
-  - pacman -S zsh fzf wget zoxide
-  - useradd -m -G wheel -s /bin/zsh earthian
-  - passwd earthian
-  - ~EDITOR=vim visudo~ -> uncomment wheel
-  - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT SU*
-  - (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
-    something won't work go to 'udev' page from this link
+  - create user:
+    - useradd -m -G wheel earthian
+    - passwd earthian
+    - ~EDITOR=vim visudo~ -> uncomment wheel
+  - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT ROOT*
+  - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
+  - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
+  - ~make dotfiles~
   - ~make install~
   - setup [[*gpg][gpg]]
   - ~make postinstall~
 
+NOTE: (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
+something won't work go to 'udev' page from this link
+
 *** Partition the disks
 - check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
   loop or airoot may be ignored.)
-
-**** Using fdisk
 - ~p~ - list all partitions that u currently have
 - ~g~ - create new gpt-partition table (or ~d~ to delete particular ones)
 - ~n[ew]~ -> 1 (default) -> 2048 (default) -> +1G (efi partition) (tho wiki
