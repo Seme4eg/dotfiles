@@ -1,3 +1,4 @@
 \.git
 ^/.*\.org
 docs
+.gitmodules
