@@ -47,3 +47,5 @@ node_modules/
 /.config/CrossOver/*
 !/.config/CrossOver/preferences.json
 /.config/gthumb/
+/.config/nautilus/
+/.config/chromium/
