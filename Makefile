@@ -86,8 +86,10 @@ reflector:
 
 PACMAN_DIR := ${HOME}/.config/pacman
 install: reflector yay pacman ## Install all packages
-	cp $(PACMAN_DIR)/pkglist.txt $(PACMAN_DIR)/temp1.txt
-	cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
+	if [ ! -f $(PACMAN_DIR)/temp1.txt ]; then
+		cp $(PACMAN_DIR)/pkglist.txt $(PACMAN_DIR)/temp1.txt
+		cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
+	fi
 	sudo pacman -Syy
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
