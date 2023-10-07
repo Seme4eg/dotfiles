@@ -2,3 +2,4 @@
 ^/.*\.org
 docs
 .gitmodules
+Makefile
