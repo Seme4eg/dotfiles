@@ -93,7 +93,7 @@ install: dotfiles reflector yay pacman ## Install all packages
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh emacs
+postinstall: sysoptions zsh emacs systemd
 
 postreboot: firefox mpv mpd waydroid
 
@@ -103,15 +103,7 @@ postreboot: firefox mpv mpd waydroid
 zsh:
 	chsh -s /usr/bin/zsh
 
-systemd:
-	$(SSEN) systemd-timesyncd.service
-	$(SSEN) plocate-updatedb.service
-	$(SSEN) bluetooth.service
-	find $(XDG_CONFIG_HOME)/systemd/user/ -type f -printf "%f\n" | xargs -I {} systemctl --user enable --now {}
-	$(SUEN) syncthing.service
-	$(SUEN) udiskie.service
-
-emacs: 
+emacs:
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/$@
 	~/.config/$@/bin/doom install
 	doom sync
@@ -152,6 +144,15 @@ waydroid:
 	@echo 'Now you need a reboot'
 
 # ------------  Other  ------------
+
+systemd:
+	$(SSEN) systemd-timesyncd.service
+	$(SSEN) plocate-updatedb.service
+	$(SSEN) bluetooth.service
+	find $(XDG_CONFIG_HOME)/systemd/user/ -type f -printf "%f\n" |
+		xargs -I {} systemctl --user enable --now {}
+	$(SUEN) syncthing.service
+	$(SUEN) udiskie.service
 
 # system files changed
 sysoptions:
