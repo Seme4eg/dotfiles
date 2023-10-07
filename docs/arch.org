@@ -30,14 +30,11 @@
     - ~EDITOR=vim visudo~ -> uncomment wheel
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT ROOT*
   - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
-  - wget https://github.com/Seme4eg/dotfiles/raw/master/Makefile
   - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
-  - ~make dotfiles~
   - ~make install~
   - ~make postinstall~
-  - reboot
+  - reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
   - setup [[*gpg][gpg]]
-  - ~make gpgpostinstall~
 
 NOTE: (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
 something won't work go to 'udev' page from this link

@@ -56,7 +56,6 @@ dotfiles: ## Initial deploy dotfiles
 	git clone git@github.com:Seme4eg/.doom.d.git ${HOME}/.config/doom
 # potentially must be a different rule
 	git clone git@github.com:Seme4eg/secrets.git ${HOME}/secrets
-	mkdir ${HOME}/git
 	cd ${HOME}/secrets
 	stow .
 
@@ -85,7 +84,7 @@ reflector:
 	$(SSEN) reflector
 
 PACMAN_DIR := ${HOME}/.config/pacman
-install: reflector yay pacman ## Install all packages
+install: dotfiles reflector yay pacman ## Install all packages
 	if [ ! -f $(PACMAN_DIR)/temp1.txt ]; then
 		cp $(PACMAN_DIR)/pkglist.txt $(PACMAN_DIR)/temp1.txt
 		cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
@@ -94,7 +93,9 @@ install: reflector yay pacman ## Install all packages
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh systemd emacs pass mail firefox mpv mpd waydroid
+postinstall: sysoptions zsh emacs
+
+postreboot: firefox mpv mpd waydroid
 
 
 # ------------  Packages  ------------
@@ -109,7 +110,6 @@ systemd:
 	find $(XDG_CONFIG_HOME)/systemd/user/ -type f -printf "%f\n" | xargs -I {} systemctl --user enable --now {}
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
-	$(SUEN) mpd.service
 
 emacs: 
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/$@
@@ -117,23 +117,9 @@ emacs:
 	doom sync
 	rm -rf ${HOME}/.$@.d
 
-pass:
-	git clone git@github.com:Seme4eg/pass.git $(XDG_DATA_HOME)/password-store
-# FIXME: emacs doesn't know about =$PASSWORD_STORE_DIR= env var
-	ln -s $(XDG_DATA_HOME)/password-store ${HOME}/.password-store
-
-# Make sure gpg is set up.
-# If any problems refer to mu4e documentation of doom emacs.
-# Just don't install mu-git, it's broken atm.
-mail: pass ## install, sync and index mail with mu and mbsync
-	mkdir -p ${HOME}/.$@/mailru
-	mkdir -p ${HOME}/.$@/zimbra
-	mbsync --all
-	sh ${HOME}/secrets/index
-	mu index
-
 # https://github.com/yokoffing/Betterfox
 # https://github.com/MrOtherGuy/firefox-csshacks
+# NOTE: firefox must be started (once) to create folder with default-profile
 firefox: ## symlinks user.js and userChrome.css files to default firefox profile
 	find ${HOME}/.mozilla/firefox/ -maxdepth 1 -type d -name '*.default-release' \
 		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
@@ -155,6 +141,7 @@ mpv:
 mpd:
 	mkdir -p ${HOME}/.$@
 	systemctl --user restart $@.service
+	$(SUEN) mpd.service
 
 # TODO: need better testing
 waydroid:
@@ -172,6 +159,9 @@ sysoptions:
   # =/etc/bluetooth/main.conf= <- AutoEnable=false
 	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
 	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
+	sudo sed -i 's/^\(GRUB_CMDLINE_LINUX_DEFAULT=.*\)"/\1 nvidia_drm.modeset=1"/' \
+		/etc/default/grub
+	sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # useful when removed some file(s) from repo and don't want to remove the
 # symlinks by hand
