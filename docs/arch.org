@@ -2,7 +2,19 @@
 
 ** Installation
 - follow official arch installation guide
-- disk partitioning -> see the child header below
+- _disk partitioning_ (using /fdisk/):
+  - check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
+    loop or airoot may be ignored.)
+  - ~p~ - list all partitions that u currently have
+  - ~g~ - create new gpt-partition table (or ~d~ to delete particular ones)
+  - ~n[ew]~ -> 1 (default) -> 2048 (default) -> +1G (efi partition) (tho wiki
+    recommends +512M)
+  - ~n~ -> 3x enter (root partition)
+  - ~t[ype]~ -> 1st partition (efi one) -> l[ist] to get all available types ->
+    choose EFI system
+  - set root partition type to /Linux filesystem/
+  - ~p~ -> check which partitions you ended up with
+  - ~w[rite]~ if everything is as u want
 - _pacstrap_: ~pacstrap -K /mnt base base-devel linux linux-firmware linux-headers
   sof-firmware networkmanager wget vim man-db man-pages texinfo intel-ucode~
 - ...
@@ -18,28 +30,17 @@
     - ~EDITOR=vim visudo~ -> uncomment wheel
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT ROOT*
   - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
+  - wget https://github.com/Seme4eg/dotfiles/raw/master/Makefile
   - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
   - ~make dotfiles~
   - ~make install~
-  - setup [[*gpg][gpg]]
   - ~make postinstall~
+  - reboot
+  - setup [[*gpg][gpg]]
+  - ~make gpgpostinstall~
 
 NOTE: (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
 something won't work go to 'udev' page from this link
-
-*** Partition the disks
-- check your disks sda's / nvme's: ~lsblk~ or ~fdisk -l~. (Results ending in rom,
-  loop or airoot may be ignored.)
-- ~p~ - list all partitions that u currently have
-- ~g~ - create new gpt-partition table (or ~d~ to delete particular ones)
-- ~n[ew]~ -> 1 (default) -> 2048 (default) -> +1G (efi partition) (tho wiki
-  recommends +512M)
-- ~n~ -> 3x enter (root partition)
-- ~t[ype]~ -> 1st partition (efi one) -> l[ist] to get all available types ->
-  choose EFI system
-- set root partition type to /Linux filesystem/
-- ~p~ -> check which partitions you ended up with
-- ~w[rite]~ if everything is as u want
 
 ** sound
 If there's no sound, maybe you've several sound cards and default one got set
@@ -83,7 +84,6 @@ are blocking nouveau and if they don't - add block rule and regenerate modprobe.
 - copy secret2.gpg from wherever you have it stored and run ~gpg --import
   secret2.gpg~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
-- ~make pass~
 
 ** fingerprint sensor
 https://wiki.archlinux.org/title/fprint
