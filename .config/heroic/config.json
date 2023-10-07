@@ -6,6 +6,7 @@
     "addStartMenuShortcuts": true,
     "autoInstallDxvk": true,
     "autoInstallVkd3d": true,
+    "autoInstallDxvkNvapi": true,
     "addSteamShortcuts": true,
     "preferSystemLibs": false,
     "checkForUpdatesOnStartup": true,
@@ -34,9 +35,9 @@
       "name": "Proton - Proton 8.0",
       "type": "proton"
     },
-    "discordRPC": true,
     "enableEsync": true,
     "enableFsync": true,
+    "discordRPC": true,
     "enableDXVKFpsLimit": true,
     "DXVKFpsCap": "60",
     "useSteamRuntime": true
