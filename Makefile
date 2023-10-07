@@ -24,7 +24,6 @@ help:
 
 test:
 	export SSHDIR="${HOME}/.$@"
-# some comment here
 	echo $$XDG_DATA_HOME
 	echo $(XDG_DATA_HOME)
 
@@ -93,7 +92,7 @@ install: dotfiles reflector yay pacman ## Install all packages
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh emacs systemd
+postinstall: sysoptions zsh emacs systemd icons
 
 postreboot: firefox mpv mpd waydroid
 
@@ -163,6 +162,9 @@ sysoptions:
 	sudo sed -i 's/^\(GRUB_CMDLINE_LINUX_DEFAULT=.*\)"/\1 nvidia_drm.modeset=1"/' \
 		/etc/default/grub
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+icons:
+	bash ${HOME}/.icons/unpack-all
 
 # useful when removed some file(s) from repo and don't want to remove the
 # symlinks by hand

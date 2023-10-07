@@ -6,11 +6,6 @@ systemctl --user start hyprland-session.target
 
 # /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
 
-gsettings set org.gnome.desktop.interface cursor-theme Future-dark-cursors
-gsettings set org.gnome.desktop.interface gtk-theme Dracula
-
-hyprctl setcursor Future-dark-cursors 26
-
 # needs to be started before 'change-theme' script otherwise the latter waits
 # for swaync service to appear
 swaync &
