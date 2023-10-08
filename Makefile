@@ -92,9 +92,9 @@ install: dotfiles reflector yay pacman ## Install all packages
 	$(PACMAN) - < ~/.config/pacman/temp1.txt
 	$(YAY) - < ~/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh emacs systemd icons
+postinstall: sysoptions zsh emacs systemd
 
-postreboot: firefox mpv mpd protonge waydroid
+postreboot: firefox mpv mpd icons protonge waydroid
 
 
 # ------------  Packages  ------------
@@ -165,6 +165,7 @@ sysoptions:
 
 icons:
 	bash ${HOME}/.icons/unpack-all
+	nwg-look -a
 
 protonge:
 	export WORKDIR="/tmp/proton-ge-custom"
