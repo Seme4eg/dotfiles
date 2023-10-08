@@ -94,7 +94,7 @@ install: dotfiles reflector yay pacman ## Install all packages
 
 postinstall: sysoptions zsh emacs systemd icons
 
-postreboot: firefox mpv mpd waydroid
+postreboot: firefox mpv mpd protonge waydroid
 
 
 # ------------  Packages  ------------
@@ -165,6 +165,21 @@ sysoptions:
 
 icons:
 	bash ${HOME}/.icons/unpack-all
+
+protonge:
+	export WORKDIR="/tmp/proton-ge-custom"
+	mkdir $$WORKDIR
+	cd $$WORKDIR
+# download  tarball
+	curl -LOJ "$$(curl https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\" -f4 | grep .tar.gz)"
+# download checksum
+	curl -LOJ "$$(curl https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\" -f4 | grep .sha512sum)"
+	sha512sum -c ./*.sha512sum
+	mkdir -p ${HOME}/.steam/root/compatibilitytools.d
+	tar -xf GE-Proton*.tar.gz -C ${HOME}/.steam/root/compatibilitytools.d/
+	cd /
+	rm -rf $$WORKDIR
+	echo "All done :)"
 
 # useful when removed some file(s) from repo and don't want to remove the
 # symlinks by hand
