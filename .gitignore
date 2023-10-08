@@ -42,3 +42,4 @@ node_modules/
 /.icons/*
 !/.icons/default/
 !/.icons/unpack-all
+/.config/user-dirs.dirs
