@@ -4,7 +4,8 @@
    settings page
 2. Tridactyl: run ~:source~ in browser
 3. [optional] [[https://my.nextdns.io/4c7229/setup][setup nextdns]]
-
+4. settings -> privacy & security -> certificates -> authorities tab -> import
+   ca.crt from secrets repo
 
 =enhancer-for-youtube.json= <- import on 'enhancer for youtube' extension settings
 page.
