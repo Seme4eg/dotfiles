@@ -105,7 +105,7 @@ zsh:
 emacs:
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/$@
 	~/.config/$@/bin/doom install
-	doom sync
+	~/.config/$@/bin/doom sync
 	rm -rf ${HOME}/.$@.d
 
 # https://github.com/yokoffing/Betterfox
