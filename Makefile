@@ -162,6 +162,7 @@ sysoptions:
 	sudo sed -i 's/^\(GRUB_CMDLINE_LINUX_DEFAULT=.*\)"/\1 nvidia_drm.modeset=1"/' \
 		/etc/default/grub
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
+	sudo echo UserspaceHID=true | sudo tee -a /etc/bluetooth/input.conf
 
 icons:
 	bash ${HOME}/.icons/unpack-all
