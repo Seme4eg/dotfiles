@@ -94,7 +94,9 @@ install: dotfiles reflector yay pacman ## Install all packages
 
 postinstall: sysoptions zsh emacs systemd
 
-postreboot: firefox mpv mpd icons protonge waydroid
+# waydroid - debug
+# protonge <- run only after steam launch cuz steam creates symlink to root dir
+postreboot: firefox mpv mpd icons
 
 
 # ------------  Packages  ------------
