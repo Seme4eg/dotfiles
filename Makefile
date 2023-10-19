@@ -44,7 +44,7 @@ dotfiles: ## Initial deploy dotfiles
 	mkdir -p ${HOME}/.local/bin
 # or otherwise unsave permissions
 	mkdir -p ${HOME}/.gnupg
-	chmod 700 ~/.gnupg
+	chmod 700 ${HOME}/.gnupg
 	$(PACMAN) git stow
 	git clone git@github.com:Seme4eg/$@.git ${HOME}/$@
 	rm Makefile
@@ -89,10 +89,10 @@ install: dotfiles reflector yay pacman ## Install all packages
 		cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
 	fi
 	sudo pacman -Syy
-	$(PACMAN) - < ~/.config/pacman/temp1.txt
-	$(YAY) - < ~/.config/pacman/temp2.txt
+	$(PACMAN) - < ${HOME}/.config/pacman/temp1.txt
+	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh emacs systemd
+postinstall: sysoptions zsh npm emacs systemd wal
 
 # waydroid - debug
 # protonge <- run only after steam launch cuz steam creates symlink to root dir
@@ -105,9 +105,9 @@ zsh:
 	chsh -s /usr/bin/zsh
 
 emacs:
-	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/$@
-	~/.config/$@/bin/doom install
-	~/.config/$@/bin/doom sync
+	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
+	${HOME}/.config/$@/bin/doom install
+	${HOME}/.config/$@/bin/doom sync
 	rm -rf ${HOME}/.$@.d
 
 # https://github.com/yokoffing/Betterfox
