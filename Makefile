@@ -104,6 +104,12 @@ postreboot: firefox mpv mpd icons
 zsh:
 	chsh -s /usr/bin/zsh
 
+npm: ## needed for 'doom env' and lsp installation
+	nvm install 18.16
+
+wal: ## for hyprland to not show error of undefined color var on first launch
+	wal -n -q -i "${HOME}/.config/hypr/assets/default-wp.jpg" --saturate 0.3
+
 emacs:
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
 	${HOME}/.config/$@/bin/doom install
