@@ -92,11 +92,11 @@ install: dotfiles reflector yay pacman ## Install all packages
 	$(PACMAN) - < ${HOME}/.config/pacman/temp1.txt
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh npm emacs systemd wal
+postinstall: sysoptions zsh npm emacs systemd wal icons
 
 # waydroid - debug
 # protonge <- run only after steam launch cuz steam creates symlink to root dir
-postreboot: firefox mpv mpd icons
+postreboot: firefox mpv mpd
 
 
 # ------------  Packages  ------------
