@@ -1,6 +1,7 @@
 #!/bin/bash
 
 say -e 'Recording started'
+[ ! -d "$HOME/Movies" ] && mkdir "$HOME/Movies"
 wf-recorder -f "$HOME/Movies/rec_$(date +%H-%M-%S).mp4"
 # with system sounds
 # wf-recorder -a=alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink.monitor -f $HOME/Movies/demo$(date +%H-%M-%S).mp4
