@@ -27,5 +27,6 @@ swww
 telegram-tdlib-git
 wal-telegram-git
 waydroid-git
+webcord-bin
 wlsunset-git
 yay
