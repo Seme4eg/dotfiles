@@ -88,11 +88,14 @@ install: dotfiles reflector yay pacman ## Install all packages
 		cp $(PACMAN_DIR)/pkglist.txt $(PACMAN_DIR)/temp1.txt
 		cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
 	fi
+	export MAKEFLAGS="-j$$(nproc)"
 	sudo pacman -Syy
 	$(PACMAN) - < ${HOME}/.config/pacman/temp1.txt
+# remove orphaned packages, otherwise rust and rustup are in conflict
+	pacman -Qtdq | sudo pacman -Rns --noconfirm -
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh npm emacs systemd wal icons
+postinstall: sysoptions zsh emacs systemd wal icons
 
 # waydroid - debug
 # protonge <- run only after steam launch cuz steam creates symlink to root dir
@@ -103,9 +106,6 @@ postreboot: firefox mpv mpd
 
 zsh:
 	chsh -s /usr/bin/zsh
-
-npm: ## needed for 'doom env' and lsp installation
-	nvm install 18.16
 
 wal: ## for hyprland to not show error of undefined color var on first launch
 	wal -n -q -i "${HOME}/.config/hypr/assets/default-wp.jpg" --saturate 0.3
@@ -156,6 +156,9 @@ systemd:
 	$(SSEN) systemd-timesyncd.service
 	$(SSEN) plocate-updatedb.service
 	$(SSEN) bluetooth.service
+# sequence of these 2 needs to be hardcoded sadly
+	$(SUEN) eww.service
+	$(SUEN) eww-window.service
 	find $(XDG_CONFIG_HOME)/systemd/user/ -type f -printf "%f\n" |
 		xargs -I {} systemctl --user enable --now {}
 	$(SUEN) syncthing.service
