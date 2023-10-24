@@ -43,3 +43,4 @@ node_modules/
 !/.icons/default/
 !/.icons/unpack-all
 /.config/user-dirs.dirs
+/.config/terminal/
