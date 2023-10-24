@@ -38,6 +38,7 @@ man-pages
 mpc
 mpd
 msmtp
+nautilus
 ncdu
 neofetch
 networkmanager
