@@ -112,7 +112,18 @@ progressbar {
       margin-right: 5px;
     }
   }
-  .bt {
+  .bluetooth {
+    progressbar {
+      progress {
+        background: $_accent2;
+      };
+      &.charging {
+        progress {
+          background: $color6;
+        }
+      }
+      padding: 6px 1px;
+    }
     font: 1.1em daddytimemono nerd font;
   }
 }

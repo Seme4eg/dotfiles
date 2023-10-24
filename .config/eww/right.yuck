@@ -6,8 +6,8 @@
 (deflisten layout "scripts/layout")
 (deflisten backlight :initial "0.0" "scripts/backlight")
 (deflisten volume
-  :initial '{ "is_vol_muted": "true", "vol_level": 0, "is_mic_muted": "true", "mic_level": 0}'
-  "scripts/volume")
+    :initial '{ "is_vol_muted": "true", "vol_level": 0, "is_mic_muted": "true", "mic_level": 0}'
+    "scripts/volume")
 
 ;; polls
 (defpoll gpu :interval "3s" :initial "{\"temp\": 0, \"load\": 0}" "scripts/gpu")
@@ -22,14 +22,18 @@
 (defpoll weather :interval "3600s" "scripts/weather t")
 (defpoll wind :interval "3600s" "scripts/weather w")
 (defpoll notifs_count :interval "3s" :initial "0" "swaync-client -c")
+(defpoll dualsense
+    :interval "3s"
+    :initial '{ "connected": "false", "battery": 0, "charging": "false" }'
+    "scripts/dualsense")
 
 (defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
 
 (defpoll ESSID_WLAN :interval "3s" "nmcli c | grep wlp0s20f3 | awk '{print ($1)}'")
 (defpoll vpnstatus :interval "3s"
-  "timeout 5s /home/earthian/.local/bin/waitwifi && systemctl is-active openvpn-client@client.service || echo 0")
+         "timeout 5s /home/earthian/.local/bin/waitwifi && systemctl is-active openvpn-client@client.service || echo 0")
 (defpoll net :interval "10s" :initial 0
-  `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print $1}'`)
+         `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print $1}'`)
 
 
 (defwidget container_right []
@@ -197,7 +201,20 @@
         :text {swayidle_status == 'active' ? "󰃝" : ""}))))
 
 (defwidget _bt []
-  (label :xalign 1 :class "bt" :text "${bt_status}"))
+  (box
+    :space-evenly false
+    :class "bluetooth"
+    :spacing {dualsense.connected ? 5 : 0}
+    (label :xalign 1 :text "${bt_status}")
+    (revealer
+     :reveal {dualsense.connected == "true"}
+     :transition "slideright"
+     (progress
+       :class {dualsense.charging ? "dlsbattery charging" : "dlsbattery"}
+       :value {dualsense.battery}
+       :orientation "v"
+       :flipped "true"
+       :halign "center"))))
 
 
 ;; --- telemetery block ---
