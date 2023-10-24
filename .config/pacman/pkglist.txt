@@ -35,6 +35,7 @@ lsp-plugins
 lua52
 man-db
 man-pages
+mesa
 mpc
 mpd
 msmtp
@@ -43,8 +44,6 @@ ncdu
 neofetch
 networkmanager
 noto-fonts-emoji
-nvidia
-nvidia-prime
 openssh
 openvpn
 otf-hasklig-nerd

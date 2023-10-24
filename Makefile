@@ -167,8 +167,6 @@ sysoptions:
   # =/etc/bluetooth/main.conf= <- AutoEnable=false
 	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
 	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
-	sudo sed -i 's/^\(GRUB_CMDLINE_LINUX_DEFAULT=.*\)"/\1 nvidia_drm.modeset=1"/' \
-		/etc/default/grub
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 	sudo echo UserspaceHID=true | sudo tee -a /etc/bluetooth/input.conf
 
