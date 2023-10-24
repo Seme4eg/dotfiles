@@ -44,3 +44,5 @@ node_modules/
 !/.icons/unpack-all
 /.config/user-dirs.dirs
 /.config/terminal/
+/.config/ArmCord/
+/.config/content_shell/
