@@ -68,16 +68,10 @@ When encountering problems with sound: ~/usr/bin/rm -r
 ~/.local/state/wireplumber/~, ~scur wireplumber.service~
 
 ** hyprland
-*Nvidia* setup: *DO NOT FOLLOW HYPRLAND WIKI* yet, first try to install just normal,
-proprietary =nvidia= package, do not add anything in grub conf or mkinitcpio, JUST
-TRY TO LAUNCH IT WITH NVIDIA (using ~starthl~ ofc). If it runs, then enable drm in
-grub conf and you're done.
-
-# GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia_drm.modeset=1"
-
-there are 2 checks in aliases, 1st one should show 2 vda things, on your gpu the
-'driver' field must show NOT nouveau, if it does - check both modprobes if those
-are blocking nouveau and if they don't - add block rule and regenerate modprobe.
+- _Nvidia laptop setup_: install /nvidia/ drivers, edit =env.conf= in =hypr= dir. Done.
+- _Nvidia pc setup_: install /nvidia-dkms/, then enable drm in grub conf:
+  - ~GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia_drm.modeset=1"~
+  - done
 
 ** gpg
 - copy secret2.gpg from wherever you have it stored and run ~gpg --import
