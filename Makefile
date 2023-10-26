@@ -97,9 +97,13 @@ install: dotfiles reflector yay pacman ## Install all packages
 
 postinstall: sysoptions zsh emacs systemd wal icons
 
-# waydroid - debug
-# protonge <- run only after steam launch cuz steam creates symlink to root dir
 postreboot: firefox mpv mpd
+
+# Targets to run manually:
+# - protonge : run only after steam launch cuz steam creates symlink to root dir
+# - icons : run only after you synced icons folder from other devices
+# - waydroid : not ready yet
+# - asus-battery-threshold : run only for asus laptops
 
 
 # ------------  Packages  ------------
@@ -180,6 +184,11 @@ icons:
 	nwg-look -a
 
 protonge:
+asus-battery-threshold: ## set ASUS laptop battery threshold to 85
+	$(YAY) bat-asus-battery-bin
+	sudo bat-asus-battery threshold 85
+	sudo bat-asus-battery persist
+
 	export WORKDIR="/tmp/proton-ge-custom"
 	mkdir $$WORKDIR
 	cd $$WORKDIR
