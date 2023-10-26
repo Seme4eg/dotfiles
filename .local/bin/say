@@ -9,7 +9,9 @@ seed=$(tr </dev/urandom -dc A-Za-z0-9 | head -c6)
 # [[ ! -d $tempdir ]] && mkdir -p $tempdir
 
 # if [ -z "$(ls -A ~/tmp/wallhaven)" ]; then
-icon=$(find ~/Pictures/DCIM/Avbl/ -type f | sort --random-sort | head -n 1)
+[ ! -d ~/Pictures/DCIM/Avbl ] &&
+  icon="$HOME/dotfiles/assets/avatar.jpg" ||
+  icon=$(find ~/Pictures/DCIM/Avbl/ -type f | sort --random-sort | head -n 1)
 # else
 #   icon=$tempdir/*
 # fi

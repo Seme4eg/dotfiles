@@ -1,4 +1,5 @@
 \.git
+assets
 ^/.*\.org
 docs
 .gitmodules
