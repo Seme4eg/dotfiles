@@ -1,4 +1,4 @@
-(defvar window_lim 27)
+(defvar window_lim 25)
 
 (deflisten workspaces :initial '[]' "scripts/workspaces")
 (deflisten window "scripts/window")
@@ -53,4 +53,4 @@
     (box)
     (box :space-evenly false :spacing 10
       (label :class "icon" :text "${player_state == 'Playing' ? '' : ''}")
-      (label :limit-width 30 :show-truncated true :text "${player}"))))
+      (label :limit-width 20 :show-truncated true :text "${player}"))))
