@@ -32,8 +32,7 @@ toggle_wifi() {
 
 ssid_connected() {
   ssid="$1"
-  connected_ssid=$(nmcli -t -f active,ssid dev wifi | grep -e '^yes' | cut -d: -f2)
-  if [ "$connected_ssid" == "$ssid" ]; then
+  if [ "$initial_ssid" == "$ssid" ]; then
     echo "Disconnect"
     return 0
   else
@@ -60,6 +59,7 @@ forget_ssid() {
 
 toggle_ssid() {
   ssid="$1"
+  security="$2"
   vpnstatus=$(systemctl is-active openvpn-client@client.service)
   if [ $vpnstatus == 'active' ]; then
     sudo systemctl stop openvpn-client@client.service
@@ -78,11 +78,12 @@ toggle_ssid() {
   }
 
   _connect() {
-    wifi_pass=$(rofi -dmenu -password \
+    protected() { if [ "$security" = "--" ]; then return 1; else return 0; fi }
+    protected && wifi_pass=$(rofi -dmenu -password \
       -theme-str '#entry { placeholder: "password .."; }')
     # if no password provided - quit that script and restore initial connection
     # maybe show return to main menu instead?
-    if [ ! "$wifi_pass" ]; then
+    if [ ! "$wifi_pass" ] && protected; then
       # no need to restore initial connection if it wasn't disbanded
       ssid_connected "$initial_ssid" && exit 1
       nmcli connection up id "$initial_ssid"
@@ -117,6 +118,7 @@ toggle_ssid() {
 # A submenu for a specific device that allows connecting, pairing, and trusting
 ssid_menu() {
   ssid="$1"
+  security="$2"
   goback="Back"
 
   # Build options
@@ -136,7 +138,7 @@ ssid_menu() {
       echo "No option chosen."
       ;;
     "$connected")
-      toggle_ssid "$ssid"
+      toggle_ssid "$ssid" "$security"
       ;;
     "$saved")
       forget_ssid "$ssid"
@@ -187,8 +189,9 @@ show_menu() {
     show_menu
   else
     ssid=$(echo "$option" | awk -F '  +' '{print $2}')
-    echo "$ssid"
-    ssid_menu "$ssid"
+    security=$(echo "$option" | awk -F '  +' '{print $3}')
+    echo $security
+    ssid_menu "$ssid" "$security"
   fi
 }
 
