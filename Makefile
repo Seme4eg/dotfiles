@@ -156,7 +156,7 @@ waydroid:
 
 # ------------  Other  ------------
 
-systemd:
+systemd: ## enable and start all user and system systemd services
 	$(SSEN) systemd-timesyncd.service
 	$(SSEN) plocate-updatedb.service
 	$(SSEN) bluetooth.service
@@ -169,26 +169,25 @@ systemd:
 	$(SUEN) udiskie.service
 
 # system files changed
-sysoptions:
+sysoptions: ## make changes to system files
 	sudo sed -i 's/^#\(SystemMaxUse\)=.*/\1=50M/' /etc/systemd/journald.conf
   # =/etc/bluetooth/main.conf= <- AutoEnable=false
 	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
 	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
-	sudo sed -i 's/^\(GRUB_CMDLINE_LINUX_DEFAULT=.*\)"/\1 nvidia_drm.modeset=1"/' \
-		/etc/default/grub
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 	sudo echo UserspaceHID=true | sudo tee -a /etc/bluetooth/input.conf
 
-icons:
+# TODO: doesn't apply to everything that way yet
+icons: ## setup icons and theme
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
 
-protonge:
 asus-battery-threshold: ## set ASUS laptop battery threshold to 85
 	$(YAY) bat-asus-battery-bin
 	sudo bat-asus-battery threshold 85
 	sudo bat-asus-battery persist
 
+protonge: ## install proton GE latest version
 	export WORKDIR="/tmp/proton-ge-custom"
 	mkdir $$WORKDIR
 	cd $$WORKDIR
