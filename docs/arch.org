@@ -16,7 +16,7 @@
   - ~p~ -> check which partitions you ended up with
   - ~w[rite]~ if everything is as u want
 - _pacstrap_: ~pacstrap -K /mnt base base-devel linux linux-firmware linux-headers
-  sof-firmware networkmanager wget vim man-db man-pages texinfo intel-ucode~
+  sof-firmware networkmanager wget vim man-db man-pages texinfo intel/amd-ucode~
 - ...
 - bootloader step:
   - pacman -S grub efibootmgr
@@ -32,6 +32,8 @@
   - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
   - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
   - ~make install~
+  - for *nvidia* machines install /nvidia, nvidia-prime, libva-nvidia-driver-git/,
+    for *amd* /mesa/
   - ~make postinstall~
   - reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
   - setup [[*gpg][gpg]]
