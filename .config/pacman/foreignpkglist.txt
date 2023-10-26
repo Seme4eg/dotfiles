@@ -8,7 +8,6 @@ gojq
 golangci-lint-bin
 heroic-games-launcher-bin
 hyprland-git
-libva-nvidia-driver-git
 mbsync-git
 mpv-vapoursynth-git
 mu

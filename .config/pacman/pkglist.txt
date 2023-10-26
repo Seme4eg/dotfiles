@@ -23,7 +23,6 @@ go
 grim
 grub
 gtk-layer-shell
-intel-ucode
 jq
 languagetool
 lf
@@ -43,8 +42,6 @@ ncdu
 neofetch
 networkmanager
 noto-fonts-emoji
-nvidia
-nvidia-prime
 openssh
 openvpn
 otf-hasklig-nerd
