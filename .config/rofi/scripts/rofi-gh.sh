@@ -8,7 +8,7 @@ USER="seme4eg"
 clone_repository(){
   if [ ! -z "$1" ]; then
     say -e "Cloning $1 ..."
-    cd ~/git
+    cd ~/git 2>/dev/null || mkdir -p ~/git && cd ~/git
     git clone "$1"
     say -e "Cloned $1"
   fi
