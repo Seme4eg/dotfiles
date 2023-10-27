@@ -1,6 +1,7 @@
 ;; vars
 (defvar show_essid false)
 (defvar show_wind false)
+(defvar show_tray false)
 
 ;; listeners
 (deflisten layout "scripts/layout")
@@ -44,7 +45,6 @@
     :space-evenly false
     :spacing 13
     (_userinfo)
-    ;; TODO: tray
     (_sysinfo)
     (_telemetery)))
 
@@ -55,13 +55,28 @@
     :class "user-info"
     :space-evenly false
     :spacing 13
-    (_layout)
+    (_tray_and_layout)
     (_updates)
     ;; notifications widget is part of 'weather' widget cuz less crutches
-    (_weather)))
+    (_weather_and_notifications)))
 
+(defwidget _tray_and_layout []
+  (eventbox
+    :onclick "eww update show_tray=${show_tray ? false : true}"
+    (box
+      :space-evenly false
+      :spacing {show_tray ? 15 : 0}
+      :hexpand "false"
+      (_tray)
+      (label :class "layout" :text "${layout}"))))
 
-(defwidget _layout [] (label :class "layout" :text "${layout}"))
+(defwidget _tray []
+  (revealer
+    :transition "slideleft"
+    :reveal show_tray
+    :duration "350ms"
+    (box :orientation "v" :valign "center" :space-evenly true :spacing "5"
+       (systray :class "tray" :icon-size 20 :pack-direction "ltr"))))
 
 (defwidget _updates []
   (overlay :class "updates" :width 35
@@ -70,7 +85,7 @@
       :text "${updates_count}")
     (label :class "bg" :text "")))
 
-(defwidget _weather []
+(defwidget _weather_and_notifications []
   (box
     :class "notifs"
     :space-evenly false
@@ -92,9 +107,9 @@
           :reveal show_wind
           :duration "350ms"
           (label :text wind))))
-    (_notifs)))
+    (_notifications)))
 
-(defwidget _notifs []
+(defwidget _notifications []
   (revealer
     :transition "slideright"
     :reveal {notifs_count > 0}

@@ -1,5 +1,24 @@
 .user-info {
   @extend %box;
+
+  .tray {
+    menu {
+      @extend %box;
+      padding: 10px;
+      margin-right: 20px;
+      menuitem {
+        padding: 1px 0;
+        font: bold 1em Jura; // Comfortaa; Unbounded;
+      }
+      separator {
+        background-color: $_accent2;
+        margin: 3px 0;
+        padding: 1px 0;
+        opacity: .6;
+      }
+    }
+  }
+
   .layout {
     @extend %shadow-text;
     font: 1.5em Iceland;
