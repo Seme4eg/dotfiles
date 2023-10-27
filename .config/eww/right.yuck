@@ -10,7 +10,6 @@
     "scripts/volume")
 
 ;; polls
-(defpoll gpu :interval "3s" :initial "{\"temp\": 0, \"load\": 0}" "scripts/gpu")
 ;; yay -S && yay -Qu | wc -l || echo 0
 ;; /home/earthian/.local/bin/waitwifi && checkupdates | wc -l
 (defpoll updates_count :initial 0 :interval "3600s" "/home/earthian/.local/bin/waitwifi && checkupdates | wc -l")
@@ -223,13 +222,31 @@
 
 (defwidget _telemetery []
   (box :class "telemetery" :space-evenly false :spacing 15
-    (_revealer
-      :revealvar {gpu.temp != 0}
-      :spacing {gpu.temp != 0 ? 8 : 0}
-      (_graph :type "CPU")
-      (_graph :type "GPU"))
+    (_cpu)
     (_mem)
     (_battery :capacity {EWW_BATTERY.BAT0.capacity})))
+
+(defwidget _cpu []
+  (box :orientation "v" :spacing 0 :class "cpu"
+    (box :valign "start" :class "temp-text"
+      (label :xalign 0 :text "CPU")
+      (label :class "temp-value" :xalign 1 :text "${EWW_TEMPS.ACPITZ_TEMP1}°"))
+    (overlay
+      (graph :class "load"
+        :value {EWW_CPU.avg}
+        :thickness 2
+        :width 55
+        :time-range "30s"
+        :max 100
+        :line-style "round")
+      (graph :class "temp"
+        :value {EWW_TEMPS.ACPITZ_TEMP1}
+        :thickness 2
+        :width 55
+        :time-range "30s"
+        :min 40
+        :max 120
+        :line-style "round"))))
 
 (defwidget _mem []
   (overlay :class "memory" :width 31

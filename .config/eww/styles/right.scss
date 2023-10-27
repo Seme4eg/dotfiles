@@ -176,11 +176,6 @@ circular-progress {
       color: $foreground;
     }
   }
-  .GPU {
-    .temp {
-      color: color.scale($color5, $saturation: 30%);
-    }
-  }
   .circle-text {
     margin-right: 2px;
   }
