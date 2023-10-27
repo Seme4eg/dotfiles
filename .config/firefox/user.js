@@ -264,6 +264,9 @@ user_pref("privacy.history.custom", false);
 
 user_pref("browser.tabs.insertAfterCurrent", true);
 
+user_pref("privacy.resistFingerprinting.block_mozAddonManager", true)
+user_pref("extensions.webextensions.restrictedDomains", "")
+
 /****************************************************************************
  * END: BETTERFOX                                                           *
 ****************************************************************************/

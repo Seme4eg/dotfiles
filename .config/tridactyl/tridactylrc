@@ -7,8 +7,8 @@
 set modeindicatorshowkeys true
 set smoothscroll true
 # set searchengine searchurls.searx # https://searx.space/
-# auto,dark,default,greenmat,halloween,midnight,quake,quakelight,shydactyl
-set theme midnight
+# dark,quake,shydactyl
+set theme quake
 
 # NOTE: testing this "sane hinting mode"
 # vimperator vimperator-reflow
@@ -53,7 +53,7 @@ bind --mode=normal ,S source
 # REVIEW: maybe i don't need it
 bind --mode=normal ,d tabduplicate
 # to to last visited tab
-bind --mode=normal gp tab #
+bind --mode=normal gp tab # or C-^ (default)
 bind --mode=normal gm fillcmdline tabmove
 # TODO: binding below zooms in *current* page (since viewconfig opens with delay)
 # bind --mode=normal ,hn composite viewconfig nmaps | zoom 1.4
@@ -65,8 +65,6 @@ bind --mode=normal ,hn viewconfig nmaps
 
 # yank source blocks
 bind ;s hint -c pre -p
-# open multiple hints in background
-bind ;r hint -qb
 # Open hint link in Firefox reader mode:
 bind ;R composite hint -pipe a href | jsb -p tri.excmds.tabopen("about:reader?url=" + JS_ARG)
 
