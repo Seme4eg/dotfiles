@@ -34,6 +34,7 @@ lsp-plugins
 lua52
 man-db
 man-pages
+mangohud
 mpc
 mpd
 msmtp
