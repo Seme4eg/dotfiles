@@ -182,7 +182,7 @@ icons: ## setup icons and theme
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
 
-asus: ## set ASUS laptop battery threshold to 85
+asus: ## set ASUS laptop battery threshold to 80
 	$(YAY) asusctl
 	wget -P ${HOME}/Downloads https://gitlab.com/asus-linux/asusctl/-/raw/d0b9aee85a60f0d0a1afb4cb6e3da802cddb1344/data/asusd-alt.service
 	sudo systemctl mask asusd
