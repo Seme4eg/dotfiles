@@ -2,10 +2,7 @@
 
 state=$1
 
-say $state
-
 if [ "$state" == "on" ]; then
-  say "lid opened"
   hyprctl keyword monitor "eDP-1,highrr,0x0,1.7"
   count_monitors=$(hyprctl monitors | grep -c '^Monitor')
   # if its a normal lid on then do normal stuff, if there's a 2nd monitor
@@ -24,6 +21,5 @@ else
   else
     hyprctl keyword monitor "eDP-1, disable"
     systemctl reload --user eww
-    say "lid closed"
   fi
 fi
