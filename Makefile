@@ -182,10 +182,14 @@ icons: ## setup icons and theme
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
 
-asus-battery-threshold: ## set ASUS laptop battery threshold to 85
-	$(YAY) bat-asus-battery-bin
-	sudo bat-asus-battery threshold 85
-	sudo bat-asus-battery persist
+asus: ## set ASUS laptop battery threshold to 85
+	$(YAY) asusctl
+	wget -P ${HOME}/Downloads https://gitlab.com/asus-linux/asusctl/-/raw/d0b9aee85a60f0d0a1afb4cb6e3da802cddb1344/data/asusd-alt.service
+	sudo systemctl mask asusd
+	sudo systemctl stop asusd
+	sudo cp -p asusd-alt.service /etc/systemd/system/
+	$(SSEN) asusd-alt.service
+	asusctl -c 80
 
 protonge: ## install proton GE latest version
 	export WORKDIR="/tmp/proton-ge-custom"
