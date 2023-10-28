@@ -66,6 +66,7 @@ slurp
 sndio
 socat
 sof-firmware
+solaar
 steam
 stow
 sway
