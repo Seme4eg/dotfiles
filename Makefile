@@ -128,9 +128,6 @@ firefox: ## symlinks user.js and userChrome.css files to default firefox profile
 		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
 	find ${HOME}/.mozilla/firefox/ -maxdepth 1 -type d -name '*.default-release' \
 		-exec ln -s $(XDG_CONFIG_HOME)/firefox/chrome {}/chrome \;
-# to get newer command run ':nativeinstall' in browser
-	curl -fsSl https://raw.githubusercontent.com/tridactyl/native_messenger/master/installers/install.sh \
-		-o /tmp/trinativeinstall.sh && sh /tmp/trinativeinstall.sh 1.23.0
 
 mpv:
 	git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \
