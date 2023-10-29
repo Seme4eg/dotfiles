@@ -84,6 +84,7 @@ ttf-space-mono-nerd
 udiskie
 udisks2
 unzip
+usb_modeswitch
 vim
 virt-manager
 wf-recorder
