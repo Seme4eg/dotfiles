@@ -3,6 +3,6 @@
 location=$(timedatectl | grep "Time zone" | awk '{print $3}' | xargs basename)
 
 # 2 valid args: t (for temperature) and w (for wind)
-timeout 5s /home/earthian/.local/bin/waitwifi &&
+ip addr show | grep -q "state UP" &&
   curl "https://wttr.in/$location?format=%$1" ||
   echo ''

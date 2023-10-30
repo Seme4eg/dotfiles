@@ -10,9 +10,13 @@
 
 ;; polls
 ;; yay -S && yay -Qu | wc -l || echo 0
-;; /home/earthian/.local/bin/waitwifi && checkupdates | wc -l
-(defpoll updates_count :initial 0 :interval "3600s" "/home/earthian/.local/bin/waitwifi && checkupdates | wc -l")
-(defpoll swayidle_status :interval "10000s" "systemctl --user is-active swayidle.service")
+;; checkupdates | wc -l
+(defpoll updates_count
+         :initial 0
+         :interval "3600s"
+         "ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
+(defpoll swayidle_status
+         :interval "10000s" "systemctl --user is-active swayidle.service")
 ;; https://github.com/chubin/wttr.in#one-line-output
 ;; (defpoll weather :interval "3600s" "curl 'https://wttr.in/Becici?format=j2'") ;; JSON
 ;;%x for text icon of weather; %f for 'feels like' and %w for wind and arrow-direction
@@ -27,7 +31,7 @@
 (defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
 
 (defpoll vpnstatus :interval "3s"
-         "timeout 5s /home/earthian/.local/bin/waitwifi && systemctl is-active openvpn-client@client.service || echo 0")
+         "ip addr show | grep -q 'state UP' && systemctl is-active openvpn-client@client.service || echo 0")
 (defpoll net
   :interval "10s"
   :initial '{ "type": "nil", "wifi_strengh": 0 }'

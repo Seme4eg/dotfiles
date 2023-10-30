@@ -36,7 +36,13 @@ set_coordinates() {
   fi
 }
 
-waitwifi && set_timezone && set_coordinates &&
+waitnetwork() {
+  while true; do
+    ping -q -c 1 -w 2 -W 1 archwiki.org >/dev/null && return 0 || sleep 5
+  done
+}
+
+waitnetwork && set_timezone && set_coordinates &&
   systemctl --user restart wlsunset.service && sudo systemctl start reflector
 
 exit 0
