@@ -218,7 +218,7 @@
   (box :class "telemetery" :space-evenly false :spacing 15
     (_cpu)
     (_mem)
-    (_battery :capacity {EWW_BATTERY.BAT0.capacity})))
+    (_battery)))
 
 (defwidget _cpu []
   (box :orientation "v" :spacing 0 :class "cpu"
@@ -251,8 +251,8 @@
       :clockwise true)
     (label :class "circle-text" :text "󰍛")))
 
-(defwidget _battery [capacity]
+(defwidget _battery []
   (label
-    :class {EWW_BATTERY.BAT0.status == 'Charging' ? "bat charging" :
-             EWW_BATTERY.BAT0.capacity < 15 ? "bat low" : "bat"}
-    :text "${EWW_BATTERY.BAT0.capacity}󱐋"))
+    :class {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .status') == 'Charging' ? "bat charging" :
+             jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') < 15 ? "bat low" : "bat"}
+    :text "${jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity')}󱐋"))
