@@ -1,7 +1,5 @@
 #!/bin/bash
 
-EWW_NET="$1"
-
 is_wifi() {
   # 802-11-wireless:wlp1s0 <- on one laptop
   nmcli -t -f TYPE,DEVICE con show --active | grep wireless > /dev/null &&
@@ -27,19 +25,9 @@ type() {
   fi
 }
 
-# echo "$()"
-speeds() {
-  echo "$EWW_NET" | jq 'to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value'
-}
-
 result='{ "type": "'"$(type)"'"'
 
 is_wifi && result="$result"', "wifi_signal": "'"$(wifi_signal)"'"'
-
-if [ "$(type)" != "nil" ]; then
-  result="$result"', "up": "'"$(speeds | jq '.NET_UP')"'"'
-  result="$result"', "down": "'"$(speeds | jq '.NET_DOWN')"'"'
-fi
 
 result="$result"' }'
 

@@ -35,7 +35,7 @@
 (defpoll net
   :interval "10s"
   :initial '{ "type": "nil", "wifi_strengh": 0 }'
-  "scripts/net ${EWW_NET}")
+  "scripts/net")
 
 
 (defwidget container_right []
@@ -113,12 +113,15 @@
 
 (defwidget _sysinfo []
   (box :class "sys-info" :space-evenly false :spacing 13
-    (_network)
+    (_network
+      ;; network interface name might is different on every machine
+      :up {jq(EWW_NET, 'to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_UP')}
+      :down {jq(EWW_NET, 'to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_DOWN')})
     (_audioblock)
     (_backlight)
     (_bt)))
 
-(defwidget _network []
+(defwidget _network [up down]
   (box
     :space-evenly false
     :class "network"
@@ -136,19 +139,19 @@
         :halign "center"
         :space-evenly false
         (label
-          :class {net.up / 1024 > 1024 ? "bold" : ""}
-          :text {net.up / 1024 < 1024 ?
-                    " ${round(net.up / 1024, 0)}" :
-                    " ${round(net.up / 1048576, 0)}"})
+          :class {up / 1024 > 1024 ? "bold" : ""}
+          :text {up / 1024 < 1024 ?
+                    " ${round(up / 1024, 0)}" :
+                    " ${round(up / 1048576, 0)}"})
         (progress
             :value {net.wifi_signal ?: 100}
             :width 38
             :orientation "h")
         (label
-          :class {net.down / 1024 > 1024 ? "bold" : ""}
-          :text {net.down / 1024 < 1024 ?
-                  " ${round(net.down / 1024, 0)}" :
-                  " ${round(net.down / 1048576, 0)}"}))
+          :class {down / 1024 > 1024 ? "bold" : ""}
+          :text {down / 1024 < 1024 ?
+                  " ${round(down / 1024, 0)}" :
+                  " ${round(down / 1048576, 0)}"}))
       (label :class "disconnected" :text {net.type == "nil" ? "󰤮" : ""}))))
 
 (defwidget _audioblock []
