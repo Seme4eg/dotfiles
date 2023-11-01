@@ -115,8 +115,8 @@
   (box :class "sys-info" :space-evenly false :spacing 13
     (_network
       ;; network interface name might is different on every machine
-      :up {jq(EWW_NET, 'to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_UP')}
-      :down {jq(EWW_NET, 'to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_DOWN')})
+      :up {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_UP')}
+      :down {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_DOWN')})
     (_audioblock)
     (_backlight)
     (_bt)))
