@@ -1,3 +1,4 @@
+armcord-bin
 binder_linux-dkms
 brillo
 cgo-git

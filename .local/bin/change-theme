@@ -63,9 +63,9 @@ emacsclient -e "(load-theme 'ewal-doom-one)" & # update emacs theme
 # . $XDG_CONFIG_HOME/swaync/reload.sh # <- debugging / developing
 swaync-client -rs &
 
-# Webcord
-rm ~/.config/WebCord/Themes/*
-cp $XDG_DATA_HOME/webcord/wal.theme.css $XDG_CONFIG_HOME/WebCord/Themes/wal
+# TODO: ArmCord
+# rm ~/.config/WebCord/Themes/*
+# cp $XDG_DATA_HOME/webcord/wal.theme.css $XDG_CONFIG_HOME/WebCord/Themes/wal
 
 # Telegram (https://github.com/guillaumeboehm/wal-telegram#set-the-color-palette)
 # -g for blur background

@@ -44,7 +44,11 @@ node_modules/
 !/.icons/unpack-all
 /.config/user-dirs.dirs
 /.config/terminal/
-/.config/ArmCord/
+/.config/ArmCord/*
+!/.config/ArmCord/themes/
+!/.config/ArmCord/storage/
+/.config/ArmCord/storage/lang.json
+/.config/ArmCord/storage/window.json
 /.config/content_shell/
 /.config/solaar/
 /.config/MusicBrainz/
