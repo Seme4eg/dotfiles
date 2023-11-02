@@ -180,7 +180,8 @@ icons: ## setup icons and theme
 	nwg-look -a
 
 asus: ## set ASUS laptop battery threshold to 80
-	$(YAY) asusctl
+	$(PACMAN) mesa libva-mesa-driver mesa-vdpau vulkan-radeon
+	$(YAY) asusctl amdgpu_top-bin
 	wget -P ${HOME}/Downloads https://gitlab.com/asus-linux/asusctl/-/raw/d0b9aee85a60f0d0a1afb4cb6e3da802cddb1344/data/asusd-alt.service
 	sudo systemctl mask asusd
 	sudo systemctl stop asusd
