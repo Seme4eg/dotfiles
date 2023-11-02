@@ -50,6 +50,7 @@ pacman-contrib
 pass
 passff-host
 pavucontrol
+picard
 pipewire-alsa
 pipewire-audio
 pipewire-pulse
