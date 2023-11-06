@@ -38,6 +38,7 @@
 
 .notification-content {
   padding: 5px 0;
+  margin-left: 10px;
   color: @foreground;
   background: transparent;
 }
@@ -62,7 +63,7 @@
 }
 
 .image {
-  margin-right: -15px;
+  margin-left: -5px;
 }
 
 .body-image {

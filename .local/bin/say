@@ -17,7 +17,9 @@ seed=$(tr </dev/urandom -dc A-Za-z0-9 | head -c6)
 # fi
 
 # $@ to pass all flags (-e, -t etc), that i might pass from my other scripts
+# swaync-client -rs
 notify-send -i "$icon" $(whoami) "$@"
+# notify-send $(whoami) "$@"
 
 # /bin/rm $tempdir/*
 
