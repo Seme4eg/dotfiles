@@ -76,8 +76,8 @@
     :transition "slideleft"
     :reveal show_tray
     :duration "350ms"
-    (box :orientation "v" :valign "center" :space-evenly true :spacing "5"
-       (systray :class "tray" :icon-size 20 :pack-direction "ltr"))))
+    (box :orientation "v" :valign "center" :space-evenly true :spacing 5
+       (systray :class "tray" :icon-size 25 :pack-direction "ltr"))))
 
 (defwidget _updates []
   (overlay :class "updates" :width 35
