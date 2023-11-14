@@ -43,6 +43,7 @@ ncdu
 neofetch
 networkmanager
 noto-fonts-emoji
+okular
 openssh
 openvpn
 otf-hasklig-nerd
