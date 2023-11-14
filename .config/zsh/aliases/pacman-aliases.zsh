@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 alias pm="sudo pacman"
-alias pmi="pm -S"   # install
+alias pmi="pms && pm -S"   # install
 alias pmr="pm -Rs"  # remove
 alias pmsr="pm -Ss" # search remotes
 alias pmsl="pm -Qs" # search locally
