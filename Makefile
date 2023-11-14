@@ -95,7 +95,7 @@ install: dotfiles reflector yay pacman ## Install all packages
 	pacman -Qtdq | sudo pacman -Rns --noconfirm -
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh emacs systemd wal icons
+postinstall: sysoptions zsh emacs systemd wal
 
 postreboot: firefox mpv mpd
 
@@ -112,7 +112,7 @@ zsh:
 	chsh -s /usr/bin/zsh
 
 wal: ## for hyprland to not show error of undefined color var on first launch
-	wal -n -q -i "${HOME}/.config/hypr/assets/default-wp.jpg" --saturate 0.3
+	wal -n -q -i "${HOME}/dotfiles/assets/wallpaper.jpg" --saturate 0.3
 
 emacs:
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
@@ -160,7 +160,7 @@ systemd: ## enable and start all user and system systemd services
 # sequence of these 2 needs to be hardcoded sadly
 	$(SUEN) eww.service
 	$(SUEN) eww-window.service
-	find $(XDG_CONFIG_HOME)/systemd/user/ -type f -printf "%f\n" |
+	find ${HOME}/.config/systemd/user/ -type f -printf "%f\n" |
 		xargs -I {} systemctl --user enable --now {}
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
