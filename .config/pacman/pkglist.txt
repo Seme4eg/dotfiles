@@ -22,6 +22,7 @@ git
 go
 grim
 grub
+gthumb
 gtk-layer-shell
 jq
 languagetool
