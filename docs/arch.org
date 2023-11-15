@@ -68,7 +68,13 @@ When encountering problems with sound: ~/usr/bin/rm -r
 ~/.local/state/wireplumber/~, ~scur wireplumber.service~
 
 ** hyprland
-- _Nvidia laptop setup_: install /nvidia/ drivers, edit =env.conf= in =hypr= dir. Done.
+- _Nvidia hybrid laptop setup_: install /nvidia/ drivers, done. In order for HDMI
+  port to work (which is often connected directly to Nvidia gpu) hyprland must
+  be able to be launched only using Nvidia gpu (do it via ~WLR_DRM_DEVICES~ var).
+  If it launches you're good to go. Otherwise set ~nvidia-drm.modeset=1~ in
+  =/etc/default/grub=, check again and if it works - HDMI will b working (tho i
+  recommend to use USB-C hub and plug HDMI in there so external monitor apps use
+  Intel GPU cuz for now nvidia is glichy).
 - _Nvidia pc setup_: install /nvidia-dkms/, then enable drm in grub conf:
   - ~GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia_drm.modeset=1"~
   - done
