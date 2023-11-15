@@ -1,0 +1,12 @@
+[Unit]
+Description=Eww window manager (reloads eww windows based on monitors change)
+PartOf=graphical-session.target
+
+[Install]
+WantedBy=hyprland-session.target
+
+[Service]
+ExecStart=/bin/bash -c "${HOME}/.local/bin/eww-manager"
+Slice=session.slice
+Restart=on-failure
+RestartSec=3s

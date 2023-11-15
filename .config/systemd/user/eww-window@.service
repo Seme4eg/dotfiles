@@ -10,8 +10,8 @@ PartOf=eww.service
 
 [Service]
 ExecStartPre=eww ping
-ExecStart=eww open topbar
-ExecStop=eww close topbar
+ExecStart=eww open %i
+ExecStop=eww close %i
 Type=oneshot
 RemainAfterExit=true
 Restart=on-failure
