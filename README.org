@@ -25,7 +25,7 @@ syncthing.
 
 So i've just updated git index to 'untrack' files that differ and don't change.
 
-: git update-index --assume-unchanged ./.config/syncthing/config.xml ./.config/hypr/scale.conf
+: git update-index --assume-unchanged ./.config/syncthing/config.xml
 
 To get any of those files 'back on track':
 
