@@ -37,6 +37,7 @@
   - ~make postinstall~
   - reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
   - setup [[*gpg][gpg]]
+  - also check some of the targets in makefile that need to be run manually
 
 NOTE: (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
 something won't work go to 'udev' page from this link

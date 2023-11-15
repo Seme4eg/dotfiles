@@ -7,41 +7,31 @@
 - *Screen locker*: swaylock-effects
 - *Theme changing*: pywal&scripts
 - *Notifications*: swaync
-- *Terminal*: Alacritty
+- *Terminal*: foot
 
 [[https://www.youtube.com/watch?v=rQLS_4ZGbtw][Youtube demo]]
 
-[[.config/hypr/demo/demo.png]]
+[[assets/demo.png]]
 
 ** Bootstrapping
-For now stow symlinks work fine for me, but if it's a fresh install - create
-$HOME/.local/share first, otherwise steam and other apps quickly flood it and my
-emacs project indexing rips. Also i'd create $HOME/.local/bin. Then just ~stow .~
+The list below is my personall fresh install process. Check targets in Makefile
+and adjust to your needs.
+
+- wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
+- ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
+- ~make install~
+- for *nvidia* machines install /nvidia, nvidia-prime, libva-nvidia-driver-git/, for
+  *amd* /mesa/
+- ~make postinstall~
+- reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
+- also check some of the targets in makefile that need to be run manually
 
 ** Notes
-i have 2 machines but they configs don't differ that much to use somethings like
-shezmoi. But they do have different resolution for hyprland and id for
-syncthing.
-
-So i've just updated git index to 'untrack' files that differ and don't change.
-
-: git update-index --assume-unchanged ./.config/syncthing/config.xml
-
-To get any of those files 'back on track':
-
-: git update-index --no-assume-unchanged {files}
-
-*** rofi
-scripts that might be useful later:
+Maybe useful rofi scripts:
 - https://github.com/carnager/rofi-pass
 - aur/rofi-mpd-git - A Rofi menu for interacting with MPD written in Python.
 - aur/rofi-mpc - Fast graphical Rofi-Interface for controlling MPD
 
 ** Todos [0/1]
-*** IDEA migrate from pacman hooks to Makefile
-on next fresh install don't autoinstall all packages from pkg files, do
-everything by hand and via makefile targets. Do not remove hooks, just don't
-commit the change without a Makefile target. Reason - things will be more
-organized and instead of blaming to see why i installed something i will see it
-in makefile target.
-
+*** IDEA script to move my 1st workspace windows to 3rd one when plugging external monitor
+there is something in wiki
