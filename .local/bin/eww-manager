@@ -23,10 +23,10 @@ socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - |
         systemctl --user start --now eww-window@topbar.service
       fi
     else
-      # if [ "$first_monitor" = 'eDP-1' ]; then
-      #   systemctl --user stop eww-window@toptopbar.service
-      systemctl --user start --now eww-window@topbar.service
-      # fi
+      if [ "$first_monitor" = 'eDP-1' ]; then
+        systemctl --user stop eww-window@toptopbar.service
+        systemctl --user start --now eww-window@topbar.service
+      fi
     fi
 
   fi
