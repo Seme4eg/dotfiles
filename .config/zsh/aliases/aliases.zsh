@@ -10,9 +10,6 @@ alias vedroid="waydroid session stop && waydroid session start &"
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 
-alias gau="git update-index --assume-unchanged"
-alias gnau="git update-index --no-assume-unchanged"
-
 # --grep=<pattern>
 # -x -- Include explanations of log messages from the message catalog where available
 # -u -- messages by a specific (system) unit (man-db.service)
