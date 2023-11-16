@@ -240,6 +240,6 @@
 
 (defwidget _battery []
   (label
-    :class {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .status') == 'Charging' ? "bat charging" :
+    :class {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .status') == '"Charging"' ? "bat charging" :
              jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') < 15 ? "bat low" : "bat"}
     :text "${jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity')}󱐋"))
