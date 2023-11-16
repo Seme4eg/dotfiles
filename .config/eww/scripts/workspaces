@@ -1,22 +1,10 @@
-#!/usr/bin/env bash
-#
-# For several monitors support check
-# https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/workspaces
+#!/bin/bash
 
-# get initial focused workspace
-focusedws=$(hyprctl -j monitors | gojq -r '.[] | select(.focused == true) | .activeWorkspace.id')
-
-# generate the json for eww
 generate() {
-  workspace_count=`hyprctl -j workspaces | gojq -r '. | length'`
-  echo -n '['
-
-  for ((i=1; i <= $workspace_count; ++i)); do
-    active=`[ $focusedws -eq "$i" ] && echo true || echo false`
-    echo -n ''$([ $i -eq 1 ] || echo ,) '{ "number": "'"$i"'", "active": "'"$active"'" }'
-  done
-
-  echo ']'
+  workspaces="$(hyprctl -j workspaces | gojq -r '. | sort_by(.id)')"
+  activeId="$(hyprctl -j activeworkspace | gojq -r '.id')"
+  # don't quote on purpose
+  echo '{ "items": '$workspaces', "activeId": '$activeId' }'
 }
 
 # generate initial widget
@@ -24,10 +12,6 @@ generate
 
 # main loop
 socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
-  if [[ ${line%>>*} =~ (workspace|createworkspace|destroyworkspace) ]]; then
-    # deskroyworkspace gets fires later than createworkspace, do not change
-    # focusedws on destroyworkspace, or it's gonna b bugged
-    [ ${line%>>*} != 'destroyworkspace' ] && focusedws=${line#*>>}
+  [[ ${line%>>*} =~ (workspace|createworkspace|destroyworkspace|focusedmon) ]] &&
     generate
-  fi
 done
