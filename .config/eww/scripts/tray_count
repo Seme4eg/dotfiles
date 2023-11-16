@@ -1,0 +1,5 @@
+#!/bin/bash
+
+dbus-send --dest=org.kde.StatusNotifierWatcher --print-reply=literal /StatusNotifierWatcher \
+  org.freedesktop.DBus.Properties.Get string:"org.kde.StatusNotifierWatcher" \
+  string:"RegisteredStatusNotifierItems" | tr -dc : | wc -c
