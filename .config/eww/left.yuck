@@ -19,7 +19,7 @@
     :halign "start"
     :orientation "h"
     :space-evenly false
-    :spacing 13
+    :spacing 8
     (_workspaces)
     ;; TODO: wlr/taskbar
     (_window)
