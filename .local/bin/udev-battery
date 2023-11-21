@@ -1,6 +1,7 @@
 #!/bin/bash
 
-name= # we only need 'ADP0' and 'BAT0' events, no mouse events, etc ..
+name= # we only need 'ADP0/ACAD (for zenbook)' and 'BAT0' events,
+# no mouse events, etc ..
 # don't use POWER_SUPPLY_STATUS cuz it updates only on 2nd tick
 old_charging=0 # hardcode cuz when starting more often its gonna be..
 charging=      # 0 / 1
@@ -13,7 +14,7 @@ udevadm monitor -p -u |
   while read -r line; do
     [[ $line == POWER_SUPPLY_NAME=* ]] && name=$(echo "$line" | cut -d '=' -f 2)
     # do not process events from mouses, keyboards and other external stuff
-    [ "$name" != ADP0 -a "$name" != BAT0 ] && continue
+    [ "$name" != ADP0 -a "$name" != BAT0 -a "$name" != ACAD ] && continue
 
     if [[ $line == POWER_SUPPLY_ONLINE=* ]]; then
       charging=$(echo "$line" | cut -d '=' -f 2)
