@@ -62,7 +62,9 @@ toggle_ssid() {
   security="$2"
   vpnstatus=$(systemctl is-active openvpn-client@client.service)
   if [ $vpnstatus == 'active' ]; then
-    sudo systemctl stop openvpn-client@client.service
+    # sudo systemctl stop openvpn-client@client.service
+    # command above doesn't work sometimes and network on laptop jus hangs
+    sudo pkill -9 openvpn
     vpnneedsactivation=0
   fi
 
