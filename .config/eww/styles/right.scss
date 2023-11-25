@@ -9,6 +9,9 @@
       menuitem {
         padding: 1px 0;
         font: bold 1em Jura; // Comfortaa; Unbounded;
+        &:hover {
+         background-color: color.scale($color6, $lightness: -60%);
+        }
       }
       separator {
         background-color: $_accent2;
