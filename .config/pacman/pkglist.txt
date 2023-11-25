@@ -1,3 +1,4 @@
+adobe-source-han-sans-cn-fonts
 alsa-utils
 android-tools
 arc-gtk-theme
