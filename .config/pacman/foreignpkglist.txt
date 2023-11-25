@@ -1,5 +1,4 @@
 armcord-bin
-binder_linux-dkms
 brillo
 cgo-git
 dualsensectl-git
@@ -28,7 +27,6 @@ swaync-git
 swww
 telegram-tdlib-git
 wal-telegram-git
-waydroid-git
 webcord-bin
 wlsunset-git
 yay
