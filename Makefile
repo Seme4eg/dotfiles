@@ -103,7 +103,8 @@ postreboot: firefox mpv mpd
 # - protonge : run only after steam launch cuz steam creates symlink to root dir
 # - icons : run only after you synced icons folder from other devices
 # - waydroid : not ready yet
-# - asus-battery-threshold : run only for asus laptops
+# - asus: for asus laptops
+# - nvidia: for nvidia hybrid laptops
 
 
 # ------------  Packages  ------------
@@ -176,7 +177,7 @@ icons: ## setup icons and theme
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
 
-asus: ## set ASUS laptop battery threshold to 80
+asus: ## install ASUS laptop specific software (ie. battery threshold)
 	$(PACMAN) mesa libva-mesa-driver mesa-vdpau vulkan-radeon
 	$(YAY) asusctl amdgpu_top-bin
 	wget -P ${HOME}/Downloads https://gitlab.com/asus-linux/asusctl/-/raw/d0b9aee85a60f0d0a1afb4cb6e3da802cddb1344/data/asusd-alt.service
@@ -185,6 +186,10 @@ asus: ## set ASUS laptop battery threshold to 80
 	sudo cp -p asusd-alt.service /etc/systemd/system/
 	$(SSEN) asusd-alt.service
 	asusctl -c 80
+
+nvidia: ## install Nvidia hybrid laptop software
+	$(PACMAN) nvidia nvidia-prime nvtop
+	$(YAY) libplacebo-git libva-nvidia-driver-git
 
 protonge: ## install proton GE latest version
 	export WORKDIR="/tmp/proton-ge-custom"
