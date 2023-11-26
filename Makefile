@@ -95,7 +95,7 @@ install: dotfiles reflector yay pacman ## Install all packages
 	pacman -Qtdq | sudo pacman -Rns --noconfirm -
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh emacs systemd wal
+postinstall: sysoptions zsh emacs systemd hyprplugins wal
 
 postreboot: firefox mpv mpd
 
@@ -143,6 +143,10 @@ mpd:
 	systemctl --user restart $@.service
 	$(SUEN) mpd.service
 
+hyprplugins:
+	git clone 'git@github.com:VortexCoyote/hyprfocus.git' ${HOME}/utils/hyprfocus
+	cd ${HOME}/utils/hyprfocus
+	make all
 
 # ------------  Other  ------------
 
