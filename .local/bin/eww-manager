@@ -8,26 +8,28 @@
 # command. And based on that we start/stop 2 eww windows that render on
 # different monitors.
 
-socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
-  if [[ ${line%>>*} =~ (monitoradded|monitorremoved) ]]; then
-    monitors_count=$(hyprctl -j monitors | gojq -r '. | length')
-    first_monitor=$(hyprctl -j monitors | gojq -r '.[0] | .name')
-    # echo "count: $monitors_count; first: $first_monitor"
+manage() {
+  monitors_count=$(hyprctl -j monitors | gojq -r '. | length')
+  first_monitor=$(hyprctl -j monitors | gojq -r '.[0] | .name')
+  # echo "count: $monitors_count; first: $first_monitor"
 
-    if [ "$monitors_count" = 2 ]; then
-      if [ "$first_monitor" = 'eDP-1' ]; then
-        systemctl --user start eww-window@toptopbar.service
-        systemctl --user stop --now eww-window@topbar.service
-      else
-        systemctl --user stop eww-window@toptopbar.service
-        systemctl --user start --now eww-window@topbar.service
-      fi
+  if [ "$monitors_count" = 2 ]; then
+    if [ "$first_monitor" = 'eDP-1' ]; then
+      systemctl --user stop --now eww-window@topbar.service
+      systemctl --user start eww-window@toptopbar.service
     else
-      if [ "$first_monitor" = 'eDP-1' ]; then
-        systemctl --user stop eww-window@toptopbar.service
-        systemctl --user start --now eww-window@topbar.service
-      fi
+      systemctl --user stop eww-window@toptopbar.service
+      systemctl --user start --now eww-window@topbar.service
     fi
-
+  else
+    systemctl --user stop --now eww-window@toptopbar.service
+    systemctl --user restart --now eww-window@topbar.service
   fi
+}
+
+# update eww windows on service startup
+manage
+
+socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
+  [[ ${line%>>*} =~ (monitoradded|monitorremoved) ]] && manage
 done
