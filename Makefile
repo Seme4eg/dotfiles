@@ -143,13 +143,6 @@ mpd:
 	systemctl --user restart $@.service
 	$(SUEN) mpd.service
 
-# TODO: need better testing
-waydroid:
-	sudo waydroid init
-	wget -P ${HOME}/Downloads https://dl.anixart.tv/anixart.apk
-	$@ session start
-	$@ app install ${HOME}/Downloads/anixart.apk
-	@echo 'Now you need a reboot'
 
 # ------------  Other  ------------
 
