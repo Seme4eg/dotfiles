@@ -18,7 +18,7 @@ else
   # /etc/systemd/logind.conf
   count_monitors=$(hyprctl -j monitors | gojq -r '. | length')
   if [ "$count_monitors" = 1 ]; then
-    swaylock --grace 0
+    # swaylock --grace 0
     systemctl suspend
   else
     hyprctl keyword monitor "eDP-1, disable"
