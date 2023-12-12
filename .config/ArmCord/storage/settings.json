@@ -23,5 +23,5 @@
     "trayIcon": "default",
     "doneSetup": true,
     "clientName": "ArmCord",
-    "customIcon": "/opt/armcord/resources/app.asar/assets/desktop.png"
+    "customIcon": "/usr/share/armcord/app.asar/assets/desktop.png"
 }
