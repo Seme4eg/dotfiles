@@ -266,6 +266,8 @@ user_pref("browser.tabs.insertAfterCurrent", true);
 
 user_pref("privacy.resistFingerprinting.block_mozAddonManager", true)
 user_pref("extensions.webextensions.restrictedDomains", "")
+user_pref("media.ffmpeg.vaapi.enabled", true)
+user_pref("media.hardware-video-decoding.force-enabled", true)
 
 /****************************************************************************
  * END: BETTERFOX                                                           *
