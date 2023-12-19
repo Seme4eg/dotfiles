@@ -16,10 +16,10 @@ wifi_signal() {
 }
 
 type() {
-  if is_wifi; then
-    echo wifi
-  elif is_ethernet; then
+  if is_ethernet; then
     echo ethernet
+  elif is_wifi; then
+    echo wifi
   else
     echo nil
   fi

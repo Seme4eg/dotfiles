@@ -133,7 +133,7 @@
                     " ${round(up / 1024, 0)}" :
                     " ${round(up / 1048576, 0)}"})
         (progress
-            :value {net.wifi_signal ?: 100}
+            :value {net.type == "wifi" ? net.wifi_signal : 100}
             :width 38
             :orientation "h")
         (label
