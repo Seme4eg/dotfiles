@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
 getShortName() {
-  [[ $1 =~ English.* ]] && echo 'EN' || echo 'RU'
+    case "$1" in
+      *Colemak*) echo DH ;;
+      *English*) echo EN ;;
+      *Russian*) echo RU ;;
+    esac
 }
 
-# initial value to display
-layoutLine=$(hyprctl devices | grep keymap | tail --lines 1)
-getShortName ${layoutLine#*:}
+# get all layouts of all devices to not hardcode keyboard id
+layouts=$(hyprctl devices | grep keymap)
+getShortName "$layouts"
 
 socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
-  [ ${line%>>*} == "activelayout" ] && getShortName ${line#*:}
+  [[ "$line" == activelayout* ]] && getShortName "$line"
 done
