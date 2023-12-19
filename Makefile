@@ -103,8 +103,8 @@ postreboot: firefox mpv mpd
 # - protonge : run only after steam launch cuz steam creates symlink to root dir
 # - icons : run only after you synced icons folder from other devices
 # - waydroid : not ready yet
-# - asus: for asus laptops
-# - nvidia: for nvidia hybrid laptops
+# - asus: for asus laptop
+# - xiaomi: for nvidia hybrid xiaomi laptop
 
 
 # ------------  Packages  ------------
@@ -187,9 +187,9 @@ asus: ## install ASUS laptop specific software (ie. battery threshold)
 	$(SSEN) asusd-alt.service
 	asusctl -c 80
 
-nvidia: ## install Nvidia hybrid laptop software
-	$(PACMAN) nvidia nvidia-prime nvtop
-	$(YAY) libplacebo-git libva-nvidia-driver-git
+xiaomi: ## install stuff for nvidia hybrid laptop
+	$(PACMAN) intel-media-driver nvidia nvidia-prime nvtop
+	$(YAY) libva-nvidia-driver-git
 
 protonge: ## install proton GE latest version
 	export WORKDIR="/tmp/proton-ge-custom"
