@@ -7,7 +7,6 @@
 
 location=$(timedatectl | grep "Time zone" | awk '{print $3}' | xargs basename)
 
-# 2 valid args: t (for temperature) and w (for wind)
 ip addr show | grep -q "state UP" &&
-  curl "https://wttr.in/$location?format=%$1" ||
+  curl "https://wttr.in/$location?format=%t" ||
   echo ''
