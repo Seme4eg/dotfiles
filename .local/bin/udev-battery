@@ -2,7 +2,6 @@
 
 name= # we only need 'ADP0/ACAD (for zenbook)' and 'BAT0' events,
 # no mouse events, etc ..
-# don't use POWER_SUPPLY_STATUS cuz it updates only on 2nd tick
 old_charging=0 # hardcode cuz when starting more often its gonna be..
 charging=      # 0 / 1
 old_capacity=  # to compare with since we r getting multiple events
@@ -10,18 +9,31 @@ capacity=      # current charge level
 
 # filter lines before they get processed otherwise inefficient
 udevadm monitor -p -u |
-  rg --line-buffered -e '^POWER_SUPPLY_(NAME|ONLINE|CAPACITY)=' |
+  rg --line-buffered -e '^POWER_SUPPLY_(NAME|ONLINE|STATUS|CAPACITY)=' |
   while read -r line; do
     [[ $line == POWER_SUPPLY_NAME=* ]] && name=$(echo "$line" | cut -d '=' -f 2)
     # do not process events from mouses, keyboards and other external stuff
-    [ "$name" != ADP0 -a "$name" != BAT0 -a "$name" != ACAD ] && continue
+    # asus laptop has battery name BATT
+    [[ ! "$name" =~ ^(ADP0|BAT0|BATT|ACAD)$ ]] && continue
 
-    if [[ $line == POWER_SUPPLY_ONLINE=* ]]; then
-      charging=$(echo "$line" | cut -d '=' -f 2)
-      [ "$old_charging" == "0" -a "$charging" == "1" ] &&
+    # on asus laptop there is only 'status' field which downside is that updates
+    # only on 2nd tick
+    if [[ ($name == BAT0 && $line == POWER_SUPPLY_ONLINE=*) ||
+            ($name == BATT && $line == POWER_SUPPLY_STATUS=*) ]]; then
+      status=$(echo "$line" | cut -d '=' -f 2)
+
+      if [ $status == Discharging ]; then
+        charging=0
+      elif [ $status == Charging ]; then
+        charging=1
+      else
+        charging=$status
+      fi
+
+      [[ "$old_charging" -eq 0 && "$charging" -eq 1 ]] &&
         $HOME/.local/bin/say -e 'Charging'
       old_charging=$charging
-      # charging line goes before line with capacity, don't do anythinig just yet
+      # charging line goes before line with capacity, don't do anythinig yet
       continue
     elif [[ $line == POWER_SUPPLY_CAPACITY=* ]]; then
       capacity=$(echo "$line" | cut -d '=' -f 2)
