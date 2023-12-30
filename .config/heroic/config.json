@@ -25,22 +25,26 @@
     "wrapperOptions": [],
     "showFps": true,
     "useGameMode": false,
-    "userInfo": {
-      "name": "earthian"
-    },
     "wineCrossoverBottle": "Heroic",
     "winePrefix": "/home/earthian/Games/Heroic/Prefixes/default",
     "wineVersion": {
-      "bin": "/home/earthian/.local/share/Steam/steamapps/common/Proton 8.0/proton",
-      "name": "Proton - Proton 8.0",
+      "bin": "/home/earthian/.local/share/Steam/steamapps/common/Proton - Experimental/proton",
+      "name": "Proton - Proton - Experimental",
       "type": "proton"
     },
     "enableEsync": true,
     "enableFsync": true,
+    "eacRuntime": false,
+    "battlEyeRuntime": false,
+    "framelessWindow": false,
+    "userInfo": {
+      "name": "earthian"
+    },
     "discordRPC": true,
-    "enableDXVKFpsLimit": true,
+    "enableDXVKFpsLimit": false,
     "DXVKFpsCap": "60",
-    "useSteamRuntime": true
+    "useSteamRuntime": true,
+    "showMangohud": true
   },
   "version": "v0"
 }
