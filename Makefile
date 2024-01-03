@@ -189,7 +189,8 @@ asus: ## install ASUS laptop specific software (ie. battery threshold)
 	asusctl -c 80
 
 xiaomi: ## install stuff for nvidia hybrid laptop
-	$(PACMAN) intel-media-driver nvidia nvidia-prime nvtop
+	$(PACMAN) --needed intel-media-driver nvidia nvidia-prime nvtop nvidia-dkms \
+		nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader
 	$(YAY) libva-nvidia-driver-git
 
 protonge: ## install proton GE latest version
