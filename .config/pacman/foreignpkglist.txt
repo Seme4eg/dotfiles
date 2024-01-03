@@ -26,7 +26,6 @@ swaylock-effects-git
 swaync-git
 swww
 telegram-tdlib-git
-wal-telegram-git
 webcord-bin
 wlsunset-git
 yay

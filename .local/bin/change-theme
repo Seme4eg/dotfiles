@@ -24,16 +24,6 @@ if [ -z "$wp" ]; then
     wp=$(find ~/Pictures/DCIM/wps/pc/ -type f | sort --random-sort | head -n 1)
 fi
 
-# NOTE: also works smoothly but visually i like changing the wallpaper after
-# all application themes change
-# swww img "$wp" -t=any \
-#   --transition-duration=2 \
-#   --transition-step=255 \
-#   --transition-fps=60 &
-# # --transition-bezier=0,0,1,1 \
-
-# sleep 2; # without this swww look rly sttuttery
-
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
 [ $theme = light ] &&
   wal -n -q -l -i "$wp" --saturate 0.3 ||
@@ -70,14 +60,10 @@ swaync-client -rs &
 # rm ~/.config/WebCord/Themes/*
 # cp $XDG_DATA_HOME/webcord/wal.theme.css $XDG_CONFIG_HOME/WebCord/Themes/wal
 
-# Telegram (https://github.com/guillaumeboehm/wal-telegram#set-the-color-palette)
-# -g for blur background
-wal-telegram -g &
-
-wait # for all child processes to finish
+# wait # for all child processes to finish
 
 swww img "$wp" -t=any \
   --transition-duration=2 \
   --transition-step=255 \
+  --transition-bezier=0,0,1,1 \
   --transition-fps=60 &
-# --transition-bezier=0,0,1,1 \
