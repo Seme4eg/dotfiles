@@ -178,7 +178,8 @@ icons: ## setup icons and theme
 	nwg-look -a
 
 asus: ## install ASUS laptop specific software (ie. battery threshold)
-	$(PACMAN) mesa libva-mesa-driver vulkan-radeon
+	$(PACMAN) --needed needed mesa lib32-mesa mesa-vdpau libva-mesa-driver \
+		vulkan-radeon vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
 	$(YAY) asusctl amdgpu_top-bin
 	wget -P ${HOME}/Downloads https://gitlab.com/asus-linux/asusctl/-/raw/d0b9aee85a60f0d0a1afb4cb6e3da802cddb1344/data/asusd-alt.service
 	sudo systemctl mask asusd
