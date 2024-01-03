@@ -32,6 +32,3 @@ Maybe useful rofi scripts:
 - aur/rofi-mpd-git - A Rofi menu for interacting with MPD written in Python.
 - aur/rofi-mpc - Fast graphical Rofi-Interface for controlling MPD
 
-** Todos [0/1]
-*** IDEA script to move my 1st workspace windows to 3rd one when plugging external monitor
-there is something in wiki
