@@ -20,11 +20,10 @@ and adjust to your needs.
 - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
 - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
 - ~make install~
-- for *nvidia* machines install /nvidia, nvidia-prime, libva-nvidia-driver-git/, for
-  *amd* /mesa/
+- ~make asus/xiaomi~
 - ~make postinstall~
 - reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
-- also check some of the targets in makefile that need to be run manually
+- also check some of the targets in makefile that need/can be run manually
 
 ** Notes
 Maybe useful rofi scripts:
