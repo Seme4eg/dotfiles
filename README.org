@@ -31,3 +31,7 @@ Maybe useful rofi scripts:
 - aur/rofi-mpd-git - A Rofi menu for interacting with MPD written in Python.
 - aur/rofi-mpc - Fast graphical Rofi-Interface for controlling MPD
 
+** Todos
+*** TODO setup swaync to group several telegram notifications
+*** IDEA try/switch to [[https://github.com/Aylur/ags][ags]]
+*** IDEA maybe make some 5/6th workspace a scratchpad and fill it with useful widgets?
