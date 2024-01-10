@@ -35,7 +35,7 @@
       "lib32": "/home/earthian/.config/heroic/tools/wine/Wine-GE-Proton8-25/lib",
       "wineserver": "/home/earthian/.config/heroic/tools/wine/Wine-GE-Proton8-25/bin/wineserver"
     },
-    "enableEsync": true,
+    "enableEsync": false,
     "enableFsync": true,
     "eacRuntime": false,
     "battlEyeRuntime": false,
