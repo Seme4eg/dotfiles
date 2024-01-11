@@ -5,6 +5,8 @@
 # %x for text icon of weather; %f for 'feels like' and %w for wind and arrow-direction
 #  not using json cuz too heavy, 2 separate requests seem to be much lighter
 
+sleep 10 # fix zero value after wakeup cuz of lack of network connection
+
 location=$(timedatectl | grep "Time zone" | awk '{print $3}' | xargs basename)
 
 ip addr show | grep -q "state UP" &&

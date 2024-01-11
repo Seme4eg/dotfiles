@@ -12,7 +12,7 @@
 (defpoll updates_count
          :initial 0
          :interval "3600s"
-         "ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
+         "sleep 10; ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
 (defpoll swayidle_status
     :interval "10000s"
     "systemctl --user is-active swayidle.service || echo 0")
