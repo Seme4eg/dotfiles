@@ -54,3 +54,4 @@ node_modules/
 /.config/MusicBrainz/
 /.config/okularrc
 /.config/QtProject.conf
+/.config/go/
