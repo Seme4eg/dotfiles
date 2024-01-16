@@ -102,7 +102,7 @@ install: dotfiles reflector yay pacman ## Install all packages
 	pacman -Qtdq | sudo pacman -Rns --noconfirm -
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
 
-postinstall: sysoptions zsh emacs systemd hyprplugins wal
+postinstall: sysoptions zsh emacs systemd hyprplugins wal golang
 
 postreboot: firefox mpv mpd
 
@@ -155,6 +155,20 @@ hyprplugins:
 	git clone 'git@github.com:VortexCoyote/hyprfocus.git' ${HOME}/utils/hyprfocus
 	cd ${HOME}/utils/hyprfocus
 	make all
+
+golang: ## install go and its packages
+	$(PACMAN) go
+	export GOPATH="${HOME}/go"
+	go install golang.org/x/tools/gopls@latest
+	go install github.com/x-motemen/gore/cmd/gore@latest
+	go install github.com/stamblerre/gocode@latest
+	go install golang.org/x/tools/cmd/godoc@latest
+	go install golang.org/x/tools/cmd/goimports@latest
+	go install golang.org/x/tools/cmd/gorename@latest
+	go install golang.org/x/tools/cmd/guru@latest
+	go install github.com/cweill/gotests/gotests@latest
+	go install github.com/fatih/gomodifytags@latest
+	go install github.com/rogpeppe/godef@latest
 
 # ------------  Other  ------------
 
