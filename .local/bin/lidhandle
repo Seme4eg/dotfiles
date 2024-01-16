@@ -3,7 +3,7 @@
 state=$1
 
 if [ "$state" == "on" ]; then
-  hyprctl keyword monitor "eDP-1,highrr,0x0,1.7"
+  hyprctl keyword monitor "eDP-1,highrr,0x0,1.8"
   count_monitors=$(hyprctl -j monitors | gojq -r '. | length')
   # if its a normal lid on then do normal stuff, if there's a 2nd monitor
   # plugged its not needed
