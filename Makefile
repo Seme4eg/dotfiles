@@ -104,7 +104,7 @@ install: dotfiles reflector yay pacman ## Install all packages
 
 postinstall: sysoptions zsh emacs systemd hyprplugins wal golang
 
-postreboot: firefox mpv mpd
+postreboot: mpv mpd
 
 # Targets to run manually:
 # - protonge : run only after steam launch cuz steam creates symlink to root dir
@@ -127,15 +127,6 @@ emacs:
 	${HOME}/.config/$@/bin/doom install
 	${HOME}/.config/$@/bin/doom sync
 	rm -rf ${HOME}/.$@.d
-
-# https://github.com/yokoffing/Betterfox
-# https://github.com/MrOtherGuy/firefox-csshacks
-# NOTE: firefox must be started (once) to create folder with default-profile
-firefox: ## symlinks user.js and userChrome.css files to default firefox profile
-	find ${HOME}/.mozilla/firefox/ -maxdepth 1 -type d -name '*.default-release' \
-		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
-	find ${HOME}/.mozilla/firefox/ -maxdepth 1 -type d -name '*.default-release' \
-		-exec ln -s $(XDG_CONFIG_HOME)/firefox/chrome {}/chrome \;
 
 mpv:
 	git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \

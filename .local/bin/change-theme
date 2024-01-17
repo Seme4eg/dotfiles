@@ -33,10 +33,7 @@ eww update theme=$theme
 eww reload & # might be slow sometimes
 # systemctl --user restart eww.service
 
-# TODO: Firefox
-# rm -r ~/.mozilla/firefox/*.default-release/chrome
-# cp -r ~/.config/themes/firefox/$COLOR_SCHEME/chrome ~/.mozilla/firefox/*.default-release/
-pywalfox update & # update firefox theme
+pywalfox update & # update firefox/floorp theme
 
 emacsclient -e "(load-theme 'ewal-doom-one)" & # update emacs theme
 

@@ -5,6 +5,7 @@ dualsensectl-git
 emacs-gcc-wayland-devel-bin
 eww-tray-wayland-git
 firefox-tridactyl-native
+floorp-bin
 gojq
 golangci-lint-bin
 heroic-games-launcher-bin

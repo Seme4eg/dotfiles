@@ -65,7 +65,7 @@ bind --mode=normal ,hn viewconfig nmaps
 
 # yank source blocks
 bind ;s hint -c pre -p
-# Open hint link in Firefox reader mode:
+# Open hint link in reader mode:
 bind ;R composite hint -pipe a href | jsb -p tri.excmds.tabopen("about:reader?url=" + JS_ARG)
 
 # rudimentary find mode
