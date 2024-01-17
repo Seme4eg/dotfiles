@@ -89,7 +89,6 @@ sof-firmware
 solaar
 steam
 stow
-sway
 syncthing
 telegram-desktop
 texinfo
