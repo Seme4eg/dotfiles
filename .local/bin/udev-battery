@@ -53,7 +53,7 @@ udevadm monitor -p -u |
       case $capacity in
         # this one is needed in case i am playing on 60w charger and laptop is
         # still discharging while doing intensive tasks
-        "15") $HOME/.local/bin/say "$capacity% charged left" ;;
+        "15") $HOME/.local/bin/say -e "$capacity% charged left" ;;
         "80" | "85") $HOME/.local/bin/say "$capacity% charged, unplug" ;;
       esac
     fi
