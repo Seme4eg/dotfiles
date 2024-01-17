@@ -58,6 +58,7 @@ msmtp
 nautilus
 ncdu
 neofetch
+nethogs
 networkmanager
 noto-fonts-emoji
 okular
