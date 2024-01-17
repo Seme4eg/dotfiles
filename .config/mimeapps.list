@@ -1,0 +1,9 @@
+[Default Applications]
+text/plain=emacsclient.desktop
+audio/mpeg=mpv.desktop
+image/jpeg=org.gnome.gThumb.desktop
+video/mp4=mpv.desktop
+application/pdf=emacsclient.desktop
+text/html=floorp.desktop
+x-scheme-handler/http=floorp.desktop
+x-scheme-handler/https=floorp.desktop
