@@ -36,24 +36,11 @@
   //     "run-on": "action"
   //   }
   // },
-  "notification-visibility": {
-    "example-name": {
-      "state": "muted",
-      "urgency": "Low",
-      "app-name": "Spotify"
-    }
-  },
   "widgets": [
-    "inhibitors",
     "notifications",
     "mpris"
   ],
   "widget-config": {
-    "inhibitors": {
-      "text": "Inhibitors",
-      "button-text": "Clear All",
-      "clear-all-button": true
-    },
     "mpris": {
       "image-size": 96,
       "image-radius": 13

@@ -11,13 +11,46 @@
 .notification-row {
   outline: none;
   margin: 0;
-  padding: 10px;
+  padding: 0px;
   /* BellotaText 13, Comfortaa 13, Jura 14, montserrat alternates 13 */
   font: 1em shantell sans;
 }
 
 .notification-row:focus,
 .notification-row:hover {
+  background: alpha(@color6, .2);
+}
+
+.notification-group-headers {
+  /* font: 1em shantell sans; */
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: @foreground;
+  letter-spacing: 2px;
+  font: bold 1em Megrim;
+}
+
+.notification-group-icon {
+  color: alpha(@color13, .7);
+  margin-right: 8px;
+/* border: 1px solid @color3 */
+}
+
+.notification-group-collapse-button {
+  background: transparent;
+  border: none
+}
+
+.notification-group-collapse-button:hover {
+  background: alpha(@color6, .2);
+}
+
+.notification-group-close-all-button {
+  background: transparent;
+  border: none
+}
+
+.notification-group-close-all-button:hover {
   background: alpha(@color6, .2);
 }
 
@@ -30,7 +63,7 @@
 
 .low {border: 1px solid @color3;}
 .normal {border: 1px solid @color13;} /* or color5 */
-.critical {
+.notification.critical {
   background: alpha(black, .89);
   border: 1px solid white;
   color: #eeeeee;
