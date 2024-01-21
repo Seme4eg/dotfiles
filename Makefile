@@ -107,6 +107,7 @@ postinstall: sysoptions zsh emacs systemd hyprplugins wal golang
 postreboot: mpv mpd
 
 # Targets to run manually:
+# - floorp : run after first browser launch (cuz folder needs to be created)
 # - protonge : run only after steam launch cuz steam creates symlink to root dir
 # - icons : run only after you synced icons folder from other devices
 # - waydroid : not ready yet
@@ -127,6 +128,10 @@ emacs:
 	${HOME}/.config/$@/bin/doom install
 	${HOME}/.config/$@/bin/doom sync
 	rm -rf ${HOME}/.$@.d
+
+floorp:
+	find ${HOME}/.floorp/ -maxdepth 1 -type d -name '*.default-release' \
+		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
 
 mpv:
 	git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \
