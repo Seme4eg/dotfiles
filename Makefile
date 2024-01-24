@@ -165,6 +165,7 @@ golang: ## install go and its packages
 	go install github.com/cweill/gotests/gotests@latest
 	go install github.com/fatih/gomodifytags@latest
 	go install github.com/rogpeppe/godef@latest
+	go install github.com/jessfraz/dockfmt@latest
 
 # ------------  Other  ------------
 
