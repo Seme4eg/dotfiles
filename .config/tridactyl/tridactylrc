@@ -29,6 +29,8 @@ set searchurls.sp    https://startpage.com/do/search?language=english&cat=web&qu
 set searchurls.sx    https://searx.me/?category_general=on&q=
 set searchurls.osm   https://www.openstreetmap.org/search?query=
 set searchurls.mdn   https://developer.mozilla.org/en-US/search?q=
+set searchurls.aur   https://aur.archlinux.org/packages?O=0&K=
+set searchurls.gopkg  https://pkg.go.dev/search?q=
 
 
 # ------------------- Bindings -------------------
