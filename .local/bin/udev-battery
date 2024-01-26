@@ -1,7 +1,6 @@
 #!/bin/bash
 
-name= # we only need 'ADP0/ACAD (for zenbook)' and 'BAT0' events,
-# no mouse events, etc ..
+name= # we only need 'ADP0/ACAD' events, no mouse events, etc ..
 old_charging=0 # hardcode cuz when starting more often its gonna be..
 charging=      # 0 / 1
 old_capacity=  # to compare with since we r getting multiple events
@@ -9,33 +8,21 @@ capacity=      # current charge level
 
 # filter lines before they get processed otherwise inefficient
 udevadm monitor -p -u |
-  rg --line-buffered -e '^POWER_SUPPLY_(NAME|ONLINE|STATUS|CAPACITY)=' |
+  rg --line-buffered -e '^POWER_SUPPLY_(NAME|ONLINE|CAPACITY)=' |
   while read -r line; do
     [[ $line == POWER_SUPPLY_NAME=* ]] && name=$(echo "$line" | cut -d '=' -f 2)
+
     # do not process events from mouses, keyboards and other external stuff
     # asus laptop has battery name BATT
-    [[ ! "$name" =~ ^(ADP0|BAT0|BATT|ACAD)$ ]] && continue
-
-    # on asus laptop there is only 'status' field which downside is that updates
-    # only on 2nd tick
-    if [[ ($name == BAT0 && $line == POWER_SUPPLY_ONLINE=*) ||
-            ($name == BATT && $line == POWER_SUPPLY_STATUS=*) ]]; then
-      status=$(echo "$line" | cut -d '=' -f 2)
-
-      if [ $status == Discharging ]; then
-        charging=0
-      elif [ $status == Charging ]; then
-        charging=1
-      else
-        charging=$status
-      fi
+    if [[ ($name =~ ^(ADP0|ACAD)$) && $line == POWER_SUPPLY_ONLINE=* ]]; then
+      charging=$(echo "$line" | cut -d '=' -f 2)
 
       [[ "$old_charging" -eq 0 && "$charging" -eq 1 ]] &&
-        $HOME/.local/bin/say -e 'Charging'
+        "$HOME"/.local/bin/say -e 'Charging'
       old_charging=$charging
       # charging line goes before line with capacity, don't do anythinig yet
       continue
-    elif [[ $line == POWER_SUPPLY_CAPACITY=* ]]; then
+    elif [[ ($name =~ ^(BAT0|BATT)$) && $line == POWER_SUPPLY_CAPACITY=* ]]; then
       capacity=$(echo "$line" | cut -d '=' -f 2)
       [ "$capacity" == "$old_capacity" ] && continue # filter same events
       old_capacity=$capacity
@@ -45,16 +32,16 @@ udevadm monitor -p -u |
 
     if [ "$charging" == "0" ]; then
       case $capacity in
-        "15" | "10") $HOME/.local/bin/say "$capacity% charge left" ;;
-        "6") $HOME/.local/bin/say "Hybernating very soon" ;;
+        "15" | "10") "$HOME"/.local/bin/say "$capacity% charge left" ;;
+        "6") "$HOME"/.local/bin/say "Hybernating very soon" ;;
         "5") systemctl suspend ;;
       esac
     elif [ "$charging" == "1" ]; then
       case $capacity in
         # this one is needed in case i am playing on 60w charger and laptop is
         # still discharging while doing intensive tasks
-        "15") $HOME/.local/bin/say -e "$capacity% charged left" ;;
-        "80" | "85") $HOME/.local/bin/say "$capacity% charged, unplug" ;;
+        "15") "$HOME"/.local/bin/say -e "$capacity% charged left" ;;
+        "80" | "85") "$HOME"/.local/bin/say "$capacity% charged, unplug" ;;
       esac
     fi
   done
