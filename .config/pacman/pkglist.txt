@@ -78,7 +78,6 @@ podman-compose
 podman-docker
 polkit-kde-agent
 poppler-glib
-postgresql
 python-pywal
 reflector
 ripgrep
