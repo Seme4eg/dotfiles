@@ -80,7 +80,7 @@ pacman: ## add user pacman config to [options] section, add community and multil
 
 reflector:
 	$(PACMAN) reflector
-	$(SSEN) reflector
+	$(SSEN) reflector.timer
 
 PACMAN_DIR := ${HOME}/.config/pacman
 install: dotfiles reflector yay pacman ## Install all packages
