@@ -30,13 +30,16 @@ udevadm monitor -p -u |
       continue # continue on all lines except the capacity one
     fi
 
+    # need to ++ / -- capacity cuz ADP0/ACAD events are always behing by 1
     if [ "$charging" == "0" ]; then
+      capacity=$((capacity-1))
       case $capacity in
         "15" | "10") "$HOME"/.local/bin/say "$capacity% charge left" ;;
         "6") "$HOME"/.local/bin/say "Hybernating very soon" ;;
         "5") systemctl suspend ;;
       esac
     elif [ "$charging" == "1" ]; then
+      capacity=$((capacity+1))
       case $capacity in
         # this one is needed in case i am playing on 60w charger and laptop is
         # still discharging while doing intensive tasks
