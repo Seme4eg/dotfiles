@@ -92,7 +92,6 @@ solaar
 steam
 stow
 syncthing
-telegram-desktop
 texinfo
 timeshift
 tldr
