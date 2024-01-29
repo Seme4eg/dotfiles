@@ -65,6 +65,7 @@ okular
 openssh
 openvpn
 otf-hasklig-nerd
+p7zip
 pacman-contrib
 pass
 passff-host
