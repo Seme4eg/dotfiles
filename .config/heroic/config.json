@@ -28,12 +28,12 @@
     "wineCrossoverBottle": "Heroic",
     "winePrefix": "/home/earthian/Games/Heroic/Prefixes/default",
     "wineVersion": {
-      "bin": "/home/earthian/.config/heroic/tools/wine/Wine-GE-Proton8-25/bin/wine",
-      "name": "Wine - Wine-GE-Proton8-25",
+      "bin": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/bin/wine",
+      "name": "Wine - Wine-GE-latest",
       "type": "wine",
-      "lib": "/home/earthian/.config/heroic/tools/wine/Wine-GE-Proton8-25/lib64",
-      "lib32": "/home/earthian/.config/heroic/tools/wine/Wine-GE-Proton8-25/lib",
-      "wineserver": "/home/earthian/.config/heroic/tools/wine/Wine-GE-Proton8-25/bin/wineserver"
+      "lib": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/lib64",
+      "lib32": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/lib",
+      "wineserver": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/bin/wineserver"
     },
     "enableEsync": false,
     "enableFsync": true,
