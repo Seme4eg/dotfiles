@@ -1,13 +1,8 @@
-.DS_Store
-.idea
 .uuid
 *.log
 tmp/
 .github/
 *.http
-
-.npm-global/
-.npm/
 node_modules/
 
 # dotfiles specific
