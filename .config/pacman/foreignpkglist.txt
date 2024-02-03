@@ -11,7 +11,7 @@ golangci-lint-bin
 heroic-games-launcher-bin
 hyprland-git
 mbsync-git
-mpv-vapoursynth
+mpv-full
 mu
 numix-circle-icon-theme-git
 nvm-git
