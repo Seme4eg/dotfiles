@@ -9,6 +9,7 @@ bluez
 bluez-utils
 btop
 calf
+chromium
 cliphist
 cmake
 easyeffects
