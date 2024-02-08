@@ -43,6 +43,8 @@ toggle_power() {
     fi
 }
 
+# FIXME: borked after recent bluez updates, use bluetoothctl in console to
+# enable scanning there and connect to new devices
 # Checks if controller is scanning for new devices
 scan_on() {
     if bluetoothctl show | grep -q "Discovering: yes"; then
