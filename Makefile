@@ -217,6 +217,14 @@ nvidia-tkg:
 	cd ${HOME}/utils/$@
 	makepkg -si
 
+Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
+	$(YAY) miniconda3
+	git clone https://github.com/lllyasviel/Fooocus.git ${HOME}/utils/$@
+	cd ${HOME}/utils/Fooocus
+	conda env create -f environment.yaml
+	conda activate fooocus
+	pip install -r requirements_versions.txt
+
 protonge: ## install proton GE latest version
 	export WORKDIR="/tmp/proton-ge-custom"
 	mkdir $$WORKDIR

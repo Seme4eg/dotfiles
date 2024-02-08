@@ -90,5 +90,9 @@ if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
   source /usr/share/nvm/install-nvm-exec
 fi
 
+# For Fooocus
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
+
