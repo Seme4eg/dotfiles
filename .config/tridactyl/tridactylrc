@@ -52,7 +52,6 @@ bind --mode=normal h fillcmdline help
 bind --mode=normal ,a fillcmdline apropos
 bind --mode=normal ,R restart
 bind --mode=normal ,S source
-# REVIEW: maybe i don't need it
 bind --mode=normal ,d tabduplicate
 # to to last visited tab (C-^ - default)
 bind --mode=normal gp tab
@@ -61,12 +60,10 @@ bind --mode=normal gm fillcmdline tabmove
 # bind --mode=normal ,hn composite viewconfig nmaps | zoom 1.4
 # how to zoom *opened* page?
 bind --mode=normal ,hn viewconfig nmaps
-# TODO: first it 'forwards' and only then it tabduplicates, which is a bs to me
-# bind --mode=normal ,L composite tabduplicate; forward
-# bind --mode=normal ,H composite tabduplicate; back
 
 # yank source blocks
 bind ;s hint -c pre -p
+bind ;r hint -qb
 # Open hint link in reader mode:
 bind ;R composite hint -pipe a href | jsb -p tri.excmds.tabopen("about:reader?url=" + JS_ARG)
 
