@@ -136,18 +136,10 @@ ssid_menu() {
 
   # Match chosen option to command
   case "$chosen" in
-    "")
-      echo "No option chosen."
-      ;;
-    "$connected")
-      toggle_ssid "$ssid" "$security"
-      ;;
-    "$saved")
-      forget_ssid "$ssid"
-      ;;
-    "$goback")
-      show_menu
-      ;;
+    "$connected") toggle_ssid "$ssid" "$security" ;;
+    "$saved") forget_ssid "$ssid" ;;
+    "$goback") show_menu ;;
+    *) echo "No option chosen." ;;
   esac
 }
 
@@ -175,8 +167,12 @@ show_menu() {
   # force monospace font to not get those fields messy
   option=$(echo -e "$options\nrefresh" | uniq -u |
     rofi -dmenu -i -selected-row 2 \
+      -kb-custom-1 "Alt+Return" \
+      -kb-custom-2 "Alt+k" \
       -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }' \
       -theme-str '* { font: "syne mono 13"; }')
+
+  status=$?
 
   kill $update_pid
 
@@ -192,8 +188,13 @@ show_menu() {
   else
     ssid=$(echo "$option" | awk -F '  +' '{print $2}')
     security=$(echo "$option" | awk -F '  +' '{print $3}')
-    echo $security
-    ssid_menu "$ssid" "$security"
+    case $status in
+      # Alt + Return directly toggles network, without submenu
+      10) toggle_ssid "$ssid" "$security" ;;
+      # Alt + k directly forgets network, without submenu
+      11) forget_ssid "$ssid" ;;
+      *) ssid_menu "$ssid" "$security" ;;
+    esac
   fi
 }
 
