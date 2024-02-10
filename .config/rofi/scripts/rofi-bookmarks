@@ -1,41 +1,49 @@
 #!/usr/bin/bash
 
+# 'Return' opens selected entry via xdg-open
 # 'Alt + Return' adds bookmark to your bookmarks file
 # 'Alt + k' copies bookmark line to clipboard (in case you want to
 #   create it edited and just to be save) and removes chosen bookmark from file
+# 'Alt + K' does same as 'Alt + k', but keeps menu opened
 # 'Alt + y' copies selected bookmark to clipboad (wayland only)
 # 'Ctrl + Space' (rofi bindings) completes selected entry
 
 bookmarks_file="$HOME/Documents/quickmarks"
 
-# force monospace font to not get those fields messy
-bookmark=$(rofi -dmenu -i \
-  -theme-str '#entry { placeholder: "Choose kaomoji:"; }' \
-  -theme-str '* { font: "syne mono 13"; }' \
-  -kb-custom-1 "Alt+Return" \
-  -kb-custom-2 "Alt+k" \
-  -kb-custom-3 "Alt+y" \
-  -input "$bookmarks_file")
+show_menu() {
+  # force monospace font to not get those fields messy
+  bookmark=$(rofi -dmenu -i \
+    -theme-str '#entry { placeholder: "Choose kaomoji:"; }' \
+    -theme-str '* { font: "syne mono 13"; }' \
+    -kb-custom-1 "Alt+Return" \
+    -kb-custom-2 "Alt+k" \
+    -kb-custom-3 "Alt+K" \
+    -kb-custom-4 "Alt+y" \
+    -input "$bookmarks_file")
 
-status=$?
+  status=$?
 
-[ -z "$bookmark" ] && exit 0
+  [ -z "$bookmark" ] && exit 0
 
-url=$(echo "$bookmark" | cut -d ' ' -f 2)
+  url=$(echo "$bookmark" | cut -d ' ' -f 2)
 
-case $status in
-  10)
-    echo "$bookmark" >> "$bookmarks_file"
-    sort -u -o "$bookmarks_file" "$bookmarks_file"
-    ;;
-  11)
-    wl-copy "$bookmark"
-    # Escape special characters
-    escaped_bookmark=$(sed 's/[][\/.*^$]/\\&/g' <<< "$bookmark")
-    sed -i "/$escaped_bookmark/d" "$bookmarks_file"
-    ;;
-  12) wl-copy "$url" ;;
-  *) xdg-open "$url" ;;
-esac
+  case $status in
+    10)
+      echo "$bookmark" >> "$bookmarks_file"
+      sort -u -o "$bookmarks_file" "$bookmarks_file"
+      ;;
+    11|12)
+      wl-copy "$bookmark"
+      # Escape special characters
+      escaped_bookmark=$(sed 's/[][\/.*^$]/\\&/g' <<< "$bookmark")
+      sed -i "/$escaped_bookmark/d" "$bookmarks_file"
+      [ $status -eq 12 ] && show_menu
+      ;;
+    13) wl-copy "$url" ;;
+    *) xdg-open "$url" ;;
+  esac
+}
+
+show_menu
 
 exit 0
