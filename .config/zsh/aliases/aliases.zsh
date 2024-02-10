@@ -9,7 +9,8 @@ alias eh="cd ~/git/mp/web-arm/ && yarn serve"
 alias vedroid="waydroid session stop && waydroid session start &"
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
-alias picgen="cd ~/utils/Fooocus && conda activate fooocus && python entry_with_update.py"
+alias picgen="cd ~/utils/Fooocus && conda activate fooocus && \
+  python entry_with_update.py --always-download-new-model"
 
 # --grep=<pattern>
 # -x -- Include explanations of log messages from the message catalog where available
