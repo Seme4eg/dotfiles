@@ -33,7 +33,10 @@ show_menu() {
       sort -u -o "$bookmarks_file" "$bookmarks_file"
       ;;
     11|12)
-      wl-copy "$bookmark"
+      # copy only on normla delete, because i suppose that when user will use
+      # delete with reappearing menu (Alt + K) he most likely already has
+      # something in clipboard to replace deleted entry with
+      [ $status -eq 11 ] && wl-copy "$bookmark"
       # Escape special characters
       escaped_bookmark=$(sed 's/[][\/.*^$]/\\&/g' <<< "$bookmark")
       sed -i "/$escaped_bookmark/d" "$bookmarks_file"
