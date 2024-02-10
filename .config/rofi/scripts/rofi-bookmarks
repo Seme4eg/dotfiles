@@ -13,7 +13,7 @@ bookmarks_file="$HOME/Documents/quickmarks"
 show_menu() {
   # force monospace font to not get those fields messy
   bookmark=$(rofi -dmenu -i \
-    -theme-str '#entry { placeholder: "Choose kaomoji:"; }' \
+    -theme-str '#entry { placeholder: "Open/yank/kill bookmark:"; }' \
     -theme-str '* { font: "syne mono 13"; }' \
     -kb-custom-1 "Alt+Return" \
     -kb-custom-2 "Alt+k" \
