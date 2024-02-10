@@ -5,24 +5,39 @@ action=install
 while getopts ":ri" Option; do case $Option in
   i) action=install ;;
   r) action=remove ;;
+  *) action=install ;;
 esac done
 
 case $action in
   "install")
     pkg=$(pacman -Si |
-      awk '/^Name/{name=$3} /^Download Size/{size=$4$5} /^Repo/{repo=$3} /^Description/{sub(/^.{18}/,"",$0); print name, "["size"]", "("repo") =>", $0} ' |
-      sort -d | rofi -dmenu -i | awk '{print $1}')
+            awk -F ' : ' '
+/^Name/{name=$2}
+/^Description/{description=$2}
+/^Download Size/{size=$2}
+/^Installed Size/{size_i=$2;
+print name, "「 "size" →", size_i" 」", description} ' |
+            sort -d | rofi -dmenu -i | awk '{print $1}')
 
-    sudo pacman -S --noconfirm "$pkg" && say "Installed 📦 $pkg"
-    # TODO: on error from pacman command do pacman sync and then try again
+    # Name [Download Size] (Repo) => Description
+
+    [ -z "$pkg" ] && exit 0
+
+    sudo pacman -S --noconfirm "$pkg" &&
+      say "Installed 📦 $pkg" || say "Failed to install 📦 $pkg"
     ;;
   "remove")
-    # FIXME: 'installed size' gets grabbed from somewhere else resulting in
-    # wrong size
     pkg=$(yay -Qi |
-      awk -F ' : ' '/^Name/{name=$2} /^Installed Size/{size=$2} /^Description/{sub(/^.{18}/,"",$0); print name, "["size"] =>", $0} ' |
+      awk -F ' : ' '
+/^Name/{name=$2}
+/^Description/{description=$2}
+/^Installed Size/{size=$2;
+print name, "「 "size" 」", description} ' |
       sort -d | rofi -dmenu -i | awk '{print $1}')
 
-    sudo pacman -R --noconfirm "$pkg" && say "Removed 📦 $pkg"
+    [ -z "$pkg" ] && exit 0
+
+    sudo pacman -R --noconfirm "$pkg" &&
+      say "Removed 📦 $pkg" || say "Failed to remove 📦 $pkg"
     ;;
 esac
