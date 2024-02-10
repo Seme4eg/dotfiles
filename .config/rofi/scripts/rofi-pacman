@@ -8,18 +8,25 @@ while getopts ":ri" Option; do case $Option in
   *) action=install ;;
 esac done
 
-case $action in
-  "install")
-    pkg=$(pacman -Si |
-            awk -F ' : ' '
+awk_install_str='
 /^Name/{name=$2}
 /^Description/{description=$2}
 /^Download Size/{size=$2}
 /^Installed Size/{size_i=$2;
-print name, "「 "size" →", size_i" 」", description} ' |
-            sort -d | rofi -dmenu -i | awk '{print $1}')
+print name, "「 "size" →", size_i" 」", description}'
 
-    # Name [Download Size] (Repo) => Description
+awk_remove_str='
+/^Name/{name=$2}
+/^Description/{description=$2}
+/^Installed Size/{size=$2;
+print name, "「 "size" 」", description}'
+
+case $action in
+  "install")
+    pkg=$(pacman -Si | awk -F ' : ' "$awk_install_str" | sort -d | \
+      rofi -dmenu -i \
+      -theme-str '#entry { placeholder: "Install package ..."; }' | \
+      awk '{print $1}')
 
     [ -z "$pkg" ] && exit 0
 
@@ -27,13 +34,10 @@ print name, "「 "size" →", size_i" 」", description} ' |
       say "Installed 📦 $pkg" || say "Failed to install 📦 $pkg"
     ;;
   "remove")
-    pkg=$(yay -Qi |
-      awk -F ' : ' '
-/^Name/{name=$2}
-/^Description/{description=$2}
-/^Installed Size/{size=$2;
-print name, "「 "size" 」", description} ' |
-      sort -d | rofi -dmenu -i | awk '{print $1}')
+    pkg=$(yay -Qi | awk -F ' : ' "$awk_remove_str" | sort -d | \
+      rofi -dmenu -i \
+      -theme-str '#entry { placeholder: "Remove package ..."; }' | \
+      awk '{print $1}')
 
     [ -z "$pkg" ] && exit 0
 
