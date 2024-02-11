@@ -1,3 +1,6 @@
 [submodule ".config/mpv"]
 	path = .config/mpv
 	url = git@github.com:Seme4eg/mpv-conf.git
+[submodule ".config/rofi/scripts/pacman"]
+	path = .config/rofi/scripts/pacman
+	url = git@github.com:Seme4eg/rofi-pacman.git
