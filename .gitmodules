@@ -4,3 +4,6 @@
 [submodule ".config/rofi/scripts/pacman"]
 	path = .config/rofi/scripts/pacman
 	url = git@github.com:Seme4eg/rofi-pacman.git
+[submodule ".config/rofi/scripts/kaomoji"]
+	path = .config/rofi/scripts/kaomoji
+	url = git@github.com:Seme4eg/rofi-kaomoji.git
