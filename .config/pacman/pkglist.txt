@@ -61,7 +61,6 @@ neofetch
 nethogs
 networkmanager
 noto-fonts-emoji
-okular
 openssh
 openvpn
 otf-hasklig-nerd
