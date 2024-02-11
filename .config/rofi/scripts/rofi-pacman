@@ -1,47 +1,50 @@
 #!/bin/bash
 
-action=install
+list_flags="-Si"
+action_flags="-S"
+placeholder="Remove package ..."
+success_message="Installed 📦 $pkg"
+failure_message="Failed to install 📦 $pkg"
 
-while getopts ":ri" Option; do case $Option in
-  i) action=install ;;
-  r) action=remove ;;
-  *) action=install ;;
-esac done
+while getopts ":r" Option; do
+  case $Option in
+    r)
+      list_flags="-Qi"
+      action_flags="-R"
+      placeholder="Install package ..."
+      success_message="Installed 📦 $pkg"
+      failure_message="Failed to install 📦 $pkg"
+      ;;
+    *) ;;
+  esac done
 
-awk_install_str='
+awk_str='
 /^Name/{name=$2}
 /^Description/{description=$2}
-/^Download Size/{size=$2}
+/^Download Size/{size=$2" →"}
 /^Installed Size/{size_i=$2;
-print name, "「 "size" →", size_i" 」", description}'
+print name, "「 "size, size_i" 」", description}'
 
-awk_remove_str='
-/^Name/{name=$2}
-/^Description/{description=$2}
-/^Installed Size/{size=$2;
-print name, "「 "size" 」", description}'
+open_url_kbd="Control+o"
 
-case $action in
-  "install")
-    pkg=$(pacman -Si | awk -F ' : ' "$awk_install_str" | sort -d | \
-      rofi -dmenu -i \
-      -theme-str '#entry { placeholder: "Install package ..."; }' | \
-      awk '{print $1}')
+open_url() {
+  pacman -Si "$1" | awk -F ' : ' '/^URL/{print $2}' | xargs xdg-open
+}
 
-    [ -z "$pkg" ] && exit 0
+entry=$(pacman "$list_flags" | awk -F ' : ' "$awk_str" | sort -d | \
+  rofi -dmenu -i -theme-str "#entry { placeholder: \"$placeholder\"; }" \
+  -kb-custom-1 "$open_url_kbd")
 
-    sudo pacman -S --noconfirm "$pkg" &&
-      say "Installed 📦 $pkg" || say "Failed to install 📦 $pkg"
-    ;;
-  "remove")
-    pkg=$(yay -Qi | awk -F ' : ' "$awk_remove_str" | sort -d | \
-      rofi -dmenu -i \
-      -theme-str '#entry { placeholder: "Remove package ..."; }' | \
-      awk '{print $1}')
+rofi_exit=$?
 
-    [ -z "$pkg" ] && exit 0
+[ $rofi_exit -eq 1 ] && exit
 
-    sudo pacman -R --noconfirm "$pkg" &&
-      say "Removed 📦 $pkg" || say "Failed to remove 📦 $pkg"
-    ;;
+pkg=$(echo "$entry" | awk '{print $1}')
+
+case $rofi_exit in
+  10) open_url "$pkg" ;;
+  *) sudo pacman "$action_flags" --noconfirm "$pkg" &&
+       say "$success_message" || say "$failure_message" ;;
 esac
+
+exit 0
