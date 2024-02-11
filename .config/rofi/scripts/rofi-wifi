@@ -150,7 +150,7 @@ quick_forget="Alt+k"
 refresh="Control+r"
 
 # autoupdate network list
-function update_networks() {
+update_networks() {
   while true; do
     sleep 1
     _networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
@@ -181,8 +181,6 @@ show_menu() {
       -theme-str '* { font: "syne mono 13"; }')
 
   rofi_exit=$?
-
-  echo $rofi_exit
 
   kill $update_pid
 
