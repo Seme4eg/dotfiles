@@ -16,7 +16,6 @@ easyeffects
 editorconfig-core-c
 efibootmgr
 fd
-firefox
 foot
 fzf
 git

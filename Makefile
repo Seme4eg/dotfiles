@@ -39,6 +39,7 @@ ssh: ## Init ssh
 	curl -F 'file=@-' 0x0.st < $$SSHDIR/id_ed25519.pub
 
 dotfiles: ## Initial deploy dotfiles
+# XDG is not present at this moment so no xdg_data_home env var
 	mkdir -p ${HOME}/.local/share/applications
 	mkdir -p ${HOME}/.local/share/fonts
 	mkdir -p ${HOME}/.local/bin
