@@ -8,6 +8,7 @@ while getopts ":w:ld" Option; do case $Option in
   l) theme=light ;;
   w) wp=$OPTARG ;;
   d) delete_current=1 ;;
+  *) ;;
 esac done
 
 # move current wallpaper to directory with blend wallpapers
@@ -16,7 +17,7 @@ if [[ $delete_current ]]; then
   blend_wps_dir="$HOME/Pictures/DCIM/blend"
   [ ! -d "$blend_wps_dir" ] && mkdir -p "$blend_wps_dir"
   mv -f "$wallpaper" "$blend_wps_dir"
-  say -e "Theme changed, previous wallpaper moved to graveyard"
+  say -e "Theme changed, previous wallpaper moved to blend dir"
 fi
 
 if [ -z "$wp" ]; then
