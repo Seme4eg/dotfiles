@@ -8,7 +8,7 @@ networks=$(nmcli -f "$FIELDS" device wifi list | awk NF) # sed '/--/d' |
 initial_ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
 
 wifi_on() {
-  if [ $(nmcli radio wifi) = "enabled" ]; then
+  if [ "$(nmcli radio wifi)" = "enabled" ]; then
     echo "󰤭  Disable Wi-Fi"
     return 0
   else
@@ -28,6 +28,14 @@ toggle_wifi() {
     sleep 5
     show_menu
   fi
+}
+
+restart_wifi() {
+  say -t 3000 -e "Restarting wifi"
+  nmcli networking off
+  sleep 3
+  nmcli networking on
+  show_menu
 }
 
 ssid_connected() {
@@ -61,7 +69,7 @@ toggle_ssid() {
   ssid="$1"
   security="$2"
   vpnstatus=$(systemctl is-active openvpn-client@client.service)
-  if [ $vpnstatus == 'active' ]; then
+  if [ "$vpnstatus" == 'active' ]; then
     # sudo systemctl stop openvpn-client@client.service
     # command above doesn't work sometimes and network on laptop jus hangs
     sudo pkill -9 openvpn
@@ -70,13 +78,13 @@ toggle_ssid() {
 
   _success() {
     say -e "Connected to $1."
-    if [ $vpnneedsactivation ]; then
+    if [ "$vpnneedsactivation" ]; then
       sleep 5
       sudo systemctl start openvpn-client@client.service
     fi
   }
   _connecting() {
-    say -t 2000 -e $(whoami) "Connecting to $1..."
+    say -t 2000 -e "$(whoami)" "Connecting to $1..."
   }
 
   _connect() {
@@ -96,7 +104,7 @@ toggle_ssid() {
     nmcli device wifi connect "$1" password "$wifi_pass"
     # if connection failed - prompt again and remove attempted connection from
     # saved ones (cuz it does save connection even if wrong pass was provided)
-    if [ $? -gt 0 ]; then
+    if ! $? ; then
       nmcli connection delete id "$1"
       say -e "Nope."
       _connect "$1"
@@ -117,17 +125,54 @@ toggle_ssid() {
   fi
 }
 
+show_qr() {
+  ssid="$1"
+  security="$2"
+  tmp_ssid="${ssid// /_}"
+  qrcode_dir="$HOME/.cache/rofi"
+  qrcode_path="$qrcode_dir/$tmp_ssid.png"
+
+	if [[ ! -e "$qrcode_path" ]]; then
+		qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
+      "WIFI:S:""$ssid"";T:""$security"";P:""$PASSWORD"";;"
+	fi
+
+  rofi -dmenu -theme-str "
+entry{enabled:false;}
+textbox-prompt-colon{str:\"\";}
+window{
+  border-radius:6mm; padding:1mm; width:100mm; height:100mm;
+  background-image:url(\"$qrcode_path\",both);
+}"
+}
+
+show_pass() {
+  ssid="$1"
+  security="$2"
+
+  which qrencode && qr_option="QR\n"
+
+  options="$(nmcli dev wifi show-password)\n${qr_option}Back"
+
+  chosen="$(echo -e "$options" | rofi -dmenu -i)"
+
+  case $chosen in
+    "QR") show_qr "$1" "$2" ;;
+    "Back") ssid_menu "$1" "$2" ;;
+  esac
+}
+
+
 # A submenu for a specific device that allows connecting, pairing, and trusting
 ssid_menu() {
   ssid="$1"
   security="$2"
-  goback="Back"
 
   # Build options
   connected=$(ssid_connected "$ssid")
   saved=$(ssid_saved "$ssid")
-  ssid_saved "$ssid" && options="$connected\n$saved\n$goback" ||
-    options="$connected\n$goback"
+  ssid_saved "$ssid" && options="$connected\n$saved\nShow password\nBack" ||
+    options="$connected\nBack"
 
   # Open rofi menu, read chosen option
   chosen="$(echo -e "$options" | rofi -dmenu -i \
@@ -138,7 +183,8 @@ ssid_menu() {
   case "$chosen" in
     "$connected") toggle_ssid "$ssid" "$security" ;;
     "$saved") forget_ssid "$ssid" ;;
-    "$goback") show_menu ;;
+    "Show password") show_pass "$ssid" "$security" ;;
+    "Back") show_menu ;;
     *) echo "No option chosen." ;;
   esac
 }
@@ -158,7 +204,7 @@ update_networks() {
     count=$(echo "$networks" | wc -l)
 
     # -w for 'wait' to not spam tnose notification until user refreshes
-    [ $_count -ne $count ] && say -w -e "Networks changed, refresh ($refresh)"
+    [ "$_count" -ne "$count" ] && say -w -e "Networks changed, refresh ($refresh)"
   done
 }
 
@@ -169,7 +215,7 @@ show_menu() {
   update_networks &
   update_pid=$!
 
-  wifi_on && options="$state\n$networks" || options="$state"
+  wifi_on && options="$state\n$networks\nrestart" || options="$state"
   # force monospace font to not get those fields messy
   option=$(echo -e "$options" | uniq -u |
     rofi -dmenu -i -selected-row 2 \
@@ -186,21 +232,23 @@ show_menu() {
 
   [ $rofi_exit -eq 1 ] && exit
 
-  if [ "$option" = "$state" ]; then
-    toggle_wifi
-  else
-    ssid=$(echo "$option" | awk -F '  +' '{print $2}')
-    security=$(echo "$option" | awk -F '  +' '{print $3}')
-    case $rofi_exit in
-      10) toggle_ssid "$ssid" "$security" ;;
-      11) forget_ssid "$ssid" ;;
-      12)
-        networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
-        show_menu
+  case $option in
+    "$state") toggle_wifi ;;
+    "restart") restart_wifi ;;
+    *)
+      ssid=$(echo "$option" | awk -F '  +' '{print $2}')
+      security=$(echo "$option" | awk -F '  +' '{print $3}')
+      case $rofi_exit in
+        10) toggle_ssid "$ssid" "$security" ;;
+        11) forget_ssid "$ssid" ;;
+        12)
+          networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+          show_menu
+          ;;
+        *) ssid_menu "$ssid" "$security" ;;
+      esac
       ;;
-      *) ssid_menu "$ssid" "$security" ;;
-    esac
-  fi
+  esac
 }
 
 show_menu

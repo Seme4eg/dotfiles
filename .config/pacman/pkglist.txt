@@ -79,6 +79,7 @@ podman-docker
 polkit-kde-agent
 poppler-glib
 python-pywal
+qrencode
 reflector
 ripgrep
 rtorrent
