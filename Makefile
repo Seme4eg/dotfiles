@@ -172,6 +172,7 @@ golang: ## install go and its packages
 
 systemd: ## enable and start all user and system systemd services
 	$(SSEN) systemd-timesyncd.service
+	sudo sed -i '/^ConditionACPower/d' /usr/lib/systemd/system/plocate-updatedb.service
 	$(SSEN) plocate-updatedb.timer
 	$(SSEN) bluetooth.service
 # sequence of these 2 needs to be hardcoded sadly
