@@ -245,7 +245,8 @@ show_menu() {
           networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
           show_menu
           ;;
-        *) ssid_menu "$ssid" "$security" ;;
+        0) ssid_menu "$ssid" "$security" ;;
+        *) exit ;;
       esac
       ;;
   esac
