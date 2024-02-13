@@ -3,13 +3,17 @@
 # root=/path/to/root
 
 # rofi command. Make sure to have "$@" as last argument
-_rofi () {
-    rofi -i -no-auto-select "$@"
-}
+# _rofi () {
+#     rofi -i -no-auto-select "$@"
+# }
 
 # default command to generate passwords
 _pwgen () {
 	pwgen -y "$@"
+}
+
+_notify () {
+  say -e "$1"
 }
 
 # image viewer to display qrcode of selected entry
@@ -36,7 +40,7 @@ type_delay=12
 
 ## Programs to be used
 # Editor
-EDITOR='gvim -f'
+EDITOR='emacsclient -c'
 
 # Browser
 BROWSER='xdg-open'
