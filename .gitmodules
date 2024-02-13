@@ -7,3 +7,6 @@
 [submodule ".config/rofi/scripts/kaomoji"]
 	path = .config/rofi/scripts/kaomoji
 	url = git@github.com:Seme4eg/rofi-kaomoji.git
+[submodule ".config/rofi/scripts/rofi-pass-wayland"]
+	path = .config/rofi/scripts/rofi-pass-wayland
+	url = git@github.com:Seme4eg/rofi-pass-wayland.git
