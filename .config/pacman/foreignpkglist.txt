@@ -4,7 +4,7 @@ cgo-git
 dualsensectl-git
 emacs-gcc-wayland-devel-bin
 eww-tray-wayland-git
-firefox-tridactyl-native-bin
+firefox-tridactyl-native
 floorp-bin
 gojq
 golangci-lint-bin
