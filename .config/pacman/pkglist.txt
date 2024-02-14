@@ -60,9 +60,9 @@ ncdu
 neofetch
 nethogs
 networkmanager
+networkmanager-openvpn
 noto-fonts-emoji
 openssh
-openvpn
 otf-hasklig-nerd
 p7zip
 pacman-contrib

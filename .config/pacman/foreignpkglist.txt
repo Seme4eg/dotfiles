@@ -16,7 +16,6 @@ mu
 numix-circle-icon-theme-git
 nvm-git
 nwg-look-bin
-openvpn-update-systemd-resolved
 otf-symbola
 plocate-git
 python-pyclip

@@ -68,20 +68,9 @@ forget_ssid() {
 toggle_ssid() {
   ssid="$1"
   security="$2"
-  vpnstatus=$(systemctl is-active openvpn-client@client.service)
-  if [ "$vpnstatus" == 'active' ]; then
-    # sudo systemctl stop openvpn-client@client.service
-    # command above doesn't work sometimes and network on laptop jus hangs
-    sudo pkill -9 openvpn
-    vpnneedsactivation=0
-  fi
 
   _success() {
     say -e "Connected to $1."
-    if [ "$vpnneedsactivation" ]; then
-      sleep 5
-      sudo systemctl start openvpn-client@client.service
-    fi
   }
   _connecting() {
     say -t 2000 -e "$(whoami)" "Connecting to $1..."

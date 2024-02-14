@@ -24,8 +24,7 @@
     "scripts/dualsense")
 (defpoll tray_count :interval "3s" :initial 0 "scripts/tray_count")
 (defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
-(defpoll vpnstatus :interval "3s"
-         "ip addr show | grep -q 'state UP' && systemctl is-active openvpn-client@client.service || echo 0")
+(defpoll vpnstatus :interval "3s" "nmcli -g type con show --active | grep -q vpn && echo 1 || echo 0")
 (defpoll net :interval "10s" :initial '{ "type": "nil", "wifi_strengh": 0 }' "scripts/net")
 
 
@@ -114,9 +113,9 @@
   (box
     :space-evenly false
     :class "network"
-    :spacing {vpnstatus == "active" ? 5 : 0}
+    :spacing {vpnstatus == 1 ? 5 : 0}
     (revealer
-      :reveal {vpnstatus == "active"}
+      :reveal {vpnstatus == 1}
       :transition "slideleft"
       (label :width 24 :xalign 0 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
     (overlay :width 35
