@@ -1,10 +1,9 @@
 
 @import url("/home/earthian/.cache/wal/gtk-colors.css");
 @import url("./styles/notifications.css");
-@import url("./styles/widgets.css");
 
 .control-center {
-  background: alpha(@background, 0.9);
+  background: transparent;
 }
 
 .control-center-list {

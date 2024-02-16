@@ -5,19 +5,14 @@
   "control-center-margin-bottom": 40,
   "timeout": 5,
   "timeout-low": 3,
-  "fit-to-screen": true,
+  "fit-to-screen": false,
   "control-center-width": 470,
+  "control-center-height": 470,
   "notification-window-width": 470,
   "image-visibility": "always",
   "hide-on-clear": true,
   "widgets": [
-    "notifications",
-    "mpris"
+    "notifications"
   ],
-  "widget-config": {
-    "mpris": {
-      "image-size": 96,
-      "image-radius": 13
-    }
-  }
+  "widget-config": {}
 }
