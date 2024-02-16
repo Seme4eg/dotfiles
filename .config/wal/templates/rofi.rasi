@@ -56,7 +56,7 @@ entry {{
 
 #textbox-prompt-colon {{
   expand: false;
-  str: "┻┳|･_･)ﾉ";
+  str: "( ￣ー￣)φ__";
   margin: 0em 0.8em 0em 0em;
   text-color: @accent-a;
 }}
