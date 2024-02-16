@@ -7,7 +7,7 @@
 ;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/modules/music.yuck
 ;; https://github.com/iamverysimp1e/dots/blob/main/configs/eww/scripts/music
 (deflisten player :initial ""
-  "playerctl -F metadata -f '{{ artist }} - {{ title }}' || true")
+  "playerctl -F metadata -f '{{ title }} - {{ artist }}' || true")
 
 (deflisten player_state :initial ""
   "playerctl -F metadata -f '{{ status }}' || true")
