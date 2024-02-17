@@ -1,92 +1,88 @@
+# Config example (also default values)
+
 # permanently set alternative root dir. Use ":" to separate multiple roots
 # which can be switched at runtime with shift+left/right
 # root=/path/to/root
 
-# rofi command. Make sure to have "$@" as last argument
-# _rofi () {
-#     rofi -i -no-auto-select "$@"
-# }
+# Fields to be used
+URL_FIELD='url'
+USERNAME_FIELD='user'
+AUTOTYPE_FIELD='autotype'
+OTPMETHOD_FIELD='otp_method'
 
-# default command to generate passwords
-_pwgen () {
-	pwgen -y "$@"
-}
+BACK_OPTION='< back'
 
-_notify () {
-  say -e "$1"
-}
-
-# image viewer to display qrcode of selected entry
-# qrencode is needed to generate the image and a viewer
-# that can read from pipes. Known viewers to work are feh and display
-_image_viewer () {
-    feh -
-#    display
-}
-
-# fields to be used
-URL_field='url'
-USERNAME_field='user'
-AUTOTYPE_field='autotype'
+## Programs to be used
+EDITOR='emacsclient -c'
+BROWSER='xdg-open' # Browser
 
 # delay to be used for :delay keyword
 delay=2
-
 # rofi-pass needs to close itself before it can type passwords. Set delay here.
 wait=0.2
-
 # delay between keypresses when typing (in ms)
 type_delay=12
-
-## Programs to be used
-# Editor
-EDITOR='emacsclient -c'
-
-# Browser
-BROWSER='xdg-open'
-
-## Misc settings
-
-default_do='menu' # menu, autotype, copyPass, typeUser, typePass, copyUser, copyUrl, viewEntry, typeMenu, actionMenu, copyMenu, openUrl
-auto_enter='false'
-notify='true'
-default_autotype='user :tab pass'
-
-# color of the help messages
-# leave empty for autodetection
-help_color="#4872FF"
 
 # Clipboard settings
 # Possible options: primary, clipboard, both
 clip=clipboard
-
 # Seconds before clearing pass from clipboard
 clip_clear=15
 
-## Options for generating new password entries
 
+## Options for generating new password entries
 # open new password entries in editor
 edit_new_pass="true"
+default_user="${ROFI_PASS_DEFAULT_USER-$(whoami)}"
+default_user2=john_doe
+password_length=12
 
-# default_user is also used for password files that have no user field.
-#default_user="${ROFI_PASS_DEFAULT_USER-$(whoami)}"
-#default_user2=mary_ann
-#password_length=12
+## Misc settings
 
-# Custom Keybindings
+default_autotype="user :tab pass"
+auto_enter='false'
+notify='false'
+
+# default shortcuts
 autotype="Alt+1"
 type_user="Alt+2"
 type_pass="Alt+3"
 open_url="Alt+4"
+type_otp="Alt+5"
 copy_name="Alt+u"
 copy_url="Alt+l"
 copy_pass="Alt+p"
 show="Alt+o"
-copy_entry="Alt+2"
-type_entry="Alt+1"
 copy_menu="Alt+c"
 action_menu="Alt+a"
 type_menu="Alt+t"
 help="Alt+h"
 switch="Alt+x"
 insert_pass="Alt+n"
+qrcode="Alt+q"
+previous_root="Shift+Left"
+next_root="Shift+Right"
+
+# --- Functions you can redefine ---
+# rofi command. Make sure to have "$@" as last argument
+# _rofi () {
+# 	rofi -no-auto-select -i -dmenu "$@"
+# }
+
+# default command to generate passwords
+# _pwgen () {
+# 	pwgen -y "$@"
+# }
+
+# image viewer to display qrcode of selected entry
+# qrencode is needed to generate the image and a viewer
+# that can read from pipes. Known viewers to work are feh and display
+# _image_viewer () {
+#     feh -
+# #    display
+# }
+
+# wrapper for notify command, used if 'notify' option is set to 'true'
+_notify () {
+  say -e "$1"
+}
