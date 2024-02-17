@@ -4,8 +4,8 @@ wp_dir="$HOME/Pictures/DCIM/wps/pc"
 
 list_wps() {
   find "$wp_dir" -type f -printf "%P\n" |
-    while read wp; do
-      echo -en "$wp\x00icon\x1f$wp_dir/$wp\n"
+    while read -r wp; do
+      printf '%s\x00icon\x1f%s/%s\n' "$wp" "$wp_dir" "$wp"
     done
 }
 
