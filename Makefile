@@ -148,10 +148,9 @@ mpd:
 	systemctl --user restart $@.service
 	$(SUEN) mpd.service
 
-hyprplugins:
-	git clone 'git@github.com:VortexCoyote/hyprfocus.git' ${HOME}/utils/hyprfocus
-	cd ${HOME}/utils/hyprfocus
-	make all
+# TODO:
+# hyprplugins:
+# 	hyprpm add https://github.com/VortexCoyote/hyprfocus <- doesn't work yet
 
 golang: ## install go and its packages
 	$(PACMAN) go
