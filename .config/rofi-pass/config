@@ -1,8 +1,16 @@
 # Config example (also default values)
 
 # permanently set alternative root dir. Use ":" to separate multiple roots
-# which can be switched at runtime with shift+left/right
-# root=/path/to/root
+# which can be switched at runtime with corresponding hotkeys
+ROOTS=~/.password-store:~/teststore
+
+# You can define password store env vars here and they will be sourced in
+# the script and applied to all pass commands called. Like:
+# PASSWORD_STORE_CLIP_TIME=30
+# PASSWORD_STORE_GENERATED_LENGTH=13
+
+# Same way you can define other env vars that pass is using:
+EDITOR='emacsclient -c'
 
 # Fields to be used
 URL_FIELD='url'
@@ -12,10 +20,6 @@ OTPMETHOD_FIELD='otp_method'
 
 BACK_OPTION='< back'
 
-## Programs to be used
-EDITOR='emacsclient -c'
-BROWSER='xdg-open' # Browser
-
 # delay to be used for :delay keyword
 delay=2
 # rofi-pass needs to close itself before it can type passwords. Set delay here.
@@ -23,42 +27,39 @@ wait=0.2
 # delay between keypresses when typing (in ms)
 type_delay=12
 
-# Clipboard settings
-# Possible options: primary, clipboard, both
-clip=clipboard
-# Seconds before clearing pass from clipboard
-clip_clear=15
-
 
 ## Options for generating new password entries
 # open new password entries in editor
-edit_new_pass="true"
-default_user="${ROFI_PASS_DEFAULT_USER-$(whoami)}"
-default_user2=john_doe
+edit_new_pass="false"
+default_user=":basename"
+default_user2=""
 password_length=12
 
 ## Misc settings
 
 default_autotype="user :tab pass"
 auto_enter='false'
-notify='false'
+notify='true'
 
 # default shortcuts
-autotype="Alt+1"
-type_user="Alt+2"
+help="Alt+h"
+
+type_menu="Alt+t"
 type_pass="Alt+3"
-open_url="Alt+4"
+type_user="Alt+2"
 type_otp="Alt+5"
+autotype="Alt+1"
+
+copy_menu="Alt+c"
+copy_pass="Alt+p"
 copy_name="Alt+u"
 copy_url="Alt+l"
-copy_pass="Alt+p"
-show="Alt+o"
-copy_menu="Alt+c"
-action_menu="Alt+a"
-type_menu="Alt+t"
-help="Alt+h"
-switch="Alt+x"
+
 insert_pass="Alt+n"
+show="Alt+o"
+action_menu="Alt+a"
+
+open_url="Alt+4"
 qrcode="Alt+q"
 previous_root="Shift+Left"
 next_root="Shift+Right"
@@ -67,11 +68,6 @@ next_root="Shift+Right"
 # rofi command. Make sure to have "$@" as last argument
 # _rofi () {
 # 	rofi -no-auto-select -i -dmenu "$@"
-# }
-
-# default command to generate passwords
-# _pwgen () {
-# 	pwgen -y "$@"
 # }
 
 # image viewer to display qrcode of selected entry
