@@ -118,8 +118,7 @@ show_qr() {
   ssid="$1"
   security="$2"
   tmp_ssid="${ssid// /_}"
-  qrcode_dir="$HOME/.cache/rofi"
-  qrcode_path="$qrcode_dir/$tmp_ssid.png"
+  qrcode_path="$HOME/.cache/rofi/$tmp_ssid.png"
 
 	if [[ ! -e "$qrcode_path" ]]; then
 		qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
