@@ -189,7 +189,7 @@ sysoptions: ## make changes to system files
 	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
 	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
-	sudo echo UserspaceHID=true | sudo tee -a /etc/bluetooth/input.conf
+	sudo sed -i 's/^#\(UserspaceHID\)=.*/\1=true/' /etc/bluetooth/input.conf
 
 # TODO: doesn't apply to everything that way yet
 icons: ## setup icons and theme
