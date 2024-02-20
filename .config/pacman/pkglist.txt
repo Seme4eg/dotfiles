@@ -113,6 +113,7 @@ wget
 wine-staging
 wireplumber
 wl-clipboard
+wtype
 xdg-desktop-portal-hyprland
 yarn
 yt-dlp
