@@ -18,7 +18,7 @@ USERNAME_FIELD='user'
 AUTOTYPE_FIELD='autotype'
 OTPMETHOD_FIELD='otp_method'
 
-BACK_OPTION='< back'
+BACK_OPTION='← back'
 
 # delay to be used for :delay keyword
 delay=2
@@ -44,25 +44,29 @@ notify='true'
 # default shortcuts
 help="Alt+h"
 
-type_menu="Alt+t"
-type_pass="Alt+3"
-type_user="Alt+2"
-type_otp="Alt+5"
-autotype="Alt+1"
+kb_type_field="Alt+t"
+kb_type_pass="Alt+P"
+kb_type_user="Alt+N"
+kb_type_otp="Alt+O"
+kb_autotype="Alt+A"
 
-copy_menu="Alt+c"
-copy_pass="Alt+p"
-copy_name="Alt+u"
-copy_url="Alt+l"
+kb_copy_field="Alt+c"
+kb_copy_pass="Alt+p"
+kb_copy_user="Alt+n"
 
-insert_pass="Alt+n"
-show="Alt+o"
-action_menu="Alt+a"
+kb_insert="Alt+i"
+kb_show="Alt+o"
 
-open_url="Alt+4"
-qrcode="Alt+q"
-previous_root="Shift+Left"
-next_root="Shift+Right"
+# Actions
+kb_rename="Alt+r"
+kb_delete="Alt+x"
+kb_edit="Alt+e"
+kb_generate="Alt+I"
+
+kb_browse_url="Alt+U"
+kb_qrcode="Alt+q"
+kb_previous_root="Alt+bracketleft" # [
+kb_next_root="Alt+bracketright" # ]
 
 # --- Functions you can redefine ---
 # rofi command. Make sure to have "$@" as last argument
