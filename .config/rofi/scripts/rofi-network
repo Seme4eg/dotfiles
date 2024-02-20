@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# nice, but horrible reference: https://github.com/P3rf/rofi-network-manager/blob/master/rofi-network-manager.sh
+
 # IN-USE, BSSID
 FIELDS=ACTIVE,SSID,SECURITY,FREQ,RATE,SIGNAL
 # awk NF to filter empty lines from output
