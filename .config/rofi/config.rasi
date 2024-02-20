@@ -1,50 +1,54 @@
-// 'rofi -dump-theme' to see all config keys
+// 'rofi -dump-config' to see all custom values (rofi -dump-theme is same but for theme)
+// Getting current keybindings:
+//   rofi -dump-config | grep kb-
+//   rofi -list-keybindings
+
+//	kb-clear-line:          "Control+u";
+//	kb-move-front:          "Control+a";
+//	kb-move-end:            "Control+e";
+//	kb-move-word-back:      "Alt+b";
+//	kb-move-word-forward:   "Alt+f";
+//	kb-move-char-back:      "Control+b";
+//	kb-move-char-forward:   "Control+f";
+//	kb-remove-word-back:    "Control+w,Control+Alt+h,Control+BackSpace";
+//	kb-remove-word-forward: "Control+Alt+d";
+//	kb-remove-char-forward: "Control+d";
+//	kb-remove-to-eol:       "";
+//	kb-remove-to-sol:       "Control+m";
 
 configuration {
 	// cache-dir: ; // passing from binding cuz no $XDG_.. here
 	combi-modes: "window,drun,run";
-	drun-show-actions: false;
   fixed-num-lines: false;
-  icon {
-      theme: "hicolor";
-  }
 	display-window: "[w]";
 	display-run: "[r]";
 	display-drun: "[d]";
 	window-format: "{w}{c}{t}";
 
-/*	display-combi: ;*/
 	display-keys: "[k]";
-/*	display-filebrowser: ;*/
-
-	kb-accept-entry: "Control+m,Return,KP_Enter";
-/*	kb-cancel: "Escape,Control+g,Control+bracketleft";*/
+	kb-accept-entry: "Return,KP_Enter";
   kb-mode-complete: ""; // ctrl+l was here
 	kb-mode-next: "Control+l,Control+Tab";
 	kb-remove-char-back: "BackSpace,Shift+BackSpace"; // ctrl+h was here
 	kb-mode-previous: "Control+h,Control+ISO_Left_Tab";
-	kb-remove-to-eol: ""; // needed to unset for 'down' binding to work
-	kb-row-down: "Control+j,Control+n";
-	kb-row-up: "Control+k,Control+p";
-/*	kb-screenshot: "Alt+S";*/
 
-// monitor to display on
-	matching: "normal"; // fuzzy
-	// max-history-size: 25;
+  kb-remove-word-back: "Control+w,Control+Alt+h,Control+BackSpace";
+	kb-remove-to-eol: ""; // was 'Ctrl+j' needed for 'down' binding
+	kb-remove-to-sol: "Control+m";
+  kb-clear-line: "Control+u";
+
+	kb-row-down: "Control+j";
+	kb-row-up: "Control+k";
+  kb-entry-history-up: "Control+n";
+  kb-entry-history-down: "Control+p";
+
+	max-history-size: 25;
 	modes: "combi,run,keys";
-	scroll-method: 1;
-	show-icons: false;
-	sidebar-mode: true;
-/*	sort: false;*/
-/*	sorting-method: "normal";*/
-	steal-focus: true;
-  timeout {
-      action: "kb-cancel";
-      delay:  0;
+	scroll-method: 1; // 0: Per page, 1: continuous.
+	sidebar-mode: true; // show all enabled modes at the bottom
+  inputchange {
+    action: "kb-row-first";
   }
 }
 
-// @theme "/dev/null"
-
 @import "~/.cache/wal/rofi.rasi"
-// @import "test" // test theme

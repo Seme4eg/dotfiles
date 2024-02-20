@@ -145,12 +145,10 @@ element.selected.normal, element.selected.active {{
   text-color: @foreground;
 }}
 
-// for choose wallpaper script
 element-icon {{
-  padding: -25px 0px;
-  border-radius: 10;
-  size: 100;
-  margin: 0 10 0 0;
+  size: 0.9em; // or simply int size - in pixels
+  horizontal-align: 1;
+  vertical-align: 1;
 }}
 
 // element-icon selected {{}}
