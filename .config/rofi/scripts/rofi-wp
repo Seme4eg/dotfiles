@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 wp_dir="$HOME/Pictures/DCIM/wps/pc"
 
@@ -11,11 +11,18 @@ list_wps() {
 
 rofi_dmenu() {
   # handwriting fonts: caveat #1 swankyandmoomoo #2 longcang #3
-  rofi -dmenu -i -show-icons \
-    -theme-str '#element-text { font: "caveat 17"; }' \
-    -theme-str '#entry { placeholder: "Wallpaper to apply.."; }'
+  rofi -dmenu -i -show-icons -theme-str "
+  #element-text { font: \"caveat 17\"; }
+  #entry { placeholder: \"Wallpaper to apply..\"; }
+  element-icon {
+    border-radius: 10;
+    size: 100;
+    padding: -25px 0px;
+    margin: 0 10 0 0;
+  }
+"
 }
 
 wp=$(list_wps | rofi_dmenu)
 
-[ ! -z $wp ] && change-theme -w "$wp_dir/$wp"
+[[ "$?" -ne 1 && -n "$wp" ]] && change-theme -w "$wp_dir/$wp"
