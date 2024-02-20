@@ -17,7 +17,7 @@
 //	kb-remove-to-sol:       "Control+m";
 
 configuration {
-	// cache-dir: ; // passing from binding cuz no $XDG_.. here
+	cache-dir: "~/.cache/rofi";
 	combi-modes: "window,drun,run";
   fixed-num-lines: false;
 	display-window: "[w]";
