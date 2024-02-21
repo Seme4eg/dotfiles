@@ -1,0 +1,11 @@
+[Unit]
+Description=Hyprland idle manager
+After=graphical-session.target
+
+[Service]
+ExecStart=/bin/bash -c hypridle
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=hyprland-session.target

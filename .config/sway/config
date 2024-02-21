@@ -27,13 +27,6 @@ gaps outer 5
 # man sway-output ..
 
 
-### Idle configuration
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-#          before-sleep 'swaylock -f -c 000000'
-
-
 ### Input configuration
 # swaymsg -t get_inputs
 # man 5 sway-input

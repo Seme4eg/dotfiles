@@ -9,7 +9,9 @@ floorp-bin
 gojq
 golangci-lint-bin
 heroic-games-launcher-bin
+hypridle-git
 hyprland-git
+hyprlang-git
 mbsync-git
 mpv-full
 mu
@@ -21,11 +23,11 @@ plocate-git
 python-pyclip
 python-pywalfox
 rofi-lbonn-wayland-git
-swayidle-git
 swaylock-effects-git
 swaync-git
 swww
 telegram-tdlib-git
 webcord-bin
 wlsunset-git
+xdg-desktop-portal-hyprland-git
 yay

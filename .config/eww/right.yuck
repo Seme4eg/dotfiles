@@ -13,9 +13,6 @@
          :initial 0
          :interval "3600s"
          "sleep 10; ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
-(defpoll swayidle_status
-    :interval "10000s"
-    "systemctl --user is-active swayidle.service || echo 0")
 (defpoll weather :interval "3600s" "scripts/weather")
 (defpoll notifs_count :interval "3s" :initial "0" "swaync-client -c")
 (defpoll dualsense
@@ -170,18 +167,13 @@
       :text {volume.is_mic_muted == "true" ? "󰍭" : "${volume.mic_level}󰍬"})))
     
 (defwidget _backlight []
-  ;; eww is started with soystemd so it doesn't know about my local/bin and i
-  ;; don't want to pass it there, that's why hardcoded path
-  (eventbox :onclick "sh /home/earthian/.local/bin/toggle-idling"
-    (overlay :class "backlight" :width 31
-      (circular-progress
-        :value backlight
-        :start-at 0
-        :thickness 3
-        :clockwise true)
-      (label
-        :class "circle-text yes"
-        :text {swayidle_status == 'active' ? "󰃝" : ""}))))
+  (overlay :class "backlight" :width 31
+    (circular-progress
+      :value backlight
+      :start-at 0
+      :thickness 3
+      :clockwise true)
+    (label :class "circle-text yes" :text "󰃝")))
 
 (defwidget _bt []
   (box
