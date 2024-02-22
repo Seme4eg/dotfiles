@@ -32,7 +32,9 @@ ssh: ## Init ssh
 	export SSHDIR=${HOME}/.$@
 	$(PACMAN) open$@
 	mkdir -p $$SSHDIR
-	ssh-keygen -t ed25519 -C "418@duck.com" -P ""
+	ssh-keygen -C "418@duck.com" -P ""
+# create AUR keypair
+	ssh-keygen -f $$SSHDIR/aur
 	eval "$$(ssh-agent -s)"
 	ssh-add $$SSHDIR/id_ed25519
 	chmod 600 $$SSHDIR/id_ed25519
