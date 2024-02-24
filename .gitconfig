@@ -1,11 +1,25 @@
 [user]
-    name = earthian
-    email = 418@duck.com
+  name = earthian
+  email = 418@duck.com
 [core]
-	excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
 [github]
-	user = seme4eg
+  user = seme4eg
 [pull]
-	rebase = true
+  rebase = true
+[push]
+  default = current
+[merge]
+  conflictstyle = zdiff3
+[rerere]
+  enabled = true
+[rebase]
+  autostash = true
+  autosquash = true
+[diff]
+  algorithm = histogram
+  submodule = log
+  colorMoved = default
+  colorMovedWS = allow-indentation-change
 [includeIf "gitdir:~/git/mp/"]
   path = ~/git/mp/.gitconfig
