@@ -13,6 +13,7 @@ hypridle-git
 hyprland-git
 hyprlang-git
 mbsync-git
+mpd-mpris-bin
 mpv-full
 mu
 numix-circle-icon-theme-git
