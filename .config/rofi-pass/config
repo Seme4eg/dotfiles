@@ -58,8 +58,8 @@ kb_insert="Alt+i"
 kb_show="Alt+o"
 
 # Actions
-kb_rename="Alt+r"
-kb_delete="Alt+x"
+kb_move="Alt+m"
+kb_remove="Alt+x"
 kb_edit="Alt+e"
 kb_generate="Alt+I"
 

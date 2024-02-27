@@ -22,7 +22,6 @@ set hintnames short
 # So i just define new ones and keep old ones.
 set searchurls.ecorp https://www.google.com/search?q=
 set searchurls.ddg   https://duckduckgo.com/?q=
-set searchurls.pedia https://en.wikipedia.org/wiki/Special:Search/
 set searchurls.yt    https://www.youtube.com/results?search_query=
 set searchurls.gh    https://github.com/search?utf8=✓&q=
 set searchurls.sp    https://startpage.com/do/search?language=english&cat=web&query=

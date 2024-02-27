@@ -32,7 +32,6 @@ lib32-giflib
 lib32-gnutls
 lib32-gst-plugins-base-libs
 lib32-gtk3
-lib32-libgcrypt
 lib32-libjpeg-turbo
 lib32-libpng
 lib32-libpulse
@@ -76,7 +75,6 @@ pipewire-alsa
 pipewire-audio
 pipewire-pulse
 playerctl
-podman-compose
 podman-docker
 polkit-kde-agent
 poppler-glib
