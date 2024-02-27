@@ -50,3 +50,4 @@ node_modules/
 /.config/okularrc
 /.config/QtProject.conf
 /.config/go/
+/.config/imapnotify
