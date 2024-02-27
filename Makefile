@@ -183,6 +183,7 @@ systemd: ## enable and start all user and system systemd services
 		xargs -I {} systemctl --user enable --now {}
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
+	$(SUEN) goimapnotify@mail.service
 
 # system files changed
 sysoptions: ## make changes to system files
