@@ -12,6 +12,7 @@ calf
 chromium
 cliphist
 cmake
+dust
 easyeffects
 editorconfig-core-c
 efibootmgr
