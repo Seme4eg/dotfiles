@@ -78,6 +78,7 @@ playerctl
 podman-docker
 polkit-kde-agent
 poppler-glib
+powertop
 python-pywal
 qrencode
 reflector
