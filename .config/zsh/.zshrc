@@ -39,6 +39,12 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 # Always starting with insert mode for each command line
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # <- gets defined only after zvm sourcing
 
+zvm_vi_yank() {
+	zvm_yank
+	echo ${CUTBUFFER} | wl-copy
+	zvm_exit_visual_mode
+}
+
 ###############################################################################
 #                                   Utility                                   #
 ###############################################################################
