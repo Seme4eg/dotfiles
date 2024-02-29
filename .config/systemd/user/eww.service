@@ -9,4 +9,4 @@ WantedBy=hyprland-session.target
 [Service]
 ExecStart=eww daemon --no-daemonize
 Restart=always
-RestartSec=3s
+RestartSec=3
