@@ -69,6 +69,7 @@ otf-hasklig-nerd
 p7zip
 pacman-contrib
 pass
+pass-otp
 passff-host
 pavucontrol
 picard
@@ -118,6 +119,7 @@ wl-clipboard
 wtype
 yarn
 yt-dlp
+zbar
 zoxide
 zsh
 zsh-completions

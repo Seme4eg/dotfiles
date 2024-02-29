@@ -12,6 +12,10 @@ alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 alias picgen="cd ~/utils/Fooocus && conda activate fooocus && \
   python entry_with_update.py --always-download-new-model"
 
+# Paste image from clipboard, decode it with zbar and copy it back to clipboard
+# https://github.com/tadfisher/pass-otp#examples - more examples
+alias otpdecode="wl-paste | zbarimg -q --raw - | wl-copy"
+
 # --grep=<pattern>
 # -x -- Include explanations of log messages from the message catalog where available
 # -u -- messages by a specific (system) unit (man-db.service)
