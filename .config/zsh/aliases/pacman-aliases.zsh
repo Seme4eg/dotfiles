@@ -1,15 +1,14 @@
 #!/usr/bin/env zsh
 
 alias pm="sudo pacman"
-alias pmi="pms && pm -S"   # install
-alias pmr="pm -Rs"  # remove
-alias pmsr="pm -Ss" # search remotes
-alias pmsl="pm -Qs" # search locally
-alias pml="pm -Ql"  # list package
+alias pmi="pms && pm -S" # install
+alias pmr="pm -Rs"       # remove
+alias pmsr="pm -Ss"      # search remotes
+alias pmsl="pm -Qs"      # search locally
+alias pml="pm -Ql"       # list package
 # If no orphans were found, the output is error: argument '-' specified with
 # empty stdin. This is expected as no arguments were passed to pacman -Rns.
 alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
-alias pmrao="pacman -Qqd | sudo pacman -Rsu -" # remove ALL orphaned
 alias pms="pm -Syy"                            # sync
 alias pmu="pm -Syyu"                           # update
 # -Scc is more agressive approach, read bout it before using in case u decide to
