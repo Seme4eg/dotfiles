@@ -23,7 +23,7 @@ power_on() { bluetoothctl show | grep -q "Powered: yes"; }
 
 toggle_power() {
   if power_on; then
-  bluetoothctl power off
+    bluetoothctl power off
   else
     rfkill list bluetooth | grep -q 'blocked: yes' &&
       rfkill unblock bluetooth && sleep 3
@@ -160,7 +160,7 @@ print_status() {
     counter=0
 
     for device in "${paired_devices[@]}"; do
-      device_connected "$device" > /dev/null && ((counter++))
+      device_connected "$device" >/dev/null && ((counter++))
     done
 
     [ $counter -gt 0 ] && echo "󰂯($counter)" || echo "󰂯"
@@ -246,9 +246,10 @@ show_menu() {
           10) toggle_connection "$mac" ;;
           11) toggle_paired "$mac" ;;
           12) toggle_trust "$mac" ;;
-          *) device_menu
+          *) device_menu ;;
         esac
       fi
+      ;;
   esac
 }
 

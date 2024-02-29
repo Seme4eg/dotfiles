@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file=$(find $HOME -type f 2>/dev/null | rofi -dmenu -i)
+file=$(find "$HOME" -type f 2>/dev/null | rofi -dmenu -i)
 if [ -n "$file" ]; then
   curl -F "file=@$file" 0x0.st | wl-copy
   say -e "0x0 link yanked to 📎board"

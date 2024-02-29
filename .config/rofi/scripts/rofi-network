@@ -79,7 +79,7 @@ toggle_ssid() {
   }
 
   _connect() {
-    protected() { if [ "$security" = "--" ]; then return 1; else return 0; fi }
+    protected() { if [ "$security" = "--" ]; then return 1; else return 0; fi; }
     protected && wifi_pass=$(rofi -dmenu -password \
       -theme-str '#entry { placeholder: "password .."; }')
     # if no password provided - quit that script and restore initial connection
@@ -95,7 +95,7 @@ toggle_ssid() {
     nmcli device wifi connect "$1" password "$wifi_pass"
     # if connection failed - prompt again and remove attempted connection from
     # saved ones (cuz it does save connection even if wrong pass was provided)
-    if ! $? ; then
+    if ! $?; then
       nmcli connection delete id "$1"
       say -e "Nope."
       _connect "$1"
@@ -122,10 +122,10 @@ show_qr() {
   tmp_ssid="${ssid// /_}"
   qrcode_path="$HOME/.cache/rofi/$tmp_ssid.png"
 
-	if [[ ! -e "$qrcode_path" ]]; then
-		qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
+  if [[ ! -e "$qrcode_path" ]]; then
+    qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
       "WIFI:S:""$ssid"";T:""$security"";P:""$PASSWORD"";;"
-	fi
+  fi
 
   rofi -dmenu -theme-str "
 entry{enabled:false;}
@@ -151,7 +151,6 @@ show_pass() {
     "Back") ssid_menu "$1" "$2" ;;
   esac
 }
-
 
 # A submenu for a specific device that allows connecting, pairing, and trusting
 ssid_menu() {

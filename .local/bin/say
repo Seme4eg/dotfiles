@@ -1,13 +1,12 @@
 #!/bin/bash
 
-seed=$(tr </dev/urandom -dc A-Za-z0-9 | head -c6)
 [ ! -d ~/Pictures/DCIM/Avbl ] &&
   icon="$HOME/dotfiles/assets/avatar.jpg" ||
   icon=$(find ~/Pictures/DCIM/Avbl/ -type f | sort --random-sort | head -n 1)
 
 # $@ to pass all flags (-e, -t etc), that i might pass from my other scripts
 # swaync-client -rs
-notify-send -i "$icon" $(whoami) "$@"
+notify-send -i "$icon" "$(whoami)" "$@"
 # notify-send $(whoami) "$@"
 
 exit 0

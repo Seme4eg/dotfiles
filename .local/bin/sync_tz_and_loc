@@ -1,9 +1,8 @@
 #!/bin/bash
 
-force=
-
 while getopts ":f" opt; do case $opt in
   f) force=true ;;
+  *) ;;
 esac done
 
 set_timezone() {
@@ -26,9 +25,9 @@ set_timezone() {
 
 set_coordinates() {
   coordinates=$(curl -s https://ipinfo.io/loc)
-  if [ ! -z $coordinates ]; then
+  if [ -n "$coordinates" ]; then
     say "Coordinates data updated"
-    echo $coordinates >$XDG_CACHE_HOME/last_known_coordinates.txt
+    echo "$coordinates" >"$XDG_CACHE_HOME/last_known_coordinates.txt"
     return 0
   else
     say "Fetching new coordinates failed, using old ones"
@@ -38,7 +37,11 @@ set_coordinates() {
 
 waitnetwork() {
   while true; do
-    ping -q -c 1 -w 2 -W 1 archwiki.org >/dev/null && return 0 || sleep 5
+    if ping -q -c 1 -w 2 -W 1 archwiki.org >/dev/null; then
+      return 0
+    else
+      sleep 5
+    fi
   done
 }
 
