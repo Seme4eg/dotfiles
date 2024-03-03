@@ -184,7 +184,6 @@ systemd: ## enable and start all user and system systemd services
 		xargs -I {} systemctl --user enable --now {}
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
-	$(SUEN) mpd-mpris.service
 	$(SUEN) goimapnotify@mail.service
 
 # system files changed
