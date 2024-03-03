@@ -21,5 +21,7 @@ wl-paste --watch cliphist store &
 doom env
 foot --server
 
+(sleep 10 && mbsync mailru) &
+
 pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I
