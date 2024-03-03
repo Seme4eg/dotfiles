@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/env bash
 
 # nice, but horrible reference: https://github.com/P3rf/rofi-network-manager/blob/master/rofi-network-manager.sh
 
@@ -9,9 +9,25 @@ networks=$(nmcli -f "$FIELDS" device wifi list | awk NF) # sed '/--/d' |
 # will b empty if no active connection
 initial_ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
 
+kb_refresh="Control+r"
+kb_restart="Control+R"
+# toggle network, without submenu
+kb_quick_connect="Control+Return"
+# forget network, without submenu
+kb_quick_forget="Alt+x"
+kb_show_info="Alt+o" # show info like password, security, qr, ssid
+
+backOption='← back'
+
+_rofi() {
+  rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }' "$@"
+}
+
+assert_status() { [ "$1" -eq 1 ] && exit; }
+
 wifi_on() {
   if [ "$(nmcli radio wifi)" = "enabled" ]; then
-    echo "󰤭  Disable Wi-Fi"
+    echo "󰤭  Disable Wi-Fi ($kb_restart to restart)"
     return 0
   else
     echo "󰤨  Enable Wi-Fi"
@@ -80,8 +96,10 @@ toggle_ssid() {
 
   _connect() {
     protected() { if [ "$security" = "--" ]; then return 1; else return 0; fi; }
-    protected && wifi_pass=$(rofi -dmenu -password \
+    protected && wifi_pass=$(_rofi -password \
       -theme-str '#entry { placeholder: "password .."; }')
+    assert_status $?
+
     # if no password provided - quit that script and restore initial connection
     # maybe show return to main menu instead?
     if [ ! "$wifi_pass" ] && protected; then
@@ -117,103 +135,124 @@ toggle_ssid() {
 }
 
 show_qr() {
-  ssid="$1"
-  security="$2"
-  tmp_ssid="${ssid// /_}"
-  qrcode_path="$HOME/.cache/rofi/$tmp_ssid.png"
+  local ssid="$1"
+  local security="$2"
+  local tmp_ssid="${ssid// /_}"
+  local qrcode_path="$HOME/.cache/rofi/$tmp_ssid.png"
 
-  if [[ ! -e "$qrcode_path" ]]; then
-    qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
-      "WIFI:S:""$ssid"";T:""$security"";P:""$PASSWORD"";;"
-  fi
+  [ -e "$qrcode_path" ] && rm "$qrcode_path"
 
-  rofi -dmenu -theme-str "
+  qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
+    "WIFI:S:""$ssid"";T:""$security"";P:""$PASSWORD"";;"
+
+  _rofi -theme-str "
 entry{enabled:false;}
 textbox-prompt-colon{str:\"\";}
 window{
   border-radius:6mm; padding:1mm; width:100mm; height:100mm;
   background-image:url(\"$qrcode_path\",both);
 }"
+
+  rm "$qrcode_path"
 }
 
-show_pass() {
-  ssid="$1"
-  security="$2"
-
-  which qrencode && qr_option="QR\n"
-
-  options="$(nmcli dev wifi show-password)\n${qr_option}Back"
-
-  chosen="$(echo -e "$options" | rofi -dmenu -i)"
-
-  case $chosen in
-    "QR") show_qr "$1" "$2" ;;
-    "Back") ssid_menu "$1" "$2" ;;
-  esac
+show_info() {
+  local ssid="$1"
+  local security="$2"
+  local -a options
+  options=("$(nmcli dev wifi show-password)" "$backOption")
+  printf '%s\n' "${options[@]}" | _rofi
+  assert_status $?
+  show_menu
 }
 
 # A submenu for a specific device that allows connecting, pairing, and trusting
 ssid_menu() {
-  ssid="$1"
-  security="$2"
+  local ssid="$1"
+  local security="$2"
+  local connected
+  connected="$(ssid_connected "$ssid") ($kb_quick_connect)"
+  local qrOption="Generate QR"
 
-  # Build options
-  connected=$(ssid_connected "$ssid")
-  saved=$(ssid_saved "$ssid")
-  ssid_saved "$ssid" && options="$connected\n$saved\nShow password\nBack" ||
-    options="$connected\nBack"
+  local -a options=("$connected")
+
+  if ssid_saved "$ssid"; then
+    saved="$(ssid_saved "$ssid") ($kb_quick_forget)"
+    show_info="Show info & pass ($kb_show_info)"
+    options+=("$saved" "$show_info")
+  fi
+
+  which qrencode && options+=("$qrOption")
+
+  options+=("$backOption")
 
   # Open rofi menu, read chosen option
-  chosen="$(echo -e "$options" | rofi -dmenu -i \
-    -theme-str "#entry { placeholder: \"$ssid:\"; }" \
-    -theme-str '* { font: "syne mono 13"; }')"
+  action=$(
+    printf '%s\n' "${options[@]}" | _rofi \
+      -mesg "All hotkeys shown are available from main menu" \
+      -kb-custom-1 "$kb_quick_connect" \
+      -kb-accept-custom "" \
+      -kb-custom-2 "$kb_quick_forget" \
+      -kb-custom-3 "$kb_show_info" \
+      -theme-str "#entry { placeholder: \"$ssid:\"; }"
+  )
+  assert_status $?
 
-  # Match chosen option to command
-  case "$chosen" in
-    "$connected") toggle_ssid "$ssid" "$security" ;;
-    "$saved") forget_ssid "$ssid" ;;
-    "Show password") show_pass "$ssid" "$security" ;;
-    "Back") show_menu ;;
+  # pressed keybinding is more important than selected entry
+  [ "$rofi_exit" -ne 0 ] && action="$rofi_exit"
+
+  # Match action option to command
+  case "$action" in
+    10 | "$connected") toggle_ssid "$ssid" "$security" ;;
+    11 | "$saved") forget_ssid "$ssid" ;;
+    12 | "$show_info") show_info "$ssid" "$security" ;;
+    "$qrOption") show_qr "$1" "$2" ;;
+    "$backOption") show_menu ;;
     *) echo "No option chosen." ;;
   esac
 }
 
-# toggle network, without submenu
-quick_connect="Control+Return"
-# forget network, without submenu
-quick_forget="Alt+k"
-refresh="Control+r"
-
 # autoupdate network list
 update_networks() {
+  local current
+  current=$(echo "$networks" | wc -l)
+  local new
+  local networks
+
   while true; do
     sleep 1
-    _networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
-    _count=$(echo "$_networks" | wc -l)
-    count=$(echo "$networks" | wc -l)
+    networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+    new=$(echo "$networks" | wc -l)
 
     # -w for 'wait' to not spam tnose notification until user refreshes
-    [ "$_count" -ne "$count" ] && say -w -e "Networks changed, refresh ($refresh)"
+    [ "$current" -ne "$new" ] && say -w -e "Networks changed, refresh ($kb_refresh)"
   done
 }
 
 show_menu() {
+  local state
   state=$(wifi_on)
+  local current
+  current=$(echo -e "$networks" | grep "^yes")
+  echo "$current"
 
   # start background networks list updating, and kill it later by pid
   update_networks &
   update_pid=$!
 
-  wifi_on && options="$state\n$networks\nrestart" || options="$state"
+  local -a options=("$state")
+
+  wifi_on && options+=("$networks")
+
   # force monospace font to not get those fields messy
-  option=$(echo -e "$options" | uniq -u |
-    rofi -dmenu -i -selected-row 2 \
-      -kb-custom-1 "$quick_connect" \
-      -kb-accept-custom "" \
-      -kb-custom-2 "$quick_forget" \
-      -kb-custom-3 "$refresh" \
-      -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }' \
-      -theme-str '* { font: "syne mono 13"; }')
+  option=$(printf '%s\n' "${options[@]}" | uniq -u | _rofi -select "$current" \
+    -kb-custom-1 "$kb_quick_connect" \
+    -kb-accept-custom "" \
+    -kb-custom-2 "$kb_quick_forget" \
+    -kb-custom-3 "$kb_show_info" \
+    -kb-custom-4 "$kb_refresh" \
+    -kb-custom-5 "$kb_restart" \
+    -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }')
 
   rofi_exit=$?
 
@@ -223,17 +262,18 @@ show_menu() {
 
   case $option in
     "$state") toggle_wifi ;;
-    "restart") restart_wifi ;;
     *)
       ssid=$(echo "$option" | awk -F '  +' '{print $2}')
       security=$(echo "$option" | awk -F '  +' '{print $3}')
       case $rofi_exit in
         10) toggle_ssid "$ssid" "$security" ;;
         11) forget_ssid "$ssid" ;;
-        12)
+        12) show_info "$ssid" "$security" ;;
+        13)
           networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
           show_menu
           ;;
+        14) restart_wifi ;;
         0) ssid_menu "$ssid" "$security" ;;
         *) exit ;;
       esac
