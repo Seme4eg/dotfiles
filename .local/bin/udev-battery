@@ -6,6 +6,8 @@ charging=      # 0 / 1
 old_capacity=  # to compare with since we r getting multiple events
 capacity=      # current charge level
 
+_notify() { "$HOME"/.local/bin/say -e "$@"; }
+
 # filter lines before they get processed otherwise inefficient
 udevadm monitor -p -u |
   rg --line-buffered -e '^POWER_SUPPLY_(NAME|ONLINE|CAPACITY)=' |
@@ -18,7 +20,7 @@ udevadm monitor -p -u |
       charging=$(echo "$line" | cut -d '=' -f 2)
 
       [[ "$old_charging" -eq 0 && "$charging" -eq 1 ]] &&
-        "$HOME"/.local/bin/say -e 'Charging'
+        _notify -u low -t 500 'Charging'
       old_charging=$charging
       # charging line goes before line with capacity, don't do anythinig yet
       continue
@@ -34,8 +36,8 @@ udevadm monitor -p -u |
     if [ "$charging" == "0" ]; then
       capacity=$((capacity - 1))
       case $capacity in
-        "15" | "10") "$HOME"/.local/bin/say "$capacity% charge left" ;;
-        "6") "$HOME"/.local/bin/say "Hybernating very soon" ;;
+        "15" | "10") _notify "$capacity% charge left" ;;
+        "6") _notify "Hybernating very soon" ;;
         "5") systemctl suspend ;;
       esac
     elif [ "$charging" == "1" ]; then
@@ -43,8 +45,8 @@ udevadm monitor -p -u |
       case $capacity in
         # this one is needed in case i am playing on 60w charger and laptop is
         # still discharging while doing intensive tasks
-        "15") "$HOME"/.local/bin/say -e "$capacity% charged left" ;;
-        "80" | "85") "$HOME"/.local/bin/say "$capacity% charged, unplug" ;;
+        "15") _notify "$capacity% charged left" ;;
+        "80" | "85") _notify "$capacity% charged, unplug" ;;
       esac
     fi
   done
