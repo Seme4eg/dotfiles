@@ -51,3 +51,4 @@ node_modules/
 /.config/QtProject.conf
 /.config/go/
 /.config/imapnotify
+/.config/qutebrowser/

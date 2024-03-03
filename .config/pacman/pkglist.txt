@@ -83,6 +83,7 @@ poppler-glib
 powertop
 python-pywal
 qrencode
+qutebrowser
 reflector
 ripgrep
 rtorrent
