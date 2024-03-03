@@ -6,6 +6,7 @@ if nmcli -g type con show --active | grep -q vpn; then
 else
   nmcli con up mp24
   sleep 3
-  mbsync zimbra
   systemctl --user start goimapnotify@zimbra
+  sleep 5
+  mbsync zimbra
 fi
