@@ -7,3 +7,4 @@ application/pdf=emacsclient.desktop
 text/html=floorp.desktop
 x-scheme-handler/http=floorp.desktop
 x-scheme-handler/https=floorp.desktop
+x-scheme-handler/mailto=emacsclient-mail.desktop
