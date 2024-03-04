@@ -4,21 +4,21 @@
 (deflisten layout "scripts/layout")
 (deflisten backlight :initial "0.0" "scripts/backlight")
 (deflisten volume
-    :initial '{ "is_vol_muted": "true", "vol_level": 0, "is_mic_muted": "true", "mic_level": 0}'
-    "scripts/volume")
+  :initial '{ "is_vol_muted": "true", "vol_level": 0, "is_mic_muted": "true", "mic_level": 0}'
+  "scripts/volume")
 
 ;; === polls ===
 ;; yay -S && yay -Qu | wc -l || echo 0
 (defpoll updates_count
-         :initial 0
-         :interval "3600s"
-         "sleep 10; ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
+  :initial 0
+  :interval "3600s"
+  "sleep 10; ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
 (defpoll weather :interval "3600s" "scripts/weather")
 (defpoll notifs_count :interval "3s" :initial "0" "swaync-client -c")
 (defpoll dualsense
-    :interval "3s"
-    :initial '{ "connected": "false", "battery": 0, "charging": "false" }'
-    "scripts/dualsense")
+  :interval "3s"
+  :initial '{ "connected": "false", "battery": 0, "charging": "false" }'
+  "scripts/dualsense")
 (defpoll tray_count :interval "3s" :initial 0 "scripts/tray_count")
 (defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
 (defpoll vpnstatus :interval "3s" "nmcli -g type con show --active | grep -q vpn && echo 1 || echo 0")
@@ -27,209 +27,205 @@
 
 (defwidget container_right []
   (box
-    :class "right_container"
-    :halign "end"
-    :orientation "h"
-    :space-evenly false
-    :spacing 8
-    (_userinfo)
-    (_sysinfo)
-    (_telemetery)))
+   :class "right_container"
+   :halign "end"
+   :orientation "h"
+   :space-evenly false
+   :spacing 8
+   (_userinfo)
+   (_sysinfo)
+   (_telemetery)))
 
 ;; --- misc block ---
 
 (defwidget _userinfo []
   (box
-    :class "user-info"
-    :space-evenly false
-    :spacing 11
-    (_tray_and_layout)
-    (_updates)
-    ;; notifications widget is part of 'weather' widget cuz less crutches
-    (_weather_and_notifications)))
+   :class "user-info"
+   :space-evenly false
+   :spacing 11
+   (_tray_and_layout)
+   (_updates)
+   ;; notifications widget is part of 'weather' widget cuz less crutches
+   (_weather_and_notifications)))
 
 (defwidget _tray_and_layout []
   (box
-    :space-evenly false
-    :spacing {tray_count > 0 ? 11 : 0}
-    :hexpand "false"
-    (_tray)
-    (label :class "layout" :text "${layout}")))
+   :space-evenly false
+   :spacing {tray_count > 0 ? 11 : 0}
+   :hexpand "false"
+   (_tray)
+   (label :class "layout" :text "${layout}")))
 
 (defwidget _tray []
   (revealer
-    :transition "slideleft"
-    :reveal {tray_count > 0}
-    :duration "350ms"
-    (box :orientation "v" :valign "center" :space-evenly true :spacing 5
-       (systray :class "tray" :icon-size 25 :pack-direction "ltr"))))
+   :transition "slideleft"
+   :reveal {tray_count > 0}
+   :duration "350ms"
+   (box :orientation "v" :valign "center" :space-evenly true :spacing 5
+        (systray :class "tray" :icon-size 25 :pack-direction "ltr"))))
 
 (defwidget _updates []
   (overlay :class "updates" :width 35
-    (label
-      :class {updates_count > 99 ? "fg small" : "fg"}
-      :text "${updates_count}")
-    (label :class "bg" :text "")))
+           (label
+            :class {updates_count > 99 ? "fg small" : "fg"}
+            :text "${updates_count}")
+           (label :class "bg" :text "")))
 
 (defwidget _weather_and_notifications []
   (box
-    :class "notifs"
-    :space-evenly false
-    :spacing {notifs_count > 0 ? 11 : 0}
-    :hexpand "false"
-    ;; in case server returns something like 'unknown location, try ...'
-    (label
-      :class "weather"
-      :width 17
-      :text {strlength(weather) == 0  ? "" : strlength(weather) > 8 ? "󰒏" : weather})
-    (_notifications)))
+   :class "notifs"
+   :space-evenly false
+   :spacing {notifs_count > 0 ? 11 : 0}
+   :hexpand "false"
+   ;; in case server returns something like 'unknown location, try ...'
+   (label
+    :class "weather"
+    :width 17
+    :text {strlength(weather) == 0  ? "" : strlength(weather) > 8 ? "󰒏" : weather})
+   (_notifications)))
 
 (defwidget _notifications []
   (revealer
-    :transition "slideright"
-    :reveal {notifs_count > 0}
-    :duration "350ms"
-    (overlay :class "notifs" :width 35
-      (label :class "fg" :text notifs_count)
-      (label :class "bg" :text "󱥂"))))
+   :transition "slideright"
+   :reveal {notifs_count > 0}
+   :duration "350ms"
+   (overlay :class "notifs" :width 35
+            (label :class "fg" :text notifs_count)
+            (label :class "bg" :text "󱥂"))))
 
 
 ;; --- System info block ---
 
 (defwidget _sysinfo []
   (box :class "sys-info" :space-evenly false :spacing 13
-    (_network
-      ;; network interface name might is different on every machine
-      :up {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_UP')}
-      :down {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_DOWN')})
-    (_audioblock)
-    (_backlight)
-    (_bt)))
+       (_network
+        ;; network interface name might is different on every machine
+        :up {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_UP')}
+        :down {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_DOWN')})
+       (_audioblock)
+       (_backlight)
+       (_bt)))
 
 (defwidget _network [up down]
   (box
-    :space-evenly false
-    :class "network"
-    :spacing {vpnstatus == 1 ? 5 : 0}
-    (revealer
-      :reveal {vpnstatus == 1}
-      :transition "slideleft"
-      (label :width 24 :xalign 0 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
-    (overlay :width 35
-      (box
-        :class "fg"
-        :visible {net.type != "nil"}
-        :orientation "v"
-        :valign "center"
-        :halign "center"
-        :space-evenly false
-        (label
-          :class {up / 1024 > 1024 ? "bold" : ""}
-          :text {up / 1024 < 1024 ?
-                    " ${round(up / 1024, 0)}" :
-                    " ${round(up / 1048576, 0)}"})
-        (progress
-            :value {net.type == "wifi" ? net.wifi_signal : 100}
-            :width 38
-            :orientation "h")
-        (label
-          :class {down / 1024 > 1024 ? "bold" : ""}
-          :text {down / 1024 < 1024 ?
-                  " ${round(down / 1024, 0)}" :
-                  " ${round(down / 1048576, 0)}"}))
-      (label :class "disconnected" :text {net.type == "nil" ? "󰤮" : ""}))))
+   :space-evenly false
+   :class "network"
+   :spacing {vpnstatus == 1 ? 5 : 0}
+   (revealer
+    :reveal {vpnstatus == 1}
+    :transition "slideleft"
+    (label :width 24 :xalign 0 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
+   (overlay :width 35
+            (box
+             :class "fg"
+             :visible {net.type != "nil"}
+             :orientation "v"
+             :valign "center"
+             :halign "center"
+             :space-evenly false
+             (label
+              :class {up / 1024 > 1024 ? "bold" : ""}
+              :text {up / 1024 < 1024 ? " ${round(up / 1024, 0)}" : " ${round(up / 1048576, 0)}"})
+             (progress
+              :value {net.type == "wifi" ? net.wifi_signal : 100}
+              :width 38
+              :orientation "h")
+             (label
+              :class {down / 1024 > 1024 ? "bold" : ""}
+              :text {down / 1024 < 1024 ? " ${round(down / 1024, 0)}" : " ${round(down / 1048576, 0)}"}))
+            (label :class "disconnected" :text {net.type == "nil" ? "󰤮" : ""}))))
 
 (defwidget _audioblock []
   (box :class "audio" :space-evenly false
-    (label
-      :class "volume"
-      :text {volume.is_vol_muted == "true" ? "󰖁" :
-             volume.vol_level < 20 ? "󰕿${volume.vol_level}" :
-             volume.vol_level < 50 ? "󰖀${volume.vol_level}" :
-             "󰖀${volume.vol_level}"} ;; 󰕾
-      :angle 90)
-    (progress
-      :class {volume.is_vol_muted ? "vol_progress muted" : "vol_progress"}
-      :value {volume.vol_level}
-      :orientation "v"
-      :flipped "true"
-      :halign "center")
-    (progress
-      :class {volume.is_mic_muted ? "muted" : ""}
-      :value {volume.mic_level}
-      :orientation "v"
-      :flipped "true"
-      :halign "center")
-    (label
-      :class "mic"
-      :angle 270
-      :xalign 1
-      :text {volume.is_mic_muted == "true" ? "󰍭" : "${volume.mic_level}󰍬"})))
-    
+       (label
+        :class "volume"
+        :text {volume.is_vol_muted == "true" ? "󰖁" :
+        volume.vol_level < 20 ? "󰕿${volume.vol_level}" :
+        volume.vol_level < 50 ? "󰖀${volume.vol_level}" :
+        "󰖀${volume.vol_level}"} ;; 󰕾
+        :angle 90)
+       (progress
+        :class {volume.is_vol_muted ? "vol_progress muted" : "vol_progress"}
+        :value {volume.vol_level}
+        :orientation "v"
+        :flipped "true"
+        :halign "center")
+       (progress
+        :class {volume.is_mic_muted ? "muted" : ""}
+        :value {volume.mic_level}
+        :orientation "v"
+        :flipped "true"
+        :halign "center")
+       (label
+        :class "mic"
+        :angle 270
+        :xalign 1
+        :text {volume.is_mic_muted == "true" ? "󰍭" : "${volume.mic_level}󰍬"})))
+
 (defwidget _backlight []
   (overlay :class "backlight" :width 31
-    (circular-progress
-      :value backlight
-      :start-at 0
-      :thickness 3
-      :clockwise true)
-    (label :class "circle-text yes" :text "󰃝")))
+           (circular-progress
+            :value backlight
+            :start-at 0
+            :thickness 3
+            :clockwise true)
+           (label :class "circle-text yes" :text "󰃝")))
 
 (defwidget _bt []
   (box
-    :space-evenly false
-    :class "bluetooth"
-    :spacing {dualsense.connected ? 5 : 0}
-    (label :xalign 1 :text "${bt_status}")
-    (revealer
-     :reveal {dualsense.connected == "true"}
-     :transition "slideright"
-     (progress
-       :class {dualsense.charging ? "dlsbattery charging" : "dlsbattery"}
-       :value {dualsense.battery}
-       :orientation "v"
-       :flipped "true"
-       :halign "center"))))
+   :space-evenly false
+   :class "bluetooth"
+   :spacing {dualsense.connected ? 5 : 0}
+   (label :xalign 1 :text "${bt_status}")
+   (revealer
+    :reveal {dualsense.connected == "true"}
+    :transition "slideright"
+    (progress
+     :class {dualsense.charging ? "dlsbattery charging" : "dlsbattery"}
+     :value {dualsense.battery}
+     :orientation "v"
+     :flipped "true"
+     :halign "center"))))
 
 
 ;; --- telemetery block ---
 
 (defwidget _telemetery []
   (box :class "telemetery" :space-evenly false :spacing 15
-    (_cpu)
-    (_mem)
-    (_battery)))
+       (_cpu)
+       (_mem)
+       (_battery)))
 
 (defwidget _cpu []
   (box :orientation "v" :spacing 0 :class "cpu"
-    (box :valign "start" :class "temp-text"
-      (label :xalign 0 :text "CPU")
-      (label :class "temp-value" :xalign 1 :text "${EWW_TEMPS.ACPITZ_TEMP1}°"))
-    (overlay
-      (graph :class "load"
-        :value {EWW_CPU.avg}
-        :thickness 2
-        :width 55
-        :time-range "30s"
-        :max 100
-        :line-style "round")
-      (graph :class "temp"
-        :value {EWW_TEMPS.ACPITZ_TEMP1}
-        :thickness 2
-        :width 55
-        :time-range "30s"
-        :min 40
-        :max 120
-        :line-style "round"))))
+       (box :valign "start" :class "temp-text"
+            (label :xalign 0 :text "CPU")
+            (label :class "temp-value" :xalign 1 :text "${EWW_TEMPS.ACPITZ_TEMP1}°"))
+       (overlay
+        (graph :class "load"
+               :value {EWW_CPU.avg}
+               :thickness 2
+               :width 55
+               :time-range "30s"
+               :max 100
+               :line-style "round")
+        (graph :class "temp"
+               :value {EWW_TEMPS.ACPITZ_TEMP1}
+               :thickness 2
+               :width 55
+               :time-range "30s"
+               :min 40
+               :max 120
+               :line-style "round"))))
 
 (defwidget _mem []
   (overlay :class "memory" :width 31
-    (circular-progress
-      :value {EWW_RAM.used_mem_perc}
-      :start-at 0
-      :thickness 3
-      :clockwise true)
-    (label :class "circle-text" :text "󰍛")))
+           (circular-progress
+            :value {EWW_RAM.used_mem_perc}
+            :start-at 0
+            :thickness 3
+            :clockwise true)
+           (label :class "circle-text" :text "󰍛")))
 
 (defwidget _battery []
   (label
