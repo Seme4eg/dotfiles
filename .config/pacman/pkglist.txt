@@ -108,6 +108,7 @@ ttf-sourcecodepro-nerd
 ttf-space-mono-nerd
 udiskie
 udisks2
+unrar
 unzip
 usb_modeswitch
 vim
