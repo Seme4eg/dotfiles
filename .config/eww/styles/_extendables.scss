@@ -1,8 +1,8 @@
 %box {
   background: color.scale($background, $alpha: -20%);
   border-radius: 11px;
-  padding: 0 16px;
-  box-shadow: 0 0 3px 2px color.scale($background, $alpha: -20%);
+  padding: 0 14px;
+  box-shadow: 0 0 2px 1px color.scale($background, $alpha: -20%);
   transition: all 0.5s ease-in-out;
 }
 

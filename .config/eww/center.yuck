@@ -7,11 +7,11 @@
        (overlay
         (box :halign "center" :class "bg" :space-evenly false
              (transform
-              :width 295
-              :scale-x "216%"
+              :width 289
+              :scale-x "221%"
               :translate-x "-27%"
-              :scale-y "195%"
-              :translate-y "-25%"
+              :scale-y "200%"
+              :translate-y "-26%"
               ;; center around colon + colon needs to b raised a bit
               (centerbox
                (label :halign "end" :class "hour" :text {time.hour})
