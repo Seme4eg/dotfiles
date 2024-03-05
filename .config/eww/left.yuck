@@ -28,7 +28,7 @@
 (defwidget _workspaces []
   (box :class "workspaces"
        :class "module workspaces"
-       :spacing 13
+       :spacing 10
        (for ws in {workspaces.items}
             (label
              :class {workspaces.activeId == ws.id ? "active" : ""}

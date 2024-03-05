@@ -32,12 +32,12 @@
     .bg {
       color: color.scale($color6, $saturation: 30%);
       opacity: .6;
-      font-size: 2.4em;
-      margin-top: -1px;
+      font-size: 2.2em;
+      margin-top: -2px;
       margin-right: 13px;
     }
     .fg {
-      font-size: 1.2em;
+      font-size: 1.1em;
       @extend %shadow-text;
       &.small {
         font-size: .9em;
@@ -52,7 +52,7 @@
       color: $_accent2;
       opacity: .6;
       font-size: 2.1em;
-      margin-top: 2px;
+      margin-top: -1px;
       margin-right: 8px;
     }
     .fg {
@@ -104,7 +104,7 @@ progressbar {
   }
   .audio {
     progressbar {
-      padding: 6px 1px;
+      padding: 3px 1px;
     }
     .volume, .mic {
       // any nerd font
@@ -125,7 +125,6 @@ progressbar {
     }
   }
   .backlight {
-    transition: all 0.3s ease-in-out;
     .circle-text {
       font-size: 1.2em;
       margin-right: 5px;
@@ -161,27 +160,38 @@ circular-progress {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 10px;
-  .load {
-    color: $foreground;
-    opacity: .9;
-  }
-  .temp {
-    color: $_accent;
-  }
-  .temp-text {
-    font: bold .8em Megrim;
-    color: color.scale($foreground, $alpha: -20%);
-    letter-spacing: 2px;
-    .temp-value {
+
+  .cpu {
+    .load {
       color: $foreground;
+      opacity: .9;
+    }
+    .temp {
+      color: $_accent;
+    }
+    .label {
+      font: bold .8em Megrim;
+      margin-top: -3px;
+      color: color.scale($foreground, $alpha: -20%);
+      letter-spacing: 2px;
+      .text {
+        margin-top: -1px;
+      }
+      .value {
+        color: $foreground;
+      }
     }
   }
+
   .circle-text {
     margin-right: 2px;
   }
   .bat {
-    font: 1.7em RubikWetPaint;
+    font: 1.2em RubikWetPaint;
     color: color.scale($foreground, $alpha: -20%);
+    &.icon {
+      font: 1.8em RubikWetPaint;
+    }
     &.charging {
       text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
                    0 0 10px color.scale($foreground, $lightness: -45%),
