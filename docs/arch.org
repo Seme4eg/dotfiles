@@ -83,8 +83,8 @@ When encountering problems with sound: ~/usr/bin/rm -r
   - done
 
 ** gpg
-- copy secret2.gpg from wherever you have it stored and run ~gpg --import
-  secret2.gpg~
+- copy secret.gpg from wherever you have it stored and run ~gpg --import
+  secret.gpg~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
 
 ** fingerprint sensor
