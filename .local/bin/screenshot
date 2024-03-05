@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+_path=~/Pictures/Pictures/Screenshots/$(date +"grim_%d%m%Y_%H-%M-%S.png")
+
+case $@ in
+  --fulltoboth) grim "$_path" && wl-copy <"$_path" ;; # full screenshot to both - file and clipboard
+  --fulltoclip) grim - | wl-copy ;;                   # full screenshot to clipboard only
+  --parttoclip) grim -g "$(slurp)" - | wl-copy ;;     # partial screenshot to clipboard only
+  --parttofile) grim -g "$(slurp)" "$_path" ;;        # partial screenshot to file
+esac
+
+say -e 'Taken'
