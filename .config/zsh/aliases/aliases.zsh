@@ -16,6 +16,9 @@ alias picgen="cd ~/utils/Fooocus && conda activate fooocus && \
 # https://github.com/tadfisher/pass-otp#examples - more examples
 alias otpdecode="wl-paste | zbarimg -q --raw - | wl-copy"
 
+alias gpgconf="sudo gpgconf --list-options gpg-agent" # list all config options
+alias gpgreload="systemctl --user restart gpg-agent"
+
 # --grep=<pattern>
 # -x -- Include explanations of log messages from the message catalog where available
 # -u -- messages by a specific (system) unit (man-db.service)
