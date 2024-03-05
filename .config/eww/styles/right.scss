@@ -186,22 +186,26 @@ circular-progress {
   .circle-text {
     margin-right: 2px;
   }
+
   .bat {
-    font: 1.2em RubikWetPaint;
+    font: 1.1em RubikWetPaint;
     color: color.scale($foreground, $alpha: -20%);
-    &.icon {
-      font: 1.8em RubikWetPaint;
+    .icon {
+      font-size: 1em;
     }
     &.charging {
-      text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
-                   0 0 10px color.scale($foreground, $lightness: -45%),
-                   0 0 15px color.scale($foreground, $lightness: -45%);
+      .icon {
+        font-size: 1.2em;
+        text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
+                     0 0 5px color.scale($foreground, $lightness: -45%),
+                     0 0 10px color.scale($foreground, $lightness: -45%);
+      }
     }
     &.low {
       // more bright version
       text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
                    0 0 10px color.scale($foreground, $lightness: -25%),
-                   0 0 20px color.scale($foreground, $lightness: -35%);
+                   0 0 15px color.scale($foreground, $lightness: -35%);
     }
   }
 }
