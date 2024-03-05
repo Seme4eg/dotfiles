@@ -231,15 +231,18 @@
     (label :class "circle-text" :text "󰍛")))
 
 (defwidget _battery []
-  (box :spacing 0 :space-evenly false :halign "center" :class "bat"
+  (box
+    :spacing 0
+    :space-evenly false
+    :halign "center"
+    :class {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .status') == '"Charging"' ? "bat charging" :
+             jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') < 15 ? "bat low" : "bat"}
    (transform
-     :width 41
+     :width 36
      :scale-x "155%"
-     :translate-x "-20%"
+     :translate-x "-19%"
      :scale-y "155%"
-     :translate-y "-21%"
+     :translate-y "-19%"
      (label
-       :class {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .status') == '"Charging"' ? "charging" :
-                jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') < 15 ? "low" : ""}
        :text "${jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity')}"))
    (label :class "icon" :text "󱐋")))
