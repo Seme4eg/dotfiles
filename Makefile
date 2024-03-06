@@ -216,11 +216,11 @@ asus: ## install ASUS laptop specific software (ie. battery threshold)
 	$(SSEN) asusd-alt.service
 	asusctl -c 80
 
-xiaomi: nvidia-tkg ## install stuff for nvidia hybrid laptop
-	$(PACMAN) --needed intel-media-driver nvtop nvidia-prime
+xiaomi: nvidia-all ## install stuff for nvidia hybrid laptop
+	$(PACMAN) --needed intel-media-driver libva-utils nvtop nvidia-prime
 	$(YAY) libva-nvidia-driver-git
 
-nvidia-tkg:
+nvidia-all: ## nvidia-tkg
 	rm -rf ${HOME}/utils/$@
 	git clone https://github.com/Frogging-Family/nvidia-all.git ${HOME}/utils/$@
 	cd ${HOME}/utils/$@
