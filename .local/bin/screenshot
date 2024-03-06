@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+set -Eeo pipefail
+
 _path=~/Pictures/Pictures/Screenshots/$(date +"grim_%d%m%Y_%H-%M-%S.png")
 
 case $@ in
@@ -9,4 +11,4 @@ case $@ in
   --parttofile) grim -g "$(slurp)" "$_path" ;;        # partial screenshot to file
 esac
 
-say -e 'Taken'
+say -e -t 1000 'Taken'

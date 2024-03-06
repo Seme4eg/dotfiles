@@ -20,7 +20,7 @@ udevadm monitor -p -u |
       charging=$(echo "$line" | cut -d '=' -f 2)
 
       [[ "$old_charging" -eq 0 && "$charging" -eq 1 ]] &&
-        _notify -u low -t 500 'Charging'
+        _notify -u low -t 1000 'Charging'
       old_charging=$charging
       # charging line goes before line with capacity, don't do anythinig yet
       continue
