@@ -173,6 +173,8 @@ golang: ## install go and its packages
 	go install github.com/fatih/gomodifytags@latest
 # for formatting docker files in emacs
 	go install github.com/jessfraz/dockfmt@latest
+# for debugging
+	go install github.com/go-delve/delve/cmd/dlv@latest
 
 # ------------  Other  ------------
 
