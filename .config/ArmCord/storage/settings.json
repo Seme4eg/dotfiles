@@ -10,7 +10,7 @@
     "mods": "vencord",
     "spellcheck": true,
     "performanceMode": "none",
-    "skipSplash": false,
+    "skipSplash": true,
     "inviteWebsocket": true,
     "startMinimized": false,
     "dynamicIcon": false,
