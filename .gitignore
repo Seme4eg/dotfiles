@@ -52,3 +52,4 @@ node_modules/
 /.config/go/
 /.config/imapnotify
 /.config/qutebrowser/
+/.config/dlv/
