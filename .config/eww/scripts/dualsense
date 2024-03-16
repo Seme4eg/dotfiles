@@ -1,18 +1,12 @@
 #!/bin/bash
 
-connected() {
-  if dualsensectl -l | grep -q "Devices"; then
-    return 0
-  else
-    return 1
-  fi
-}
+connected() { dualsensectl info | grep -q "Invalid"; }
 
 charging() {
   status=
   if connected; then
-    status=$(dualsensectl battery | cut -d ' ' -f 2)
-    [ $status = "charging" ] && echo "true" || echo "false"
+    status=$(dualsensectl battery 2>/dev/null | cut -d ' ' -f 2)
+    [ "$status" = "charging" ] && echo "true" || echo "false"
   else
     echo "false"
   fi

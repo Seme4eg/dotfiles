@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
 
-echo "$(brillo)" # initial
-
-udevadm monitor | rg --line-buffered "backlight" | while read -r _; do
-  echo "$(brillo)" # initial
-done
+brillo
+udevadm monitor | rg --line-buffered "backlight" | while read -r _; do brillo; done
