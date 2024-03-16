@@ -238,7 +238,7 @@
     :class {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .status') == '"Charging"' ? "bat charging" :
              jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') < 15 ? "bat low" : "bat"}
    (transform
-     :width 36
+     :width {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') == 100 ? 48 : 36}
      :scale-x "155%"
      :translate-x "-19%"
      :scale-y "155%"

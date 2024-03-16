@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 
 vol() {
-  wpctl get-volume @DEFAULT_AUDIO_$1@ | awk '{print int($2*100)}'
+  wpctl get-volume "@DEFAULT_AUDIO_$1@" | awk '{print int($2*100)}'
 }
 
 ismuted() {
-  wpctl get-volume @DEFAULT_AUDIO_$1@ | rg -i muted > /dev/null
-  [ $? -eq 0 ] && echo 'true' || echo 'false'
+  wpctl get-volume "@DEFAULT_AUDIO_$1@" | rg -i muted >/dev/null &&
+    echo 'true' || echo 'false'
 }
 
 get_info() {
-  lvl=$(awk -v n="$(vol "SINK")" 'BEGIN{print int(n/34)}')
   isvolmuted=$(ismuted "SINK")
   ismicmuted=$(ismuted "SOURCE")
   echo '{ "is_vol_muted": "'"$isvolmuted"'",' \

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-echo $(hyprctl -j activewindow | gojq -r '.title')
+# echo initial value
+hyprctl -j activewindow | gojq -r '.title'
 
 socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
-  [ ${line%>>*} == "activewindow" ] && echo ${line#*,}
+  [ "${line%>>*}" == "activewindow" ] && echo "${line#*,}"
 done

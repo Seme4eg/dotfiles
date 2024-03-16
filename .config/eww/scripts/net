@@ -2,13 +2,12 @@
 
 is_wifi() {
   # 802-11-wireless:wlp1s0 <- on one laptop
-  nmcli -t -f TYPE,DEVICE con show --active | grep wireless > /dev/null &&
-    return 0 || return 1
+  nmcli -t -f TYPE,DEVICE con show --active | grep wireless >/dev/null
+
 }
 
 is_ethernet() {
-  nmcli -t -f TYPE,DEVICE con show --active | grep ethernet > /dev/null &&
-    return 0 || return 1
+  nmcli -t -f TYPE,DEVICE con show --active | grep ethernet >/dev/null
 }
 
 wifi_signal() {
