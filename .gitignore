@@ -53,3 +53,5 @@ node_modules/
 /.config/imapnotify
 /.config/qutebrowser/
 /.config/dlv/
+/.config/Vampire_Survivors*
+/.config/unity3d/
