@@ -2,7 +2,7 @@ armcord-bin
 brillo
 cgo-git
 dualsensectl-git
-emacs-gcc-wayland-devel-bin
+emacs-git
 eww-tray-wayland-git
 firefox-tridactyl-native
 floorp-bin
