@@ -21,6 +21,7 @@ fzf
 git
 go
 goimapnotify
+graphviz
 grim
 grub
 gthumb
