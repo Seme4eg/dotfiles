@@ -110,10 +110,10 @@ toggle_ssid() {
       exit 1
     fi
     _connecting "$ssid"
-    nmcli device wifi connect "$1" password "$wifi_pass"
+    nmcli device wifi connect "$ssid" password "$wifi_pass"
     # if connection failed - prompt again and remove attempted connection from
     # saved ones (cuz it does save connection even if wrong pass was provided)
-    if ! $?; then
+    if [ "$?" -eq 1 ]; then
       nmcli connection delete id "$1"
       say -e "Nope."
       _connect "$1"
