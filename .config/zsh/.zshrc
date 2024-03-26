@@ -40,9 +40,9 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # <- gets defined only after zvm sourcing
 
 zvm_vi_yank() {
-	zvm_yank
-	echo ${CUTBUFFER} | wl-copy
-	zvm_exit_visual_mode
+  zvm_yank
+  echo ${CUTBUFFER} | wl-copy
+  zvm_exit_visual_mode
 }
 
 ###############################################################################
@@ -54,14 +54,10 @@ zvm_vi_yank() {
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
-fcd () {
-  cd $(find -type d | fzf)
-}
+fcd() { cd $(find -type d | fzf); }
 bindkey -s '^o' '^ufcd\n'
 
-open () {
-  xdg-open $(find -type f | fzf)
-}
+open() { xdg-open $(find -type f | fzf); }
 bindkey -s '^f' '^uopen\n'
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion history)
@@ -75,7 +71,7 @@ bindkey '^[^_' fzf-history-widget # ctrl + alt + /
 ###############################################################################
 
 eval "$(zoxide init zsh)" # z / zi[nteractive] (using fzf if u have it)
-stty stop undef # disable C-s to freeze terminal
+stty stop undef           # disable C-s to freeze terminal
 # Nobody needs flow control anymore. Troublesome feature.
 #stty -ixon
 setopt noflowcontrol
@@ -87,7 +83,7 @@ for file in ~/.config/zsh/aliases/*; do source "$file"; done
 # [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
 # i have cat aliased to 'bat' so i need to call cat directly
-( /usr/bin/cat ~/.cache/wal/sequences & ) # pywal
+(/usr/bin/cat ~/.cache/wal/sequences &) # pywal
 
 if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
   # init-nvm.sh contents with bash_completion excluded and nvm dir changed
@@ -101,4 +97,3 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
-
