@@ -59,6 +59,7 @@ msmtp
 nautilus
 ncdu
 neofetch
+network-manager-applet
 networkmanager
 networkmanager-openvpn
 noto-fonts-emoji
