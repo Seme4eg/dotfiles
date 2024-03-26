@@ -8,15 +8,28 @@ capacity=      # current charge level
 
 _notify() { "$HOME"/.local/bin/say -e "$@"; }
 
+case $@ in
+  --debug) debug=true ;;
+esac
+
+debug() {
+  "$debug" && return 0 || return 1
+}
+
+debug && echo "debug mode"
+
 # filter lines before they get processed otherwise inefficient
 udevadm monitor -p -u |
   rg --line-buffered -e '^POWER_SUPPLY_(NAME|ONLINE|CAPACITY)=' |
   while read -r line; do
+    debug && echo "line: $line"
     [[ $line == POWER_SUPPLY_NAME=* ]] && name=$(echo "$line" | cut -d '=' -f 2)
+    debug && echo "name: $name"
 
     # do not process events from mouses, keyboards and other external stuff
     # asus laptop has battery name BATT
     if [[ ($name =~ ^(ADP0|ACAD)$) && $line == POWER_SUPPLY_ONLINE=* ]]; then
+      debug && echo "if"
       charging=$(echo "$line" | cut -d '=' -f 2)
 
       [[ "$old_charging" -eq 0 && "$charging" -eq 1 ]] &&
@@ -25,6 +38,8 @@ udevadm monitor -p -u |
       # charging line goes before line with capacity, don't do anythinig yet
       continue
     elif [[ ($name =~ ^(BAT0|BATT)$) && $line == POWER_SUPPLY_CAPACITY=* ]]; then
+      debug && echo "else"
+
       capacity=$(echo "$line" | cut -d '=' -f 2)
       [ "$capacity" == "$old_capacity" ] && continue # filter same events
       old_capacity=$capacity
@@ -32,11 +47,15 @@ udevadm monitor -p -u |
       continue # continue on all lines except the capacity one
     fi
 
+    debug && echo "capacity: $capacity"
+    debug && echo "charging: $charging"
+
     # need to ++ / -- capacity cuz ADP0/ACAD events are always behing by 1
     if [ "$charging" == "0" ]; then
       capacity=$((capacity - 1))
       case $capacity in
-        "15" | "10") _notify "$capacity% charge left" ;;
+        "15") _notify "$capacity% charge left" ;;
+        "10") _notify "$capacity% charge left" ;;
         "6") _notify "Hybernating very soon" ;;
         "5") systemctl suspend ;;
       esac
