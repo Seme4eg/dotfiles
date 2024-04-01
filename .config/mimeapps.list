@@ -8,3 +8,4 @@ text/html=floorp.desktop
 x-scheme-handler/http=floorp.desktop
 x-scheme-handler/https=floorp.desktop
 x-scheme-handler/mailto=emacsclient-mail.desktop
+x-scheme-handler/eclipse+command=_usr_lib_dbeaver_.desktop
