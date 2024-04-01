@@ -1,6 +1,9 @@
 #!/bin/bash
 
-connected() { dualsensectl info | grep -q "Invalid"; }
+connected() {
+  dualsensectl info | grep -q "Invalid"
+  return $((!$?))
+}
 
 charging() {
   status=
