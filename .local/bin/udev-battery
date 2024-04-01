@@ -54,19 +54,3 @@ while true; do
   old_capacity=$capacity
 
 done
-
-# if charging; then
-#   case $capacity in
-#     15) _notify "$capacity% charge left" ;;
-#     10) _notify "$capacity% charge left" ;;
-#     6) _notify "Hybernating very soon" ;;
-#     5) systemctl suspend ;;
-#   esac
-# else
-#   case $capacity in
-#     # this one is needed in case i am playing on 60w charger and laptop is
-#     # still discharging while doing intensive tasks
-#     15) _notify "$capacity% charged left" ;;
-#     80 | 85) _notify "$capacity% charged, unplug" ;;
-#   esac
-# fi
