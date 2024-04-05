@@ -45,7 +45,7 @@
     }
   }
   .weather {
-    font: 1.2em jura;
+    font: 1.4em iceland;
   }
   .notifs {
     .bg {
@@ -102,28 +102,21 @@ progressbar {
       }
     }
   }
+
   .audio {
-    progressbar {
-      padding: 3px 1px;
+    .icon {
+      margin-left: 3px;
     }
-    .volume, .mic {
-      // any nerd font
-      font: 1em daddytimemono nerd font;
-      font-size: .7em;
-      letter-spacing: 2px;
-      // line-height: 5px;
+    .output > .icon {
+      font: 1.5em daddytimemono nerd font;
     }
-    progressbar.vol_progress {
-      progress {
-        background: $_accent2;
-      };
-    }
-    progressbar.muted {
-      progress {
-        background: color.scale($color6, $lightness: -60%);
-      }
+
+    .level {
+      // silkscreen looks cool but is too wide
+      font: 1em syne mono;
     }
   }
+
   .backlight {
     .circle-text {
       font-size: 1.2em;

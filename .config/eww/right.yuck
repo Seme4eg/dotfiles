@@ -14,6 +14,7 @@
          :interval "3600s"
          "sleep 10; ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
 (defpoll weather :interval "3600s" "scripts/weather")
+(defpoll outputicon :interval "1s" "scripts/outputicon")
 (defpoll notifs_count :interval "3s" :initial "0" "swaync-client -c")
 (defpoll dualsense
     :interval "3s"
@@ -139,32 +140,18 @@
       (label :class "disconnected" :text {net.type == "nil" ? "󰤮" : ""}))))
 
 (defwidget _audioblock []
-  (box :class "audio" :space-evenly false
-    (label
-      :class "volume"
-      :text {volume.is_vol_muted == "true" ? "󰖁" :
-             volume.vol_level < 20 ? "󰕿${volume.vol_level}" :
-             volume.vol_level < 50 ? "󰖀${volume.vol_level}" :
-             "󰖀${volume.vol_level}"} ;; 󰕾
-      :angle 90)
-    (progress
-      :class {volume.is_vol_muted ? "vol_progress muted" : "vol_progress"}
-      :value {volume.vol_level}
-      :orientation "v"
-      :flipped "true"
-      :halign "center")
-    (progress
-      :class {volume.is_mic_muted ? "muted" : ""}
-      :value {volume.mic_level}
-      :orientation "v"
-      :flipped "true"
-      :halign "center")
-    (label
-      :class "mic"
-      :angle 270
-      :xalign 1
-      :text {volume.is_mic_muted == "true" ? "󰍭" : "${volume.mic_level}󰍬"})))
-    
+  (box :class "audio" :spacing 8
+    (box :class "output" :space-evenly false :halign "end"
+      (label
+        :class "level"
+        :text {volume.is_vol_muted == "true" ? "0" : volume.vol_level})
+      (label :class "icon" :text outputicon))
+    (box :class "input" :space-evenly false
+      (label
+        :class "level"
+        :text {volume.is_mic_muted == "true" ? "0" : volume.mic_level})
+      (label :class "icon" :halign "end" :text ""))))
+
 (defwidget _backlight []
   (overlay :class "backlight" :width 29
     (circular-progress
