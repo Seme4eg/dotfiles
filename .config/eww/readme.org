@@ -3,6 +3,9 @@
 - Important references: [[https://elkowar.github.io/eww/configuration.html][configuration wiki]], [[https://docs.gtk.org/gtk3/css-properties.html][gtk css]], [[https://sass-lang.com/documentation/modules/color#scale][sass modules]]
 - How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]]
 - css ideas: [[https://www.bypeople.com/css-snippets/][bypeople]]
+- any nerd font is needed for icons. I use 'daddytimemono nerd font', if you
+  decide to use different one - change all occurances of daddytime font in eww
+  styles.
 
 ** Todos
 - [ ] [[https://www.bypeople.com/css-neon-sign-effect/][implement]] blinking animation when [[https://github.com/elkowar/eww/issues/688][animation cpu]] issue will b resolved
