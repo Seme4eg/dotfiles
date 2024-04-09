@@ -33,7 +33,7 @@ while true; do
       _notify "$capacity% charged left"
       # for cases when i use 60W charging and gaming - laptop is discharging
       # and i need to know when i need to switch to another charging cable
-    elif [ "$capacity" -ge 80 ]; then
+    elif [ "$capacity" -ge 80 ] && [ "$capacity" -gt "$old_capacity" ]; then
       _notify "$capacity% charged, unplug"
     fi
 
