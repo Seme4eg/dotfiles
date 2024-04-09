@@ -1,21 +1,51 @@
 #!/usr/bin/env bash
 
-vol() {
+volume() {
+  if is_muted "$1"; then
+    echo 0
+    return
+  fi
+
   wpctl get-volume "@DEFAULT_AUDIO_$1@" | awk '{print int($2*100)}'
 }
 
-ismuted() {
-  wpctl get-volume "@DEFAULT_AUDIO_$1@" | rg -i muted >/dev/null &&
-    echo 'true' || echo 'false'
+is_muted() {
+  wpctl get-volume "@DEFAULT_AUDIO_$1@" | grep -iq muted
+}
+
+card_name() {
+  name=$(wpctl inspect @DEFAULT_AUDIO_SINK@ | grep alsa.card_name)
+
+  if [ $? -eq 1 ]; then
+    name=$(wpctl inspect @DEFAULT_AUDIO_SINK@ | grep media.name)
+  fi
+
+  echo "$name" | cut -d'=' -f 2
+}
+
+get_sink_icon() {
+  if [[ "$(card_name)" == *"EDIFIER S880DB"* ]]; then
+    is_muted "SINK" && echo 󰓄 || echo 󰓃
+  else
+    is_muted "SINK" && echo 󰟎 || echo 󰋋
+  fi
 }
 
 get_info() {
-  isvolmuted=$(ismuted "SINK")
-  ismicmuted=$(ismuted "SOURCE")
-  echo '{ "is_vol_muted": "'"$isvolmuted"'",' \
-    '"vol_level": "'"$(vol "SINK")"'",' \
-    '"is_mic_muted": "'"$ismicmuted"'",' \
-    '"mic_level": "'"$(vol "SOURCE")"'" }'
+  sink_volume=$(volume "SINK")
+  sink_icon=$(get_sink_icon)
+
+  source_volume=$(volume "SOURCE")
+  source_icon=$(is_muted "SOURCE" && echo  || echo )
+
+  json=$(jq -nc \
+    --arg vl "$sink_volume" \
+    --arg vi "$sink_icon" \
+    --arg ml "$source_volume" \
+    --arg mi "$source_icon" \
+    '{sink_volume: $vl, sink_icon: $vi, source_volume: $ml, source_icon: $mi}')
+
+  echo "$json"
 }
 
 get_info # initial values
