@@ -5,10 +5,20 @@ set -Eeo pipefail
 _path=~/Pictures/Pictures/Screenshots/$(date +"grim_%d%m%Y_%H-%M-%S.png")
 
 case $@ in
-  --fulltoboth) grim "$_path" && wl-copy <"$_path" ;; # full screenshot to both - file and clipboard
-  --fulltoclip) grim - | wl-copy ;;                   # full screenshot to clipboard only
-  --parttoclip) grim -g "$(slurp)" - | wl-copy ;;     # partial screenshot to clipboard only
-  --parttofile) grim -g "$(slurp)" "$_path" ;;        # partial screenshot to file
+  --fulltoboth) # full screenshot to both - file and clipboard
+    grim "$_path" && wl-copy <"$_path"
+    say -e -t 1000 'Full taken to folder and clipboard'
+    ;;
+  --fulltoclip) # full screenshot to clipboard only
+    grim - | wl-copy
+    say -e -t 1000 'Full taken to clipboard'
+    ;;
+  --parttoclip) # partial screenshot to clipboard only
+    grim -g "$(slurp)" - | wl-copy
+    say -e -t 1000 'Part taken to clipboard'
+    ;;
+  --parttofile) # partial screenshot to file
+    grim -g "$(slurp)" "$_path"
+    say -e -t 1000 'Part taken to folder'
+    ;;
 esac
-
-say -e -t 1000 'Taken'
