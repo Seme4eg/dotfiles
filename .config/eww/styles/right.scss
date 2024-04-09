@@ -80,7 +80,8 @@ progressbar {
   @extend %box;
   .network {
     .vpn {
-      font-size: 1.3em;
+      margin-right: 3px;
+      font-size: 1.1em;
     }
     .disconnected {
       font-size: 1.4em;

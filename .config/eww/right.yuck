@@ -114,7 +114,7 @@
     (revealer
       :reveal {vpnstatus == 1}
       :transition "slideleft"
-      (label :width 24 :xalign 0 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
+      (label :width 20 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
     (overlay :width 35
       (box
         :class "fg"
