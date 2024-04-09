@@ -140,17 +140,13 @@
       (label :class "disconnected" :text {net.type == "nil" ? "󰤮" : ""}))))
 
 (defwidget _audioblock []
-  (box :class "audio" :spacing 8
-    (box :class "output" :space-evenly false :halign "end"
-      (label
-        :class "level"
-        :text {volume.is_vol_muted == "true" ? "0" : volume.vol_level})
-      (label :class "icon" :text outputicon))
+  (box :class "audio" :spacing 6 :space-evenly false
+    (box :class "output" :space-evenly false :halign "center"
+      (label :class "level" :text {volume.sink_volume})
+      (label :class "icon" :text {volume.sink_icon}))
     (box :class "input" :space-evenly false
-      (label
-        :class "level"
-        :text {volume.is_mic_muted == "true" ? "0" : volume.mic_level})
-      (label :class "icon" :halign "end" :text ""))))
+      (label :class "level" :text {volume.source_volume})
+      (label :class "icon" :halign "end" :text {volume.source_icon}))))
 
 (defwidget _backlight []
   (overlay :class "backlight" :width 29
