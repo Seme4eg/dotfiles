@@ -140,8 +140,8 @@
       (label :class "disconnected" :text {net.type == "nil" ? "󰤮" : ""}))))
 
 (defwidget _audioblock []
-  (box :class "audio" :spacing 6 :space-evenly false
-    (box :class "output" :space-evenly false :halign "center"
+  (box :class "audio" :spacing 7 :space-evenly false
+    (box :class "output ${volume.sink_class}" :space-evenly false :halign "center"
       (label :class "level" :text {volume.sink_volume})
       (label :class "icon" :text {volume.sink_icon}))
     (box :class "input" :space-evenly false
