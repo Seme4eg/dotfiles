@@ -42,9 +42,18 @@ get_sink_icon() {
   fi
 }
 
+get_sink_class() {
+  if [[ "$(node_name)" == *"EDIFIER_S880DB"* ]]; then
+    echo "speakers"
+  else
+    echo "headphones"
+  fi
+}
+
 get_info() {
   sink_volume=$(volume "SINK")
   sink_icon=$(get_sink_icon)
+  sink_class=$(get_sink_class)
 
   source_volume=$(volume "SOURCE")
   source_icon=$(is_muted "SOURCE" && echo  || echo )
@@ -52,9 +61,10 @@ get_info() {
   json=$(jq -nc \
     --arg vl "$sink_volume" \
     --arg vi "$sink_icon" \
+    --arg vc "$sink_class" \
     --arg ml "$source_volume" \
     --arg mi "$source_icon" \
-    '{sink_volume: $vl, sink_icon: $vi, source_volume: $ml, source_icon: $mi}')
+    '{sink_volume: $vl, sink_icon: $vi, sink_class: $vc, source_volume: $ml, source_icon: $mi}')
 
   echo "$json"
 }

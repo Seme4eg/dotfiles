@@ -45,7 +45,7 @@
     }
   }
   .weather {
-    font: 1.4em iceland;
+    font: 1.2em jura;
   }
   .notifs {
     .bg {
@@ -108,13 +108,15 @@ progressbar {
     .icon {
       margin-left: 3px;
     }
-    .output > .icon {
+    .output.speakers > .icon {
       font: 1.5em daddytimemono nerd font;
+    }
+    .output.headphones > .icon {
+      font: 1.3em daddytimemono nerd font;
     }
 
     .level {
-      // silkscreen looks cool but is too wide
-      font: 1em syne mono;
+      font: bold .9em megrim;
     }
   }
 
