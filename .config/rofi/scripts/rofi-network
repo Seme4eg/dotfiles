@@ -91,14 +91,16 @@ toggle_ssid() {
     say -e "Connected to $1."
   }
   _connecting() {
-    say -t 2000 -e "$(whoami)" "Connecting to $1..."
+    say -t 2000 -e "Connecting to $1..."
   }
 
   _connect() {
-    protected() { if [ "$security" = "--" ]; then return 1; else return 0; fi; }
-    protected && wifi_pass=$(_rofi -password \
-      -theme-str '#entry { placeholder: "password .."; }')
-    assert_status $?
+    protected() { [ "$security" != "--" ]; }
+
+    if protected; then
+      wifi_pass=$(_rofi -password -theme-str '#entry { placeholder: "password .."; }')
+      assert_status $?
+    fi
 
     # if no password provided - quit that script and restore initial connection
     # maybe show return to main menu instead?
@@ -109,7 +111,9 @@ toggle_ssid() {
       say -e "Restored connection to $initial_ssid."
       exit 1
     fi
+
     _connecting "$ssid"
+
     nmcli device wifi connect "$ssid" password "$wifi_pass"
     # if connection failed - prompt again and remove attempted connection from
     # saved ones (cuz it does save connection even if wrong pass was provided)
@@ -118,6 +122,7 @@ toggle_ssid() {
       say -e "Nope."
       _connect "$1"
     fi
+
     # required to show success notif
     return 0
   }
