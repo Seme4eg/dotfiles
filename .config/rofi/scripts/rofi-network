@@ -19,19 +19,17 @@ kb_show_info="Alt+o" # show info like password, security, qr, ssid
 
 backOption='← back'
 
-_rofi() {
-  rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }' "$@"
-}
+_rofi() { rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }' "$@"; }
 
 assert_status() { [ "$1" -eq 1 ] && exit; }
 
-wifi_on() {
-  if [ "$(nmcli radio wifi)" = "enabled" ]; then
+wifi_on() { [ "$(nmcli radio wifi)" = "enabled" ]; }
+
+wifi_status() {
+  if wifi_on; then
     echo "󰤭  Disable Wi-Fi ($kb_restart to restart)"
-    return 0
   else
     echo "󰤨  Enable Wi-Fi"
-    return 1
   fi
 }
 
@@ -56,16 +54,7 @@ restart_wifi() {
   show_menu
 }
 
-ssid_connected() {
-  ssid="$1"
-  if [ "$initial_ssid" == "$ssid" ]; then
-    echo "Disconnect"
-    return 0
-  else
-    echo "Connect"
-    return 1
-  fi
-}
+ssid_connected() { [ "$initial_ssid" == "$1" ]; }
 
 ssid_saved() {
   # Parses the list of known connections to see if it already contains the SSID.
@@ -113,6 +102,8 @@ toggle_ssid() {
     fi
 
     _connecting "$ssid"
+
+    echo "nmcli device wifi connect $ssid password $wifi_pass"
 
     nmcli device wifi connect "$ssid" password "$wifi_pass"
     # if connection failed - prompt again and remove attempted connection from
@@ -176,8 +167,14 @@ ssid_menu() {
   local ssid="$1"
   local security="$2"
   local connected
-  connected="$(ssid_connected "$ssid") ($kb_quick_connect)"
   local qrOption="Generate QR"
+  local connected
+
+  if ssid_connected "$ssid"; then
+    connected="Disconnect ($kb_quick_connect)"
+  else
+    connected="Connect ($kb_quick_connect)"
+  fi
 
   local -a options=("$connected")
 
@@ -185,9 +182,8 @@ ssid_menu() {
     saved="$(ssid_saved "$ssid") ($kb_quick_forget)"
     show_info="Show info & pass ($kb_show_info)"
     options+=("$saved" "$show_info")
+    which qrencode >/dev/null && options+=("$qrOption")
   fi
-
-  which qrencode && options+=("$qrOption")
 
   options+=("$backOption")
 
@@ -236,7 +232,7 @@ update_networks() {
 
 show_menu() {
   local state
-  state=$(wifi_on)
+  state=$(wifi_status)
   local current
   current=$(echo -e "$networks" | grep "^yes")
   echo "$current"
