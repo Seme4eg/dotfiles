@@ -4,8 +4,6 @@
 
 # IN-USE, BSSID
 FIELDS=ACTIVE,SSID,SECURITY,FREQ,RATE,SIGNAL
-# awk NF to filter empty lines from output
-networks=$(nmcli -f "$FIELDS" device wifi list | awk NF) # sed '/--/d' |
 # will b empty if no active connection
 initial_ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
 
@@ -24,6 +22,9 @@ _rofi() { rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }' "$@"; }
 assert_status() { [ "$1" -eq 1 ] && exit; }
 
 wifi_on() { [ "$(nmcli radio wifi)" = "enabled" ]; }
+
+# awk NF to filter empty lines from output
+get_networks() { nmcli -f "$FIELDS" device wifi list | awk NF; } # sed '/--/d' |
 
 wifi_status() {
   if wifi_on; then
@@ -222,7 +223,7 @@ update_networks() {
 
   while true; do
     sleep 1
-    networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+    networks=$(get_networks)
     new=$(echo "$networks" | wc -l)
 
     # -w for 'wait' to not spam tnose notification until user refreshes
@@ -233,6 +234,8 @@ update_networks() {
 show_menu() {
   local state
   state=$(wifi_status)
+  networks=$(get_networks)
+
   local current
   current=$(echo -e "$networks" | grep "^yes")
   echo "$current"
@@ -271,7 +274,7 @@ show_menu() {
         11) forget_ssid "$ssid" ;;
         12) show_info "$ssid" "$security" ;;
         13)
-          networks=$(nmcli --fields "$FIELDS" device wifi list | sed '/--/d' | awk NF)
+          networks=$(get_networks)
           show_menu
           ;;
         14) restart_wifi ;;
