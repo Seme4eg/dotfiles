@@ -6,6 +6,7 @@ emacs-git
 eww-tray-wayland-git
 firefox-tridactyl-native
 floorp-bin
+goimapnotify-git
 gojq
 golangci-lint-bin
 heroic-games-launcher-bin

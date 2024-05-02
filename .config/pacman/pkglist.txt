@@ -21,7 +21,6 @@ foot
 fzf
 git
 go
-goimapnotify
 graphviz
 grim
 grub
