@@ -33,4 +33,4 @@ alias cheatengine="xhost +local: &; gameconqueror"
 
 # journalctl /usr/lib/systemd/systemd # messages by a specific executable
 # journalctl _PID=1 # messages by a specific process:
-alias jc="journalctl --user -xeu"
+alias jc="journalctl --user -xe" # to see specific unit add -u flag
