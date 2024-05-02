@@ -21,6 +21,8 @@ alias gpgreload="systemctl --user restart gpg-agent"
 
 alias cheatengine="xhost +local: &; gameconqueror"
 
+alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
+
 # --grep=<pattern>
 # -x -- Include explanations of log messages from the message catalog where available
 # -u -- messages by a specific (system) unit (man-db.service)
