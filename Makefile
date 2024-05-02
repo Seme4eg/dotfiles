@@ -150,9 +150,11 @@ mpd:
 	systemctl --user restart $@.service
 	$(SUEN) mpd.service
 
-# TODO:
-# hyprplugins:
-# 	hyprpm add https://github.com/VortexCoyote/hyprfocus <- doesn't work yet
+hyprplugins:
+	hyprpm add https://github.com/VortexCoyote/hyprfocus
+	hyprpm list
+	hyprpm enable hyprfocus
+	hyprpm reload
 
 pam-gnupg: ## setup pam-gnupg to unlock GnuPG keys on login
 	@echo 'auth     optional  pam_gnupg.so store-only' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
