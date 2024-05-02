@@ -26,7 +26,7 @@ user_pref("browser.urlbar.placeholderName", "Google");
 user_pref("browser.urlbar.placeholderName.private", "DuckDuckGo");
 user_pref("browser.urlbar.suggest.engines", false);
 user_pref("browser.urlbar.suggest.topsites", false);
-user_pref("browser.zoom.full", false);
+user_pref("browser.zoom.full", true);
 user_pref("extensions.pictureinpicture.enable_picture_in_picture_overrides", true);
 user_pref("extensions.ui.dictionary.hidden", true);
 user_pref("extensions.ui.extension.hidden", false);
