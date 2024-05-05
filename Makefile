@@ -154,8 +154,8 @@ mpd:
 	$(SUEN) mpd.service
 
 hyprplugins:
+	hyprpm update
 	hyprpm add https://github.com/VortexCoyote/hyprfocus
-	hyprpm list
 	hyprpm enable hyprfocus
 	hyprpm reload
 
