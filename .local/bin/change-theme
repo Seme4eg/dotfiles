@@ -36,8 +36,7 @@ else
 fi
 
 eww update theme=$theme
-eww reload & # might be slow sometimes
-# systemctl --user restart eww.service
+systemctl --user restart eww.service
 
 pywalfox update & # update firefox/floorp theme
 
