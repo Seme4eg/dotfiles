@@ -4,15 +4,18 @@
 # also there is this var
 # .EXPORT_ALL_VARIABLES:
 
+SHELL := /bin/bash
+.SHELLFLAGS := -ec
+# if this special target appears anywhere in the makefile then *all* recipe
+# lines for each target will be provided to a single invocation of the shell.
+.ONESHELL:
+
 PACMAN := sudo pacman -S --noconfirm
 YAY    := yay -S --noconfirm
 SSEN   := sudo systemctl --now enable
 SUEN   := systemctl --user --now enable
 
 .DEFAULT_GOAL := help
-# if this special target appears anywhere in the makefile then *all* recipe 
-# lines for each target will be provided to a single invocation of the shell.
-.ONESHELL:
 
 # prevents 'make' from getting confused by an actual file called 'allinstall',
 # etc.. and causes it to continue in spite of errors
