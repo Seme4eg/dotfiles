@@ -261,24 +261,25 @@ show_menu() {
 
   [ $rofi_exit -eq 1 ] && exit
 
-  case $option in
-    "$state") toggle_wifi ;;
-    *)
-      ssid=$(echo "$option" | awk -F '  +' '{print $2}')
-      security=$(echo "$option" | awk -F '  +' '{print $3}')
-      case $rofi_exit in
-        10) toggle_ssid "$ssid" "$security" ;;
-        11) forget_ssid "$ssid" ;;
-        12) show_info "$ssid" "$security" ;;
-        13)
-          networks=$(get_networks)
-          show_menu
-          ;;
-        14) restart_wifi ;;
-        0) ssid_menu "$ssid" "$security" ;;
-        *) exit ;;
+  ssid=$(echo "$option" | awk -F '  +' '{print $2}')
+  security=$(echo "$option" | awk -F '  +' '{print $3}')
+
+  case $rofi_exit in
+    0)
+      case $option in
+        "$state") toggle_wifi ;;
+        *) ssid_menu "$ssid" "$security" ;;
       esac
       ;;
+    10) toggle_ssid "$ssid" "$security" ;;
+    11) forget_ssid "$ssid" ;;
+    12) show_info "$ssid" "$security" ;;
+    13)
+      networks=$(get_networks)
+      show_menu
+      ;;
+    14) restart_wifi ;;
+    *) exit ;;
   esac
 }
 
