@@ -42,16 +42,13 @@ toggle_wifi() {
   else
     nmcli radio wifi on
     say -t 5000 -e "Wifi turned on. Scanning for networks..."
-    sleep 5
     show_menu
   fi
 }
 
 restart_wifi() {
   say -t 3000 -e "Restarting wifi"
-  nmcli networking off
-  sleep 3
-  nmcli networking on
+  nmcli networking off && nmcli networking on
   show_menu
 }
 
