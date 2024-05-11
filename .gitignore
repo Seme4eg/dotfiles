@@ -17,7 +17,6 @@ node_modules/
 /.config/dconf/
 /.config/syncthing
 /.config/discord/
-/.config/nvm/
 /.config/systemd/user/hyprland-session.target.wants/
 /.config/pavucontrol.ini
 /.config/cef_user_data/

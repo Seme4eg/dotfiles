@@ -16,7 +16,6 @@ mbsync-git
 mpv-full
 mu
 numix-circle-icon-theme-git
-nvm-git
 nwg-look-bin
 ookla-speedtest-bin
 otf-symbola

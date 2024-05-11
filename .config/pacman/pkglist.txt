@@ -77,6 +77,7 @@ pipewire-alsa
 pipewire-audio
 pipewire-pulse
 playerctl
+pnpm
 podman-docker
 polkit-kde-agent
 poppler-glib
