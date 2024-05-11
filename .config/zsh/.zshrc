@@ -85,13 +85,6 @@ for file in ~/.config/zsh/aliases/*; do source "$file"; done
 # i have cat aliased to 'bat' so i need to call cat directly
 (/usr/bin/cat ~/.cache/wal/sequences &) # pywal
 
-if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
-  # init-nvm.sh contents with bash_completion excluded and nvm dir changed
-  [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.config/nvm"
-  source /usr/share/nvm/nvm.sh
-  source /usr/share/nvm/install-nvm-exec
-fi
-
 # For Fooocus
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 

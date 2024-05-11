@@ -5,6 +5,7 @@ alias cat="bat"
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
 alias eh="cd ~/git/mp/web-arm/ && yarn serve"
+alias pn="pnpm"
 
 alias vedroid="waydroid session stop && waydroid session start &"
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"

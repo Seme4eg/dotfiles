@@ -256,6 +256,13 @@ protonge: ## install proton GE latest version
 	rm -rf $$WORKDIR
 	echo "All done :)"
 
+pnpm: ## install all needed global npm packages
+	export PNPM_HOME=${HOME}/.pnpm
+	export PATH=$$PNPM_HOME:$(PATH)
+	pnpm add --global prettier
+	pnpm add --global typescript-language-server
+	pnpm add --global typescript
+
 # useful when removed some file(s) from repo and don't want to remove the
 # symlinks by hand
 clean: ## removes all broken symlinks recursively
