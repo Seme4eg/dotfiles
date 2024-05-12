@@ -1,7 +1,7 @@
 [Unit]
 Description=handle automounting
-After=eww.service
-Requires=eww.service
+After=graphical-session.target
+PartOf=graphical-session.target
 
 [Service]
 ExecStart=udiskie

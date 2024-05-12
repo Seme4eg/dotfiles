@@ -36,9 +36,6 @@
    (container_center)
    (container_right)))
 
-;; https://github.com/druskus20/eugh/blob/master/revealer-example/eww.yuck
-;; ↑ this helped to figure out how to use revealer properly.
-
 ;; Revealer using children
 (defwidget _revealer [revealvar ?class ?spacing ?duration ?transition]
            (box :space-evenly false :spacing {spacing ?: 0} :class {class}

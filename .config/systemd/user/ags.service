@@ -1,5 +1,5 @@
 [Unit]
-Description=Eww Daemon
+Description=Aylur's GTK Shell
 After=graphical-session.target
 PartOf=graphical-session.target
 
@@ -7,6 +7,6 @@ PartOf=graphical-session.target
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=eww daemon --no-daemonize
+ExecStart=ags
 Restart=always
 RestartSec=3

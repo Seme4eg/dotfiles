@@ -153,22 +153,6 @@ toggle_trust() {
   device_menu
 }
 
-# Using this one in my eww bluetooth widget
-print_status() {
-  if power_on; then
-    mapfile -t paired_devices < <(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
-    counter=0
-
-    for device in "${paired_devices[@]}"; do
-      device_connected "$device" >/dev/null && ((counter++))
-    done
-
-    [ $counter -gt 0 ] && echo "󰂯($counter)" || echo "󰂯"
-  else
-    echo "󰂲"
-  fi
-}
-
 get_mac() { echo "$1" | cut -d ' ' -f 2; }
 
 # A submenu for a specific device that allows connecting, pairing, and trusting
@@ -256,7 +240,4 @@ show_menu() {
 # Rofi command to pipe into, can add any options here
 _rofi() { rofi -dmenu -i "$@"; }
 
-case "$1" in
-  --status) print_status ;;
-  *) show_menu ;;
-esac
+show_menu
