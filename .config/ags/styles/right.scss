@@ -1,27 +1,6 @@
 .user-info {
   @extend %box;
 
-  .tray {
-    menu {
-      @extend %box;
-      padding: 10px;
-      margin-right: 20px;
-      menuitem {
-        padding: 1px 0;
-        font: bold 1em Jura; // Comfortaa; Unbounded;
-        &:hover {
-         background-color: color.scale($color6, $lightness: -60%);
-        }
-      }
-      separator {
-        background-color: $_accent2;
-        margin: 3px 0;
-        padding: 1px 0;
-        opacity: .6;
-      }
-    }
-  }
-
   .layout {
     @extend %shadow-text;
     font: 1.5em Iceland;
@@ -31,16 +10,18 @@
   .updates {
     .bg {
       color: color.scale($color6, $saturation: 30%);
-      opacity: .6;
+      opacity: 0.6;
       font-size: 2.2em;
-      margin-top: -2px;
-      margin-right: 13px;
+      margin-top: -3px;
+      margin-left: -12px;
     }
     .fg {
+      min-width: 31px;
       font-size: 1.1em;
+      margin-left: 1px;
       @extend %shadow-text;
       &.small {
-        font-size: .9em;
+        font-size: 0.9em;
       }
     }
   }
@@ -50,12 +31,14 @@
   .notifs {
     .bg {
       color: $_accent2;
-      opacity: .6;
+      opacity: 0.6;
       font-size: 2.1em;
-      margin-top: -1px;
       margin-right: 8px;
+      margin-top: -1px;
     }
     .fg {
+      min-width: 33px;
+      // margin-top: -2px;
       font-size: 1em;
       font-weight: bold;
     }
@@ -73,7 +56,7 @@ progressbar {
     border-radius: 5px;
     min-width: 3px;
     background: $_accent;
-  };
+  }
 }
 
 .sys-info {
@@ -85,13 +68,20 @@ progressbar {
     }
     .disconnected {
       font-size: 1.4em;
+      margin-right: 8px;
     }
-    .fg {
+    .connected {
       // font: .8em syne mono;
       // font: .8em bellota;
-      font: .8em shantell sans;
+      font: 0.8em shantell sans;
       .bold {
         font-weight: bold;
+      }
+      .up {
+        margin-top: -20px;
+      }
+      .down {
+        margin-bottom: -20px;
       }
     }
     progressbar {
@@ -108,15 +98,13 @@ progressbar {
     .icon {
       margin-left: 3px;
     }
-    .output.speakers > .icon {
-      font: 1.5em daddytimemono nerd font;
-    }
-    .output.headphones > .icon {
+    .output .icon {
       font: 1.3em daddytimemono nerd font;
     }
 
     .level {
-      font: bold .9em megrim;
+      font: bold 0.9em megrim;
+      margin-top: 2px;
     }
   }
 
@@ -126,11 +114,13 @@ progressbar {
       margin-right: 5px;
     }
   }
+
   .bluetooth {
     progressbar {
+      margin-left: 2px;
       progress {
         background: $_accent2;
-      };
+      }
       &.charging {
         progress {
           background: $color6;
@@ -138,35 +128,38 @@ progressbar {
       }
       padding: 6px 1px;
     }
+    .device_name {
+      font-size: 0.5em;
+    }
     font: 1.1em daddytimemono nerd font;
   }
 }
 
 circular-progress {
   color: $_accent;
+  font-size: 3px;
+  min-height: 27px;
+  min-width: 27px; // without this both circular progress widgets break
   background: $_background;
 }
 .circle-text {
-  font-size: 1.4em;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .telemetery {
   @extend %box;
-  padding-top: 5px;
-  padding-bottom: 5px;
   padding-right: 10px;
 
   .cpu {
     .load {
       color: $foreground;
-      opacity: .9;
+      opacity: 0.9;
     }
     .temp {
       color: $_accent;
     }
     .label {
-      font: bold .8em Megrim;
+      font: bold 0.8em Megrim;
       margin-top: -3px;
       color: color.scale($foreground, $alpha: -20%);
       letter-spacing: 2px;
@@ -180,28 +173,52 @@ circular-progress {
   }
 
   .circle-text {
+    font-size: 1.4em;
     margin-right: 2px;
   }
 
-  .bat {
-    font: 1.1em RubikWetPaint;
-    color: color.scale($foreground, $alpha: -20%);
-    .icon {
-      font-size: 1em;
+  .battery {
+    separator {
+      margin: 3px;
+      min-width: 2px;
     }
-    &.charging {
+
+    .info {
+      // font: normal 1em syne mono;
+      font-size: 0.9em;
+      letter-spacing: 1px;
+    }
+
+    .energy_rate {
+      margin-top: -15px;
+    }
+    .time_remaining {
+      margin-bottom: -15px;
+    }
+
+    .percent {
+      font: 1.7em RubikWetPaint;
+      color: color.scale($foreground, $alpha: -20%);
       .icon {
-        font-size: 1.2em;
-        text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
-                     0 0 5px color.scale($foreground, $lightness: -45%),
-                     0 0 10px color.scale($foreground, $lightness: -45%);
+        font-size: 0.7em;
       }
-    }
-    &.low {
-      // more bright version
-      text-shadow: 0 0 5px color.scale($foreground, $lightness: -25%),
-                   0 0 10px color.scale($foreground, $lightness: -25%),
-                   0 0 15px color.scale($foreground, $lightness: -35%);
+      &.charging {
+        .icon {
+          margin-top: 2px;
+          font-size: 0.9em;
+          text-shadow:
+            0 0 5px color.scale($foreground, $lightness: -35%),
+            0 0 5px color.scale($foreground, $lightness: -45%),
+            0 0 10px color.scale($foreground, $lightness: -45%);
+        }
+      }
+      &.low {
+        // more bright version
+        text-shadow:
+          0 0 5px color.scale($foreground, $lightness: -25%),
+          0 0 10px color.scale($foreground, $lightness: -25%),
+          0 0 15px color.scale($foreground, $lightness: -35%);
+      }
     }
   }
 }

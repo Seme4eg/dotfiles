@@ -1,4 +1,3 @@
-
 /* .floating-notifications > scrolledwindow > viewport > box { */
 /*   margin-top: 50px; */
 /* } */
@@ -14,11 +13,11 @@
   padding: 0px;
   /* BellotaText 13, Comfortaa 13, Jura 14, montserrat alternates 13 */
   font: 1em shantell sans;
-}
 
-.notification-row:focus,
-.notification-row:hover {
-  background: alpha(@color6, .2);
+  &:focus,
+  &:hover {
+    background: alpha(@color6, 0.2);
+  }
 }
 
 .notification-group-headers {
@@ -31,27 +30,27 @@
 }
 
 .notification-group-icon {
-  color: alpha(@color13, .7);
+  color: alpha(@color13, 0.7);
   margin-right: 8px;
-/* border: 1px solid @color3 */
+  /* border: 1px solid @color3 */
 }
 
 .notification-group-collapse-button {
   background: transparent;
-  border: none
-}
+  border: none;
 
-.notification-group-collapse-button:hover {
-  background: alpha(@color6, .2);
+  &:hover {
+    background: alpha(@color6, 0.2);
+  }
 }
 
 .notification-group-close-all-button {
   background: transparent;
-  border: none
-}
+  border: none;
 
-.notification-group-close-all-button:hover {
-  background: alpha(@color6, .2);
+  &:hover {
+    background: alpha(@color6, 0.2);
+  }
 }
 
 .notification {
@@ -59,14 +58,19 @@
   box-shadow: 3px 3px 0 0 @color6;
   border-radius: 15px;
   background: @background;
+  &.critical {
+    /* or color5 */
+    background: alpha(black, 0.89);
+    border: 1px solid white;
+    color: #eeeeee;
+  }
 }
 
-.low {border: 1px solid @color3;}
-.normal {border: 1px solid @color13;} /* or color5 */
-.notification.critical {
-  background: alpha(black, .89);
-  border: 1px solid white;
-  color: #eeeeee;
+.low {
+  border: 1px solid @color3;
+}
+.normal {
+  border: 1px solid @color13;
 }
 
 .notification-content {

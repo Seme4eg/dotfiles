@@ -1,7 +1,7 @@
 .workspaces {
   @extend %box;
   // initial
-  // XXX: bring back when eww animations problem is resolved
+  // TODO: bring back when eww animations problem is resolved
   // background: linear-gradient(-45deg, $color5, $background, $color5, $background);
   // background-size: 400% 400%;
   // idea: https://www.bypeople.com/pure-css-gradient-background-animation
@@ -11,28 +11,31 @@
     font: 1.7em Silkscreen;
     margin-top: -2px;
     color: $background;
-    text-shadow: 0 0 2px color.scale($foreground, $lightness: -25%),
-                 0 0 5px color.scale($foreground, $lightness: -25%),
-                 0 0 10px color.scale($foreground, $lightness: -35%);
+    text-shadow:
+      0 0 2px color.scale($foreground, $lightness: -25%),
+      0 0 5px color.scale($foreground, $lightness: -25%),
+      0 0 10px color.scale($foreground, $lightness: -35%);
     &.active {
       color: $foreground;
-      text-shadow: 0 0 4px color.scale($foreground, $lightness: -15%),
-                   0 0 8px color.scale($foreground, $lightness: -25%),
-                   0 0 15px color.scale($foreground, $lightness: -35%);
+      text-shadow:
+        0 0 4px color.scale($foreground, $lightness: -15%),
+        0 0 8px color.scale($foreground, $lightness: -25%),
+        0 0 15px color.scale($foreground, $lightness: -35%);
     }
   }
 }
 
-.window {
+.client {
   @extend %box;
   font: bold 1.2em Jura; // Comfortaa; Unbounded;
   color: color.scale($foreground, $lightness: -10%);
-  text-shadow: 0 0 2px color.scale($foreground, $lightness: -25%),
-               0 0 5px color.scale($foreground, $lightness: -25%),
-               0 0 8px color.scale($foreground, $lightness: -35%);
+  text-shadow:
+    0 0 2px color.scale($foreground, $lightness: -25%),
+    0 0 5px color.scale($foreground, $lightness: -25%),
+    0 0 8px color.scale($foreground, $lightness: -35%);
 }
 
-.player {
+.media {
   @extend %box;
   text-shadow: 3px 3px $_background;
   .icon {
@@ -56,6 +59,10 @@
 }
 
 @keyframes gradient {
-  0% {background-position: 100% 100%}
-  100% {background-position: 15% 0%}
+  0% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 15% 0%;
+  }
 }

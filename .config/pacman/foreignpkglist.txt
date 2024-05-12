@@ -1,9 +1,9 @@
 armcord-bin
+aylurs-gtk-shell-git
 brillo
 cgo-git
 dualsensectl-git
 emacs-git
-eww-tray-wayland-git
 firefox-tridactyl-native
 floorp-bin
 goimapnotify-git
@@ -25,7 +25,6 @@ python-pyclip
 python-pywalfox
 rofi-lbonn-wayland-git
 swaylock-effects-git
-swaync-git
 swww
 telegram-tdlib-git
 webcord-bin

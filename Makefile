@@ -188,9 +188,6 @@ systemd: ## enable and start all user and system systemd services
 	sudo sed -i '/^ConditionACPower/d' /usr/lib/systemd/system/plocate-updatedb.service
 	$(SSEN) plocate-updatedb.timer
 	$(SSEN) bluetooth.service
-# sequence of these 2 needs to be hardcoded sadly
-	$(SUEN) eww.service
-	$(SUEN) eww-window@topbar.service
 	find ${HOME}/.config/systemd/user/ -type f -printf "%f\n" |
 		xargs -I {} systemctl --user enable --now {}
 	$(SUEN) syncthing.service

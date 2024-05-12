@@ -1,29 +1,9 @@
-;; === vars ===
-
-;; === listeners ===
-(deflisten layout "scripts/layout")
-(deflisten backlight :initial "0.0" "scripts/backlight")
-(deflisten volume
-    :initial '{ "is_vol_muted": "true", "vol_level": 0, "is_mic_muted": "true", "mic_level": 0}'
-    "scripts/volume")
-
 ;; === polls ===
-;; yay -S && yay -Qu | wc -l || echo 0
-(defpoll updates_count
-         :initial 0
-         :interval "3600s"
-         "sleep 10; ip addr show | grep -q 'state UP' && checkupdates | wc -l || echo 0")
-(defpoll weather :interval "3600s" "scripts/weather")
-(defpoll outputicon :interval "1s" "scripts/outputicon")
-(defpoll notifs_count :interval "3s" :initial "0" "swaync-client -c")
 (defpoll dualsense
     :interval "3s"
     :initial '{ "connected": "false", "battery": 0, "charging": "false" }'
     "scripts/dualsense")
-(defpoll tray_count :interval "3s" :initial 0 "scripts/tray_count")
-(defpoll bt_status :interval "3s" "~/.config/rofi/scripts/rofi-bt --status")
 (defpoll vpnstatus :interval "3s" "nmcli -g type con show --active | grep -q vpn && echo 1 || echo 0")
-(defpoll net :interval "10s" :initial '{ "type": "nil", "wifi_strengh": 0 }' "scripts/net")
 
 
 (defwidget container_right []
@@ -33,76 +13,13 @@
     :orientation "h"
     :space-evenly false
     :spacing 8
-    (_userinfo)
     (_sysinfo)
     (_telemetery)))
-
-;; --- misc block ---
-
-(defwidget _userinfo []
-  (box
-    :class "user-info"
-    :space-evenly false
-    :spacing 9
-    (_tray_and_layout)
-    (_updates)
-    ;; notifications widget is part of 'weather' widget cuz less crutches
-    (_weather_and_notifications)))
-
-(defwidget _tray_and_layout []
-  (box
-    :space-evenly false
-    :spacing {tray_count > 0 ? 11 : 0}
-    :hexpand "false"
-    (_tray)
-    (label :class "layout" :text "${layout}")))
-
-(defwidget _tray []
-  (revealer
-    :transition "slideleft"
-    :reveal {tray_count > 0}
-    :duration "350ms"
-    (box :orientation "v" :valign "center" :space-evenly true :spacing 5
-       (systray :class "tray" :icon-size 25 :pack-direction "ltr"))))
-
-(defwidget _updates []
-  (overlay :class "updates" :width 31
-    (label
-      :class {updates_count > 99 ? "fg small" : "fg"}
-      :text "${updates_count}")
-    (label :class "bg" :text "")))
-
-(defwidget _weather_and_notifications []
-  (box
-    :class "notifs"
-    :space-evenly false
-    :spacing {notifs_count > 0 ? 13 : 0}
-    :hexpand "false"
-    ;; in case server returns something like 'unknown location, try ...'
-    (label
-      :class "weather"
-      :text {strlength(weather) == 0  ? "" : strlength(weather) > 8 ? "󰒏" : weather})
-    (_notifications)))
-
-(defwidget _notifications []
-  (revealer
-    :transition "slideright"
-    :reveal {notifs_count > 0}
-    :duration "350ms"
-    (overlay :class "notifs" :width 33
-      (label :class "fg" :text notifs_count)
-      (label :class "bg" :text "󱥂"))))
-
 
 ;; --- System info block ---
 
 (defwidget _sysinfo []
   (box :class "sys-info" :space-evenly false :spacing 10
-    (_network
-      ;; network interface name might is different on every machine
-      :up {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_UP')}
-      :down {jq(EWW_NET, 'del(.lo) | to_entries | map(select(.value.NET_UP != 0 or .value.NET_DOWN != 0)) | .[0] | .value | .NET_DOWN')})
-    (_audioblock)
     (_backlight)
     (_bt)))
 
@@ -117,36 +34,9 @@
       (label :width 20 :class "vpn" :text "󰖂")) ;; 󰖂 / 󰌆
     (overlay :width 35
       (box
-        :class "fg"
-        :visible {net.type != "nil"}
-        :orientation "v"
-        :valign "center"
-        :halign "center"
-        :space-evenly false
         (label
-          :class {up / 1024 > 1024 ? "bold" : ""}
-          :text {up / 1024 < 1024 ?
-                    " ${round(up / 1024, 0)}" :
-                    " ${round(up / 1048576, 0)}"})
         (progress
-            :value {net.type == "wifi" ? net.wifi_signal : 100}
-            :width 38
-            :orientation "h")
         (label
-          :class {down / 1024 > 1024 ? "bold" : ""}
-          :text {down / 1024 < 1024 ?
-                  " ${round(down / 1024, 0)}" :
-                  " ${round(down / 1048576, 0)}"}))
-      (label :class "disconnected" :text {net.type == "nil" ? "󰤮" : ""}))))
-
-(defwidget _audioblock []
-  (box :class "audio" :spacing 7 :space-evenly false
-    (box :class "output ${volume.sink_class}" :space-evenly false :halign "center"
-      (label :class "level" :text {volume.sink_volume})
-      (label :class "icon" :text {volume.sink_icon}))
-    (box :class "input" :space-evenly false
-      (label :class "level" :text {volume.source_volume})
-      (label :class "icon" :halign "end" :text {volume.source_icon}))))
 
 (defwidget _backlight []
   (overlay :class "backlight" :width 29
@@ -179,8 +69,6 @@
 (defwidget _telemetery []
   (box :class "telemetery" :space-evenly false :spacing 11
     (_cpu)
-    (_mem)
-    (_battery)))
 
 (defwidget _cpu []
   (box :orientation "v" :spacing 0 :class "cpu"
@@ -203,29 +91,3 @@
         :min 40
         :max 120
         :line-style "round"))))
-
-(defwidget _mem []
-  (overlay :class "memory" :width 31
-    (circular-progress
-      :value {EWW_RAM.used_mem_perc}
-      :start-at 0
-      :thickness 3
-      :clockwise true)
-    (label :class "circle-text" :text "󰍛")))
-
-(defwidget _battery []
-  (box
-    :spacing 0
-    :space-evenly false
-    :halign "center"
-    :class {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .status') == '"Charging"' ? "bat charging" :
-             jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') < 15 ? "bat low" : "bat"}
-   (transform
-     :width {jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity') == 100 ? 48 : 36}
-     :scale-x "155%"
-     :translate-x "-19%"
-     :scale-y "155%"
-     :translate-y "-19%"
-     (label
-       :text "${jq(EWW_BATTERY, 'to_entries[] | select(.key == "BATT" or .key == "BAT0") | .value | .capacity')}"))
-   (label :class "icon" :text "󱐋")))

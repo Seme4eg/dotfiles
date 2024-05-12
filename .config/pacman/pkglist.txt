@@ -11,6 +11,7 @@ btop
 calf
 cliphist
 cmake
+dart-sass
 dbeaver
 dust
 easyeffects
@@ -20,6 +21,7 @@ fd
 foot
 fzf
 git
+gnome-bluetooth-3.0
 go
 graphviz
 grim
