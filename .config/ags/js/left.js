@@ -7,14 +7,14 @@ function Workspaces() {
     ws.map(({ id }) =>
       Widget.Label({
         // yalign: 0.5,
-        class_name: activeId.as((i) => `${i === id ? "active" : ""}`),
+        className: activeId.as((i) => `${i === id ? "active" : ""}`),
         label: activeId.as((i) => `${i === id ? "X" : "O"}`),
       }),
     ),
   );
 
   return Widget.Box({
-    class_name: "workspaces",
+    className: "workspaces",
     children: workspaces,
     spacing: 10,
   });

@@ -1,18 +1,24 @@
 // we don't need dunst or any other notification daemon
 // because the Notifications module is a notification daemon itself
 
+import GLib from "gi://GLib";
+
 const notifications = await Service.import("notifications");
 
 export function NotificationsCount() {
   return Widget.Revealer({
-    revealChild: notifications.bind("notifications").as((c) => c.length > 0),
+    revealChild: notifications
+      .bind("notifications")
+      .as((c) => c.filter((n) => !n.transient).length > 0),
     transition: "slide_right",
     transitionDuration: 350,
     child: Widget.Overlay({
-      className: "notifs",
+      className: "notification_counter",
       child: Widget.Label({
         className: "fg",
-        label: notifications.bind("notifications").as((c) => `${c.length}`),
+        label: notifications
+          .bind("notifications")
+          .as((c) => String(c.filter((n) => !n.transient).length)),
       }),
       overlays: [
         Widget.Label({
@@ -47,40 +53,69 @@ function NotificationIcon({ app_entry, app_icon, image }) {
 }
 
 /** @param {import('resource:///com/github/Aylur/ags/service/notifications.js').Notification} n */
-function Notification(n) {
+function Notification(n, /** @type Boolean */ showTime = false) {
+  // ["id", "summary", "time", "popup"].forEach((key) => {
+  //   print(key, n[key]);
+  // });
+
   const icon = Widget.Box({
     vpack: "start",
-    class_name: "icon",
+    className: "icon",
     child: NotificationIcon(n),
   });
 
-  const title = Widget.Label({
-    class_name: "title",
-    xalign: 0,
-    justification: "left",
-    hexpand: true,
-    max_width_chars: 24,
-    truncate: "end",
-    wrap: true,
-    label: n.summary,
-    use_markup: true,
+  function getTimePassed(/** @type {number} */ notificationTime) {
+    if (!showTime) return "";
+    const difference =
+      GLib.DateTime.new_now_local().difference(
+        GLib.DateTime.new_from_unix_local(notificationTime),
+      ) / 1000000; // convert to seconds
+    const hours = Math.floor(difference / 3600);
+    const minutes = Math.floor((difference % 3600) / 60);
+
+    if (hours > 0) {
+      return `${hours}h:${minutes}m ago`;
+    } else if (minutes > 0) {
+      return `${minutes}m ago`;
+    } else return "Just now";
+  }
+
+  const title = Widget.Box({
+    children: [
+      Widget.Label({
+        className: "title",
+        xalign: 0,
+        justification: "left",
+        hexpand: true,
+        max_width_chars: 24,
+        truncate: "end",
+        wrap: true,
+        label: n.summary,
+        use_markup: true,
+      }),
+      Widget.Label({
+        className: "time",
+        hpack: "end",
+        label: getTimePassed(n.time),
+      }),
+    ],
   });
 
   const body = Widget.Label({
-    class_name: "body",
+    className: "body",
     hexpand: true,
     use_markup: true,
     xalign: 0,
     justification: "left",
-    label: n.body,
+    label: n.body.trim(),
     wrap: true,
   });
 
   const actions = Widget.Box({
-    class_name: "actions",
+    className: "actions",
     children: n.actions.map(({ id, label }) =>
       Widget.Button({
-        class_name: "action-button",
+        className: "action_button",
         on_clicked: () => {
           n.invoke(id);
           n.dismiss();
@@ -98,7 +133,7 @@ function Notification(n) {
     },
     Widget.Box(
       {
-        class_name: `notification ${n.urgency}`,
+        className: `notification ${n.urgency}`,
         vertical: true,
       },
       Widget.Box([icon, Widget.Box({ vertical: true }, title, body)]),
@@ -109,6 +144,9 @@ function Notification(n) {
 
 export function NotificationPopups(monitor = 0) {
   const list = Widget.Box({
+    className: "notifications",
+    // dunno why but this needs to be here otherwise no popups are shown
+    css: "min-width: 2px; min-height: 2px;",
     vertical: true,
     children: notifications.popups.map(Notification),
   });
@@ -129,41 +167,47 @@ export function NotificationPopups(monitor = 0) {
   return Widget.Window({
     monitor,
     name: `notifications${monitor}`,
-    class_name: "notification-popups",
+    className: "notification_popups",
     anchor: ["right"],
-    child: Widget.Box({
-      css: "min-width: 2px; min-height: 2px;",
-      class_name: "notifications",
-      vertical: true,
-      child: list,
-
-      /** this is a simple one liner that could be used instead of
-          hooking into the 'notified' and 'dismissed' signals.
-          but its not very optimized becuase it will recreate
-          the whole list everytime a notification is added or dismissed */
-      // children: notifications.bind('popups')
-      //     .as(popups => popups.map(Notification))
-    }),
+    layer: "overlay",
+    child: list,
   });
 }
 
 export function NotificationsList(monitor = 0) {
+  const NoNotifs = Widget.Box({
+    className: `something`,
+    visible: notifications.bind("notifications").as((n) => n.length === 0),
+    vertical: true,
+    children: [Widget.Label("something")],
+  });
+
   const list = Widget.Box({
     vertical: true,
-    children: notifications.notifications.map(Notification),
+    className: "notifications",
+    children: notifications.bind("notifications").as((n) => {
+      if (n.length > 0)
+        return n.filter((v) => !v.transient).map((n) => Notification(n, true));
+      else return [NoNotifs];
+    }),
   });
 
   return Widget.Window({
     monitor,
     name: `notifications-list-${monitor}`,
+    layer: "overlay",
     visible: false,
-    class_name: "notification-popups",
+    className: "notifications_list",
     anchor: ["right"],
-    child: Widget.Box({
-      css: "min-width: 2px; min-height: 2px;",
-      className: "notifications",
-      vertical: true,
-      child: list,
-    }),
-  });
+    child: list,
+  }).hook(
+    // close notifications list window when all notifications are cleared
+    notifications,
+    (self, _) => {
+      if (notifications.notifications.length === 0) {
+        self.visible = false;
+      }
+    },
+    "closed",
+  );
 }

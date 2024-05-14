@@ -4,48 +4,99 @@ export default function RRight() {
   return Widget.Box({
     className: "telemetery",
     spacing: 11,
-    children: [Memory(), Battery()],
+    children: [CPU(), Memory(), Battery()],
   });
 }
 
 const divide = ([total, free]) => free / total;
 
-const cpu = Variable(0, {
-  poll: [
-    2000,
-    "top -b -n 1",
-    (out) =>
-      divide([
-        100,
-        out
-          .split("\n")
-          .find((line) => line.includes("Cpu(s)"))
-          .split(/\s+/)[1]
-          .replace(",", "."),
-      ]),
-  ],
-});
+function CPU() {
+  const historyLen = 17;
 
-const ram = Variable(0, {
-  poll: [
-    2000,
-    "free",
-    (out) =>
-      divide(
-        out
-          .split("\n")
-          .find((line) => line.includes("Mem:"))
-          .split(/\s+/)
-          .splice(1, 2),
-      ),
-  ],
-});
+  const cpu = Variable(Array(historyLen).fill(0), {
+    poll: [
+      2000,
+      "top -b -n 1",
+      (out) => {
+        const load = divide([
+          100,
+          out
+            .split("\n")
+            .find((line) => line.includes("Cpu(s)"))
+            .split(/\s+/)[1]
+            .replace(",", "."),
+        ]);
+        let copy = cpu.getValue();
+        if (copy.length >= historyLen) copy.shift();
+        copy.push(load);
+        cpu.setValue(copy);
+        return copy;
+      },
+    ],
+  });
 
-const cpuProgress = Widget.CircularProgress({
-  value: cpu.bind(),
-});
+  const cpuTemp = Variable("40", {
+    poll: [
+      2000,
+      "sensors -j",
+      (out) => {
+        let temp = Number(JSON.parse(out)["acpitz-acpi-0"].temp1.temp1_input);
+        return `${temp.toFixed(0)}°`;
+      },
+    ],
+  });
+
+  return Widget.Box({
+    className: "cpu",
+    vertical: true,
+    // vpack: "center",
+    children: [
+      Widget.Box({
+        className: "label",
+        // vpack: "start",
+        children: [
+          Widget.Label({ className: "text", label: "cpu" }),
+          Widget.Label({
+            className: "value",
+            hexpand: true,
+            hpack: "end",
+            label: cpuTemp.bind(),
+          }),
+        ],
+      }),
+      Widget.Box({
+        vexpand: true,
+        children: cpu.bind().as((loads) =>
+          loads.map((load) =>
+            // TODO: rewrite to levelbar
+            Widget.ProgressBar({
+              vertical: true,
+              inverted: true,
+              value: load,
+            }),
+          ),
+        ),
+      }),
+    ],
+  });
+}
 
 function Memory() {
+  const ram = Variable(0, {
+    poll: [
+      2000,
+      "free",
+      (out) =>
+        divide(
+          out
+            .split("\n")
+            .find((line) => line.includes("Mem:"))
+            .split(/\s+/)
+            .splice(1, 2),
+        ),
+    ],
+  });
+
   return Widget.Overlay({
     className: "memory",
     child: Widget.CircularProgress({
@@ -53,7 +104,7 @@ function Memory() {
     }),
     overlays: [
       Widget.Label({
-        className: "circle-text",
+        className: "circle_text",
         label: "󰍛",
       }),
     ],

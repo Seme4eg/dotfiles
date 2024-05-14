@@ -9,20 +9,15 @@
   styles.
 
 ** Todos
+*** TODO use Widget.Stack() for mpris widget and maybe notifications list
 *** TODO [#B] listen on 'monitor-add/remove' events on hyprland service
 .. and change the monitor on which the bar appears.
 
 Basically same functionality as eww-window-manager service and eww-manager
 script were doing.
 
-*** TODO [[https://www.bypeople.com/css-neon-sign-effect/][implement]] blinking animation when [[https://github.com/elkowar/eww/issues/688][animation cpu]] issue will b resolved
-*** TODO all the notifications styling all over again
-*** TODO rename all classes to snake_case instead of kebab-case
-*** TODO power-profiles widget
-*** TODO yoink the wallpaper widget from [[https://github.com/qxb3/gruvbox.hypr/tree/vim_styled/.config/ags][this guy]], reskin
-*** TODO className, not className
-*** TODO check other TODO occurances in ags dir
-*** TODO setup a notifications module test function
+*** TODO NOTIFICATIONS
+**** TODO [#B] setup a notifications module test function
 similar to this
 #+begin_src sh
 # [body] markup:
@@ -33,6 +28,9 @@ notify-send "Test noicon notification" "Lorem ipsum dolor sit amet, consectetur 
 say "Test normal notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
 say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
 #+end_src
+*** TODO power-profiles widget
+*** TODO yoink the wallpaper widget from [[https://github.com/qxb3/gruvbox.hypr/tree/vim_styled/.config/ags][this guy]], reskin
+*** TODO check other TODO occurances in ags dir
 *** TODO cava widget
 
 const cavaSettings = {
