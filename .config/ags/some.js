@@ -20,27 +20,27 @@ function Workspaces() {
       Widget.Button({
         on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
         child: Widget.Label(`${id}`),
-        class_name: activeId.as((i) => `${i === id ? "focused" : ""}`),
+        className: activeId.as((i) => `${i === id ? "focused" : ""}`),
       }),
     ),
   );
 
   return Widget.Box({
-    class_name: "workspaces",
+    className: "workspaces",
     children: workspaces,
   });
 }
 
 function ClientTitle() {
   return Widget.Label({
-    class_name: "client-title",
+    className: "client-title",
     label: hyprland.active.client.bind("title"),
   });
 }
 
 function Clock() {
   return Widget.Label({
-    class_name: "clock",
+    className: "clock",
     label: date.bind(),
   });
 }
@@ -50,7 +50,7 @@ function Clock() {
 function Notification() {
   const popups = notifications.bind("popups");
   return Widget.Box({
-    class_name: "notification",
+    className: "notification",
     visible: popups.as((p) => p.length > 0),
     children: [
       Widget.Icon({
@@ -74,7 +74,7 @@ function Media() {
   });
 
   return Widget.Button({
-    class_name: "media",
+    className: "media",
     on_primary_click: () => mpris.getPlayer("")?.playPause(),
     on_scroll_up: () => mpris.getPlayer("")?.next(),
     on_scroll_down: () => mpris.getPlayer("")?.previous(),
@@ -116,7 +116,7 @@ function Volume() {
   });
 
   return Widget.Box({
-    class_name: "volume",
+    className: "volume",
     css: "min-width: 180px",
     children: [icon, slider],
   });
@@ -129,7 +129,7 @@ function BatteryLabel() {
     .as((p) => `battery-level-${Math.floor(p / 10) * 10}-symbolic`);
 
   return Widget.Box({
-    class_name: "battery",
+    className: "battery",
     visible: battery.bind("available"),
     children: [
       Widget.Icon({ icon }),
@@ -185,7 +185,7 @@ function Right() {
 function Bar(monitor = 0) {
   return Widget.Window({
     name: `bar-${monitor}`, // name has to be unique
-    class_name: "bar",
+    className: "bar",
     monitor,
     anchor: ["top", "left", "right"],
     exclusivity: "exclusive",

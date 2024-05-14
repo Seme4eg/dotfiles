@@ -6,9 +6,15 @@ import { NotificationsCount } from "./notifications.js";
 
 export default function RLeft() {
   return Widget.Box({
-    className: "user-info",
+    className: "user_info",
     spacing: 9,
     children: [TrayAndLayout(), Updates(), WeatherAndNotifs()],
+  });
+}
+
+function test() {
+  return Widget.Slider({
+    vertical: false,
   });
 }
 
@@ -95,7 +101,7 @@ function WeatherAndNotifs() {
     className: "notifs",
     spacing: notifications
       .bind("notifications")
-      .as((c) => (c.length > 0 ? 10 : 0)),
+      .as((c) => (c.filter((n) => !n.transient).length > 0 ? 10 : 0)),
     children: [Weather(), NotificationsCount()],
   });
 }
@@ -106,17 +112,28 @@ function Weather() {
   //   .then(print)
   //   .catch(console.error)
 
-  const weather = Variable("", {
+  const weather = Variable(undefined, {
     poll: [
       60 * 60 * 1000,
       ["bash", "-c", "~/dotfiles/.config/ags/scripts/weather"],
       // if weather length is more than 8 its an error from server
-      (out) => (out.length === 0 ? "" : out.length > 8 ? "󰒏" : out),
+      (out) => {
+        if (out.length > 8) return "󰒏";
+        else if (out.length > 0) return out;
+      },
     ],
   });
 
-  return Widget.Label({
-    className: "weather",
-    label: weather.bind(),
+  const child = weather.bind().as((w) => {
+    if (w)
+      return Widget.Label({
+        className: "weather",
+        label: w,
+      });
+    return Widget.Spinner();
+  });
+
+  return Widget.Box({
+    child: child,
   });
 }

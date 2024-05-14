@@ -197,11 +197,12 @@ systemd: ## enable and start all user and system systemd services
 # system files changed
 sysoptions: ## make changes to system files
 	sudo sed -i 's/^#\(SystemMaxUse\)=.*/\1=50M/' /etc/systemd/journald.conf
-  # =/etc/bluetooth/main.conf= <- AutoEnable=false
 	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
 	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 	sudo sed -i 's/^#\(UserspaceHID\)=.*/\1=true/' /etc/bluetooth/input.conf
+# for ags bluetooth service battery percentage
+	sudo sed -i 's/^#\(Experimental\) = .*/\1 = true/' /etc/bluetooth/main.conf
 
 # TODO: doesn't apply to everything that way yet
 icons: ## setup icons and theme

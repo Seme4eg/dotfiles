@@ -1,4 +1,4 @@
-.user-info {
+.user_info {
   @extend %box;
 
   .layout {
@@ -18,7 +18,6 @@
     .fg {
       min-width: 31px;
       font-size: 1.1em;
-      margin-left: 1px;
       @extend %shadow-text;
       &.small {
         font-size: 0.9em;
@@ -28,7 +27,7 @@
   .weather {
     font: 1.2em jura;
   }
-  .notifs {
+  .notification_counter {
     .bg {
       color: $_accent2;
       opacity: 0.6;
@@ -59,12 +58,12 @@ progressbar {
   }
 }
 
-.sys-info {
+.sys_info {
   @extend %box;
   .network {
     .vpn {
       margin-right: 3px;
-      font-size: 1.1em;
+      font-size: 1.2em;
     }
     .disconnected {
       font-size: 1.4em;
@@ -98,7 +97,7 @@ progressbar {
     .icon {
       margin-left: 3px;
     }
-    .output .icon {
+    .sink .icon {
       font: 1.3em daddytimemono nerd font;
     }
 
@@ -109,7 +108,7 @@ progressbar {
   }
 
   .backlight {
-    .circle-text {
+    .circle_text {
       font-size: 1.2em;
       margin-right: 5px;
     }
@@ -142,7 +141,7 @@ circular-progress {
   min-width: 27px; // without this both circular progress widgets break
   background: $_background;
 }
-.circle-text {
+.circle_text {
   opacity: 0.5;
 }
 
@@ -151,20 +150,26 @@ circular-progress {
   padding-right: 10px;
 
   .cpu {
-    .load {
-      color: $foreground;
-      opacity: 0.9;
-    }
-    .temp {
-      color: $_accent;
+    progressbar {
+      // top left+right bottom
+      margin: 0px 1px 3px;
+      trough {
+        min-height: 1px;
+        min-width: 1px;
+        background: transparent;
+      }
+      progress {
+        min-width: 2px;
+        background: $_accent;
+      }
     }
     .label {
       font: bold 0.8em Megrim;
-      margin-top: -3px;
+      margin-top: 1px;
       color: color.scale($foreground, $alpha: -20%);
       letter-spacing: 2px;
       .text {
-        margin-top: -1px;
+        margin-top: -3px;
       }
       .value {
         color: $foreground;
@@ -172,7 +177,7 @@ circular-progress {
     }
   }
 
-  .circle-text {
+  .circle_text {
     font-size: 1.4em;
     margin-right: 2px;
   }

@@ -38,10 +38,8 @@ function Bar(monitor = 0) {
     exclusivity: "exclusive",
     // layer: "top",
     child: Widget.CenterBox({
-      className: theme.bind().as((s) => {
-        print(s);
-        return `container_main ${s}`;
-      }),
+      // add 'slim' to make status bar 'slim'
+      className: theme.bind().as((s) => `container_main ${s}`),
       start_widget: Left(),
       center_widget: Center(),
       end_widget: Right(),
@@ -58,4 +56,4 @@ App.config({
   ],
 });
 
-// export {};
+export {};

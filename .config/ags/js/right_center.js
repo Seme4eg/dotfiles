@@ -4,7 +4,7 @@ const network = await Service.import("network");
 
 export default function RCenter() {
   return Widget.Box({
-    className: "sys-info",
+    className: "sys_info",
     spacing: 10,
     children: [Network(), AudioBlock(), Backlight(), Bluetooth()],
   });
@@ -94,7 +94,6 @@ function IfConnected() {
   });
 }
 
-// TODO:
 function VPN() {
   return Widget.Revealer({
     transition: "slide_left",
@@ -102,12 +101,10 @@ function VPN() {
     revealChild: network.vpn
       .bind("activated_connections")
       .as((c) => c.length > 0),
-    child: Widget.Label({
-      label: network.vpn.bind("activated_connections").as((cons) => {
-        if (cons.length > 0) {
-          const c = cons[0];
-          print(c.uuid, c.id, c.state, c.vpn_state, c.icon_name);
-        }
+    child: Widget.Icon({
+      className: "vpn",
+      icon: network.vpn.bind("activated_connections").as((cons) => {
+        if (cons.length > 0) return cons[0].icon_name;
         return "";
       }),
     }),
@@ -123,7 +120,7 @@ function AudioBlock() {
 }
 
 function Sink() {
-  const classStr = audio.speaker.bind("name").as((n) => `output ${n}`);
+  const classStr = audio.speaker.bind("name").as((n) => `sink ${n}`);
 
   return Widget.Box({
     className: classStr,
@@ -146,9 +143,7 @@ function Sink() {
 
 function Source() {
   return Widget.Box({
-    // TODO: unify widget name, class name and everything else - either source,
-    // microphone or input, cmon
-    className: "input",
+    className: "source",
     children: [
       Widget.Label({
         className: "level",
@@ -187,7 +182,7 @@ function Backlight() {
     }),
     overlays: [
       Widget.Label({
-        className: "circle-text",
+        className: "circle_text",
         label: "󰃝",
       }),
     ],
@@ -236,12 +231,6 @@ function Bluetooth() {
 
 /** @param {import('resource:///com/github/Aylur/ags/service/bluetooth.js').BluetoothDevice} device */
 function BtDevice(device) {
-  print(
-    device.icon_name,
-    device.name, // alias ? those are same
-    device.alias,
-    device.battery_percentage,
-  );
   return Widget.Box({
     children: [
       Widget.Box({
@@ -254,7 +243,7 @@ function BtDevice(device) {
             ellipsize: true,
             truncate: "end",
             className: "device_name",
-            label: device.name,
+            label: device.name, // .alias - most of the times those are same
           }),
         ],
       }),
@@ -263,10 +252,6 @@ function BtDevice(device) {
         inverted: true,
         value: device.bind("battery_percentage").as((p) => p / 100),
       }),
-      // Widget.Separator({
-      //   css: "color: red" + "min-width: 5px; min-height: 5px;",
-      //   vertical: true,
-      // }),
     ],
   });
 }
