@@ -16,6 +16,9 @@ SSEN   := sudo systemctl --now enable
 SUEN   := systemctl --user --now enable
 
 .DEFAULT_GOAL := help
+# if this special target appears anywhere in the makefile then *all* recipe
+# lines for each target will be provided to a single invocation of the shell.
+.ONESHELL:
 
 # prevents 'make' from getting confused by an actual file called 'allinstall',
 # etc.. and causes it to continue in spite of errors
