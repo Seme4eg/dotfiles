@@ -4,15 +4,18 @@
 # sindresorhus/pure     kind:fpath
 # romkatv/powerlevel10k kind:fpath
 
+# --- theme ---
+romkatv/powerlevel10k
+
+# --- the bug 3 ---
+zsh-users/zsh-autosuggestions
+zdharma-continuum/fast-syntax-highlighting
+# zsh-users/zsh-completions
+
 # --- other plugins ---
 # keep it first or it overwrites other bindings
 jeffreytse/zsh-vi-mode # better vi mode (add kind:defer if slow)
 zsh-users/zsh-history-substring-search
-zdharma-continuum/fast-syntax-highlighting
 # https://github.com/junegunn/fzf#fuzzy-completion-for-bash-and-zsh
 junegunn/fzf path:shell
-zsh-users/zsh-autosuggestions
-romkatv/powerlevel10k
-
-# --- not installed ---
-# zsh-users/zsh-completions
+Aloxaf/fzf-tab

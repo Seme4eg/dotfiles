@@ -1,8 +1,7 @@
-# -*- mode: sh; sh-shell: zsh -*-
-
 . $ZDOTDIR/config.zsh
 
 # Install & source grml-zsh-config
+# --> https://grml.org/zsh/grml-zsh-refcard.pdf
 if [[ ! -f $ZDOTDIR/.grmlrc ]]; then
   echo "Fetching grml"
   wget -O $ZDOTDIR/.grmlrc https://git.grml.org/f/grml-etc-core/etc/zsh/zshrc
@@ -51,8 +50,8 @@ zvm_vi_yank() {
 
 # NOTE: to get keys for defining binding: cat -v , sir
 
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
+bindkey '^K' history-substring-search-up
+bindkey '^J' history-substring-search-down
 
 fcd() { cd $(find -type d | fzf); }
 bindkey -s '^o' '^ufcd\n'
@@ -64,23 +63,21 @@ ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
-bindkey '^[^_' fzf-history-widget # ctrl + alt + /
+bindkey '^H' fzf-history-widget
 
-###############################################################################
-#                              Last things to do                              #
-###############################################################################
+# --- fzf-tab ---
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:*' fzf-bindings 'ctrl-j:down' 'ctrl-k:up'
 
 eval "$(zoxide init zsh)" # z / zi[nteractive] (using fzf if u have it)
-stty stop undef           # disable C-s to freeze terminal
-# Nobody needs flow control anymore. Troublesome feature.
-#stty -ixon
-setopt noflowcontrol
 
 # --- Sourcing ---
 for file in ~/.config/zsh/aliases/*; do source "$file"; done
-
-# for now using powerlevel10k instead
-# [ -f "~/.config/zsh/theming.zsh" ] && . "~/.config/zsh/theming.zsh"
 
 # i have cat aliased to 'bat' so i need to call cat directly
 (/usr/bin/cat ~/.cache/wal/sequences &) # pywal
