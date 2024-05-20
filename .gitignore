@@ -57,3 +57,4 @@ node_modules/
 /.config/ookla/
 /.config/Code - OSS/
 /.config/ags/compiled.css
+/.config/ags/types
