@@ -10,6 +10,6 @@ alias pml="pm -Ql"       # list package
 # empty stdin. This is expected as no arguments were passed to pacman -Rns.
 alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
 alias pms="pm -Syy"                            # sync
-alias pmu="pm -Syyu"                           # update
+alias pmu="pm -Syu"                            # update
 # -Scc is more agressive approach, read bout it before using in case u decide to
 alias pmcc="pm -Sc" # Clear Cache
