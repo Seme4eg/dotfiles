@@ -58,3 +58,4 @@ node_modules/
 /.config/Code - OSS/
 /.config/ags/compiled.css
 /.config/ags/types
+/.config/font-manager/
