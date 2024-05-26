@@ -1,12 +1,16 @@
 .notification_popups,
 .notifications_list {
+  .notifications_container {
+    min-height: 800px;
+  }
+
   .notifications {
     /* BellotaText 13, Comfortaa 13, Jura 14, montserrat alternates 13 */
     font: 1em shantell sans;
     color: $foreground;
 
     .notification {
-      min-width: 350px;
+      min-width: 370px;
       padding: 0.8em;
       margin: 0.5em;
       border: 1px solid $color6;
@@ -81,6 +85,12 @@
             margin-right: 0;
           }
         }
+      }
+
+      &.none {
+        @extend %shadow-text;
+        font-size: 1.5em;
+        min-width: 10px;
       }
     }
   }

@@ -48,26 +48,28 @@ function Media() {
     .bind("players")
     .as((p) => "media " + (p.length === 0 ? "media_hidden" : ""));
 
-  // FIXME: doesn't disappear when nothing playing
+  const visible = mpris.bind("players").as((p) => p.length > 0);
+
   return Widget.Box({
     className,
     spacing: 0,
-    visible: false,
+    visible,
     children: [
       Widget.Box(),
       Widget.Revealer({
-        revealChild: !!label || false,
-        transition: "slide_right",
-        transitionDuration: 500,
+        revealChild: visible,
+        transition: "crossfade",
         child: Widget.Box({
           spacing: 10,
           children: [
             Widget.Label({
               className: "icon",
-              label: icon || "",
+              visible,
+              label: icon,
             }),
             Widget.Label({
-              label: label || "",
+              label: label,
+              visible,
               maxWidthChars: 20,
               ellipsize: true,
               truncate: "end",
