@@ -7,26 +7,17 @@
     letter-spacing: 4px;
   }
 
-  .updates {
-    .bg {
-      color: color.scale($color6, $saturation: 30%);
-      opacity: 0.6;
-      font-size: 2.2em;
-      margin-top: -3px;
-      margin-left: -12px;
+  .weather_and_updates {
+    font-size: 0.9em;
+    margin: 0 4px;
+    box {
+      margin-top: 1px;
     }
-    .fg {
-      min-width: 31px;
-      font-size: 1.1em;
-      @extend %shadow-text;
-      &.small {
-        font-size: 0.9em;
-      }
+    separator {
+      margin-left: -4px;
     }
   }
-  .weather {
-    font: 1.2em jura;
-  }
+
   .notification_counter {
     .bg {
       color: $_accent2;
@@ -36,8 +27,7 @@
       margin-top: -1px;
     }
     .fg {
-      min-width: 33px;
-      // margin-top: -2px;
+      min-width: 27px;
       font-size: 1em;
       font-weight: bold;
     }
@@ -152,7 +142,7 @@ circular-progress {
   .cpu {
     progressbar {
       // top left+right bottom
-      margin: 0px 1px 3px;
+      margin: -1px 1px 4px;
       trough {
         min-height: 1px;
         min-width: 1px;
@@ -165,7 +155,7 @@ circular-progress {
     }
     .label {
       font: bold 0.8em Megrim;
-      margin-top: 1px;
+      margin-top: 3px;
       color: color.scale($foreground, $alpha: -20%);
       letter-spacing: 2px;
       .text {

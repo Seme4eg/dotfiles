@@ -4,17 +4,14 @@ const notifications = await Service.import("notifications");
 
 import { NotificationsCount } from "./notifications.js";
 
+// global spacing for this whole block
+const spacing = 13;
+
 export default function RLeft() {
   return Widget.Box({
     className: "user_info",
-    spacing: 9,
-    children: [TrayAndLayout(), Updates(), WeatherAndNotifs()],
-  });
-}
-
-function test() {
-  return Widget.Slider({
-    vertical: false,
+    spacing,
+    children: [TrayAndLayout(), UpdatesWeatherAndNotifs()],
   });
 }
 
@@ -22,7 +19,7 @@ function TrayAndLayout() {
   const revealTray = systemtray.bind("items").as((i) => i.length > 0);
 
   return Widget.Box({
-    spacing: systemtray.bind("items").as((i) => (i.length > 0 ? 11 : 0)),
+    spacing: systemtray.bind("items").as((i) => (i.length > 0 ? spacing : 0)),
     // hexpand; false,
     children: [SysTray(revealTray), Layout()],
   });
@@ -71,7 +68,16 @@ function Layout() {
   );
 }
 
-function Updates() {
+function UpdatesWeatherAndNotifs() {
+  return Widget.Box({
+    spacing: notifications
+      .bind("notifications")
+      .as((c) => (c.filter((n) => !n.transient).length > 0 ? spacing : 0)),
+    children: [WeatherAndUpdates(), NotificationsCount()],
+  });
+}
+
+function WeatherAndUpdates() {
   const updatesCount = Variable("~", {
     poll: [
       60 * 60 * 1000, // once an hour
@@ -79,61 +85,40 @@ function Updates() {
     ],
   });
 
-  return Widget.Overlay({
-    className: "updates",
-    child: Widget.Label({
-      className: updatesCount
-        .bind()
-        .as((u) => (Number(u) > 99 ? "fg small" : "fg")),
-      label: updatesCount.bind().as(String),
-    }),
-    overlays: [
-      Widget.Label({
-        className: "bg",
-        label: "",
-      }),
-    ],
-  });
-}
-
-function WeatherAndNotifs() {
-  return Widget.Box({
-    className: "notifs",
-    spacing: notifications
-      .bind("notifications")
-      .as((c) => (c.filter((n) => !n.transient).length > 0 ? 10 : 0)),
-    children: [Weather(), NotificationsCount()],
-  });
-}
-
-function Weather() {
   // const weather = Utils.fetch('http://wttr.in/?format=3')
   //   .then(res => res.text())
   //   .then(print)
   //   .catch(console.error)
 
-  const weather = Variable(undefined, {
+  const weather = Variable("···", {
     poll: [
       60 * 60 * 1000,
       ["bash", "-c", "~/dotfiles/.config/ags/scripts/weather"],
-      // if weather length is more than 8 its an error from server
       (out) => {
-        if (out.length > 8) return "󰒏";
+        if (out.length > 8)
+          return "󰒏"; // length more than 8 is an error from server
         else if (out.length > 0) return out;
+        return "···";
       },
     ],
   });
 
-  const child = weather.bind().as((w) => {
-    if (w)
-      return Widget.Label({
-        className: "weather",
-        label: w,
-      });
-    return Widget.Spinner();
-  });
+  const packageIcon = "󰏗 "; //   󰏗
 
-  return Widget.Box({
-    child: child,
+  return Widget.Overlay({
+    className: "weather_and_updates",
+    child: Widget.Box({
+      vertical: true,
+      children: [
+        Widget.Label({ label: weather.bind() }),
+        Widget.Label({ label: updatesCount.bind().as((u) => packageIcon + u) }),
+      ],
+    }),
+    overlays: [
+      Widget.Separator({
+        vertical: false,
+        vpack: "center",
+      }),
+    ],
   });
 }

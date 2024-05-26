@@ -2,6 +2,7 @@
 // because the Notifications module is a notification daemon itself
 
 import GLib from "gi://GLib";
+import Pango from "gi://Pango";
 
 const notifications = await Service.import("notifications");
 
@@ -54,9 +55,11 @@ function NotificationIcon({ app_entry, app_icon, image }) {
 
 /** @param {import('resource:///com/github/Aylur/ags/service/notifications.js').Notification} n */
 function Notification(n, /** @type Boolean */ showTime = false) {
-  // ["id", "summary", "time", "popup"].forEach((key) => {
-  //   print(key, n[key]);
-  // });
+  // ["id", "summary", "time", "popup", "urgency", "resident", "category"].forEach(
+  //   (key) => {
+  //     print(key, n[key]);
+  //   },
+  // );
 
   const icon = Widget.Box({
     vpack: "start",
@@ -66,18 +69,9 @@ function Notification(n, /** @type Boolean */ showTime = false) {
 
   function getTimePassed(/** @type {number} */ notificationTime) {
     if (!showTime) return "";
-    const difference =
-      GLib.DateTime.new_now_local().difference(
-        GLib.DateTime.new_from_unix_local(notificationTime),
-      ) / 1000000; // convert to seconds
-    const hours = Math.floor(difference / 3600);
-    const minutes = Math.floor((difference % 3600) / 60);
-
-    if (hours > 0) {
-      return `${hours}h:${minutes}m ago`;
-    } else if (minutes > 0) {
-      return `${minutes}m ago`;
-    } else return "Just now";
+    return GLib.DateTime.new_from_unix_local(notificationTime).format(
+      "%H ⍿ %M",
+    );
   }
 
   const title = Widget.Box({
@@ -86,16 +80,16 @@ function Notification(n, /** @type Boolean */ showTime = false) {
         className: "title",
         xalign: 0,
         justification: "left",
-        hexpand: true,
-        max_width_chars: 24,
+        maxWidthChars: 20,
+        ellipsize: true,
         truncate: "end",
-        wrap: true,
         label: n.summary,
         use_markup: true,
       }),
       Widget.Label({
         className: "time",
         hpack: "end",
+        hexpand: true,
         label: getTimePassed(n.time),
       }),
     ],
@@ -105,6 +99,8 @@ function Notification(n, /** @type Boolean */ showTime = false) {
     className: "body",
     hexpand: true,
     use_markup: true,
+    maxWidthChars: 50,
+    wrap_mode: Pango.WrapMode.WORD_CHAR,
     xalign: 0,
     justification: "left",
     label: n.body.trim(),
@@ -116,7 +112,7 @@ function Notification(n, /** @type Boolean */ showTime = false) {
     children: n.actions.map(({ id, label }) =>
       Widget.Button({
         className: "action_button",
-        on_clicked: () => {
+        onClicked: () => {
           n.invoke(id);
           n.dismiss();
         },
@@ -176,21 +172,35 @@ export function NotificationPopups(monitor = 0) {
 
 export function NotificationsList(monitor = 0) {
   const NoNotifs = Widget.Box({
-    className: `something`,
+    className: `notification none`,
     visible: notifications.bind("notifications").as((n) => n.length === 0),
     vertical: true,
-    children: [Widget.Label("something")],
+    children: [Widget.Label("(╯_╰)")], // (╯︵╰,)
   });
 
   const list = Widget.Box({
     vertical: true,
+    vpack: "center",
     className: "notifications",
     children: notifications.bind("notifications").as((n) => {
-      if (n.length > 0)
+      if (n.filter((n) => !n.transient).length > 0)
         return n.filter((v) => !v.transient).map((n) => Notification(n, true));
       else return [NoNotifs];
     }),
   });
+
+  function onNotified(_, /** @type {number} */ id) {
+    const n = notifications.getNotification(id);
+    if (n) list.children = [Notification(n), ...list.children];
+  }
+
+  function onDismissed(_, /** @type {number} */ id) {
+    list.children.find((n) => n?.attribute?.id === id)?.destroy();
+  }
+
+  list
+    .hook(notifications, onNotified, "notified")
+    .hook(notifications, onDismissed, "dismissed");
 
   return Widget.Window({
     monitor,
@@ -199,7 +209,12 @@ export function NotificationsList(monitor = 0) {
     visible: false,
     className: "notifications_list",
     anchor: ["right"],
-    child: list,
+    child: Widget.Scrollable({
+      vscroll: "automatic",
+      hscroll: "never",
+      className: "notifications_container",
+      child: list,
+    }),
   }).hook(
     // close notifications list window when all notifications are cleared
     notifications,

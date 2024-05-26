@@ -16,16 +16,14 @@ function CPU() {
   const cpu = Variable(Array(historyLen).fill(0), {
     poll: [
       2000,
-      "top -b -n 1",
+      // In 'top' output there are 3 columns that we need:
+      // - "us": Percentage of CPU time spent on user processes (non-kernel code).
+      // - "sy": Percentage of CPU time spent on system processes (kernel code).
+      // - "ni": Percentage of CPU time spent on user processes with a positive nice value (lower priority).
+      // so we sum those up and get current cpu usage
+      ["bash", "-c", "top -b -n 1 | grep %Cpu | awk '{print $2 + $4 + $6}'"],
       (out) => {
-        const load = divide([
-          100,
-          out
-            .split("\n")
-            .find((line) => line.includes("Cpu(s)"))
-            .split(/\s+/)[1]
-            .replace(",", "."),
-        ]);
+        const load = out / 100;
         let copy = cpu.getValue();
         if (copy.length >= historyLen) copy.shift();
         copy.push(load);

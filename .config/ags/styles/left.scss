@@ -1,12 +1,5 @@
 .workspaces {
   @extend %box;
-  // initial
-  // TODO: bring back when eww animations problem is resolved
-  // background: linear-gradient(-45deg, $color5, $background, $color5, $background);
-  // background-size: 400% 400%;
-  // idea: https://www.bypeople.com/pure-css-gradient-background-animation
-  // animation: gradient 10s linear infinite;
-
   label {
     font: 1.7em Silkscreen;
     margin-top: -2px;

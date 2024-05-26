@@ -1,20 +1,26 @@
 #+title: Readme
 
 - Important references: [[https://aylur.github.io/ags-docs/][great ags wiki]] is the way, just learn to read.
+- For which *fonts* are used in this config just search this dir recursively. Cuz
+  i might be changing those from time to time and maintaining precise list of
+  fonts in this readme will be tedious. The only font to stay for sure is the
+  one for icons - any nerd font. I use 'daddytimemono nerd font'.
+- *Dependencies*: /pacman-contrib/ for ~checkupdates~. The rest are required by ags
+  services: /pipewire-pulse/, /upower/, /gnome-bluetooth-3.0/ (and experimental
+  enabled in bluetooth config), /network-manager/, /power-profiles-damon/,
+  /libdbusmenu-gtk3/.
 - How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]], yes, example is for
   eww, but ez to rewrite on ags
-- css ideas: [[https://www.bypeople.com/css-snippets/][bypeople]]
-- any nerd font is needed for icons. I use 'daddytimemono nerd font', if you
-  decide to use different one - change all occurances of daddytime font in eww
-  styles.
 
 ** Todos
 *** TODO use Widget.Stack() for mpris widget and maybe notifications list
-*** TODO [#B] listen on 'monitor-add/remove' events on hyprland service
+*** TODO listen on 'monitor-add/remove' signals on hyprland service
 .. and change the monitor on which the bar appears.
 
 Basically same functionality as eww-window-manager service and eww-manager
 script were doing.
+*** TODO mpris widget double line, maybe small icon of playing track
+... and setup method to show actual status right after bar reload
 
 *** TODO NOTIFICATIONS
 **** TODO [#B] setup a notifications module test function
@@ -28,6 +34,10 @@ notify-send "Test noicon notification" "Lorem ipsum dolor sit amet, consectetur 
 say "Test normal notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
 say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
 #+end_src
+**** TODO finish no notifications widget in notifications list
+**** TODO use scroll widget with notification windows
+**** TODO when clearing notifications the don't get cleared all at once
+.. but rather one by one, which might be annoying if many
 *** TODO power-profiles widget
 *** TODO yoink the wallpaper widget from [[https://github.com/qxb3/gruvbox.hypr/tree/vim_styled/.config/ags][this guy]], reskin
 *** TODO check other TODO occurances in ags dir
