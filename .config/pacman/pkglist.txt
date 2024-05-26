@@ -19,6 +19,7 @@ editorconfig-core-c
 efibootmgr
 eza
 fd
+font-manager
 foot
 fzf
 git
@@ -108,8 +109,8 @@ ttf-daddytime-mono-nerd
 ttf-firacode-nerd
 ttf-hack-nerd
 ttf-jetbrains-mono-nerd
+ttf-monofur
 ttf-sourcecodepro-nerd
-ttf-space-mono-nerd
 udiskie
 udisks2
 unrar
