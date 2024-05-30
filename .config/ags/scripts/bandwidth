@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 awk '{if(l1){print $2-l1,$10-l2} else{l1=$2; l2=$10;}}' \
-  <(grep wlp1s0 /proc/net/dev) \
+  <(grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev) \
   <(
     sleep 1
-    grep wlp1s0 /proc/net/dev
+    grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev
   )
