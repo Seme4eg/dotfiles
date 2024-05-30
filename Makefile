@@ -234,6 +234,10 @@ nvidia-all: ## nvidia-tkg
 	cd ${HOME}/utils/$@
 	makepkg -si
 
+ags:
+	ags --init
+	sass --no-source-map $(XDG_CONFIG_HOME)/ags/styles/main.scss $(XDG_CONFIG_HOME)/ags/compiled.scss
+
 Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	$(YAY) miniconda3
 	git clone https://github.com/lllyasviel/Fooocus.git ${HOME}/utils/$@
