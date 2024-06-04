@@ -59,3 +59,4 @@ node_modules/
 /.config/ags/compiled.css
 /.config/ags/types
 /.config/font-manager/
+/.config/isyncrc
