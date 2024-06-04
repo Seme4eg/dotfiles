@@ -17,6 +17,7 @@ dust
 easyeffects
 editorconfig-core-c
 efibootmgr
+expect
 eza
 fd
 font-manager
