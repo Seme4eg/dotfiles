@@ -33,6 +33,8 @@ test:
 	echo $$XDG_DATA_HOME
 	echo $(XDG_DATA_HOME)
 
+# --- Runned manually ---
+
 # generate new ssh every time
 ssh: ## Init ssh
 	export SSHDIR=${HOME}/.$@
@@ -45,6 +47,35 @@ ssh: ## Init ssh
 	ssh-add $$SSHDIR/id_ed25519
 	chmod 600 $$SSHDIR/id_ed25519
 	curl -F 'file=@-' 0x0.st < $$SSHDIR/id_ed25519.pub
+
+pacman: ## add user pacman config to [options] section, add community and multilib repos
+	@if [ -z "$$(grep '\[community\]' /etc/$@.conf)" ]; then \
+		sudo sed -i '/^Architecture/ a\Include = ${HOME}/.config/$@/$@.conf' /etc/$@.conf; \
+		echo '
+		[community]
+		Include = /etc/pacman.d/mirrorlist
+
+		[multilib]
+		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
+	fi
+
+# useful when removed some file(s) from repo and don't want to remove the
+# symlinks by hand
+clean: ## removes all broken symlinks recursively
+	cd ${HOME}
+	find . -path ./.local/share -prune -o -path ./.cache -prune -o -xtype l -print |
+		xargs rm
+
+
+# --- 3 main stages ---
+
+install: dotfiles reflector pacman-install aur-install
+
+postinstall: sysoptions zsh emacs systemd hyprplugins wal golang pam-gnupg ags pnpm
+
+postreboot: mpv mpd
+
+# --- Install ---
 
 dotfiles: ## Initial deploy dotfiles
 	mkdir -p ${HOME}/.local/share/applications
@@ -66,25 +97,9 @@ dotfiles: ## Initial deploy dotfiles
 	cd ${HOME}/secrets
 	stow .
 
-yay: ## install yay aur helper
-	@export YAYDIR=${HOME}/utils/$@; \
-	if [ ! -d "$$YAYDIR" ]; then \
-		mkdir -p $$YAYDIR; \
-		git clone https://aur.archlinux.org/$@.git $$YAYDIR; \
-		cd $$YAYDIR && makepkg -si --noconfirm; \
-		yay --version; \
-	fi
-
-pacman: ## add user pacman config to [options] section, add community and multilib repos
-	@if [ -z "$$(grep '\[community\]' /etc/$@.conf)" ]; then \
-		sudo sed -i '/^Architecture/ a\Include = ${HOME}/.config/$@/$@.conf' /etc/$@.conf; \
-		echo '
-		[community]
-		Include = /etc/pacman.d/mirrorlist
-		 
-		[multilib]
-		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
-	fi
+reflector:
+	$(PACMAN) reflector
+	$(SSEN) reflector.timer
 
 PACMAN_DIR := ${HOME}/.config/pacman
 pacman-install: ## Install all pacman packages
@@ -97,6 +112,15 @@ pacman-install: ## Install all pacman packages
 	pacman -Qtdq | sudo pacman -Rns --noconfirm -
 	rm $(PACMAN_DIR)/temp1.txt
 
+yay: ## install yay aur helper
+	@export YAYDIR=${HOME}/utils/$@; \
+	if [ ! -d "$$YAYDIR" ]; then \
+		mkdir -p $$YAYDIR; \
+		git clone https://aur.archlinux.org/$@.git $$YAYDIR; \
+		cd $$YAYDIR && makepkg -si --noconfirm; \
+		yay --version; \
+	fi
+
 aur-install: yay ## Install all AUR packages
 	if [ ! -f $(PACMAN_DIR)/temp2.txt ]; then
 		cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
@@ -105,32 +129,21 @@ aur-install: yay ## Install all AUR packages
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
 	rm $(PACMAN_DIR)/temp2.txt
 
-reflector:
-	$(PACMAN) reflector
-	$(SSEN) reflector.timer
 
-install: dotfiles reflector pacman-install yay-install ## Install all packages
+# --- Postinstall ---
 
-postinstall: sysoptions zsh emacs systemd hyprplugins wal golang
-
-postreboot: mpv mpd
-
-# Targets to run manually:
-# - floorp : run after first browser launch (cuz folder needs to be created)
-# - protonge : run only after steam launch cuz steam creates symlink to root dir
-# - icons : run only after you synced icons folder from other devices
-# - waydroid : not ready yet
-# - asus: for asus laptop
-# - xiaomi: for nvidia hybrid xiaomi laptop
-
-
-# ------------  Packages  ------------
+# system files changed
+sysoptions: ## make changes to system files
+	sudo sed -i 's/^#\(SystemMaxUse\)=.*/\1=50M/' /etc/systemd/journald.conf
+	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
+	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
+	sudo grub-mkconfig -o /boot/grub/grub.cfg
+	sudo sed -i 's/^#\(UserspaceHID\)=.*/\1=true/' /etc/bluetooth/input.conf
+# for ags bluetooth service battery percentage
+	sudo sed -i 's/^#\(Experimental\) = .*/\1 = true/' /etc/bluetooth/main.conf
 
 zsh:
 	chsh -s /usr/bin/zsh
-
-wal: ## for hyprland to not show error of undefined color var on first launch
-	wal -n -q -i "${HOME}/dotfiles/assets/wallpaper.jpg" --saturate 0.3
 
 emacs:
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
@@ -138,23 +151,16 @@ emacs:
 	${HOME}/.config/$@/bin/doom sync
 	rm -rf ${HOME}/.$@.d
 
-floorp:
-	find ${HOME}/.floorp/ -maxdepth 1 -type d -name '*.default-release' \
-		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
-
-mpv:
-	git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \
-		-c color.ui\=false -c color.diff\=false submodule update --init -- .config/mpv
-	emacsclient -e '(progn (require (quote org)) (org-babel-tangle-file "$(XDG_CONFIG_HOME)/$@/README.org"))'
-# previous command creates .emacs.d, lazy to find out why so just delete it
-	rm -rf ${HOME}/.emacs.d
-	cd $(XDG_CONFIG_HOME)/$@
-	./mpvmanager
-
-mpd:
-	mkdir -p ${HOME}/.$@
-	systemctl --user restart $@.service
-	$(SUEN) mpd.service
+systemd: ## enable and start all user and system systemd services
+	$(SSEN) systemd-timesyncd.service
+	sudo sed -i '/^ConditionACPower/d' /usr/lib/systemd/system/plocate-updatedb.service
+	$(SSEN) plocate-updatedb.timer
+	$(SSEN) bluetooth.service
+	find ${HOME}/.config/systemd/user/ -type f -printf "%f\n" |
+		xargs -I {} systemctl --user enable --now {}
+	$(SUEN) syncthing.service
+	$(SUEN) udiskie.service
+	$(SUEN) goimapnotify@mail.service
 
 hyprplugins:
 	hyprpm update
@@ -162,9 +168,8 @@ hyprplugins:
 	hyprpm enable hyprfocus
 	hyprpm reload
 
-pam-gnupg: ## setup pam-gnupg to unlock GnuPG keys on login
-	@echo 'auth     optional  pam_gnupg.so store-only' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
-	@echo 'session  optional  pam_gnupg.so' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
+wal: ## for hyprland to not show error of undefined color var on first launch
+	wal -n -q -i "${HOME}/dotfiles/assets/wallpaper.jpg" --saturate 0.3
 
 golang: ## install go and its packages
 	$(PACMAN) go
@@ -184,31 +189,49 @@ golang: ## install go and its packages
 # for debugging
 	go install github.com/go-delve/delve/cmd/dlv@latest
 
-# ------------  Other  ------------
+pam-gnupg: ## setup pam-gnupg to unlock GnuPG keys on login
+	@echo 'auth     optional  pam_gnupg.so store-only' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
+	@echo 'session  optional  pam_gnupg.so' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
 
-systemd: ## enable and start all user and system systemd services
-	$(SSEN) systemd-timesyncd.service
-	sudo sed -i '/^ConditionACPower/d' /usr/lib/systemd/system/plocate-updatedb.service
-	$(SSEN) plocate-updatedb.timer
-	$(SSEN) bluetooth.service
-	find ${HOME}/.config/systemd/user/ -type f -printf "%f\n" |
-		xargs -I {} systemctl --user enable --now {}
-	$(SUEN) syncthing.service
-	$(SUEN) udiskie.service
-	$(SUEN) goimapnotify@mail.service
+ags:
+	ags --init
+	sass --no-source-map $(XDG_CONFIG_HOME)/ags/styles/main.scss $(XDG_CONFIG_HOME)/ags/compiled.scss
 
-# system files changed
-sysoptions: ## make changes to system files
-	sudo sed -i 's/^#\(SystemMaxUse\)=.*/\1=50M/' /etc/systemd/journald.conf
-	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
-	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
-	sudo grub-mkconfig -o /boot/grub/grub.cfg
-	sudo sed -i 's/^#\(UserspaceHID\)=.*/\1=true/' /etc/bluetooth/input.conf
-# for ags bluetooth service battery percentage
-	sudo sed -i 's/^#\(Experimental\) = .*/\1 = true/' /etc/bluetooth/main.conf
+pnpm: ## install all needed global npm packages
+	export PNPM_HOME=${HOME}/.pnpm
+	export PATH=$$PNPM_HOME:$(PATH)
+	pnpm add --global prettier
+	pnpm add --global typescript-language-server
+	pnpm add --global typescript
+	pnpm add --global yaml-language-server
+	pnpm add --global bash-language-server
+
+
+# --- Postreboot ---
+
+mpv:
+	git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \
+		-c color.ui\=false -c color.diff\=false submodule update --init -- .config/mpv
+	emacsclient -e '(progn (require (quote org)) (org-babel-tangle-file "$(XDG_CONFIG_HOME)/$@/README.org"))'
+# previous command creates .emacs.d, lazy to find out why so just delete it
+	rm -rf ${HOME}/.emacs.d
+	cd $(XDG_CONFIG_HOME)/$@
+	./mpvmanager
+
+mpd:
+	mkdir -p ${HOME}/.$@
+	systemctl --user restart $@.service
+	$(SUEN) mpd.service
+
+
+# ------------  Targets to run manually  ------------
+
+floorp: ## run after first browser launch (cuz folder needs to be created)
+	find ${HOME}/.floorp/ -maxdepth 1 -type d -name '*.default-release' \
+		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
 
 # TODO: doesn't apply to everything that way yet
-icons: ## setup icons and theme
+icons: ## setup icons and theme (run only after you synced icons folder from other devices)
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
 
@@ -234,10 +257,6 @@ nvidia-all: ## nvidia-tkg
 	cd ${HOME}/utils/$@
 	makepkg -si
 
-ags:
-	ags --init
-	sass --no-source-map $(XDG_CONFIG_HOME)/ags/styles/main.scss $(XDG_CONFIG_HOME)/ags/compiled.scss
-
 Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	$(YAY) miniconda3
 	git clone https://github.com/lllyasviel/Fooocus.git ${HOME}/utils/$@
@@ -245,32 +264,3 @@ Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	conda env create -f environment.yaml
 	conda activate fooocus
 	pip install -r requirements_versions.txt
-
-protonge: ## install proton GE latest version
-	export WORKDIR="/tmp/proton-ge-custom"
-	mkdir $$WORKDIR
-	cd $$WORKDIR
-# download  tarball
-	curl -LOJ "$$(curl https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\" -f4 | grep .tar.gz)"
-# download checksum
-	curl -LOJ "$$(curl https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\" -f4 | grep .sha512sum)"
-	sha512sum -c ./*.sha512sum
-	mkdir -p ${HOME}/.steam/root/compatibilitytools.d
-	tar -xf GE-Proton*.tar.gz -C ${HOME}/.steam/root/compatibilitytools.d/
-	cd /
-	rm -rf $$WORKDIR
-	echo "All done :)"
-
-pnpm: ## install all needed global npm packages
-	export PNPM_HOME=${HOME}/.pnpm
-	export PATH=$$PNPM_HOME:$(PATH)
-	pnpm add --global prettier
-	pnpm add --global typescript-language-server
-	pnpm add --global typescript
-
-# useful when removed some file(s) from repo and don't want to remove the
-# symlinks by hand
-clean: ## removes all broken symlinks recursively
-	cd ${HOME}
-	find . -path ./.local/share -prune -o -path ./.cache -prune -o -xtype l -print |
-		xargs rm
