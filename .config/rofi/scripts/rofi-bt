@@ -16,6 +16,12 @@
 # Depends on:
 #   Arch repositories: rofi, bluez-utils (contains bluetoothctl)
 
+kb_restart="Control+r"
+# toggle device, without submenu
+kb_quick_connect="Control+Return"
+# forget device, without submenu
+kb_quick_forget="Alt+x"
+
 goback="← back"
 
 # Checks if bluetooth controller is powered on
@@ -32,28 +38,33 @@ toggle_power() {
   show_menu
 }
 
-# FIXME: borked after recent bluez updates, use bluetoothctl in console to
-# enable scanning there and connect to new devices
-# Checks if controller is scanning for new devices
-scan_on() {
-  if bluetoothctl show | grep -q "Discovering: yes"; then
-    echo "Scan: on" && return 0
-  else
-    echo "Scan: off" && return 1
-  fi
-}
-
 # Toggles scanning state
-toggle_scan() {
-  if scan_on; then
-    kill $(pgrep -f "bluetoothctl scan on")
-    bluetoothctl scan off
-    say -e "Scanning turned off..."
-  else
-    bluetoothctl scan on
-    say -t 5000 -e "Scanning for pairable bluetooth devices..."
-    sleep 5
-  fi
+enable_scan() {
+  say -t 5000 -e "Scanning for pairable bluetooth devices..."
+
+  # solution source: https://bbs.archlinux.org/viewtopic.php?id=270044
+
+  # device="00:1B:66:88:1D:52"
+
+  expect <(
+    cat <<EOF
+spawn bluetoothctl
+send -- "scan on\r"
+sleep 5
+send -- "exit\r"
+expect eof
+EOF
+  )
+
+  # set timeout 60
+  # expect "$device"
+  # send -- "pair $device\r"
+  # expect "Pairing successful"
+  # send -- "connect $device\r"
+  # expect "Connection successful"
+  # send -- "trust $device\r"
+  # expect "trust succeeded"
+
   show_menu
 }
 
@@ -110,7 +121,6 @@ toggle_connection() {
   else
     bluetoothctl connect "$1"
   fi
-  device_menu
 }
 
 # Checks if a device is paired
@@ -153,27 +163,30 @@ toggle_trust() {
   device_menu
 }
 
-get_mac() { echo "$1" | cut -d ' ' -f 2; }
+get_device_mac() { echo "$1" | cut -d ' ' -f 2; }
+
+# NOTE: will break if there will be 2 devices with same name
+get_device() { bluetoothctl devices | grep "$option"; }
 
 # A submenu for a specific device that allows connecting, pairing, and trusting
 device_menu() {
   local -a options
 
   device_name=$(echo "$device" | cut -d ' ' -f 3-)
-  mac=$(get_mac "$device")
+  mac=$(get_device_mac "$device")
 
   # Build options
-  connected=$(device_connected "$mac")
-  paired=$(device_paired "$mac")
+  connected="$(device_connected "$mac") ($kb_quick_connect)"
+  paired="$(device_paired "$mac") ($kb_quick_forget)"
   trusted=$(device_trusted "$mac")
   options=("$connected" "$paired" "$trusted" "$goback")
 
-  # Open rofi menu, read chosen option
-  chosen="$(printf '%s\n' "${options[@]}" | _rofi "$device_name")"
+  # Open rofi menu, read option
+  option="$(printf '%s\n' "${options[@]}" | _rofi "$device_name")"
   [ "$?" -eq 1 ] && exit
 
-  # Match chosen option to command
-  case "$chosen" in
+  # Match option to command
+  case "$option" in
     "") echo "No option chosen." ;;
     "$connected") toggle_connection "$mac" ;;
     "$paired") toggle_paired "$mac" ;;
@@ -189,9 +202,9 @@ show_menu() {
   local device # will be used in subsequent functions
 
   if power_on; then
-    power="Power: on"
+    power="Power: on ($kb_restart to restart)"
 
-    scan=$(scan_on)
+    scan="Scan for devices"
     pairable=$(pairable)
     discoverable=$(discoverable)
     options=("$power" "$scan" "$pairable" "$discoverable")
@@ -206,34 +219,45 @@ show_menu() {
     options=("$power")
   fi
 
-  # Open rofi menu, read chosen option
-  chosen="$(printf '%s\n' "${options[@]}" | _rofi \
-    -kb-custom-1 "Alt+Return" -kb-custom-2 "Alt+p" -kb-custom-3 "Alt+t")"
+  option=$(printf '%s\n' "${options[@]}" | _rofi \
+    -kb-custom-1 "$kb_restart" \
+    -kb-accept-custom "" \
+    -kb-custom-2 "$kb_quick_connect" \
+    -kb-custom-3 "$kb_quick_forget")
 
-  status=$?
+  rofi_exit=$?
 
-  [ "$status" -eq 1 ] && exit
+  [ "$rofi_exit" -eq 1 ] && exit
 
-  # Match chosen option to command
-  case "$chosen" in
-    "$power") toggle_power ;;
-    "$scan") toggle_scan ;;
-    "$discoverable") toggle_discoverable ;;
-    "$pairable") toggle_pairable ;;
-    *)
-      # NOTE: will break if there will be 2 devices with same name
-      device=$(bluetoothctl devices | grep "$chosen")
-      # Open a submenu if a device is selected
-      if [[ $device ]]; then
-        mac=$(get_mac "$device")
-        case $status in
-          10) toggle_connection "$mac" ;;
-          11) toggle_paired "$mac" ;;
-          12) toggle_trust "$mac" ;;
-          *) device_menu ;;
-        esac
-      fi
+  case "$rofi_exit" in
+    0)
+      case "$option" in
+        "$power") toggle_power ;;
+        "$scan") enable_scan ;;
+        "$discoverable") toggle_discoverable ;;
+        "$pairable") toggle_pairable ;;
+        *)
+          # Open a submenu if a device is selected
+          if get_device; then
+            mac=$(get_device_mac "$(get_device)")
+            case $rofi_exit in
+              10) toggle_connection "$mac" ;;
+              11) toggle_paired "$mac" ;;
+              12) toggle_trust "$mac" ;;
+              *) device_menu ;;
+            esac
+          fi
+          ;;
+      esac
       ;;
+    10)
+      say "Restarting bluetooth"
+      bluetoothctl power off
+      bluetoothctl power on
+      show_menu
+      ;;
+    11) get_device && toggle_connection "$(get_device_mac "$(get_device)")" ;;
+    12) get_device && toggle_paired "$(get_device_mac "$(get_device)")" ;;
   esac
 }
 
