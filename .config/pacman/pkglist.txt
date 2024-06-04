@@ -125,7 +125,6 @@ wireplumber
 wl-clipboard
 wtype
 xdg-desktop-portal-hyprland
-yarn
 yt-dlp
 zbar
 zoxide
