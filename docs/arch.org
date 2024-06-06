@@ -43,7 +43,12 @@ NOTE: (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups
 something won't work go to 'udev' page from this link
 
 ** sound
-get info on your cards: ~pactl list cards~
+Some info for debugging some sound/mic problems:
+- ~man pactl~
+- get info on your cards: ~pactl list cards~
+- To output card names ~cat /proc/asound/modules/~.
+- To output soundcard into ~cd /sys/module/snd_hda_intel/parameters/~ and cat files there.
+- When encountering problems with sound: ~/usr/bin/rm -r ~/.local/state/wireplumber/~, ~scur wireplumber.service~
 
 If there's _no sound_, maybe you've several sound cards and default one got set
 incorrectly, then create ~/.asoundrc to change default sound card:
@@ -52,23 +57,22 @@ defaults.ctl.card 1
 defaults.pcm.card 1
 #+end_src
 
-: man pactl
-
 If your soundcard doens't correctly detect microphone plugged in a 4-pin 3.5mm
 (TRRS) jack, find your soundcard name (easy to do using alsamixer) and go
-[[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Correctly_detect_microphone_plugged_in_a_4-pin_3.5mm_(TRRS)_jack][research]]. (Maybe you just need to switch to in in pavucontrol..). Just examples
+[[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Correctly_detect_microphone_plugged_in_a_4-pin_3.5mm_(TRRS)_jack][research]]. (Maybe you just need to switch to in pavucontrol..). Just examples
 of what previously worked for me on different machines (file
 =/etc/modprobe.d/alsa-base.conf=):
 - options snd-sof-intel-hda-common hda_model=alc298-dell-aio
-- options snd-hda-intel model=alc298-dell-aio
-- options snd-hda-intel model=dell-headset-multi
 
 - switch default mic to the one on your headphones cuz notebook mic is
   usually crap: ~wpctl status~ - grab id of your mic (SOURCE device) - ~wpctl
   set-default ...~
 
-When encountering problems with sound: ~/usr/bin/rm -r
-~/.local/state/wireplumber/~, ~scur wireplumber.service~
+_asus zenbook headset mic fix:_
+- sir from this thread saved my life:
+  https://bbs.archlinux.org/viewtopic.php?id=281641 (tldr: hdajackretask >
+  Choose the correct card > "Show Unconnected Pins" > Scroll to 0x19 > Check
+  "Override" > Select "Microphone")
 
 ** hyprland
 - _Nvidia hybrid laptop setup_: install /nvidia/ drivers, done. In order for HDMI
