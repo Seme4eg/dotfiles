@@ -205,6 +205,7 @@ pnpm: ## install all needed global npm packages
 	pnpm add --global typescript
 	pnpm add --global yaml-language-server
 	pnpm add --global bash-language-server
+	pnpm add --global vscode-json-languageserver
 
 
 # --- Postreboot ---
