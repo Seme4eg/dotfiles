@@ -2,7 +2,6 @@ armcord-bin
 aylurs-gtk-shell-git
 brillo
 cgo-git
-emacs-git
 firefox-tridactyl-native
 floorp-bin
 goimapnotify-git
