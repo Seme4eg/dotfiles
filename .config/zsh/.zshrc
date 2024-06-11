@@ -48,16 +48,16 @@ zvm_vi_yank() {
 #                                   Utility                                   #
 ###############################################################################
 
-# NOTE: to get keys for defining binding: cat -v , sir
+# NOTE: to get keys for defining binding: /usr/bin/cat -v , sir
 
 bindkey '^K' history-substring-search-up
 bindkey '^J' history-substring-search-down
 
-fcd() { cd $(find -type d | fzf); }
-bindkey -s '^o' '^ufcd\n'
+fcd() { cd "$(find -type d | fzf)"; }
+bindkey -s '^o' 'fcd^M' # ^u in the beginning?
 
-open() { xdg-open $(find -type f | fzf); }
-bindkey -s '^f' '^uopen\n'
+fopen() { xdg-open "$(find -type f | fzf)" >/dev/null; }
+bindkey -s '^[f' 'fopen^M' # alt+f
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
