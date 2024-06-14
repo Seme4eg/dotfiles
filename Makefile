@@ -147,7 +147,7 @@ zsh:
 
 emacs:
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
-	cd ${HOME}/.config/doom
+	cd ${HOME}/.config/doom/emacsbuild
 	makepkg --install
 	${HOME}/.config/$@/bin/doom install
 	${HOME}/.config/$@/bin/doom sync
