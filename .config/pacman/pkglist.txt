@@ -10,6 +10,7 @@ bluez
 bluez-utils
 btop
 calf
+chafa
 cliphist
 cmake
 dart-sass
@@ -30,7 +31,6 @@ go
 graphviz
 grim
 grub
-gthumb
 gtk-layer-shell
 jq
 languagetool

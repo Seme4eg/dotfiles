@@ -1,7 +1,9 @@
 [Default Applications]
 text/plain=emacsclient.desktop
 audio/mpeg=mpv.desktop
-image/jpeg=org.gnome.gThumb.desktop
+image/jpeg=mpv.desktop
+image/heic=mpv.desktop
+image/png=mpv.desktop
 video/mp4=mpv.desktop
 application/pdf=emacsclient.desktop
 text/html=floorp.desktop
