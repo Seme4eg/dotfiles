@@ -54,16 +54,13 @@ bindkey '^K' history-substring-search-up
 bindkey '^J' history-substring-search-down
 
 fcd() { cd "$(find -type d | fzf)"; }
-bindkey -s '^o' 'fcd^M' # ^u in the beginning?
+bindkey -s '^O' 'fcd^M' # ^u in the beginning?
 
-fopen() { xdg-open "$(find -type f | fzf)" >/dev/null; }
-bindkey -s '^[f' 'fopen^M' # alt+f
-
-ZSH_AUTOSUGGEST_STRATEGY=(completion history)
-ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
+export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+export ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
-bindkey '^H' fzf-history-widget
+bindkey '^_' fzf-history-widget
 
 # --- fzf-tab ---
 # set list-colors to enable filename colorizing
