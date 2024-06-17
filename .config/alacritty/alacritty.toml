@@ -1,0 +1,16 @@
+# import = ["/home/earthian/.config/alacritty/user.toml"]
+
+[window]
+padding = { x = 8, y = 8 }
+
+[font]
+normal = { family =  "kode mono", style = "Regular" }
+size = 12.0
+# normal = { family =  "daddytimemono nerd font", style = "Regular" }
+# normal = { family =  "nova mono", style = "Regular" } # size 12
+# normal = { family =  "monofur", style = "Regular" } # size 14
+
+[keyboard]
+bindings = [
+         { key = "Space", mods = "Alt|Shift", action = "ToggleViMode" },
+]

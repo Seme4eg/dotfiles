@@ -54,7 +54,8 @@ bindkey '^K' history-substring-search-up
 bindkey '^J' history-substring-search-down
 
 fcd() { cd "$(find -type d | fzf)"; }
-bindkey -s '^O' 'fcd^M' # ^u in the beginning?
+# ^o doesn't work in foot, cuz idk. In foot use ^O
+bindkey -s '^o' 'fcd^M' # ^u in the beginning?
 
 export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 export ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"

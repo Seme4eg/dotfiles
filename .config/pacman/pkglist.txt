@@ -1,4 +1,5 @@
 adobe-source-han-sans-cn-fonts
+alacritty
 alsa-tools
 alsa-utils
 android-tools
@@ -23,7 +24,6 @@ expect
 eza
 fd
 font-manager
-foot
 fzf
 git
 gnome-bluetooth-3.0
