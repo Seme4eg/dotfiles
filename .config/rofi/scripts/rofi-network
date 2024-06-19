@@ -101,12 +101,9 @@ toggle_ssid() {
 
     _connecting "$ssid"
 
-    echo "nmcli device wifi connect $ssid password $wifi_pass"
-
-    nmcli device wifi connect "$ssid" password "$wifi_pass"
     # if connection failed - prompt again and remove attempted connection from
     # saved ones (cuz it does save connection even if wrong pass was provided)
-    if [ "$?" -eq 1 ]; then
+    if ! nmcli device wifi connect "$ssid" password "$wifi_pass"; then
       nmcli connection delete id "$1"
       say -e "Nope."
       _connect "$1"
@@ -268,7 +265,14 @@ show_menu() {
     0)
       case $option in
         "$state") toggle_wifi ;;
-        *) ssid_menu "$ssid" "$security" ;;
+        *)
+          # no point in showing a 1-entry submenu if ssid isn't saved
+          if ssid_saved "$ssid"; then
+            ssid_menu "$ssid" "$security"
+          else
+            toggle_ssid "$ssid"
+          fi
+          ;;
       esac
       ;;
     10) toggle_ssid "$ssid" "$security" ;;
