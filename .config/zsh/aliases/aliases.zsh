@@ -37,4 +37,5 @@ alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
 
 # journalctl /usr/lib/systemd/systemd # messages by a specific executable
 # journalctl _PID=1 # messages by a specific process:
-alias jc="journalctl --user -xe" # to see specific unit add -u flag
+alias jc="journalctl -xef -u"
+alias jcu="journalctl --user -xef -u"
