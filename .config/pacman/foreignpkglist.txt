@@ -24,7 +24,6 @@ python-pyclip
 python-pywalfox
 rofi-lbonn-wayland-git
 swaylock-effects-git
-swww
 telegram-tdlib-git
 webcord-bin
 wlsunset-git
