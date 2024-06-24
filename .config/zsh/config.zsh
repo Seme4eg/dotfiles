@@ -18,7 +18,7 @@ export PATH
 
 export EDITOR="emacsclient -c"
 export VISUAL="emacsclient -c -a emacs"
-export TERMINAL=alacritty
+export TERMINAL=foot
 export BROWSER=floorp
 
 export MAKEFLAGS="-j$(nproc)"

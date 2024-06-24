@@ -7,7 +7,7 @@
 - *Notifications*: ags
 - *Screen locker*: swaylock-effects
 - *Theme changing*: pywal&scripts
-- *Terminal*: alacritty
+- *Terminal*: foot
 
 [[https://www.youtube.com/watch?v=rQLS_4ZGbtw][Youtube demo]]
 
