@@ -12,5 +12,5 @@ size = 12.0
 
 [keyboard]
 bindings = [
-         { key = "Space", mods = "Alt|Shift", action = "ToggleViMode" },
+         { key = "Space", mods = "Control", action = "ToggleViMode" },
 ]
