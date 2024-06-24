@@ -15,6 +15,7 @@ sync_tz_and_loc -f &
 wl-paste --watch cliphist store &
 
 doom env
+foot --server
 
 (sleep 10 && mbsync mailru) &
 
