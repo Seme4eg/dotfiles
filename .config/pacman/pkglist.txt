@@ -104,6 +104,7 @@ sof-firmware
 solaar
 steam
 stow
+swww
 syncthing
 texinfo
 timeshift
