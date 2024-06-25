@@ -13,6 +13,7 @@ SHELL := /bin/bash
 PACMAN := sudo pacman -S --noconfirm
 YAY    := yay -S --noconfirm
 SSEN   := sudo systemctl --now enable
+SSER   := sudo systemctl daemon-reload && systemctl restart
 SUEN   := systemctl --user --now enable
 
 .DEFAULT_GOAL := help
@@ -71,7 +72,7 @@ clean: ## removes all broken symlinks recursively
 
 install: dotfiles reflector pacman-install aur-install
 
-postinstall: sysoptions zsh emacs systemd hyprplugins wal golang pam-gnupg ags pnpm
+postinstall: sysoptions zsh emacs systemd zram hyprplugins wal golang pam-gnupg ags pnpm
 
 postreboot: mpv mpd
 
@@ -163,6 +164,13 @@ systemd: ## enable and start all user and system systemd services
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
 	$(SUEN) goimapnotify@mail.service
+
+# man zram-generator.conf
+# zram-size = min(ram / 2, 4096) # default
+# compression-algorithm = zstd # kernel default
+zram: ## enable zram
+	@echo '[zram0]' | sudo tee /etc/systemd/zram-generator.conf > /dev/null
+	$(SSER) systemd-zram-setup@zram0
 
 hyprplugins:
 	hyprpm update
