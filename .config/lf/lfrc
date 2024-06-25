@@ -1,4 +1,7 @@
 # /usr/share/doc/lf/lfrc.example
+#
+# NOTE:
+# d - 'cut' file, then 'p' - paste it in desired dir
 
 set scrolloff 0
 set sixel true
@@ -6,6 +9,8 @@ set previewer /home/earthian/.config/lf/previewer
 
 # use enter for shell commands
 map <enter> shell
+
+map D delete        # custom command
 
 # show the result of execution of previous commands
 map ` !true
