@@ -171,22 +171,15 @@ export function NotificationPopups(monitor = 0) {
 }
 
 export function NotificationsList(monitor = 0) {
-  const NoNotifs = Widget.Box({
-    className: `notification none`,
-    visible: notifications.bind("notifications").as((n) => n.length === 0),
-    vertical: true,
-    children: [Widget.Label("(╯_╰)")], // (╯︵╰,)
-  });
-
   const list = Widget.Box({
     vertical: true,
     vpack: "center",
     className: "notifications",
-    children: notifications.bind("notifications").as((n) => {
-      if (n.filter((n) => !n.transient).length > 0)
-        return n.filter((v) => !v.transient).map((n) => Notification(n, true));
-      else return [NoNotifs];
-    }),
+    children: notifications
+      .bind("notifications")
+      .as((n) =>
+        n.filter((v) => !v.transient).map((n) => Notification(n, true)),
+      ),
   });
 
   function onNotified(_, /** @type {number} */ id) {
@@ -202,6 +195,13 @@ export function NotificationsList(monitor = 0) {
     .hook(notifications, onNotified, "notified")
     .hook(notifications, onDismissed, "dismissed");
 
+  const NoNotifs = Widget.Box({
+    className: `notification none`,
+    vertical: true,
+    vpack: "center",
+    children: [Widget.Label("(╯_╰)")], // (╯︵╰,)
+  });
+
   return Widget.Window({
     monitor,
     name: `notifications-list-${monitor}`,
@@ -214,6 +214,11 @@ export function NotificationsList(monitor = 0) {
       hscroll: "never",
       className: "notifications_container",
       child: list,
+      // child: notifications.bind("notifications").as((n) => {
+      //   if (n.filter((n) => !n.transient).length > 0) {
+      //     return list;
+      //   } else return NoNotifs;
+      // }),
     }),
   }).hook(
     // close notifications list window when all notifications are cleared

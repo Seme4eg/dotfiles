@@ -8,90 +8,90 @@
     /* BellotaText 13, Comfortaa 13, Jura 14, montserrat alternates 13 */
     font: 1em shantell sans;
     color: $foreground;
+  }
 
-    .notification {
-      min-width: 370px;
-      padding: 0.8em;
-      margin: 0.5em;
-      border: 1px solid $color6;
-      background-color: $background;
-      box-shadow: 3px 3px 0 0 $color6;
-      border-radius: 15px;
+  .notification {
+    min-width: 370px;
+    padding: 0.8em;
+    margin: 0.5em;
+    border: 1px solid $color6;
+    background-color: $background;
+    box-shadow: 3px 3px 0 0 $color6;
+    border-radius: 15px;
 
-      // TODO: doesn't work
-      &:focus,
-      &:hover {
-        background-color: color.scale($color6, $alpha: -20%);
+    // TODO: doesn't work
+    &:focus,
+    &:hover {
+      background-color: color.scale($color6, $alpha: -20%);
+    }
+
+    &.low {
+      border: 1px solid $color3;
+    }
+    &.normal {
+      border: 1px solid $color13;
+    }
+    &.critical {
+      /* or color5 */
+      background: color.scale($color6, $alpha: -11%);
+      border: 1px solid white;
+      color: #eeeeee;
+    }
+
+    .icon {
+      min-width: 68px;
+      min-height: 68px;
+      margin-right: 1em;
+      image {
+        font-size: 58px;
+        /* to center the icon */
+        margin: 5px;
+        color: $foreground;
       }
 
-      &.low {
-        border: 1px solid $color3;
-      }
-      &.normal {
-        border: 1px solid $color13;
-      }
-      &.critical {
-        /* or color5 */
-        background: color.scale($color6, $alpha: -11%);
-        border: 1px solid white;
-        color: #eeeeee;
-      }
-
-      .icon {
+      box {
         min-width: 68px;
         min-height: 68px;
-        margin-right: 1em;
-        image {
-          font-size: 58px;
-          /* to center the icon */
-          margin: 5px;
-          color: $foreground;
+        border-radius: 7px;
+      }
+    }
+
+    .title {
+      font-size: 1.2em;
+      font-weight: bold;
+      background: transparent;
+      color: $color3;
+      text-shadow: none;
+    }
+
+    .time {
+      color: $color8;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+
+    .body {
+      font-size: 12pt;
+      font-weight: normal;
+    }
+
+    .actions {
+      .action_button {
+        margin: 0 0.4em;
+        margin-top: 0.8em;
+        &:first-child {
+          margin-left: 0;
         }
-
-        box {
-          min-width: 68px;
-          min-height: 68px;
-          border-radius: 7px;
-        }
-      }
-
-      .title {
-        font-size: 1.2em;
-        font-weight: bold;
-        background: transparent;
-        color: $color3;
-        text-shadow: none;
-      }
-
-      .time {
-        color: $color8;
-        margin-bottom: 5px;
-        font-style: italic;
-      }
-
-      .body {
-        font-size: 12pt;
-        font-weight: normal;
-      }
-
-      .actions {
-        .action_button {
-          margin: 0 0.4em;
-          margin-top: 0.8em;
-          &:first-child {
-            margin-left: 0;
-          }
-          &:last-child {
-            margin-right: 0;
-          }
+        &:last-child {
+          margin-right: 0;
         }
       }
+    }
 
-      &.none {
-        @extend %shadow-text;
-        font-size: 1.5em;
-        min-width: 10px;
-      }
+    &.none {
+      @extend %shadow-text;
+      font-size: 1.5em;
+      min-width: 10px;
     }
   }
 }
