@@ -78,14 +78,6 @@ function CPU() {
 }
 
 function Memory() {
-  return Widget.Box({
-    className: "memory",
-    spacing: 7,
-    children: [Ram(), Swap()],
-  });
-}
-
-function Ram() {
   // @what either 'Mem' or 'Swap', @from is the output of 'free' command
   const get = (what, from) =>
     from
@@ -109,22 +101,7 @@ function Ram() {
     ],
   });
 
-  return Widget.Overlay({
-    className: "memory",
-    child: Widget.CircularProgress({
-      value: ram.bind(),
-    }),
-    overlays: [
-      Widget.Label({
-        className: "circle_text",
-        label: "󰍛",
-      }),
-    ],
-  });
-}
-
-function Swap() {
-  const swap = Variable(0, {
+  const zram = Variable(0, {
     poll: [
       2000,
       // can't use 'free' command for swap info since it doesn't consider
@@ -132,16 +109,23 @@ function Swap() {
       "zramctl --raw --noheadings --bytes zram0",
       (out) => {
         // Array:  DISKSIZE   DATA COMPR  TOTAL STREAMS MOUNTPOINT
-        let swapInfo = out.split(/\s+/).splice(2);
-        return swapInfo[3] / swapInfo[0]; // total used / disksize
+        let zramInfo = out.split(/\s+/).splice(2);
+        return zramInfo[3] / zramInfo[0]; // total used / disksize
       },
     ],
   });
 
-  return Widget.ProgressBar({
-    vertical: true,
-    inverted: true,
-    value: swap.bind(),
+  return Widget.Overlay({
+    className: "memory",
+    child: Widget.CircularProgress({ value: ram.bind() }),
+    overlays: [
+      Widget.Box({
+        className: "zram",
+        hpack: "center",
+        children: [Widget.CircularProgress({ value: zram.bind() })],
+      }),
+      Widget.Label({ className: "circle_text", label: "󰍛" }),
+    ],
   });
 }
 

@@ -168,17 +168,20 @@ circular-progress {
   }
 
   .memory {
-    progressbar {
-      margin-left: -3px;
-      progress {
-        background: $_accent2;
+    circular-progress {
+      font-size: 2px;
+    }
+    .zram {
+      circular-progress {
+        color: $_accent2;
+        font-size: 2px;
+        min-width: 21px; // without this both circular progress widgets break
       }
-      padding: 5px 0px;
     }
   }
 
   .circle_text {
-    font-size: 1.4em;
+    font-size: 1.2em;
     margin-right: 2px;
   }
 
