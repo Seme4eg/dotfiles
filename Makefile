@@ -167,7 +167,8 @@ systemd: ## enable and start all user and system systemd services
 
 # man zram-generator.conf
 # zram-size = min(ram / 2, 4096) # default
-# compression-algorithm = zstd # kernel default
+# compression-algorithm = zstd # kernel default, see 'zramctl zram0' for which
+#   algorith is being used.
 zram: ## enable zram
 	@echo '[zram0]' | sudo tee /etc/systemd/zram-generator.conf > /dev/null
 	$(SSER) systemd-zram-setup@zram0
