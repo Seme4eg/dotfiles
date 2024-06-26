@@ -167,6 +167,16 @@ circular-progress {
     }
   }
 
+  .memory {
+    progressbar {
+      margin-left: -3px;
+      progress {
+        background: $_accent2;
+      }
+      padding: 5px 0px;
+    }
+  }
+
   .circle_text {
     font-size: 1.4em;
     margin-right: 2px;
