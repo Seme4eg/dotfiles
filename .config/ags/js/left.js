@@ -6,7 +6,6 @@ function Workspaces() {
   const workspaces = hyprland.bind("workspaces").as((ws) =>
     ws.map(({ id }) =>
       Widget.Label({
-        // yalign: 0.5,
         className: activeId.as((i) => `${i === id ? "active" : ""}`),
         label: activeId.as((i) => `${i === id ? "X" : "O"}`),
       }),

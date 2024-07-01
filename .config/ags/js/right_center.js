@@ -111,6 +111,12 @@ function VPN() {
   });
 }
 
+// TODO: wpctl inspect @DEFAULT_SINK@
+// https://aylur.github.io/ags-docs/services/audio/
+// find:
+//   bluetooth: media.name / node.description
+//   not: alsa.card_name, alsa.mixer_name, alsa_name
+// maybe somehow use 'node.name'? present always
 function AudioBlock() {
   return Widget.Box({
     className: "audio",
