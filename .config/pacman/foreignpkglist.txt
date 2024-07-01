@@ -12,7 +12,6 @@ heroic-games-launcher-bin
 hypridle-git
 hyprland-git
 mbsync-git
-mpv-full
 mu
 numix-circle-icon-theme-git
 nwg-look-bin

@@ -62,6 +62,7 @@ man-pages
 mangohud
 mpc
 mpd
+mpv
 mpv-mpris
 msmtp
 nautilus
