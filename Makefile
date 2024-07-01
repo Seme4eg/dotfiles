@@ -177,6 +177,8 @@ hyprplugins:
 	hyprpm update
 	hyprpm add https://github.com/VortexCoyote/hyprfocus
 	hyprpm enable hyprfocus
+	hyprpm add https://github.com/ItsDrike/hyprland-dwindle-autogroup
+	hyprpm enable dwindle-autogroup
 	hyprpm reload
 
 wal: ## for hyprland to not show error of undefined color var on first launch
