@@ -9,8 +9,6 @@ if [ "$state" == "on" ]; then
   # plugged its not needed
   if [ "$count_monitors" = 1 ]; then
     systemctl --user restart wlsunset
-    # TODO: check if manual stopping and starting is needed
-    # systemctl --user start hypridle
     change-theme
     sync_tz_and_loc
   fi
@@ -23,6 +21,5 @@ else
     systemctl suspend
   else
     hyprctl keyword monitor "eDP-1, disable"
-    # systemctl --user stop hypridle
   fi
 fi

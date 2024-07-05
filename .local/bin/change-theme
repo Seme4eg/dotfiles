@@ -54,10 +54,6 @@ emacsclient -e "(load-theme 'ewal-doom-one)" & # update emacs theme
 # [ -f $XDG_CACHE_HOME/wal/cava-config ] &&
 #   mv -f $XDG_CACHE_HOME/wal/cava-config $XDG_CONFIG_HOME/cava/config
 
-# TODO: ArmCord
-# rm ~/.config/WebCord/Themes/*
-# cp $XDG_DATA_HOME/webcord/wal.theme.css $XDG_CONFIG_HOME/WebCord/Themes/wal
-
 # wait # for all child processes to finish
 
 swww img "$wp" -t=any \
