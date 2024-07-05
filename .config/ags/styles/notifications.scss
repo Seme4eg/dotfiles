@@ -19,12 +19,6 @@
     box-shadow: 3px 3px 0 0 $color6;
     border-radius: 15px;
 
-    // TODO: doesn't work
-    &:focus,
-    &:hover {
-      background-color: color.scale($color6, $alpha: -20%);
-    }
-
     &.low {
       border: 1px solid $color3;
     }

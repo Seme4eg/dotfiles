@@ -107,17 +107,21 @@ function WeatherAndUpdates() {
 
   return Widget.Overlay({
     className: "weather_and_updates",
-    child: Widget.Box({
-      vertical: true,
-      children: [
-        Widget.Label({ label: weather.bind() }),
-        Widget.Label({ label: updatesCount.bind().as((u) => packageIcon + u) }),
-      ],
+    child: Widget.Separator({
+      vertical: false,
+      vpack: "center",
+      widthRequest: 41,
     }),
     overlays: [
-      Widget.Separator({
-        vertical: false,
-        vpack: "center",
+      Widget.Box({
+        vertical: true,
+        hpack: "center",
+        children: [
+          Widget.Label({ label: weather.bind() }),
+          Widget.Label({
+            label: updatesCount.bind().as((u) => packageIcon + u),
+          }),
+        ],
       }),
     ],
   });

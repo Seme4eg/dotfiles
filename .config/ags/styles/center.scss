@@ -6,10 +6,10 @@
     font-weight: bold;
     font-size: 1.2em;
     letter-spacing: 10px;
-    padding: 8px 0; // NOTE: this thing is keeping the bar's height
+    padding: 5px 0; // NOTE: this thing is keeping the bar's height
   }
   .bg {
-    font: 2.1em RubikGlitch;
+    font: 2em RubikGlitch;
     letter-spacing: 3px;
     color: $background;
     text-shadow: 0 0 4px $foreground; // color.scale($foreground, $lightness: -20%);
@@ -24,7 +24,7 @@
     }
     .colon {
       margin: 0px 8px;
-      margin-top: -25px;
+      margin-top: -26px;
     }
   }
 }
