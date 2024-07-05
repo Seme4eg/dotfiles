@@ -1,5 +1,0 @@
-#+title: Guix
-
-** TODO Guix [[https://guix.gnu.org][#link]]
-Instructions for installing a system from a Guix configuration can be found in
-the [[https://github.com/daviwil/dotfiles/blob/master/Systems.org#system-installation][System Installation]] section.
