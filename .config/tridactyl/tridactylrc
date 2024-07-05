@@ -55,9 +55,6 @@ bind --mode=normal ,d tabduplicate
 # to to last visited tab (C-^ - default)
 bind --mode=normal gp tab
 bind --mode=normal gm fillcmdline tabmove
-# TODO: binding below zooms in *current* page (since viewconfig opens with delay)
-# bind --mode=normal ,hn composite viewconfig nmaps | zoom 1.4
-# how to zoom *opened* page?
 bind --mode=normal ,hn viewconfig nmaps
 
 # yank source blocks
@@ -97,8 +94,6 @@ bind --mode=ex <C-k> ex.prev_completion
 bind --mode=ex <C-g> ex.hide_and_clear
 bind --mode=ex <A-p> ex.prev_history
 bind --mode=ex <A-n> ex.next_history
-# TODO: <C-w> doesn't work, browser closes tab
-# bind --mode=ex <A-w> ex.backward_kill_word # using this kbd breaks menu completely
 
 
 # --- Ignore ---

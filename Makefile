@@ -245,7 +245,6 @@ floorp: ## run after first browser launch (cuz folder needs to be created)
 	find ${HOME}/.floorp/ -maxdepth 1 -type d -name '*.default-release' \
 		-exec ln -s $(XDG_CONFIG_HOME)/firefox/user.js {}/user.js \;
 
-# TODO: doesn't apply to everything that way yet
 icons: ## setup icons and theme (run only after you synced icons folder from other devices)
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
