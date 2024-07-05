@@ -66,6 +66,8 @@ bind ;r hint -qb
 # Open hint link in reader mode:
 bind ;R composite hint -pipe a href | jsb -p tri.excmds.tabopen("about:reader?url=" + JS_ARG)
 
+bind ;M composite js document.location.href.replace('https://', 'ytdl://') | shellescape | js -p 'PATH="$PATH:/usr/local/bin" mpv ' + JS_ARG | !s
+
 # rudimentary find mode
 bind / fillcmdline find
 bind ? fillcmdline find -?
