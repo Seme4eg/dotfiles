@@ -24,6 +24,7 @@ export function NotificationsCount() {
       overlays: [
         Widget.Label({
           className: "bg",
+          vpack: "center",
           label: "󱥂",
         }),
       ],
