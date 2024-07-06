@@ -1,10 +1,18 @@
 const battery = await Service.import("battery");
+const powerProfiles = await Service.import("powerprofiles");
 
 export default function RRight() {
   return Widget.Box({
     className: "telemetery",
     spacing: 11,
-    children: [CPU(), Memory(), Battery()],
+    children: [PowerProfile(), CPU(), Memory(), Battery()],
+  });
+}
+
+function PowerProfile() {
+  return Widget.Icon({
+    className: "power_profile_icon",
+    icon: powerProfiles.bind("icon_name"),
   });
 }
 

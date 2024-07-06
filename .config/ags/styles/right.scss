@@ -138,6 +138,11 @@ circular-progress {
   @extend %box;
   padding-right: 10px;
 
+  .power_profile_icon {
+    font-size: 1.1em;
+    margin-right: -5px;
+  }
+
   .cpu {
     progressbar {
       // top left+right bottom
