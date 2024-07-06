@@ -72,8 +72,7 @@ function CPU() {
         vexpand: true,
         children: cpu.bind().as((loads) =>
           loads.map((load) =>
-            // TODO: rewrite to levelbar
-            Widget.ProgressBar({
+            Widget.LevelBar({
               vertical: true,
               inverted: true,
               value: load,
