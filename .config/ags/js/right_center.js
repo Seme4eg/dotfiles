@@ -165,42 +165,23 @@ function Source() {
 
 // TODO:
 function Backlight() {
-  // let brightness = Variable("0", {
-  //   listen: [
-  //     ["bash", "-c", App.configDir + "/scripts/backlight"],
-  //     (out) => {
-  //       print(out);
-  //       return "";
-  //     },
-  //   ],
-  // });
-
-  // const proc = Utils.subprocess(
-  //   ["bash", "-c", App.configDir + "/scripts/backlight"],
-  //   (output) => print(output),
-  //   (err) => logError(err),
-  // );
+  let brightness = Variable("0", {
+    listen: [
+      ["bash", "-c", App.configDir + "/scripts/backlight"],
+      (out) => out / 100,
+    ],
+  });
 
   return Widget.Overlay({
     className: "backlight",
-    child: Widget.CircularProgress({
-      value: 0,
-    }),
-    overlays: [
-      Widget.Label({
-        className: "circle_text",
-        label: "󰃝",
-      }),
-    ],
+    child: Widget.CircularProgress({ value: brightness.bind() }),
+    overlays: [Widget.Label({ className: "circle_text", label: "󰃝" })],
   });
 }
 
 function Bluetooth() {
   return Widget.Box({
     className: "bluetooth",
-    // spacing: bluetooth
-    //   .bind("connected_devices")
-    //   .as((d) => (d.length > 0 ? 5 : 0)),
     children: [
       Widget.Revealer({
         transition: "slide_right",
