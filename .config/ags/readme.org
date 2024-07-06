@@ -36,40 +36,6 @@ say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consect
 #+end_src
 **** TODO finish no notifications widget in notifications list
 **** TODO use scroll widget with notification windows
-**** TODO when clearing notifications the don't get cleared all at once
-.. but rather one by one, which might be annoying if many
 *** TODO yoink the wallpaper widget from [[https://github.com/qxb3/gruvbox.hypr/tree/vim_styled/.config/ags][this guy]], reskin
-*** TODO check other TODO occurances in ags dir
-*** TODO cava widget
-
-const cavaSettings = {
-  bars : 20,
-  barHeight : 100,
-  align : "end",
-  vertical : false,
-  smooth : false,
-}
-
-const Cava = Variable([],{
-    listen: [
-      [
-        "bash",
-        "-c",
-        `printf "[general]\n \
-                  framerate = 60\n \
-                  bars = ${cavaSettings.bars}\n \
-                  [output]\n \
-                  channels = mono\n \
-                  method = raw\n \
-                  raw_target = /dev/stdout\n \
-                  data_format = ascii\n \
-                  ascii_max_range = ${cavaSettings.barHeight}\n" | \
-                  cava -p /dev/stdin`
-      ],
-      out => out.split(";").slice(0,-1)
-    ]
-})
-
-Cava.connect("notify::value", cava => print(cava.value))
 *** TODO make heavy usage of ags signals. Later will see which ones i don't need
 but for now try as many of them as possible

@@ -39,11 +39,11 @@ progressbar {
     min-height: 1px;
     min-width: 3px;
     background: $_background;
-  }
-  progress {
-    border-radius: 5px;
-    min-width: 3px;
-    background: $_accent;
+    progress {
+      border-radius: 5px;
+      min-width: 3px;
+      background: $_accent;
+    }
   }
 }
 
@@ -144,19 +144,21 @@ circular-progress {
   }
 
   .cpu {
-    progressbar {
-      // top left+right bottom
-      margin: -3px 1px 2px;
+    levelbar {
       trough {
+        // top left+right bottom
+        margin: -2px 1px 1px 0px;
         min-height: 1px;
         min-width: 1px;
         background: transparent;
-      }
-      progress {
-        min-width: 2px;
-        background: $_accent;
+        // background: $_background;
+        .filled {
+          min-width: 2px;
+          background: $_accent;
+        }
       }
     }
+
     .label {
       font: bold 0.8em Megrim;
       margin-top: 1px;
