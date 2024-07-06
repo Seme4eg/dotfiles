@@ -38,7 +38,6 @@ say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consect
 **** TODO use scroll widget with notification windows
 **** TODO when clearing notifications the don't get cleared all at once
 .. but rather one by one, which might be annoying if many
-*** TODO power-profiles widget
 *** TODO yoink the wallpaper widget from [[https://github.com/qxb3/gruvbox.hypr/tree/vim_styled/.config/ags][this guy]], reskin
 *** TODO check other TODO occurances in ags dir
 *** TODO cava widget
