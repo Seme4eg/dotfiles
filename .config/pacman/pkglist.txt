@@ -33,6 +33,8 @@ graphviz
 grim
 grub
 gtk-layer-shell
+intel-media-driver
+intel-ucode
 jq
 languagetool
 lf
@@ -52,6 +54,7 @@ lib32-ocl-icd
 lib32-openal
 lib32-v4l-utils
 libsixel
+libva-utils
 linux
 linux-firmware
 linux-headers
