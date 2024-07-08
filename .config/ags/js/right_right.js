@@ -5,8 +5,12 @@ export default function RRight() {
   return Widget.Box({
     className: "telemetery",
     spacing: 11,
-    children: [CPU(), Memory(), Battery()],
+    children: [PowerProfAndCPU(), Memory(), Battery()],
   });
+}
+
+function PowerProfAndCPU() {
+  return Widget.Box({ children: [PowerProfile(), CPU()] });
 }
 
 function CPU() {
@@ -44,37 +48,32 @@ function CPU() {
   });
 
   return Widget.Box({
+    className: "cpu",
+    vertical: true,
     children: [
-      PowerProfile(),
       Widget.Box({
-        className: "cpu",
-        vertical: true,
+        className: "label",
         children: [
-          Widget.Box({
-            className: "label",
-            children: [
-              Widget.Label({ className: "text", label: "cpu" }),
-              Widget.Label({
-                className: "value",
-                hexpand: true,
-                hpack: "end",
-                label: cpuTemp.bind(),
-              }),
-            ],
-          }),
-          Widget.Box({
-            vexpand: true,
-            children: cpu.bind().as((loads) =>
-              loads.map((load) =>
-                Widget.LevelBar({
-                  vertical: true,
-                  inverted: true,
-                  value: load,
-                }),
-              ),
-            ),
+          Widget.Label({ className: "text", label: "cpu" }),
+          Widget.Label({
+            className: "value",
+            hexpand: true,
+            hpack: "end",
+            label: cpuTemp.bind(),
           }),
         ],
+      }),
+      Widget.Box({
+        vexpand: true,
+        children: cpu.bind().as((loads) =>
+          loads.map((load) =>
+            Widget.LevelBar({
+              vertical: true,
+              inverted: true,
+              value: load,
+            }),
+          ),
+        ),
       }),
     ],
   });
