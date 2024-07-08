@@ -2,12 +2,14 @@
 
 state=$1
 
+single_monitor() {
+  [ "$(hyprctl -j monitors | gojq -r '. | length')" = 1 ]
+}
+
 if [ "$state" == "on" ]; then
-  hyprctl keyword monitor "eDP-1,highrr,0x0,1.8"
-  count_monitors=$(hyprctl -j monitors | gojq -r '. | length')
   # if its a normal lid on then do normal stuff, if there's a 2nd monitor
   # plugged its not needed
-  if [ "$count_monitors" = 1 ]; then
+  if single_monitor; then
     systemctl --user restart wlsunset
     change-theme
     sync_tz_and_loc
@@ -15,8 +17,7 @@ if [ "$state" == "on" ]; then
 else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
   # /etc/systemd/logind.conf
-  count_monitors=$(hyprctl -j monitors | gojq -r '. | length')
-  if [ "$count_monitors" = 1 ]; then
+  if single_monitor; then
     # swaylock --grace 0
     systemctl suspend
   else
