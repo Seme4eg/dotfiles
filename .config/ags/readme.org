@@ -12,16 +12,8 @@
 - How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]], yes, example is for
   eww, but ez to rewrite on ags
 
-** Todos
-*** TODO listen on 'monitor-add/remove' signals on hyprland service
-.. and change the monitor on which the bar appears.
+Test your notification widgets by C-c C-c this:
 
-Basically same functionality as eww-window-manager service and eww-manager
-script were doing.
-
-*** TODO NOTIFICATIONS
-**** TODO [#B] setup a notifications module test function
-similar to this
 #+begin_src sh
 # [body] markup:
 # https://specifications.freedesktop.org/notification-spec/latest/ar01s04.html
@@ -31,8 +23,16 @@ notify-send "Test noicon notification" "Lorem ipsum dolor sit amet, consectetur 
 say "Test normal notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
 say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
 #+end_src
+
+** Todos
+*** TODO use Widget.Stack() for notifications list
+*** TODO listen on 'monitor-add/remove' signals on hyprland service
+.. and change the monitor on which the bar appears.
+
+Basically same functionality as eww-window-manager service and eww-manager
+script were doing.
+*** TODO NOTIFICATIONS
 **** TODO finish no notifications widget in notifications list
 **** TODO use scroll widget with notification windows
-*** TODO yoink the wallpaper widget from [[https://github.com/qxb3/gruvbox.hypr/tree/vim_styled/.config/ags][this guy]], reskin
 *** TODO make heavy usage of ags signals. Later will see which ones i don't need
 but for now try as many of them as possible

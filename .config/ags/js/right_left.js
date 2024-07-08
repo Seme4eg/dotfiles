@@ -54,8 +54,7 @@ function Layout() {
   }).hook(
     hyprland,
     (self, _, layout) => {
-      // TODO: rewrite on watcher when https://github.com/Aylur/ags/issues/414
-      // will be resolved
+      // FIXME: https://github.com/Aylur/ags/issues/414
       if (!layout) {
         let obj = Utils.exec("hyprctl devices -j");
         let keyboards = JSON.parse(obj)["keyboards"];
