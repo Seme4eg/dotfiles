@@ -30,8 +30,8 @@
 
 .media {
   @extend %box;
-  text-shadow: 3px 3px $_background;
   .icon {
+    @extend %shadow-text;
     color: $_accent;
   }
   &_hidden {
@@ -39,9 +39,14 @@
     box-shadow: none;
   }
   label {
-    @extend %shadow-text;
     font: bold 1em Megrim;
     letter-spacing: 2px;
+    &.title {
+      @extend %shadow-text;
+    }
+    &.artist {
+      font: bold 0.7em Megrim;
+    }
   }
 }
 
