@@ -91,8 +91,6 @@ function Media() {
                   label: artist,
                   hpack: "start",
                   visible,
-                  // ellipsize: true,
-                  // truncate: "end",
                 }),
               ],
             }),
