@@ -6,7 +6,7 @@ export default function RCenter() {
   return Widget.Box({
     className: "sys_info",
     spacing: 10,
-    children: [Network(), AudioBlock(), Backlight(), Bluetooth()],
+    children: [Network(), AudioBlock(), BacklightAndBt()],
   });
 }
 
@@ -110,7 +110,7 @@ function VPN() {
   });
 }
 
-// TODO: wpctl inspect @DEFAULT_SINK@
+// IDEA: wpctl inspect @DEFAULT_SINK@
 // https://aylur.github.io/ags-docs/services/audio/
 // find:
 //   bluetooth: media.name / node.description
@@ -162,7 +162,10 @@ function Source() {
   });
 }
 
-// TODO:
+function BacklightAndBt() {
+  return Widget.Box({ children: [Backlight(), Bluetooth()] });
+}
+
 function Backlight() {
   let brightness = Variable("0", {
     listen: [
@@ -185,10 +188,9 @@ function Bluetooth() {
       Widget.Revealer({
         transition: "slide_right",
         transitionDuration: 350,
-        revealChild: bluetooth
-          .bind("connected_devices")
-          .as((d) => d.length === 0),
+        revealChild: bluetooth.bind("enabled").as((e) => !e),
         child: Widget.Label({
+          className: "disabled",
           label: bluetooth.bind("enabled").as((s) => (s ? "󰂯" : "󰂲")),
         }),
       }),
@@ -199,6 +201,7 @@ function Bluetooth() {
           .bind("connected_devices")
           .as((d) => d.length > 0),
         child: Widget.Box({
+          className: "devices_block",
           spacing: 5,
           setup: (self) =>
             self.hook(

@@ -101,6 +101,10 @@ progressbar {
   }
 
   .bluetooth {
+    .disabled,
+    .devices_block {
+      margin-left: 8px;
+    }
     progressbar {
       margin-left: 2px;
       progress {
