@@ -5,14 +5,7 @@ export default function RRight() {
   return Widget.Box({
     className: "telemetery",
     spacing: 11,
-    children: [PowerProfile(), CPU(), Memory(), Battery()],
-  });
-}
-
-function PowerProfile() {
-  return Widget.Icon({
-    className: "power_profile_icon",
-    icon: powerProfiles.bind("icon_name"),
+    children: [CPU(), Memory(), Battery()],
   });
 }
 
@@ -51,36 +44,53 @@ function CPU() {
   });
 
   return Widget.Box({
-    className: "cpu",
-    vertical: true,
-    // vpack: "center",
     children: [
+      PowerProfile(),
       Widget.Box({
-        className: "label",
-        // vpack: "start",
+        className: "cpu",
+        vertical: true,
         children: [
-          Widget.Label({ className: "text", label: "cpu" }),
-          Widget.Label({
-            className: "value",
-            hexpand: true,
-            hpack: "end",
-            label: cpuTemp.bind(),
+          Widget.Box({
+            className: "label",
+            children: [
+              Widget.Label({ className: "text", label: "cpu" }),
+              Widget.Label({
+                className: "value",
+                hexpand: true,
+                hpack: "end",
+                label: cpuTemp.bind(),
+              }),
+            ],
+          }),
+          Widget.Box({
+            vexpand: true,
+            children: cpu.bind().as((loads) =>
+              loads.map((load) =>
+                Widget.LevelBar({
+                  vertical: true,
+                  inverted: true,
+                  value: load,
+                }),
+              ),
+            ),
           }),
         ],
       }),
-      Widget.Box({
-        vexpand: true,
-        children: cpu.bind().as((loads) =>
-          loads.map((load) =>
-            Widget.LevelBar({
-              vertical: true,
-              inverted: true,
-              value: load,
-            }),
-          ),
-        ),
-      }),
     ],
+  });
+}
+
+function PowerProfile() {
+  return Widget.Revealer({
+    transition: "slide_left",
+    transitionDuration: 350,
+    revealChild: powerProfiles
+      .bind("active_profile")
+      .as((p) => p !== "balanced"),
+    child: Widget.Icon({
+      className: "power_profile_icon",
+      icon: powerProfiles.bind("icon_name"),
+    }),
   });
 }
 
