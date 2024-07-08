@@ -25,14 +25,14 @@ say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consect
 #+end_src
 
 ** Todos
-*** TODO use Widget.Stack() for notifications list
+*** TODO make heavy usage of ags signals. Later will see which ones i don't need
+but for now try as many of them as possible
+*** TODO NOTIFICATIONS
+**** TODO use Widget.Stack() for notifications list
+**** TODO finish no notifications widget in notifications list
+**** TODO use scroll widget with notification windows
 *** TODO listen on 'monitor-add/remove' signals on hyprland service
 .. and change the monitor on which the bar appears.
 
 Basically same functionality as eww-window-manager service and eww-manager
 script were doing.
-*** TODO NOTIFICATIONS
-**** TODO finish no notifications widget in notifications list
-**** TODO use scroll widget with notification windows
-*** TODO make heavy usage of ags signals. Later will see which ones i don't need
-but for now try as many of them as possible
