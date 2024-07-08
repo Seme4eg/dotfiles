@@ -19,5 +19,5 @@ foot --server
 
 (sleep 10 && mbsync mailru) &
 
-pkexec /usr/bin/brillo -c 2
 pkexec /usr/bin/brillo -I
+pkexec /usr/bin/brillo -c 2
