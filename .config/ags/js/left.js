@@ -30,12 +30,19 @@ function ClientTitle() {
 }
 
 function Media() {
-  const label = Utils.watch(null, mpris, "player-changed", () => {
-    if (mpris.players[0]) {
-      const { track_artists, track_title } = mpris.players[0];
-      return `${track_title} - ${track_artists.join(", ")}`;
-    }
-  });
+  const title = Utils.watch(
+    null,
+    mpris,
+    "player-changed",
+    () => mpris.players[0]?.track_title,
+  );
+
+  const artist = Utils.watch(
+    null,
+    mpris,
+    "player-changed",
+    () => "by " + mpris.players[0]?.track_artists?.join(", "),
+  );
 
   const icon = Utils.watch("", mpris, "player-changed", () => {
     if (mpris.players[0]) {
@@ -66,12 +73,28 @@ function Media() {
               visible,
               label: icon,
             }),
-            Widget.Label({
-              label: label,
-              visible,
-              maxWidthChars: 20,
-              ellipsize: true,
-              truncate: "end",
+            Widget.Box({
+              vertical: true,
+              vpack: "center",
+              hpack: "start",
+              children: [
+                Widget.Label({
+                  className: "title",
+                  label: title,
+                  visible,
+                  maxWidthChars: 20,
+                  ellipsize: true,
+                  truncate: "end",
+                }),
+                Widget.Label({
+                  className: "artist",
+                  label: artist,
+                  hpack: "start",
+                  visible,
+                  // ellipsize: true,
+                  // truncate: "end",
+                }),
+              ],
             }),
           ],
         }),

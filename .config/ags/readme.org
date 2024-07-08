@@ -13,14 +13,11 @@
   eww, but ez to rewrite on ags
 
 ** Todos
-*** TODO use Widget.Stack() for mpris widget and maybe notifications list
 *** TODO listen on 'monitor-add/remove' signals on hyprland service
 .. and change the monitor on which the bar appears.
 
 Basically same functionality as eww-window-manager service and eww-manager
 script were doing.
-*** TODO mpris widget double line, maybe small icon of playing track
-... and setup method to show actual status right after bar reload
 
 *** TODO NOTIFICATIONS
 **** TODO [#B] setup a notifications module test function
