@@ -10,7 +10,6 @@ export default function RCenter() {
   });
 }
 
-// TODO: on 'connected' signal notify me to which network it connected
 function Network() {
   return Widget.Box({
     className: "network",
