@@ -4,12 +4,14 @@ const mpris = await Service.import("mpris");
 function Workspaces() {
   const activeId = hyprland.active.workspace.bind("id");
   const workspaces = hyprland.bind("workspaces").as((ws) =>
-    ws.map(({ id }) =>
-      Widget.Label({
-        className: activeId.as((i) => `${i === id ? "active" : ""}`),
-        label: activeId.as((i) => `${i === id ? "X" : "O"}`),
-      }),
-    ),
+    ws
+      .sort((a, b) => a.id - b.id)
+      .map(({ id }) =>
+        Widget.Label({
+          className: activeId.as((i) => `${i === id ? "active" : ""}`),
+          label: activeId.as((i) => `${i === id ? "X" : "O"}`),
+        }),
+      ),
   );
 
   return Widget.Box({
