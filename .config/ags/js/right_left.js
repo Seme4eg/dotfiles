@@ -21,7 +21,7 @@ function TrayAndLayout() {
   return Widget.Box({
     spacing: systemtray.bind("items").as((i) => (i.length > 0 ? spacing : 0)),
     // hexpand; false,
-    children: [SysTray(revealTray), Layout()],
+    children: [SysTray(revealTray), LayoutAndSubmap()],
   });
 }
 
@@ -46,6 +46,15 @@ function SysTray(reveal) {
   });
 }
 
+function LayoutAndSubmap() {
+  return Widget.Box({
+    className: "network",
+    vertical: true,
+    vpack: "center",
+    children: [Layout(), Submap()],
+  });
+}
+
 function Layout() {
   const DEFAULT_KB = "at-translated-set-2-keyboard";
 
@@ -65,6 +74,21 @@ function Layout() {
     },
     "keyboard-layout",
   );
+}
+
+function Submap() {
+  const _submap = Variable("");
+
+  return Widget.Revealer({
+    transition: "slide_down",
+    transitionDuration: 250,
+    revealChild: _submap.bind().as((s) => s !== ""),
+    child: Widget.Label({
+      className: "submap",
+      label: _submap.bind(),
+    }),
+    // FIXME: https://github.com/Aylur/ags/issues/414
+  }).hook(hyprland, (_, submap) => _submap.setValue(submap), "submap");
 }
 
 function UpdatesWeatherAndNotifs() {
