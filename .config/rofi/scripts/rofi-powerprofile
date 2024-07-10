@@ -4,5 +4,4 @@ profiles=("power-saver" "balanced" "performance")
 profile=$(printf '%s\n' "${profiles[@]}" | rofi -dmenu -i)
 [ $? != 0 ] && exit 1
 
-powerprofilesctl set "$profile"
-say -e "Power on $profile"
+powerprofilesctl set "$profile" && say -e "Power on $profile"
