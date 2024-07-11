@@ -223,6 +223,7 @@ pnpm: ## install all needed global npm packages
 	pnpm add --global bash-language-server
 	pnpm add --global vscode-json-languageserver
 	pnpm add --global vscode-langservers-extracted
+	pnpm add --global dockerfile-language-server-nodejs
 
 
 # --- Postreboot ---
