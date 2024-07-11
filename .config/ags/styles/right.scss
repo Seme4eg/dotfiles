@@ -112,6 +112,9 @@ progressbar {
     }
     progressbar {
       margin-left: 2px;
+      trough {
+        min-width: 2px;
+      }
       progress {
         background: $_accent2;
       }
@@ -120,12 +123,11 @@ progressbar {
           background: $color6;
         }
       }
-      padding: 3px 1px;
+      padding: 3px 0px;
     }
-    .device_name {
-      font-size: 0.5em;
+    .device {
+      font: 1em daddytimemono nerd font;
     }
-    font: 1.1em daddytimemono nerd font;
   }
 }
 
