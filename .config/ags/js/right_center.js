@@ -221,21 +221,9 @@ function Bluetooth() {
 /** @param {import('resource:///com/github/Aylur/ags/service/bluetooth.js').BluetoothDevice} device */
 function BtDevice(device) {
   return Widget.Box({
+    className: "device",
     children: [
-      Widget.Box({
-        vertical: true,
-        vpack: "center",
-        children: [
-          Widget.Icon(device.icon_name + "-symbolic"),
-          Widget.Label({
-            maxWidthChars: 7,
-            ellipsize: true,
-            truncate: "end",
-            className: "device_name",
-            label: device.name, // .alias - most of the times those are same
-          }),
-        ],
-      }),
+      Widget.Icon(device.icon_name + "-symbolic"),
       Widget.ProgressBar({
         vertical: true,
         inverted: true,
