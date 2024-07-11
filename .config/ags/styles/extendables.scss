@@ -10,3 +10,23 @@
   text-shadow: 2px 2px color.scale($foreground, $alpha: -60%);
   transition: all 0.4s ease-in-out;
 }
+
+%bright-text {
+  text-shadow:
+    0 0 2px color.scale($foreground, $lightness: -25%),
+    0 0 5px color.scale($foreground, $lightness: -25%),
+    0 0 10px color.scale($foreground, $lightness: -35%);
+}
+
+%brighter-text {
+  text-shadow:
+    0 0 4px color.scale($foreground, $lightness: -15%),
+    0 0 8px color.scale($foreground, $lightness: -25%),
+    0 0 15px color.scale($foreground, $lightness: -35%);
+
+  // more spread-around version
+  // text-shadow:
+  //   0 0 5px color.scale($foreground, $lightness: -25%),
+  //   0 0 10px color.scale($foreground, $lightness: -25%),
+  //   0 0 15px color.scale($foreground, $lightness: -35%);
+}

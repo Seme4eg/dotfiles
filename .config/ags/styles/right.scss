@@ -234,11 +234,7 @@ circular-progress {
         }
       }
       &.low {
-        // more bright version
-        text-shadow:
-          0 0 5px color.scale($foreground, $lightness: -25%),
-          0 0 10px color.scale($foreground, $lightness: -25%),
-          0 0 15px color.scale($foreground, $lightness: -35%);
+        @extend %brighter-text;
       }
     }
   }
