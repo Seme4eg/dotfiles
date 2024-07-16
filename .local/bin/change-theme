@@ -38,7 +38,7 @@ fi
 ags -r "theme = '$theme'"
 ags -r "reloadCSS"
 
-pywalfox update & # update firefox/floorp theme
+pywalfox update & # update firefox/librewolf theme
 
 emacsclient -e "(load-theme 'ewal-doom-one)" & # update emacs theme
 
