@@ -4,13 +4,13 @@ brillo
 cgo-git
 emacs-git
 firefox-tridactyl-native
-floorp-bin
 goimapnotify-git
 gojq
 golangci-lint-bin
 heroic-games-launcher-bin
 hypridle-git
 hyprland-git
+librewolf-bin
 mbsync-git
 mu
 numix-circle-icon-theme-git
@@ -20,7 +20,7 @@ otf-symbola
 pam-gnupg
 plocate-git
 python-pyclip
-python-pywalfox
+python-pywalfox-librewolf
 rofi-lbonn-wayland-git
 swaylock-effects-git
 telegram-tdlib-git

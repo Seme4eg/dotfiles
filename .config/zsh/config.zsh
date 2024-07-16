@@ -19,7 +19,7 @@ export PATH
 export EDITOR="emacsclient -c"
 export VISUAL="emacsclient -c -a emacs"
 export TERMINAL=foot
-export BROWSER=floorp
+export BROWSER=librewolf
 
 export MAKEFLAGS="-j$(nproc)"
 
