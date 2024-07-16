@@ -58,6 +58,13 @@ function Media() {
 
   const visible = mpris.bind("players").as((p) => p.length > 0);
 
+  const revealArtist = Utils.watch(false, mpris, "player-changed", () => {
+    return (
+      !!mpris.players[0]?.track_artists?.length &&
+      mpris.players[0]?.track_artists?.join("").length > 1
+    );
+  });
+
   return Widget.Box({
     className,
     spacing: 0,
@@ -88,11 +95,16 @@ function Media() {
                   ellipsize: true,
                   truncate: "end",
                 }),
-                Widget.Label({
-                  className: "artist",
-                  label: artist,
-                  hpack: "start",
-                  visible,
+                Widget.Revealer({
+                  transition: "slide_down",
+                  transitionDuration: 250,
+                  revealChild: revealArtist,
+                  child: Widget.Label({
+                    className: "artist",
+                    label: artist,
+                    hpack: "start",
+                    visible,
+                  }),
                 }),
               ],
             }),
