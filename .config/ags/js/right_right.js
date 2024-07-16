@@ -120,13 +120,10 @@ function Memory() {
   const zram = Variable(0, {
     poll: [
       2000,
-      // can't use 'free' command for swap info since it doesn't consider
-      // compression
-      "zramctl --raw --noheadings --bytes zram0",
+      "free",
       (out) => {
-        // Array:  DISKSIZE   DATA COMPR  TOTAL STREAMS MOUNTPOINT
-        let zramInfo = out.split(/\s+/).splice(2);
-        return zramInfo[3] / zramInfo[0]; // total used / disksize
+        let swap = get("Swap", out).splice(1, 2);
+        return swap[1] / swap[0]; // used / total
       },
     ],
   });
