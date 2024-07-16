@@ -114,19 +114,20 @@ progressbar {
       margin-left: 2px;
       trough {
         min-width: 2px;
-      }
-      progress {
-        background: $_accent2;
+        progress {
+          background: $_accent2;
+          min-width: 2px;
+        }
       }
       &.charging {
         progress {
           background: $color6;
         }
       }
-      padding: 3px 0px;
+      padding: 4px 0px;
     }
     .device {
-      font: 1em daddytimemono nerd font;
+      font: 1.1em daddytimemono nerd font;
     }
   }
 }
