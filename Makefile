@@ -258,11 +258,6 @@ asus: ## install ASUS laptop specific software (ie. battery threshold)
 	$(PACMAN) --needed needed mesa lib32-mesa mesa-vdpau libva-mesa-driver \
 		vulkan-radeon vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
 	$(YAY) asusctl amdgpu_top-bin
-	wget -P ${HOME}/Downloads https://gitlab.com/asus-linux/asusctl/-/raw/d0b9aee85a60f0d0a1afb4cb6e3da802cddb1344/data/asusd-alt.service
-	sudo systemctl mask asusd
-	sudo systemctl stop asusd
-	sudo cp -p asusd-alt.service /etc/systemd/system/
-	$(SSEN) asusd-alt.service
 	asusctl -c 80
 
 xiaomi: nvidia-all ## install stuff for nvidia hybrid laptop
