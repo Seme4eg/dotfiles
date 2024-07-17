@@ -245,6 +245,10 @@ mpd:
 
 # ------------  Targets to run manually  ------------
 
+librewolf: ## symlink 'native-messaging-hosts' for tridactyl and pywalfox to work
+	mkdir -p ${HOME}/.mozilla/native-messaging-hosts
+	ln -s ${HOME}/.mozilla/native-messaging-hosts ${HOME}/.librewolf
+
 icons: ## setup icons and theme (run only after you synced icons folder from other devices)
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
