@@ -52,6 +52,7 @@ lib32-ocl-icd
 lib32-openal
 lib32-v4l-utils
 libsixel
+libvterm
 linux
 linux-firmware
 linux-headers
