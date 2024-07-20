@@ -42,7 +42,7 @@
 }}
 
 #inputbar {{
-  padding: 8 0;
+  padding: 0;
   // prompt
   children: [ textbox-prompt-colon,entry ];
 }}
@@ -57,24 +57,24 @@ entry {{
 #textbox-prompt-colon {{
   expand: false;
   str: "( ￣ー￣)φ__";
-  margin: 0em 0.8em 0em 0em;
+  padding: 0 0 8px 0;
   text-color: @accent-a;
 }}
 
 #listview {{
   fixed-height: 0;
-  margin: 6 0 0 0;
   border: 1px dash 0px 0px;
   border-color: @border-color;
   spacing: 0px;
   scrollbar: false;
-  padding: 2px 0px 0px;
-  lines: 8;
+  padding: 5px 0 0 0;
+  margin: 0;
+  lines: 10;
 }}
 
 #element {{
   padding: 2 12 6;
-  margin: 8px;
+  margin: 2px;
 }}
 
 #element-text, element-icon {{
