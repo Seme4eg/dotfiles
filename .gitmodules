@@ -10,3 +10,6 @@
 [submodule ".config/rofi/scripts/rofi-pass-wayland"]
 	path = .config/rofi/scripts/rofi-pass-wayland
 	url = git@github.com:Seme4eg/rofi-pass-wayland.git
+[submodule "rofi-bluetooth"]
+	path = .config/rofi/scripts/rofi-bluetooth
+	url = git@github.com:Seme4eg/rofi-bluetooth.git
