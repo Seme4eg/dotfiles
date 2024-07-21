@@ -41,7 +41,9 @@ function SysTray(reveal) {
     child: Widget.Box({
       spacing: 5,
       className: "tray",
-      children: systemtray.bind("items").as((i) => i.map(SysTrayItem)),
+      children: systemtray
+        .bind("items")
+        .as((i) => i.filter((i) => i.id).map(SysTrayItem)),
     }),
   });
 }
