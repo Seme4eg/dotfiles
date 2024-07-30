@@ -106,13 +106,15 @@ function Memory() {
       2000,
       "free",
       (out) => {
-        let ram = get("Mem", out).splice(1, 2); // returns total and used respectively
+        // returns total, used, free, shared and cache respectively
+        let ram = get("Mem", out).splice(1, 5);
         let swap = get("Swap", out).splice(1, 1); // returns total swap amount
 
         // since i am using zram, which takes part of ram
         let ramTotal = ram[0] - swap;
 
-        return ram[1] / ramTotal; // divide used by total, excluding zram
+        // divide (used - cached) by total, excluding zram
+        return (ram[1] - ram[4]) / ramTotal;
       },
     ],
   });
