@@ -50,8 +50,8 @@ zvm_vi_yank() {
 
 # NOTE: to get keys for defining binding: /usr/bin/cat -v , sir
 
-bindkey '^K' history-substring-search-up
-bindkey '^J' history-substring-search-down
+bindkey '^p' history-substring-search-up
+bindkey '^n' history-substring-search-down
 
 fcd() { cd "$(find -type d | fzf)"; }
 # ^o doesn't work in foot, cuz idk. In foot use ^O
