@@ -22,6 +22,7 @@ plocate-git
 python-pyclip
 python-pywalfox-librewolf
 rofi-lbonn-wayland-git
+rose-pine-hyprcursor
 swaylock-effects-git
 telegram-tdlib-git
 webcord-bin
