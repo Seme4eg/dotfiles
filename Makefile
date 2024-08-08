@@ -159,8 +159,6 @@ emacs:
 
 systemd: ## enable and start all user and system systemd services
 	$(SSEN) systemd-timesyncd.service
-	sudo sed -i '/^ConditionACPower/d' /usr/lib/systemd/system/plocate-updatedb.service
-	$(SSEN) plocate-updatedb.timer
 	$(SSEN) bluetooth.service
 	find ${HOME}/.config/systemd/user/ -type f -printf "%f\n" |
 		xargs -I {} systemctl --user enable --now {}
@@ -255,7 +253,7 @@ icons: ## setup icons and theme (run only after you synced icons folder from oth
 
 asus: ## install ASUS laptop specific software (ie. battery threshold)
 # support for vulkan api
-	$(PACMAN) --needed needed mesa lib32-mesa mesa-vdpau libva-mesa-driver \
+	$(PACMAN) --needed mesa lib32-mesa mesa-vdpau libva-mesa-driver \
 		vulkan-radeon vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
 	$(YAY) asusctl amdgpu_top-bin
 	asusctl -c 80
