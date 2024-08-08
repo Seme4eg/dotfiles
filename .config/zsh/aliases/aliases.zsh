@@ -8,11 +8,11 @@ alias eh="cd ~/git/mp/web-arm/ && yarn serve"
 alias pn="pnpm"
 alias spd="speedtest"
 
-alias vedroid="waydroid session stop && waydroid session start &"
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 alias picgen="cd ~/utils/Fooocus && conda activate fooocus && \
   python entry_with_update.py --always-download-new-model"
+alias nmssaveedit="cd Downloads/nms/jdk-22.0.2/bin && ./java -jar ~/Downloads/nms/NMSSaveEditor.jar"
 
 # Paste image from clipboard, decode it with zbar and copy it back to clipboard
 # https://github.com/tadfisher/pass-otp#examples - more examples
