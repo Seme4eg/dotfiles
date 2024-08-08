@@ -23,6 +23,7 @@ efibootmgr
 expect
 eza
 fd
+ffmpegthumbnailer
 font-manager
 foot
 fzf
@@ -61,6 +62,7 @@ lua52
 man-db
 man-pages
 mangohud
+mediainfo
 mpc
 mpd
 mpv
