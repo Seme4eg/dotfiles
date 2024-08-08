@@ -14,7 +14,6 @@ librewolf-bin
 mbsync-git
 mu
 numix-circle-icon-theme-git
-nwg-look-bin
 ookla-speedtest-bin
 otf-symbola
 pam-gnupg

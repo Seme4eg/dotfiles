@@ -75,6 +75,7 @@ network-manager-applet
 networkmanager
 networkmanager-openvpn
 noto-fonts-emoji
+nwg-look
 openssh
 otf-hasklig-nerd
 p7zip
