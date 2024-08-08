@@ -18,7 +18,6 @@ nwg-look-bin
 ookla-speedtest-bin
 otf-symbola
 pam-gnupg
-plocate-git
 python-pyclip
 python-pywalfox-librewolf
 rofi-lbonn-wayland-git
