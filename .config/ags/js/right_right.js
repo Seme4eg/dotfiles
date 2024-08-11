@@ -1,16 +1,11 @@
 const battery = await Service.import("battery");
-const powerProfiles = await Service.import("powerprofiles");
 
 export default function RRight() {
   return Widget.Box({
     className: "telemetery",
     spacing: 11,
-    children: [PowerProfAndCPU(), Memory(), Battery()],
+    children: [CPU(), Memory(), Battery()],
   });
-}
-
-function PowerProfAndCPU() {
-  return Widget.Box({ children: [PowerProfile(), CPU()] });
 }
 
 function CPU() {
@@ -76,20 +71,6 @@ function CPU() {
         ),
       }),
     ],
-  });
-}
-
-function PowerProfile() {
-  return Widget.Revealer({
-    transition: "slide_left",
-    transitionDuration: 350,
-    revealChild: powerProfiles
-      .bind("active_profile")
-      .as((p) => p !== "balanced"),
-    child: Widget.Icon({
-      className: "power_profile_icon",
-      icon: powerProfiles.bind("icon_name"),
-    }),
   });
 }
 

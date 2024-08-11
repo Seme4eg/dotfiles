@@ -7,8 +7,7 @@
   one for icons - any nerd font. I use 'daddytimemono nerd font'.
 - *Dependencies*: /pacman-contrib/ for ~checkupdates~. The rest are required by ags
   services: /pipewire-pulse/, /upower/, /gnome-bluetooth-3.0/ (and experimental
-  enabled in bluetooth config), /network-manager/, /power-profiles-damon/,
-  /libdbusmenu-gtk3/.
+  enabled in bluetooth config), /network-manager/, /libdbusmenu-gtk3/.
 - How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]], yes, example is for
   eww, but ez to rewrite on ags
 
