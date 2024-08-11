@@ -72,7 +72,7 @@ clean: ## removes all broken symlinks recursively
 
 install: dotfiles reflector pacman-install aur-install
 
-postinstall: sysoptions zsh emacs systemd zram hyprplugins wal golang pam-gnupg ags pnpm
+postinstall: sysoptions zsh emacs systemd zram hyprplugins wal goinstall gopkgs pam-gnupg ags pnpm tlp
 
 postreboot: mpv mpd
 
@@ -185,9 +185,11 @@ hyprplugins:
 wal: ## for hyprland to not show error of undefined color var on first launch
 	wal -n -q -i "${HOME}/dotfiles/assets/wallpaper.jpg" --saturate 0.3
 
-golang: ## install go and its packages
+goinstall: ## install go and export path
 	$(PACMAN) go
 	export GOPATH="${HOME}/go"
+
+gopkgs: ## install go and its packages
 # needed for doom golang setup to work
 	go install golang.org/x/tools/gopls@latest
 	go install github.com/x-motemen/gore/cmd/gore@latest
@@ -202,6 +204,8 @@ golang: ## install go and its packages
 	go install github.com/jessfraz/dockfmt@latest
 # for debugging
 	go install github.com/go-delve/delve/cmd/dlv@latest
+# formatting
+	go install github.com/segmentio/golines@latest
 
 pam-gnupg: ## setup pam-gnupg to unlock GnuPG keys on login
 	@echo 'auth     optional  pam_gnupg.so store-only' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
