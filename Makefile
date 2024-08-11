@@ -223,6 +223,10 @@ pnpm: ## install all needed global npm packages
 	pnpm add --global vscode-langservers-extracted
 	pnpm add --global dockerfile-language-server-nodejs
 
+tlp:
+	$(SSEN) tlp.service
+	sudo ln ${HOME}/.config/01-asus.conf /etc/tlp.d/01-asus.conf
+
 
 # --- Postreboot ---
 
@@ -251,12 +255,11 @@ icons: ## setup icons and theme (run only after you synced icons folder from oth
 	bash ${HOME}/.icons/unpack-all
 	nwg-look -a
 
-asus: ## install ASUS laptop specific software (ie. battery threshold)
+asus: ## install ASUS laptop specific software
 # support for vulkan api
 	$(PACMAN) --needed mesa lib32-mesa mesa-vdpau libva-mesa-driver \
 		vulkan-radeon vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
-	$(YAY) asusctl amdgpu_top-bin
-	asusctl -c 80
+	$(YAY) amdgpu_top-bin
 
 xiaomi: nvidia-all ## install stuff for nvidia hybrid laptop
 	$(PACMAN) --needed intel-media-driver libva-utils nvtop nvidia-prime

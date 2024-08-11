@@ -23,6 +23,7 @@ alias gpgreload="systemctl --user restart gpg-agent"
 
 alias cheatengine="xhost +local: &; gameconqueror"
 
+# NOTE: tlp-stat also shows the capacity
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
 
 # --grep=<pattern>

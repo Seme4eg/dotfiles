@@ -93,7 +93,6 @@ pnpm
 podman-docker
 polkit-kde-agent
 poppler-glib
-powertop
 python-pywal
 qrencode
 qutebrowser
@@ -114,6 +113,7 @@ syncthing
 texinfo
 timeshift
 tldr
+tlp
 ttf-daddytime-mono-nerd
 ttf-firacode-nerd
 ttf-hack-nerd
