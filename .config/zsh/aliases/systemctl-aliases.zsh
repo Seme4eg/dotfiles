@@ -11,10 +11,13 @@ alias scuk="scu kill -s SIGKILL"
 alias scur="scu daemon-reload && systemctl --user restart"
 alias scuS="scu status"
 
-alias scl="sc list-units"
-alias sclt="sc list-timers"
-alias sclt="scl --type=target"
-alias scf="sc --failed"
+# --- list commands ---
+#   lookup 'sc list-*'. But most of the times 'list-*' command can be omitted in
+#   favour of '--type' and '--state' flags
+alias sculservices="sc --user --type=service --state=running"
+alias scultargets="sc --user --type=target"
+alias scultimers="sc --user --type=timer"
+alias sculfailed="sc --user --failed"
 
 # --- soystemd sudo ---
 alias ssc="sudo systemctl"
@@ -24,4 +27,11 @@ alias sscs="ssc start"
 alias ssck="scu kill -s SIGKILL"
 alias sscr="ssc daemon-reload && systemctl restart"
 alias sscS="ssc status"
-alias ssclt="systemctl list-units --type=target"
+
+# --- list commands ---
+#   lookup 'sc list-*'. But most of the times 'list-*' command can be omitted in
+#   favour of '--type' and '--state' flags
+alias sclservices="sc --type=service --state=running"
+alias scltargets="sc --type=target"
+alias scltimers="sc --type=timer"
+alias sclfailed="sc --failed"
