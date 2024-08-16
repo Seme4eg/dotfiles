@@ -89,38 +89,18 @@ function Memory() {
       (out) => {
         // returns total, used, free, shared and cache respectively
         let ram = get("Mem", out).splice(1, 5);
-        let swap = get("Swap", out).splice(1, 1); // returns total swap amount
 
-        // since i am using zram, which takes part of ram
-        let ramTotal = ram[0] - swap;
-
-        // divide (used - cached) by total, excluding zram
-        return (ram[1] - ram[4]) / ramTotal;
-      },
-    ],
-  });
-
-  const zram = Variable(0, {
-    poll: [
-      2000,
-      "free",
-      (out) => {
-        let swap = get("Swap", out).splice(1, 2);
-        return swap[1] / swap[0]; // used / total
+        // divide (used - cached) by total
+        return (ram[1] - ram[4]) / ram[0];
       },
     ],
   });
 
   return Widget.Overlay({
     className: "memory",
-    child: Widget.CircularProgress({ value: ram.bind() }),
+    child: Widget.CircularProgress({ value: ram.bind(), }),
     overlays: [
-      Widget.Box({
-        className: "zram",
-        hpack: "center",
-        children: [Widget.CircularProgress({ value: zram.bind() })],
-      }),
-      Widget.Label({ className: "circle_text", label: "󰍛" }),
+      Widget.Label({ className: "circle_text", label: "󰍛", }),
     ],
   });
 }

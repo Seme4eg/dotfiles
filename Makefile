@@ -72,7 +72,7 @@ clean: ## removes all broken symlinks recursively
 
 install: dotfiles reflector pacman-install aur-install
 
-postinstall: sysoptions zsh emacs systemd zram hyprplugins wal goinstall gopkgs pam-gnupg ags pnpm tlp
+postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs pam-gnupg ags pnpm tlp
 
 postreboot: mpv mpd
 
@@ -165,14 +165,6 @@ systemd: ## enable and start all user and system systemd services
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
 	$(SUEN) goimapnotify@mail.service
-
-# man zram-generator.conf
-# zram-size = min(ram / 2, 4096) # default
-# compression-algorithm = zstd # kernel default, see 'zramctl zram0' for which
-#   algorith is being used.
-zram: ## enable zram
-	@echo '[zram0]' | sudo tee /etc/systemd/zram-generator.conf > /dev/null
-	$(SSER) systemd-zram-setup@zram0
 
 hyprplugins:
 	hyprpm update

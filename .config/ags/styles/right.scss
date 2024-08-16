@@ -179,19 +179,12 @@ circular-progress {
 
   .memory {
     circular-progress {
-      font-size: 2px;
-    }
-    .zram {
-      circular-progress {
-        color: $_accent2;
-        font-size: 2px;
-        min-width: 21px; // without this both circular progress widgets break
-      }
+      font-size: 3px;
     }
   }
 
   .circle_text {
-    font-size: 1.2em;
+    font-size: 1.4em;
     margin-right: 2px;
   }
 

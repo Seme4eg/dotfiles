@@ -137,6 +137,5 @@ xdg-desktop-portal-hyprland
 yt-dlp
 zbar
 zoxide
-zram-generator
 zsh
 zsh-completions
