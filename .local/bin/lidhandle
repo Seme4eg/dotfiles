@@ -7,6 +7,7 @@ single_monitor() {
 }
 
 if [ "$state" == "on" ]; then
+  hyprctl keyword monitor "eDP-1,highrr,0x0,1.6666667"
   # if its a normal lid on then do normal stuff, if there's a 2nd monitor
   # plugged its not needed
   if single_monitor; then
