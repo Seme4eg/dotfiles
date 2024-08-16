@@ -21,5 +21,11 @@
   submodule = log
   colorMoved = default
   colorMovedWS = allow-indentation-change
+[submodule]
+  recurse=true
+  propagateBranches=true
+  fetchJobs=3
+[fetch]
+  parallel=3
 [includeIf "gitdir:~/git/mp/"]
   path = ~/git/mp/.gitconfig
