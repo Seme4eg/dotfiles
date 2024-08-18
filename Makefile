@@ -198,6 +198,8 @@ gopkgs: ## install go and its packages
 	go install github.com/go-delve/delve/cmd/dlv@latest
 # formatting
 	go install github.com/segmentio/golines@latest
+# +lsp
+	go install github.com/nametake/golangci-lint-langserver@latest
 
 pam-gnupg: ## setup pam-gnupg to unlock GnuPG keys on login
 	@echo 'auth     optional  pam_gnupg.so store-only' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
