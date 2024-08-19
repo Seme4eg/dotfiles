@@ -41,7 +41,7 @@
 }}
 
 #inputbar {{
-  padding: 8;
+  padding: 5 8 8 8;
   // prompt
   children: [ textbox-prompt-colon,entry ];
 }}
