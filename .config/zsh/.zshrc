@@ -77,6 +77,8 @@ eval "$(zoxide init zsh)" # z / zi[nteractive] (using fzf if u have it)
 # --- Sourcing ---
 for file in ~/.config/zsh/aliases/*; do source "$file"; done
 
+source "${ZDOTDIR}"/ffmpeg # ffmpeg postprocessing functions for my audios
+
 # i have cat aliased to 'bat' so i need to call cat directly
 (/usr/bin/cat ~/.cache/wal/sequences &) # pywal
 
