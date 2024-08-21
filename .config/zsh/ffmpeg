@@ -1,0 +1,73 @@
+#!/usr/bin/env zsh
+
+# https://trac.ffmpeg.org/wiki/Waveform
+ffwaveform() {
+  # ffmpeg -i in.mp3 -filter_complex ""aformat=channel_layouts=mono,showwavespic=s=1000x200"" -frames:v 1 in.png
+  ffmpeg -i "${1}" -filter_complex "showwavespic=s=640x120" -frames:v 1 "${1}.png"
+}
+
+###############################################################################
+#                                Filter strings                               #
+###############################################################################
+
+# https://ffmpeg.org/ffmpeg-filters.html#afftdn
+# - noise_reduction, nr - doesn't do much even if setting it to 90db
+# - noise_floor, nf - couldn't decide on 35/40 value, 35 is less 'high' tones
+#    hence less 'clear' audio but also less white noise, but on 40 this white
+#    noise is more noticable. For now i think i prefer value of 35.
+# - running default values for this filter results in still noisy audio, tad bit
+#    better, but way worse than with 2 params below
+# - adaptivity, ad - also doesn't seem affect the output noticably
+# - band_multiplyer, bm - also doesn't seemingly affect anything
+# - gain_smooth, gs - does smooth out the high noise of the audio, but setting
+#    value to max (50) results in voice muffled sometimes and changing. Went for
+#    15 for now
+# - noise_link, nl - also didn't hear any difference
+# - residual_floor, rf - works, using
+# - track_noise, tn - works, using
+#
+# https://ffmpeg.org/ffmpeg-filters.html#speechnorm
+# - the 'speechnorm' filter with all default values only makes white noise in my
+#    case louder.
+#
+# NOTE: if you will get tired of 'muffled' sound use either of these options:
+#  - use default 'afftdn' filter with all default params - voice will be clear,
+#    original, but lots of white noise still.
+#  - -nf=-40 (or -35) - will make voice bit more 'muffled', but bit less noise
+#    and voise will still be clearer than with tracking and smoothing.
+denoise="afftdn=tn=1:tr=1:gs=15"
+
+# https://ffmpeg.org/ffmpeg-filters.html#silenceremove
+desilence="silenceremove=stop_periods=-1:stop_duration=2:stop_threshold=-50dB"
+
+# https://medium.com/@jud.dagnall/dynamic-range-compression-for-audio-with-ffmpeg-and-compand-621fe2b1a892
+# -80/-900: Remove the really quiet stuff. (i removed it for now)
+# -45/-15: Make the quietest part of the audience questions pretty clear(a 3x increase). You will likely need to fiddle with this if there’s a lot of audience noise, chairs moving, etc… that you don’t want to hear.
+# -27/-9: make the medium part of the questions easy to hear.
+# 0/-7: take what should be about the loudest part, and decrease it all the way down to -7. That means all the normal and loud stuff ends up between -9 and -7. The shouting still seems loud if it goes on for very long, because it’s just a lot more sound at the top volume. But it’s not jarring any more.
+# 20/-7: Add another anchor just to be sure nothing ends up louder that -7.
+boost="compand=attacks=0:points=-45/-15|-27/-9|0/-7|20/-7:gain=5"
+
+###############################################################################
+#                               Filter functions                              #
+###############################################################################
+
+ffpp() {
+  # simple and complex filters can't b used together for same stream
+  ffmpeg -i "${1}" -filter_complex \
+    "[0:a]${desilence},${boost},${denoise}[postprocessed]" \
+    -map "[postprocessed]" \
+    -b:a 48k "pp_${1}"
+}
+
+ffdenoise() {
+  ffmpeg -i "${1}" -af "${denoise}" -b:a 48k "denoised_${1}"
+}
+
+ffdesilence() {
+  ffmpeg -i "${1}" -af "${desilence}" -b:a 48k "desilenced_${1}"
+}
+
+ffboost() {
+  ffmpeg -i "${1}" -filter_complex "${boost}" -b:a 48k "boosted_${1}"
+}
