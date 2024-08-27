@@ -3,24 +3,31 @@
 state=$1
 
 single_monitor() {
-  [ "$(hyprctl -j monitors | gojq -r '. | length')" = 1 ]
+  [ "$(hyprctl -j monitors | gojq -r '. | length')" -eq 1 ]
+}
+
+handle_sincle_monitor_on() {
+  systemctl --user restart wlsunset
+  change-theme
+  sync_tz_and_loc
 }
 
 if [ "$state" == "on" ]; then
   hyprctl keyword monitor "eDP-1,highrr,0x0,1.6666667"
   # if its a normal lid on then do normal stuff, if there's a 2nd monitor
   # plugged its not needed
-  if single_monitor; then
-    systemctl --user restart wlsunset
-    change-theme
-    sync_tz_and_loc
-  fi
+  single_monitor && handle_sincle_monitor_on
 else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
   # /etc/systemd/logind.conf
   if single_monitor; then
     # swaylock --grace 0
     systemctl suspend
+    # NOTE: fix for hyprland not calling bind 'on' after waking up from sleep
+    #  in case of single monitor setup 'bindl on' event isn't fired. So need to
+    #  do that here manually.
+    sleep 2
+    handle_sincle_monitor_on
   else
     hyprctl keyword monitor "eDP-1, disable"
   fi
