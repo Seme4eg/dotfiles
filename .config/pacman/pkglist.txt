@@ -84,6 +84,7 @@ pass
 pass-otp
 passff-host
 pavucontrol
+pgformatter
 picard
 pipewire-alsa
 pipewire-audio
