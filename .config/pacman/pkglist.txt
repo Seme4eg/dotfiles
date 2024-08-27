@@ -94,6 +94,7 @@ pnpm
 podman-docker
 polkit-kde-agent
 poppler-glib
+pre-commit
 python-pywal
 qrencode
 qutebrowser
