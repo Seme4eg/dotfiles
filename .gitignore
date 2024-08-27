@@ -56,12 +56,6 @@ node_modules/
 /.config/font-manager/
 /.config/isyncrc
 
-/.config/ArmCord/*
-!/.config/ArmCord/themes/
-!/.config/ArmCord/storage/
-/.config/ArmCord/storage/lang.json
-/.config/ArmCord/storage/window.json
-
 /.config/armcord/*
 !/.config/armcord/themes/
 !/.config/armcord/storage/
