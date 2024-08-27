@@ -9,7 +9,7 @@ while getopts ":w:ld" Option; do case $Option in
   w) wp=$OPTARG ;;
   d) delete_current=1 ;;
   *) ;;
-esac done
+  esac done
 
 # move current wallpaper to directory with blend wallpapers
 if [[ $delete_current ]]; then
@@ -36,7 +36,6 @@ else
 fi
 
 ags -r "theme = '$theme'"
-ags -r "reloadCSS"
 
 pywalfox update & # update firefox/librewolf theme
 
