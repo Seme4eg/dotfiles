@@ -1,0 +1,17 @@
+
+- man 5 swaync - to see config options and defaults
+- https://docs.gtk.org/gtk4/css-properties.html#images - gtk 4 css props
+- ~pkill swaync && GTK_DEBUG=interactive swaync~ - launch swaync with gtk debugger
+- styles reference file: ~/etc/xdg/swaync/style.css~
+
+Test your notification widgets by C-c C-c this:
+
+#+begin_src sh
+# [body] markup:
+# https://specifications.freedesktop.org/notification-spec/latest/ar01s04.html
+# -u critical
+# -t 5000
+notify-send "Test noicon notification" "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
+say "Test normal notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
+say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
+#+end_src

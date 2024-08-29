@@ -11,23 +11,7 @@
 - How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]], yes, example is for
   eww, but ez to rewrite on ags
 
-Test your notification widgets by C-c C-c this:
-
-#+begin_src sh
-# [body] markup:
-# https://specifications.freedesktop.org/notification-spec/latest/ar01s04.html
-# -u critical
-# -t 5000
-notify-send "Test noicon notification" "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
-say "Test normal notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
-say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."
-#+end_src
-
 ** Todos
-*** TODO NOTIFICATIONS
-**** TODO use Widget.Stack() for notifications list
-**** TODO finish no notifications widget in notifications list
-**** TODO use scroll widget with notification windows
 *** TODO listen on 'monitor-add/remove' signals on hyprland service
 .. and change the monitor on which the bar appears.
 
