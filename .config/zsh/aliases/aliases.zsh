@@ -26,18 +26,3 @@ alias cheatengine="xhost +local: &; gameconqueror"
 
 # NOTE: tlp-stat also shows the capacity
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
-
-# --grep=<pattern>
-# -x -- Include explanations of log messages from the message catalog where available
-# -u -- messages by a specific (system) unit (man-db.service)
-# -e -- skip to the end
-# --user -u -- messages from user services by a specific unit (dbus)
-# -p err..alert # Show only error, critical and alert priority messages
-#    You can use numeric log level too, like journalctl -p 3..1. If single
-#    number/log level is used, journalctl -p 3, then all higher priority log
-#    levels are also included (i.e. 0 to 3 in this case).
-
-# journalctl /usr/lib/systemd/systemd # messages by a specific executable
-# journalctl _PID=1 # messages by a specific process:
-alias jc="journalctl -xef -u"
-alias jcu="journalctl --user -xef -u"
