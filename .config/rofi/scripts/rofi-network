@@ -199,12 +199,12 @@ ssid_menu() {
 
   # Match action option to command
   case "$action" in
-    10 | "$connected") toggle_ssid "$ssid" "$security" ;;
-    11 | "$saved") forget_ssid "$ssid" ;;
-    12 | "$show_info") show_info "$ssid" "$security" ;;
-    "$qrOption") show_qr "$1" "$2" ;;
-    "$backOption") show_menu ;;
-    *) echo "No option chosen." ;;
+  10 | "$connected") toggle_ssid "$ssid" "$security" ;;
+  11 | "$saved") forget_ssid "$ssid" ;;
+  12 | "$show_info") show_info "$ssid" "$security" ;;
+  "$qrOption") show_qr "$1" "$2" ;;
+  "$backOption") show_menu ;;
+  *) echo "No option chosen." ;;
   esac
 }
 
@@ -262,28 +262,28 @@ show_menu() {
   security=$(echo "$option" | awk -F '  +' '{print $3}')
 
   case $rofi_exit in
-    0)
-      case $option in
-        "$state") toggle_wifi ;;
-        *)
-          # no point in showing a 1-entry submenu if ssid isn't saved
-          if ssid_saved "$ssid"; then
-            ssid_menu "$ssid" "$security"
-          else
-            toggle_ssid "$ssid"
-          fi
-          ;;
-      esac
+  0)
+    case $option in
+    "$state") toggle_wifi ;;
+    *)
+      # no point in showing a 1-entry submenu if ssid isn't saved
+      if ssid_saved "$ssid"; then
+        ssid_menu "$ssid" "$security"
+      else
+        toggle_ssid "$ssid" "$security"
+      fi
       ;;
-    10) toggle_ssid "$ssid" "$security" ;;
-    11) forget_ssid "$ssid" ;;
-    12) show_info "$ssid" "$security" ;;
-    13)
-      networks=$(get_networks)
-      show_menu
-      ;;
-    14) restart_wifi ;;
-    *) exit ;;
+    esac
+    ;;
+  10) toggle_ssid "$ssid" "$security" ;;
+  11) forget_ssid "$ssid" ;;
+  12) show_info "$ssid" "$security" ;;
+  13)
+    networks=$(get_networks)
+    show_menu
+    ;;
+  14) restart_wifi ;;
+  *) exit ;;
   esac
 }
 
