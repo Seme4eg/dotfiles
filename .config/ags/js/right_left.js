@@ -1,8 +1,5 @@
 const systemtray = await Service.import("systemtray");
 const hyprland = await Service.import("hyprland");
-const notifications = await Service.import("notifications");
-
-import { NotificationsCount } from "./notifications.js";
 
 // global spacing for this whole block
 const spacing = 13;
@@ -94,11 +91,36 @@ function Submap() {
 }
 
 function UpdatesWeatherAndNotifs() {
+  let notif_count = Variable(0, {
+    listen: [
+      ["bash", "-c", "swaync-client -s"], // subscribe to swaync events
+      (out) => +JSON.parse(out).count,
+    ],
+  });
+
   return Widget.Box({
-    spacing: notifications
-      .bind("notifications")
-      .as((c) => (c.filter((n) => !n.transient).length > 0 ? spacing : 0)),
-    children: [WeatherAndUpdates(), NotificationsCount()],
+    spacing: notif_count.bind().as(c => Number(c) > 0 ? spacing : 0),
+    children: [WeatherAndUpdates(), NotificationsCount(notif_count)],
+  });
+}
+
+// NOTE: do NOT import the notifications service of ags, it will start the ags
+//  notif daemon, which will break swaync
+export function NotificationsCount(notif_count) {
+  return Widget.Revealer({
+    revealChild: notif_count.bind().as(c => c > 0),
+    transition: "slide_right",
+    transitionDuration: 350,
+    child: Widget.Overlay({
+      className: "notification_counter",
+      child: Widget.Label({
+        className: "fg",
+        label: notif_count.bind().as(String)
+      }),
+      overlays: [
+        Widget.Label({ className: "bg", vpack: "center", label: "󱥂", }),
+      ],
+    }),
   });
 }
 

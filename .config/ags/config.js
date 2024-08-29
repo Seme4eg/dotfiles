@@ -1,7 +1,6 @@
 import Left from "./js/left.js";
 import Center from "./js/center.js";
 import Right from "./js/right.js";
-import { NotificationPopups, NotificationsList } from "./js/notifications.js";
 
 // widgets can be only assigned as a child in one container
 // so to make a reuseable widget, make it a function
@@ -51,8 +50,6 @@ App.config({
   style: css,
   windows: [
     Bar(), // you can call it, for each monitor: Bar(0), Bar(1)
-    NotificationPopups(),
-    NotificationsList(),
   ],
 });
 

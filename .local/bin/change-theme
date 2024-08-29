@@ -53,6 +53,10 @@ emacsclient -e "(load-theme 'ewal-doom-one)" & # update emacs theme
 # [ -f $XDG_CACHE_HOME/wal/cava-config ] &&
 #   mv -f $XDG_CACHE_HOME/wal/cava-config $XDG_CONFIG_HOME/cava/config
 
+# SwayNC
+# . $XDG_CONFIG_HOME/swaync/reload.sh # <- debugging / developing
+swaync-client -rs &
+
 # wait # for all child processes to finish
 
 swww img "$wp" -t=any \

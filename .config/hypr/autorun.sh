@@ -6,6 +6,10 @@ systemctl --user start hyprland-session.target
 
 # /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
 
+# needs to be started before 'change-theme' script otherwise the latter waits
+# for swaync service to appear
+swaync &
+
 swww init
 
 change-theme &
