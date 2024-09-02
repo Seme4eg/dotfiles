@@ -21,10 +21,13 @@ function IfDisconnected() {
   return Widget.Revealer({
     transition: "slide_right",
     transitionDuration: 350,
-    revealChild: network.bind("connectivity").as((status) => status === "none"),
+    // "unknown" | "none" | "portal" | "limited" | "full"
+    revealChild: network.bind("connectivity")
+      .as((status) => status === "none" || status === "portal"),
     child: Widget.Label({
       className: "disconnected",
-      label: "󰤮",
+      label: network.bind("connectivity")
+        .as((status) => status === "portal" ? "󰤩" : "󰤮")
     }),
   });
 }
