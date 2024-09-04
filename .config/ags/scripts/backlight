@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
-brillo
-udevadm monitor | rg --line-buffered "backlight" | while read -r _; do brillo; done
+udevadm monitor | rg --line-buffered "backlight" | while read -r _; do
+  # get the percentage value
+  brightnessctl -m | grep -oP '\d+(?=%)'
+done
