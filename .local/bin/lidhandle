@@ -21,12 +21,13 @@ else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
   # /etc/systemd/logind.conf
   if single_monitor; then
-    hyprlock --immediate
     systemctl suspend
+    hyprlock --immediate
     # NOTE: fix for hyprland not calling bind 'on' after waking up from sleep
     #  in case of single monitor setup 'bindl on' event isn't fired. So need to
     #  do that here manually.
-    sleep 2
+    # sleep 2 # isn't needed if using hyprlock, cuz commands below hyprlock
+    # won't execute untill system is unlocked
     handle_sincle_monitor_on
   else
     hyprctl keyword monitor "eDP-1, disable"
