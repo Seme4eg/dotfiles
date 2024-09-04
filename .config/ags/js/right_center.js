@@ -158,7 +158,7 @@ function Source() {
         label: audio.microphone.bind("volume").as((v) => (v * 100).toFixed(0)),
       }),
       Widget.Label({
-        className: "icon",
+        className: audio.microphone.bind("is_muted").as((b) => (b ? "icon muted" : "icon")),
         label: audio.microphone.bind("is_muted").as((b) => (b ? "" : "")),
       }),
     ],
