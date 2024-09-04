@@ -4,7 +4,7 @@
 - *Compositor*: Hyprland
 - *App launcher*: rofi
 - *Status bar*: ags
-- *Screen locker*: swaylock-effects
+- *Screen locker*: hyprlock
 - *Theme changing*: pywal&scripts
 - *Notifications*: swaync
 - *Terminal*: foot

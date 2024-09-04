@@ -23,7 +23,6 @@ node_modules/
 /.config/neofetch/
 /.config/systemd/user/sockets.target.wants/
 /.config/systemd/user/default.target.wants/
-/.config/swaylock/config
 /.config/fontforge/
 /.config/emacs/
 /.config/doom/
