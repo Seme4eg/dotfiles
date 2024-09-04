@@ -9,6 +9,7 @@ base-devel
 bat
 bluez
 bluez-utils
+brightnessctl
 btop
 calf
 chafa
