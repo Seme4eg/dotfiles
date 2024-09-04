@@ -10,6 +10,7 @@ golangci-lint-bin
 heroic-games-launcher-bin
 hypridle-git
 hyprland-git
+hyprlock-git
 librewolf-bin
 mbsync-git
 mu
@@ -21,7 +22,6 @@ python-pyclip
 python-pywalfox-librewolf
 rofi-lbonn-wayland-git
 rose-pine-hyprcursor
-swaylock-effects-git
 swaync-git
 telegram-tdlib-git
 webcord-bin

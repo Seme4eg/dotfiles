@@ -21,7 +21,7 @@ else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
   # /etc/systemd/logind.conf
   if single_monitor; then
-    # swaylock --grace 0
+    hyprlock --immediate
     systemctl suspend
     # NOTE: fix for hyprland not calling bind 'on' after waking up from sleep
     #  in case of single monitor setup 'bindl on' event isn't fired. So need to
