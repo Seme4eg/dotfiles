@@ -22,7 +22,7 @@ else
   # /etc/systemd/logind.conf
   if single_monitor; then
     systemctl suspend
-    hyprlock --immediate
+    pidof hyprlock || hyprlock --immediate
     # NOTE: fix for hyprland not calling bind 'on' after waking up from sleep
     #  in case of single monitor setup 'bindl on' event isn't fired. So need to
     #  do that here manually.
