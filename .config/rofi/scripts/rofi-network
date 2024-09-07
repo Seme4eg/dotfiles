@@ -1,6 +1,7 @@
 #!/bin/env bash
 
-# nice, but horrible reference: https://github.com/P3rf/rofi-network-manager/blob/master/rofi-network-manager.sh
+# horrible, unreadable, but still a reference:
+# https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
 
 # IN-USE, BSSID
 FIELDS=ACTIVE,SSID,SECURITY,FREQ,RATE,SIGNAL
@@ -128,13 +129,15 @@ toggle_ssid() {
 show_qr() {
   local ssid="$1"
   local security="$2"
-  local tmp_ssid="${ssid// /_}"
-  local qrcode_path="$HOME/.cache/rofi/$tmp_ssid.png"
+  local password
+  password="$(nmcli dev wifi show-password)"
+
+  local qrcode_path="$HOME/.cache/rofi/$ssid.png"
 
   [ -e "$qrcode_path" ] && rm "$qrcode_path"
 
   qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
-    "WIFI:S:""$ssid"";T:""$security"";P:""$PASSWORD"";;"
+    "WIFI:S:""$ssid"";T:""$security"";P:""$password"";;"
 
   _rofi -theme-str "
 entry{enabled:false;}
