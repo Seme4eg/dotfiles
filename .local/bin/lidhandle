@@ -20,7 +20,7 @@ if [ "${state}" == "on" ]; then
   if single_monitor; then
     handle_single_monitor_on
   else
-    hyprctl keyword monitor "eDP-1,highrr,0x0,1.6666667"
+    hyprctl keyword monitor "eDP-1,highrr,0x0,${DISPLAY_SCALE}"
   fi
 else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
