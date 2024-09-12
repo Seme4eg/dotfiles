@@ -128,9 +128,12 @@ toggle_ssid() {
 
 show_qr() {
   local ssid="$1"
-  local security="$2"
+
+  local security
+  security=$(nmcli dev wifi show-password | grep '^Security' | awk '{print $2}')
+
   local password
-  password="$(nmcli dev wifi show-password)"
+  password="$(nmcli dev wifi show-password | grep '^Password' | awk '{print $2}')"
 
   local qrcode_path="$HOME/.cache/rofi/$ssid.png"
 
@@ -202,12 +205,12 @@ ssid_menu() {
 
   # Match action option to command
   case "$action" in
-  10 | "$connected") toggle_ssid "$ssid" "$security" ;;
-  11 | "$saved") forget_ssid "$ssid" ;;
-  12 | "$show_info") show_info "$ssid" "$security" ;;
-  "$qrOption") show_qr "$1" "$2" ;;
-  "$backOption") show_menu ;;
-  *) echo "No option chosen." ;;
+    10 | "$connected") toggle_ssid "$ssid" "$security" ;;
+    11 | "$saved") forget_ssid "$ssid" ;;
+    12 | "$show_info") show_info "$ssid" "$security" ;;
+    "$qrOption") show_qr "$1" ;;
+    "$backOption") show_menu ;;
+    *) echo "No option chosen." ;;
   esac
 }
 
@@ -235,7 +238,6 @@ show_menu() {
 
   local current
   current=$(echo -e "$networks" | grep "^yes")
-  echo "$current"
 
   # start background networks list updating, and kill it later by pid
   update_networks &
@@ -265,28 +267,28 @@ show_menu() {
   security=$(echo "$option" | awk -F '  +' '{print $3}')
 
   case $rofi_exit in
-  0)
-    case $option in
-    "$state") toggle_wifi ;;
-    *)
-      # no point in showing a 1-entry submenu if ssid isn't saved
-      if ssid_saved "$ssid"; then
-        ssid_menu "$ssid" "$security"
-      else
-        toggle_ssid "$ssid" "$security"
-      fi
+    0)
+      case $option in
+        "$state") toggle_wifi ;;
+        *)
+          # no point in showing a 1-entry submenu if ssid isn't saved
+          if ssid_saved "$ssid"; then
+            ssid_menu "$ssid" "$security"
+          else
+            toggle_ssid "$ssid" "$security"
+          fi
+          ;;
+      esac
       ;;
-    esac
-    ;;
-  10) toggle_ssid "$ssid" "$security" ;;
-  11) forget_ssid "$ssid" ;;
-  12) show_info "$ssid" "$security" ;;
-  13)
-    networks=$(get_networks)
-    show_menu
-    ;;
-  14) restart_wifi ;;
-  *) exit ;;
+    10) toggle_ssid "$ssid" "$security" ;;
+    11) forget_ssid "$ssid" ;;
+    12) show_info "$ssid" "$security" ;;
+    13)
+      networks=$(get_networks)
+      show_menu
+      ;;
+    14) restart_wifi ;;
+    *) exit ;;
   esac
 }
 
