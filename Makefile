@@ -114,13 +114,14 @@ pacman-install: ## Install all pacman packages
 	rm $(PACMAN_DIR)/temp1.txt
 
 yay: ## install yay aur helper
-	@export YAYDIR=${HOME}/utils/$@; \
-	if [ ! -d "$$YAYDIR" ]; then \
-		mkdir -p $$YAYDIR; \
-		git clone https://aur.archlinux.org/$@.git $$YAYDIR; \
-		cd $$YAYDIR && makepkg -si --noconfirm; \
-		yay --version; \
+	@export YAYDIR=${HOME}/utils/$@;
+	if [ -d "$$YAYDIR" ]; then
+		rm -rf $$YAYDIR
 	fi
+	mkdir -p $$YAYDIR; 
+	git clone https://aur.archlinux.org/$@.git $$YAYDIR; 
+	cd $$YAYDIR && makepkg -si --noconfirm; 
+	yay --version; 
 
 aur-install: yay ## Install all AUR packages
 	if [ ! -f $(PACMAN_DIR)/temp2.txt ]; then
