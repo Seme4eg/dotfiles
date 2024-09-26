@@ -72,7 +72,7 @@ clean: ## removes all broken symlinks recursively
 
 install: dotfiles reflector pacman-install aur-install
 
-postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs pam-gnupg ags pnpm tlp
+postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs pam-gnupg ags pnpm tlp earlyoom
 
 postreboot: mpv mpd
 
@@ -228,6 +228,12 @@ pnpm: ## install all needed global npm packages
 tlp:
 	$(SSEN) tlp.service
 	sudo ln ${HOME}/.config/01-asus.conf /etc/tlp.d/01-asus.conf
+
+earlyoom:
+# earlyoom -h
+	@echo EARLYOOM_ARGS=-m 5 -r 3600 -n --avoid '(^|/)(init|systemd|Hyprland|sshd)$' --prefer '(^|/)(emacs|librewolf|steam|armcord)$'
+	| sudo tee /etc/default/earlyoom > /dev/null
+	$(SSEN) earlyoom.service
 
 
 # --- Postreboot ---
