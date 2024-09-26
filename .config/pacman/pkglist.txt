@@ -18,6 +18,7 @@ cmake
 dart-sass
 dbeaver
 dust
+earlyoom
 easyeffects
 editorconfig-core-c
 efibootmgr
