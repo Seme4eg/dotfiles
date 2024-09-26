@@ -148,7 +148,7 @@ sysoptions: ## make changes to system files
 	sudo sed -i 's/^#\(Experimental\) = .*/\1 = true/' /etc/bluetooth/main.conf
 # https://wiki.archlinux.org/title/Sysctl
 # https://wiki.archlinux.org/title/Swap#Swappiness
-	@echo 'vm.swappiness = 10' | sudo tee -a /etc/sysctl.d/99-sysctl.conf > /dev/null
+	@echo 'vm.swappiness = 10' | sudo tee /etc/sysctl.d/99-sysctl.conf > /dev/null
 
 zsh:
 	chsh -s /usr/bin/zsh
