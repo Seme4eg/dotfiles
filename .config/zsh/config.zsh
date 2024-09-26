@@ -25,6 +25,8 @@ export MAKEFLAGS="-j$(nproc)"
 
 export PASSWORD_STORE_DIR=$XDG_DATA_HOME/password-store
 
+export LSP_USE_PLISTS=true
+
 # zsh-vi-mode
 # https://github.com/jeffreytse/zsh-vi-mode/issues/24#issuecomment-873029329
 ZVM_INIT_MODE=sourcing # <- needed BEFORE zvm gets sourced
