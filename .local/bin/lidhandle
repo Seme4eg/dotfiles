@@ -14,6 +14,12 @@ handle_single_monitor_on() {
   #  script.
   change-theme
   sync_tz_and_loc
+
+  # update mail stuff
+  mbsync -a
+  pgrep emacs && emacsclient -e '(progn (require (quote mu4e)) (mu4e-update-index))'
+  systemctl --user restart goimapnotify@mail
+  systemctl --user restart goimapnotify@gmail
 }
 
 if [ "${state}" == "on" ]; then
