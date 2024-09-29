@@ -16,14 +16,14 @@ esac done
 if [[ $delete_current ]]; then
   source "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
   rm "$wallpaper"
-  say -e "Theme changed, previous wallpaper deleted"
+  say -e "WP obliterated"
 elif [[ $blend_current ]]; then
   # move current wallpaper to directory with blend wallpapers
   source "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
   blend_wps_dir="$HOME/Pictures/DCIM/blend"
   [ ! -d "$blend_wps_dir" ] && mkdir -p "$blend_wps_dir"
   mv -f "$wallpaper" "$blend_wps_dir"
-  say -e "Theme changed, previous wallpaper moved to blend dir"
+  say -e "WP blendered"
 fi
 
 if [ -z "$wp" ]; then
