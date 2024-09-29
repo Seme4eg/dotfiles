@@ -138,7 +138,6 @@ wine-staging
 wireplumber
 wl-clipboard
 wtype
-xdg-desktop-portal-hyprland
 yt-dlp
 zbar
 zoxide
