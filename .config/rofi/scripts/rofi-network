@@ -139,8 +139,14 @@ show_qr() {
 
   [ -e "$qrcode_path" ] && rm "$qrcode_path"
 
-  qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
-    "WIFI:S:""$ssid"";T:""$security"";P:""$password"";;"
+  # FIXME: idk why it doesn't work, format is correct, info gets decoded
+  # correctly
+  # https://github.com/zxing/zxing/wiki/Barcode-Contents#wi-fi-network-config-android-ios-11
+
+  # all those params are necessary?
+  # qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
+  qrencode -t png -o "$qrcode_path" -s 25 \
+    "WIFI:S:${ssid};T:${security};P:${password};;"
 
   _rofi -theme-str "
 entry{enabled:false;}
