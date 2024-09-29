@@ -24,4 +24,5 @@ swaync-git
 telegram-tdlib-git
 webcord-bin
 wlsunset-git
+xdg-desktop-portal-hyprland-git
 yay
