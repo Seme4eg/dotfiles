@@ -26,3 +26,9 @@ alias cheatengine="xhost +local: &; gameconqueror"
 
 # NOTE: tlp-stat also shows the capacity
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
+
+ytdcur() { # yt-dlp download current
+  url="$(wl-paste)"
+  url="${url%?list*}"
+  yt-dlp -x --output "${HOME}/Music/__dw/%(artist)s - %(title)s.%(ext)s" "${url}"
+}
