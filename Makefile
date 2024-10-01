@@ -231,7 +231,7 @@ tlp:
 
 earlyoom:
 # earlyoom -h
-	@echo EARLYOOM_ARGS=-m 5 -r 3600 -n --avoid '(^|/)(init|systemd|Hyprland|sshd)$' --prefer '(^|/)(emacs|librewolf|steam|armcord)$'
+	@echo EARLYOOM_ARGS=-m 5 -r 3600 -n --avoid '(^|/)(init|systemd|Hyprland|sshd|armcord)$' --prefer '(^|/)(emacs|librewolf|steam)$'
 	| sudo tee /etc/default/earlyoom > /dev/null
 	$(SSEN) earlyoom.service
 
