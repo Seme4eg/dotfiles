@@ -61,7 +61,9 @@ export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 export ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
-bindkey '^[h' fzf-history-widget # alt + h
+# I am just not using it that much and its can't come up with any key to bind
+# it on
+# bindkey '^[h' fzf-history-widget # alt + h
 
 # --- fzf-tab ---
 # set list-colors to enable filename colorizing
