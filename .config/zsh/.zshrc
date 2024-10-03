@@ -61,7 +61,7 @@ export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 export ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
-bindkey '^h' fzf-history-widget
+bindkey '^[h' fzf-history-widget # alt + h
 
 # --- fzf-tab ---
 # set list-colors to enable filename colorizing
