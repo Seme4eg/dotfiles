@@ -1,0 +1,12 @@
+[Unit]
+Description=system bus notification daemon
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Install]
+WantedBy=hyprland-session.target
+
+[Service]
+ExecStart=systembus-notify
+Restart=always
+RestartSec=3

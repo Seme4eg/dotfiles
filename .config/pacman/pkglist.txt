@@ -114,6 +114,7 @@ steam
 stow
 swww
 syncthing
+systembus-notify
 texinfo
 timeshift
 tldr
