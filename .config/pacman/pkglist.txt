@@ -1,5 +1,4 @@
 adobe-source-han-sans-cn-fonts
-alacritty
 alsa-tools
 alsa-utils
 android-tools
