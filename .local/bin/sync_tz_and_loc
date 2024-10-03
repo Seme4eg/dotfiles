@@ -1,5 +1,7 @@
 #!/bin/bash
 
+force=
+
 while getopts ":f" opt; do case $opt in
   f) force=true ;;
   *) ;;
@@ -10,17 +12,17 @@ set_timezone() {
   current_tz=$(timedatectl | grep "Time zone" | awk '{print $3}')
 
   # Get the timezone of the current location based on the IP address
-  location_tz=$(curl -s http://ip-api.com/line/?fields=timezone)
+  location_tz=$(curl -s 'http://ip-api.com/line/?fields=timezone')
 
-  # Check if the current timezone and location timezone are the same
   if [ "$current_tz" != "$location_tz" ] && [ -n "$location_tz" ]; then
-    # If they're different, set the system timezone to the location timezone
     sudo timedatectl set-timezone "$location_tz"
     say "System timezone set to $location_tz"
     return 0
-  else
-    [[ $force ]] && return 0 || return 1
+  elif [ $force ]; then
+    return 0
   fi
+
+  return 1
 }
 
 set_coordinates() {
