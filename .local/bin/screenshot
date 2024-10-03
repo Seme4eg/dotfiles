@@ -5,20 +5,25 @@ set -Eeo pipefail
 _path=~/Pictures/Pictures/Screenshots/$(date +"grim_%d%m%Y_%H-%M-%S.png")
 
 case $@ in
-  --fulltoboth) # full screenshot to both - file and clipboard
-    grim "$_path" && wl-copy <"$_path"
-    say -e -t 1000 'Full taken to folder and clipboard'
+  --fulltoboth) # full screenshot to file and clipboard
+    grim "$_path" && wl-copy <"$_path" &&
+      say -e -t 1000 'Full taken to folder and clipboard'
     ;;
   --fulltoclip) # full screenshot to clipboard only
-    grim - | wl-copy
-    say -e -t 1000 'Full taken to clipboard'
+    grim - | wl-copy && say -e -t 1000 'Full taken to clipboard'
+    ;;
+  --parttoboth) # partial screenshot to file and clipboard
+    say -e -t 1000 'Part screenshot to folder and clipboard'
+    if grim -g "$(slurp)" "$_path"; then
+      wl-copy <"$_path"
+    else
+      say "Failed"
+    fi
     ;;
   --parttoclip) # partial screenshot to clipboard only
-    grim -g "$(slurp)" - | wl-copy
-    say -e -t 1000 'Part taken to clipboard'
-    ;;
-  --parttofile) # partial screenshot to file
-    grim -g "$(slurp)" "$_path"
-    say -e -t 1000 'Part taken to folder'
+    say -e -t 1000 'Part screenshot to clipboard'
+    grim -g "$(slurp)" - | wl-copy || say "Failed"
     ;;
 esac
+
+exit 0
