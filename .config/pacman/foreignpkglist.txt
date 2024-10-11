@@ -1,3 +1,4 @@
+abaddon-git
 armcord-bin
 aylurs-gtk-shell-git
 cgo-git

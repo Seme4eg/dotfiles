@@ -54,9 +54,4 @@ node_modules/
 /.config/ags/types
 /.config/font-manager/
 /.config/isyncrc
-
-/.config/armcord/*
-!/.config/armcord/themes/
-!/.config/armcord/storage/
-/.config/armcord/storage/lang.json
-/.config/armcord/storage/window.json
+/.config/armcord/
