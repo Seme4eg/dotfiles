@@ -216,7 +216,6 @@ ags:
 pnpm: ## install all needed global npm packages
 	export PNPM_HOME=${HOME}/.pnpm
 	export PATH=$$PNPM_HOME:$(PATH)
-	pnpm add --global prettier
 	pnpm add --global typescript-language-server
 	pnpm add --global typescript
 	pnpm add --global yaml-language-server
