@@ -2,7 +2,6 @@ adobe-source-han-sans-cn-fonts
 alsa-tools
 alsa-utils
 android-tools
-arc-gtk-theme
 base
 base-devel
 bat

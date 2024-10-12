@@ -73,7 +73,7 @@ clean: ## removes all broken symlinks recursively
 install: dotfiles reflector pacman-install aur-install
 
 postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs \
-	pam-gnupg ags pnpm tlp earlyoom grubtheme
+	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk
 
 postreboot: mpv mpd
 
@@ -243,6 +243,8 @@ grubtheme:
 	cd ${HOME}/utils/$@
   sudo ./install.sh -s 2k -b
 
+wpgtk:
+	wpg-install.sh -G
 
 # --- Postreboot ---
 
