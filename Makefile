@@ -72,7 +72,8 @@ clean: ## removes all broken symlinks recursively
 
 install: dotfiles reflector pacman-install aur-install
 
-postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs pam-gnupg ags pnpm tlp earlyoom
+postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs \
+	pam-gnupg ags pnpm tlp earlyoom grubtheme
 
 postreboot: mpv mpd
 
@@ -236,6 +237,11 @@ earlyoom:
 	@echo EARLYOOM_ARGS=-m 5 -r 3600 -n --avoid '(^|/)(init|systemd|Hyprland|sshd|abaddon)$' --prefer '(^|/)(emacs|librewolf|steam|armcord)$'
 	| sudo tee /etc/default/earlyoom > /dev/null
 	$(SSEN) earlyoom.service
+
+grubtheme:
+	git clone git@github.com:vinceliuice/Elegant-grub2-themes.git ${HOME}/utils/$@
+	cd ${HOME}/utils/$@
+  sudo ./install.sh -s 2k -b
 
 
 # --- Postreboot ---
