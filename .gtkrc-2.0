@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/earthian/.gtkrc-2.0.mine"
-gtk-theme-name="Arc-Dark"
+gtk-theme-name="linea-nord-color"
 gtk-icon-theme-name="Numix-Circle"
 gtk-font-name="Cantarell 11"
 gtk-cursor-theme-name="BreezeX-RosePine-Linux"
