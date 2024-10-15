@@ -36,11 +36,11 @@ fi
 
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
 if [ $theme = light ]; then
-  wal -n -q -l -i "$wp" --saturate 0.3
   wpg -L -s "$wp"
+  wal -n -q -l -i "$wp" --saturate 0.3
 else
-  wal -n -q -i "$wp" --saturate 0.3
   wpg -s "$wp"
+  wal -n -q -i "$wp" --saturate 0.3
 fi
 
 ags -r "theme = '$theme'"
