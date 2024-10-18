@@ -71,3 +71,9 @@ ffdesilence() {
 ffboost() {
   ffmpeg -i "${1}" -filter_complex "${boost}" -b:a 48k "boosted_${1}"
 }
+
+# --------------
+
+vidcompress() {
+  ffmpeg -i "$1" -c:v libx264 -preset slow -crf 23 -c:a aac -b:a 192k "compressed_${1}"
+}
