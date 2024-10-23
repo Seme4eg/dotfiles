@@ -4,9 +4,10 @@
 # https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
 
 # IN-USE, BSSID
-FIELDS=ACTIVE,SSID,SECURITY,FREQ,RATE,SIGNAL
+FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL)
 # will b empty if no active connection
-initial_ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
+initial_ssid=$(nmcli -f active,ssid dev wifi |
+  awk -F '  +' '/^yes/ {$1=""; print substr($0,2)}')
 
 kb_refresh="Control+r"
 kb_restart="Control+R"
@@ -24,8 +25,10 @@ assert_status() { [ "$1" -eq 1 ] && exit; }
 
 wifi_on() { [ "$(nmcli radio wifi)" = "enabled" ]; }
 
-# awk NF to filter empty lines from output
-get_networks() { nmcli -f "$FIELDS" device wifi list | awk NF; } # sed '/--/d' |
+get_networks() {
+  # awk NF to filter empty lines from output
+  nmcli -f "$(printf '%s,' "${FIELDS[@]}")" device wifi list | awk NF
+}
 
 wifi_status() {
   if wifi_on; then
@@ -130,10 +133,10 @@ show_qr() {
   local ssid="$1"
 
   local security
-  security=$(nmcli dev wifi show-password | grep '^Security' | awk '{print $2}')
+  security=$(nmcli dev wifi show-password | awk '/^Security/ {print $2}')
 
   local password
-  password="$(nmcli dev wifi show-password | grep '^Password' | awk '{print $2}')"
+  password="$(nmcli dev wifi show-password | awk '/^Password/ {print $2}')"
 
   local qrcode_path="$HOME/.cache/rofi/$ssid.png"
 
