@@ -1,11 +1,33 @@
 #!/usr/bin/env bash
 
-say -e 'Recording started'
-[ ! -d "$HOME/Movies" ] && mkdir "$HOME/Movies"
-wf-recorder -f "$HOME/Movies/rec_$(date +%H-%M-%S).mp4"
-# # with system sounds
-# wf-recorder -a=alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink.monitor -f $HOME/Movies/demo$(date +%H-%M-%S).mp4
+# Convert mp4 to gif
+# ffmpeg -i temp.mp4 vid.gif
 
-# gif version
-# [ ! -d "$HOME/Movies" ] && mkdir "$HOME/Movies"
-# wf-recorder -g "$(slurp)" -c gif -f "$HOME/Movies/rec_$(date +%H-%M-%S).gif"
+rec_dir="$HOME/Movies"
+[ ! -d "$rec_dir" ] && mkdir "$rec_dir"
+
+filepath="${rec_dir}/rec_$(date +%H-%M-%S)"
+
+# grep first alsa_output, command is taken from wf-recorder man page
+get_sink() { pactl list sources | grep -e 'Name.*alsa_output' | head -n1; }
+
+while getopts ":vVpsg" opt; do case $opt in
+  v) # default one: vid without system sounds
+    say -e 'Recording started'
+    wf-recorder -f "${filepath}.mp4"
+    ;;
+  V) # with system sounds
+    say -e 'Recording started'
+    wf-recorder --audio="$(get_sink)" -f "${filepath}.mp4"
+    ;;
+  p) # record part of screen
+    wf-recorder -g "$(slurp)" -f "${filepath}.mp4"
+    ;;
+  s) # stop current recording
+    # sigint, not sigkill, otherwise no mime type
+    pkill -2 record && say -e "Recorded"
+    ;;
+  g | *) # gif version - default one (based on my usage this one is mose frequent)
+    wf-recorder -g "$(slurp)" -c gif -r 24 -f "${filepath}.gif"
+    ;;
+esac done
