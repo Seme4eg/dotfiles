@@ -4,7 +4,7 @@
 # https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
 
 # IN-USE, BSSID
-FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL)
+FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL BSSID)
 # will b empty if no active connection
 initial_ssid=$(nmcli -f active,ssid dev wifi |
   awk -F '  +' '/^yes/ {$1=""; print substr($0,2)}')
@@ -28,6 +28,26 @@ wifi_on() { [ "$(nmcli radio wifi)" = "enabled" ]; }
 get_networks() {
   # awk NF to filter empty lines from output
   nmcli -f "$(printf '%s,' "${FIELDS[@]}")" device wifi list | awk NF
+}
+
+get_field() {
+  field="$1"
+  option="$2"
+  bssid=$(echo "$option" | awk '{print $NF}') # get last column
+
+  _networks() { nmcli -f bssid,security,ssid device wifi list; }
+
+  case $field in
+    ssid)
+      _networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; print \$0}" | xargs
+      ;;
+    security)
+      _networks | awk -F '  +' "/$bssid/ {print \$2}" | xargs
+      ;;
+    *)
+      echo "$option"
+      ;;
+  esac
 }
 
 wifi_status() {
@@ -272,8 +292,8 @@ show_menu() {
 
   [ $rofi_exit -eq 1 ] && exit
 
-  ssid=$(echo "$option" | awk -F '  +' '{print $2}')
-  security=$(echo "$option" | awk -F '  +' '{print $3}')
+  ssid="$(get_field ssid "$option")"
+  security="$(get_field security "$option")"
 
   case $rofi_exit in
     0)
