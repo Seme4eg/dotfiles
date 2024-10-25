@@ -3,7 +3,7 @@
 # horrible, unreadable, but still a reference:
 # https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
 
-# IN-USE, BSSID
+# NOTE: keep BSSID last! cuz awk print $NF below
 FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL BSSID)
 # will b empty if no active connection
 initial_ssid=$(nmcli -f active,ssid dev wifi |
