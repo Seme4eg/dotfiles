@@ -17,12 +17,12 @@ case $@ in
     if grim -g "$(slurp)" "$_path"; then
       wl-copy <"$_path"
     else
-      say "Failed"
+      say "Screenshot failed"
     fi
     ;;
   --parttoclip) # partial screenshot to clipboard only
     say -e -t 1000 'Part screenshot to clipboard'
-    grim -g "$(slurp)" - | wl-copy || say "Failed"
+    grim -g "$(slurp)" - | wl-copy || say "Screenshot failed"
     ;;
 esac
 
