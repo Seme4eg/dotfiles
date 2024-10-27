@@ -241,7 +241,7 @@ earlyoom:
 grubtheme:
 	git clone git@github.com:vinceliuice/Elegant-grub2-themes.git ${HOME}/utils/$@
 	cd ${HOME}/utils/$@
-  sudo ./install.sh -s 2k -b
+	sudo ./install.sh -s 2k -b
 
 wpgtk:
 	wpg-install.sh -G
