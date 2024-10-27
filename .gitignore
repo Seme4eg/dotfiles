@@ -55,5 +55,7 @@ node_modules/
 /.config/font-manager/
 /.config/isyncrc
 /.config/armcord/
+/.config/abaddon/
+
 /.config/wpg/*
 !/.config/wpg/wpg.conf
