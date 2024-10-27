@@ -73,7 +73,7 @@ clean: ## removes all broken symlinks recursively
 install: dotfiles reflector pacman-install aur-install
 
 postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs \
-	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk
+	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps
 
 postreboot: mpv mpd
 
@@ -246,6 +246,17 @@ grubtheme:
 wpgtk:
 	wpg-install.sh -G
 
+# https://github.com/lutris/docs/blob/master/WineDependencies.md#archendeavourosmanjaroother-arch-derivatives
+wine-deps: ## install wine dependencies for heroic
+	$(PACMAN) wine-staging
+	$(PACMAN) --needed --asdeps giflib lib32-giflib gnutls lib32-gnutls v4l-utils \
+		lib32-v4l-utils libpulse lib32-libpulse alsa-plugins lib32-alsa-plugins \
+		alsa-lib lib32-alsa-lib sqlite lib32-sqlite libxcomposite lib32-libxcomposite \
+		ocl-icd lib32-ocl-icd libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs \
+		lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader sdl2 \
+		lib32-sdl2
+
+
 # --- Postreboot ---
 
 mpv:
@@ -275,9 +286,10 @@ icons: ## setup icons and theme (run only after you synced icons folder from oth
 
 asus: ## install ASUS laptop specific software
 # support for vulkan api
-	$(PACMAN) --needed mesa lib32-mesa mesa-vdpau libva-mesa-driver \
-		vulkan-radeon vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
-	$(YAY) amdgpu_top-bin
+	$(PACMAN) --needed --asdeps mesa mesa-utils lib32-mesa mesa-vdpau \
+		libva-mesa-driver vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader \
+		lib32-vulkan-icd-loader
+#	$(YAY) amdgpu_top-bin
 
 xiaomi: nvidia-all ## install stuff for nvidia hybrid laptop
 	$(PACMAN) --needed intel-media-driver libva-utils nvtop nvidia-prime
