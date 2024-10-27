@@ -154,10 +154,12 @@ sysoptions: ## make changes to system files
 zsh:
 	chsh -s /usr/bin/zsh
 
-emacs:
-	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
+emacsbuild:
 	cd ${HOME}/.config/doom/emacsbuild
 	makepkg --install
+
+emacs: emacsbuild ## build and install emacs
+	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
 	${HOME}/.config/$@/bin/doom install
 	${HOME}/.config/$@/bin/doom sync
 	rm -rf ${HOME}/.$@.d
