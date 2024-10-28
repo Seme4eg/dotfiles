@@ -20,14 +20,15 @@ while getopts ":vVpsg" opt; do case $opt in
     say -e 'Recording started'
     wf-recorder --audio="$(get_sink)" -f "${filepath}.mp4"
     ;;
-  p) # record part of screen
-    wf-recorder -g "$(slurp)" -f "${filepath}.mp4"
-    ;;
   s) # stop current recording
     # sigint, not sigkill, otherwise no mime type
     pkill -2 record && say -e "Recorded"
     ;;
-  g | *) # gif version - default one (based on my usage this one is mose frequent)
-    wf-recorder -g "$(slurp)" -c gif -r 24 -f "${filepath}.gif"
+  # Super inefficient, mp4 records take 2-3 times less space..
+  g) # gif version
+    wf-recorder -g "$(slurp)" -c gif -r 14 -f "${filepath}.gif"
+    ;;
+  p | *) # record part of screen - (based on my usage this one is mose frequent)
+    wf-recorder -g "$(slurp)" -f "${filepath}.mp4"
     ;;
 esac done
