@@ -3,11 +3,19 @@
 # horrible, unreadable, but still a reference:
 # https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
 
+# BSSID to correctly obtain SSID of network, since those can have tricky names
 # NOTE: keep BSSID last! cuz awk print $NF below
 FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL BSSID)
 # will b empty if no active connection
-initial_ssid=$(nmcli -f active,ssid dev wifi |
-  awk -F '  +' '/^yes/ {$1=""; print substr($0,2)}')
+
+get_active_ssid() {
+  nmcli -f active,ssid dev wifi |
+    awk -F '  +' '/^yes/ {$1=""; print $0}' | xargs # xargs to strip spaces
+}
+
+initial_ssid=$(get_active_ssid)
+
+# --- somewhat of a 'config' section ---
 
 kb_refresh="Control+r"
 kb_restart="Control+R"
@@ -20,6 +28,8 @@ kb_show_info="Alt+o" # show info like password, security, qr, ssid
 backOption='← back'
 
 _rofi() { rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }' "$@"; }
+
+# --- 'config' section end ---
 
 assert_status() { [ "$1" -eq 1 ] && exit; }
 
@@ -76,7 +86,10 @@ restart_wifi() {
   show_menu
 }
 
-ssid_connected() { [ "$initial_ssid" == "$1" ]; }
+ssid_connected() {
+  active_ssid=$(get_active_ssid)
+  [ "$active_ssid" = "$1" ]
+}
 
 ssid_saved() {
   # Parses the list of known connections to see if it already contains the SSID.
