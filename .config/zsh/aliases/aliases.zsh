@@ -28,7 +28,7 @@ alias cheatengine="xhost +local: &; gameconqueror"
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
 
 alias hyprupd="yi --noconfirm aquamarine-git hyprlang-git hypridle-git \
-  hyprlock-git hyprutils-git hyprland-git"
+  hyprlock-git hyprutils-git hyprland-git xdg-desktop-portal-hyprland-git"
 
 ytdcur() { # yt-dlp download current
   url="$(wl-paste)"
