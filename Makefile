@@ -148,11 +148,11 @@ sysoptions: ## make changes to system files
 zsh:
 	chsh -s /usr/bin/zsh
 
-emacsbuild:
+emacsbuild: ## build emacs from my PKGBUILD
 	cd ${HOME}/.config/doom/emacsbuild
-	makepkg --install
+	makepkg -sir
 
-emacs: emacsbuild ## build and install emacs
+emacs: ## install & sync doom emacs
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
 	${HOME}/.config/$@/bin/doom install
 	${HOME}/.config/$@/bin/doom sync
