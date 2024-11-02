@@ -4,7 +4,6 @@ alias cat="bat"
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
-alias eh="cd ~/git/mp/web-arm/ && yarn serve"
 alias pn="pnpm"
 alias spd="speedtest"
 
