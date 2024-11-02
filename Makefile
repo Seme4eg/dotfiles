@@ -146,6 +146,8 @@ emacsbuild: ## build emacs from my PKGBUILD
 	makepkg -sir
 
 emacs: ## install & sync doom emacs
+# TODO: 'if dir is empty / doesn't exist..'
+	git clone git@github.com:Seme4eg/.doom.d.git ${HOME}/.config/doom
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
 	${HOME}/.config/$@/bin/doom install
 	${HOME}/.config/$@/bin/doom sync
