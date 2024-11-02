@@ -28,6 +28,7 @@ font-manager
 foot
 fzf
 git
+git-crypt
 gnome-bluetooth-3.0
 go
 graphviz
