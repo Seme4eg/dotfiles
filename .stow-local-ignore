@@ -1,6 +1,7 @@
 \.git
 .gitmodules
 .gitattributes
+.git-crypt
 
 assets
 ^/.*\.org
