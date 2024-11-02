@@ -85,13 +85,6 @@ dotfiles: ## Initial deploy dotfiles
 	rm Makefile
 	cd ${HOME}/$@
 	stow .
-# clone doom config repo before secrets one cuz latter one contains
-# file that should be in doom config dir
-	git clone git@github.com:Seme4eg/.doom.d.git ${HOME}/.config/doom
-# potentially must be a different rule
-	git clone git@github.com:Seme4eg/secrets.git ${HOME}/secrets
-	cd ${HOME}/secrets
-	stow .
 
 reflector:
 	$(PACMAN) reflector
