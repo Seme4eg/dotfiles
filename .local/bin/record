@@ -11,7 +11,7 @@ filepath="${rec_dir}/rec_$(date +%H-%M-%S)"
 # grep first alsa_output, command is taken from wf-recorder man page
 get_sink() { pactl list sources | grep -e 'Name.*alsa_output' | head -n1; }
 
-while getopts ":vVpsg" opt; do case $opt in
+while getopts ":vVpPsg" opt; do case $opt in
   v) # default one: vid without system sounds
     say -e 'Recording started'
     wf-recorder -f "${filepath}.mp4"
@@ -27,6 +27,9 @@ while getopts ":vVpsg" opt; do case $opt in
   # Super inefficient, mp4 records take 2-3 times less space..
   g) # gif version
     wf-recorder -g "$(slurp)" -c gif -r 14 -f "${filepath}.gif"
+    ;;
+  P) # part of screen with system sounds
+    wf-recorder -g "$(slurp)" --audio="$(get_sink)" -f "${filepath}.mp4"
     ;;
   p | *) # record part of screen - (based on my usage this one is mose frequent)
     wf-recorder -g "$(slurp)" -f "${filepath}.mp4"
