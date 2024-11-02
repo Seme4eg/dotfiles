@@ -27,5 +27,5 @@
   fetchJobs=3
 [fetch]
   parallel=3
-[includeIf "gitdir:~/git/mp/"]
-  path = ~/git/mp/.gitconfig
+[includeIf "gitdir:~/git/work/"]
+  path = ~/git/work/.gitconfig
