@@ -1,6 +1,8 @@
 \.git
+.gitmodules
+.gitattributes
+
 assets
 ^/.*\.org
 docs
-.gitmodules
 Makefile
