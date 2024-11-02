@@ -15,7 +15,8 @@ node_modules/
 /.config/pulse/
 /.config/WebCord/
 /.config/dconf/
-/.config/syncthing
+/.config/syncthing/*
+!/.config/syncthing/config.xml
 /.config/discord/
 /.config/systemd/user/hyprland-session.target.wants/
 /.config/pavucontrol.ini
@@ -43,7 +44,6 @@ node_modules/
 /.config/okularrc
 /.config/QtProject.conf
 /.config/go/
-/.config/imapnotify
 /.config/qutebrowser/
 /.config/dlv/
 /.config/Vampire_Survivors*
@@ -53,7 +53,6 @@ node_modules/
 /.config/ags/compiled.css
 /.config/ags/types
 /.config/font-manager/
-/.config/isyncrc
 /.config/armcord/
 /.config/abaddon/
 

@@ -1,3 +1,6 @@
-rip filter=git-crypt diff=git-crypt
-# *.key filter=git-crypt diff=git-crypt
-# secretdir/** filter=git-crypt diff=git-crypt
+.config/doom/mu4e.el filter=git-crypt diff=git-crypt
+.config/imapnotify/* filter=git-crypt diff=git-crypt
+.config/syncthing/config.xml filter=git-crypt diff=git-crypt
+.msmtprc filter=git-crypt diff=git-crypt
+.netrc filter=git-crypt diff=git-crypt
+isyncrc filter=git-crypt diff=git-crypt
