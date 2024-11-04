@@ -181,7 +181,7 @@ goinstall: ## install go and export path
 	export GOPATH="${HOME}/go"
 
 gopkgs: ## install go and its packages
-# needed for doom golang setup to work
+# doom golang setup
 	go install golang.org/x/tools/gopls@latest
 	go install github.com/x-motemen/gore/cmd/gore@latest
 	go install github.com/stamblerre/gocode@latest
@@ -191,14 +191,14 @@ gopkgs: ## install go and its packages
 	go install golang.org/x/tools/cmd/guru@latest
 	go install github.com/cweill/gotests/gotests@latest
 	go install github.com/fatih/gomodifytags@latest
-# for formatting docker files in emacs
+# emacs docker files formatting
 	go install github.com/jessfraz/dockfmt@latest
-# for debugging
+# debugging
 	go install github.com/go-delve/delve/cmd/dlv@latest
 # formatting
 	go install github.com/segmentio/golines@latest
 # +lsp
-	go install github.com/nametake/golangci-lint-langserver@latest
+# go install github.com/nametake/golangci-lint-langserver@latest
 
 pam-gnupg: ## setup pam-gnupg to unlock GnuPG keys on login
 	@echo 'auth     optional  pam_gnupg.so store-only' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
