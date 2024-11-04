@@ -86,8 +86,7 @@ _asus zenbook headset mic fix:_
   - done
 
 ** gpg
-- copy secret.gpg from wherever you have it stored and run ~gpg --import
-  secret.gpg~
+- import all needed gpg keys - ~gpg --import <keyname>.gpg~, including the one for ~git-crypt~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
 
 ** fingerprint sensor
