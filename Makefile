@@ -80,10 +80,11 @@ dotfiles: ## Initial deploy dotfiles
 	mkdir -p ${HOME}/.ssh
 # or otherwise unsave permissions
 	mkdir -p -m700 ${HOME}/.gnupg
-	$(PACMAN) git stow
+	$(PACMAN) git stow git-crypt
 	git clone git@github.com:Seme4eg/$@.git ${HOME}/$@
 	rm Makefile
 	cd ${HOME}/$@
+	git-crypt unlock # FIXME: remove after test on new machine
 	stow .
 
 reflector:
@@ -148,6 +149,8 @@ emacsbuild: ## build emacs from my PKGBUILD
 emacs: ## install & sync doom emacs
 # TODO: 'if dir is empty / doesn't exist..'
 	git clone git@github.com:Seme4eg/.doom.d.git ${HOME}/.config/doom
+	cd ${HOME}/.config/doom
+	git-crypt unlock
 	git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ${HOME}/.config/$@
 	${HOME}/.config/$@/bin/doom install
 	${HOME}/.config/$@/bin/doom sync
