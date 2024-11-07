@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=ArmCord
-GenericName=User desktop file
-Comment=Discord client for lower end ARM devices.
-Exec=armcord --enable-features=UseOzonePlatform --ozone-platform=wayland
-Icon=armcord
-Categories=Internet;Network;InstantMessaging;

@@ -53,7 +53,7 @@ node_modules/
 /.config/ags/compiled.css
 /.config/ags/types
 /.config/font-manager/
-/.config/armcord/
+/.config/legcord/
 /.config/abaddon/
 
 /.config/wpg/*
