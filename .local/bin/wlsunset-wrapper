@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/sh
 
 coordinates=$(cat "$XDG_CACHE_HOME/last_known_coordinates.txt")
 lat=$(echo "$coordinates" | awk -F ',' '{printf "%.1f", $1}')

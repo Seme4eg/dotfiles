@@ -1,16 +1,18 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
 notification_id_path="$XDG_CACHE_HOME/muted_notify_id"
 
+# XXX: pactl
 muted() { wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -qi 'muted'; }
 
 if muted; then
-  options=(-e -t 600)
-  [ -e "$notification_id_path" ] &&
-    options+=(-r "$(/usr/bin/cat "$notification_id_path")" )
-  say "${options[@]}" "Unmuted"
+  if [ -e "$notification_id_path" ]; then
+    say -e -t 600 -r "$(/usr/bin/cat "$notification_id_path")" "Unmuted"
+  else
+    say -e -t 600 "Unmuted"
+  fi
 else
-  say -u critical -e -p "Muted" > "$notification_id_path"
+  say -u critical -e -p "Muted" >"$notification_id_path"
 fi
 
 wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
