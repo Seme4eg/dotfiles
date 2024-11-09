@@ -1,12 +1,11 @@
-#!/bin/bash
+#!/usr/bin/sh
 
-cursor_path=$HOME/Documents/stuff/arch_cursors
-files=$(ls "$cursor_path" | grep -E '.*\.tar..z$')
+files=$(ls "$HOME/Documents/tech/arch_cursors/"*.tar.*z)
 # Set $IFS to eliminate whitespace in pathnames.
 IFS="$(printf '\n\t')"
 DIR=$HOME/.icons
 
 for file in $files; do
   echo "Extracting $file .."
-  tar xf "$cursor_path/$file" -C "$DIR"
+  tar xf "$file" -C "$DIR"
 done
