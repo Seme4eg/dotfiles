@@ -2,8 +2,7 @@
 
 notification_id_path="$XDG_CACHE_HOME/muted_notify_id"
 
-# XXX: pactl
-muted() { wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -qi 'muted'; }
+muted() { pactl get-source-mute @DEFAULT_SOURCE@ | grep -q 'yes'; }
 
 if muted; then
   if [ -e "$notification_id_path" ]; then
@@ -15,4 +14,4 @@ else
   say -u critical -e -p "Muted" >"$notification_id_path"
 fi
 
-wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+pactl set-source-mute @DEFAULT_SOURCE@ toggle
