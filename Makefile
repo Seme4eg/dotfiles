@@ -67,7 +67,7 @@ clean: ## removes all broken symlinks recursively
 install: dotfiles reflector pacman-install aur-install
 
 postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs \
-	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps
+	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps steam
 
 postreboot: mpv mpd
 
@@ -103,7 +103,7 @@ pacman-install: ## Install all pacman packages
 	rm $(PACMAN_DIR)/temp1.txt
 
 yay: ## install yay aur helper
-	@export YAYDIR=${HOME}/utils/$@;
+	@export YAYDIR=${XDG_DATA_HOME}/utils/$@;
 	if [ -d "$$YAYDIR" ]; then
 		rm -rf $$YAYDIR
 	fi
@@ -178,7 +178,7 @@ wal: ## for hyprland to not show error of undefined color var on first launch
 
 goinstall: ## install go and export path
 	$(PACMAN) go
-	export GOPATH="${HOME}/go"
+	export GOPATH="${XDG_DATA_HOME}/go"
 
 gopkgs: ## install go and its packages
 # doom golang setup
@@ -233,8 +233,8 @@ earlyoom:
 	$(SSEN) earlyoom.service
 
 grubtheme:
-	git clone git@github.com:vinceliuice/Elegant-grub2-themes.git ${HOME}/utils/$@
-	cd ${HOME}/utils/$@
+	git clone git@github.com:vinceliuice/Elegant-grub2-themes.git ${XDG_DATA_HOME}/utils/$@
+	cd ${XDG_DATA_HOME}/utils/$@
 	sudo ./install.sh -s 2k -b
 
 wpgtk:
@@ -242,6 +242,7 @@ wpgtk:
 
 # https://github.com/lutris/docs/blob/master/WineDependencies.md#archendeavourosmanjaroother-arch-derivatives
 wine-deps: ## install wine dependencies for heroic
+	mkdir -p "$XDG_DATA_HOME"/wineprefixes
 	$(PACMAN) wine-staging
 	$(PACMAN) --needed --asdeps giflib lib32-giflib gnutls lib32-gnutls v4l-utils \
 		lib32-v4l-utils libpulse lib32-libpulse alsa-plugins lib32-alsa-plugins \
@@ -250,6 +251,9 @@ wine-deps: ## install wine dependencies for heroic
 		lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader sdl2 \
 		lib32-sdl2
 
+
+steam: ## prevent steam to create yet another file in my home dir
+	@echo 'cookie-file = ~/.config/pulse/cookie' | sudo tee -a /etc/pulse/client.conf > /dev/null
 
 # --- Postreboot ---
 
@@ -290,15 +294,15 @@ xiaomi: nvidia-all ## install stuff for nvidia hybrid laptop
 	$(YAY) libva-nvidia-driver-git
 
 nvidia-all: ## nvidia-tkg
-	rm -rf ${HOME}/utils/$@
-	git clone https://github.com/Frogging-Family/nvidia-all.git ${HOME}/utils/$@
-	cd ${HOME}/utils/$@
+	rm -rf ${XDG_DATA_HOME}/utils/$@
+	git clone https://github.com/Frogging-Family/nvidia-all.git ${XDG_DATA_HOME}/utils/$@
+	cd ${XDG_DATA_HOME}/utils/$@
 	makepkg -si
 
 Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	$(YAY) miniconda3
-	git clone https://github.com/lllyasviel/Fooocus.git ${HOME}/utils/$@
-	cd ${HOME}/utils/Fooocus
+	git clone https://github.com/lllyasviel/Fooocus.git ${XDG_DATA_HOME}/utils/$@
+	cd ${XDG_DATA_HOME}/utils/$@
 	conda env create -f environment.yaml
 	conda activate fooocus
 	pip install -r requirements_versions.txt
