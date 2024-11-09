@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/sh
 
 [ ! -d ~/Pictures/DCIM/Avbl ] &&
   icon="$HOME/dotfiles/assets/avatar.jpg" ||

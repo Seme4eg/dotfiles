@@ -1,6 +1,6 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
-set -Eeo pipefail
+set -eo
 
 _path=~/Pictures/Pictures/Screenshots/$(date +"grim_%d%m%Y_%H-%M-%S.png")
 

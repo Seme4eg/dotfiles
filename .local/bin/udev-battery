@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/sh
 
 # another one is /sys/bus/acpi/drivers/battery/*/power_supply/BAT?/status
 status_path="/sys/class/power_supply/BAT?/status"
@@ -25,7 +25,7 @@ while true; do
   update_status # update charging status
 
   # don't spam notifications
-  ((old_capacity == capacity)) && sleep 1 && continue
+  [ "$old_capacity" = "$capacity" ] && sleep 1 && continue
 
   if charging; then
     # is laptop is still discharging means i am on 60w charger

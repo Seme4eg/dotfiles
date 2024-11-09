@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/sh
 
 state=$1
 
@@ -22,7 +22,7 @@ handle_single_monitor_on() {
   systemctl --user restart goimapnotify@gmail
 }
 
-if [ "${state}" == "on" ]; then
+if [ "${state}" = "on" ]; then
   if single_monitor; then
     handle_single_monitor_on
   else

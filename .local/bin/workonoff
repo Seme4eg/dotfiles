@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
 if nmcli -g type con show --active | grep -q vpn; then
   systemctl --user stop goimapnotify@zimbra

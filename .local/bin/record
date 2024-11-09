@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
 # Convert mp4 to gif
 # ffmpeg -i temp.mp4 vid.gif
