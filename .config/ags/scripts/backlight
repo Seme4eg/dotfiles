@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
 udevadm monitor | rg --line-buffered "backlight" | while read -r _; do
   # get the percentage value

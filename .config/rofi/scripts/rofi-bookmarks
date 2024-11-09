@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
 # 'Return' opens selected entry via xdg-open
 # 'Ctrl + Space' (rofi bindings) completes selected entry
@@ -45,7 +45,7 @@ show_menu() {
       # something in clipboard to replace deleted entry with
       [ $rofi_exit -eq 11 ] && wl-copy "$bookmark"
       # Escape special characters
-      escaped_bookmark=$(sed 's/[][\/.*^$]/\\&/g' <<<"$bookmark")
+      escaped_bookmark=$(echo "$bookmark" | sed 's/[][\/.*^$]/\\&/g')
       sed -i "/$escaped_bookmark/d" "$bookmarks_file"
       [ $rofi_exit -eq 12 ] && show_menu
       ;;

@@ -1,8 +1,19 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
-awk '{if(l1){print $2-l1,$10-l2} else{l1=$2; l2=$10;}}' \
-  <(grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev) \
-  <(
-    sleep 1
-    grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev
-  )
+# Create temporary FIFOs
+pipe1=$(mktemp -u)
+pipe2=$(mktemp -u)
+mkfifo "$pipe1" "$pipe2"
+
+# Run the processes to write to the FIFOs
+grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev >"$pipe1" &
+(
+  sleep 1
+  grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev
+) >"$pipe2" &
+
+# Read from the FIFOs using awk
+awk '{if(l1){print $2-l1,$10-l2} else{l1=$2; l2=$10;}}' "$pipe1" "$pipe2"
+
+# Clean up by removing the FIFOs
+rm "$pipe1" "$pipe2"

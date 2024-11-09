@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
-source "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
+. "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
 
 wp_dir="$HOME/Pictures/DCIM/wps/pc"
 
@@ -29,4 +29,4 @@ rofi_dmenu() {
 
 wp=$(list_wps | rofi_dmenu)
 
-[[ "$?" -ne 1 && -n "$wp" ]] && change-theme -w "$wp_dir/$wp"
+[ "$?" -ne 1 ] && [ -n "$wp" ] && change-theme -w "$wp_dir/$wp"

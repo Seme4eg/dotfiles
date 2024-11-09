@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/sh
 
 file=$(find "$HOME" -type f 2>/dev/null | rofi -dmenu -i)
 if [ -n "$file" ]; then

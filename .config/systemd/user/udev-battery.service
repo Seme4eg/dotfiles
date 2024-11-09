@@ -6,7 +6,7 @@ PartOf=graphical-session.target
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=/bin/bash -c "${HOME}/.local/bin/udev-battery"
+ExecStart=/bin/sh -c "${HOME}/.local/bin/udev-battery"
 Slice=session.slice
 Restart=on-failure
 RestartSec=3s
