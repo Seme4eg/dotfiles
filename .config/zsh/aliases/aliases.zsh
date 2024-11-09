@@ -10,7 +10,7 @@ alias spd="speedtest"
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file
 alias 0x0clip="wl-paste | curl -F 'file=@-' 0x0.st"
-alias picgen="cd ~/utils/Fooocus && conda activate fooocus && \
+alias picgen="cd $XDG_DATA_HOME/utils/Fooocus && conda activate fooocus && \
   python entry_with_update.py --always-download-new-model"
 alias nmssaveedit="cd Downloads/nms/jdk-22.0.2/bin && ./java -jar ~/Downloads/nms/NMSSaveEditor.jar"
 

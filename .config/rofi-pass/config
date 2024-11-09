@@ -1,4 +1,3 @@
-ROOTS=~/.password-store:~/teststore
 EDITOR='emacsclient -c'
 
 edit_new_pass="false"

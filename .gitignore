@@ -33,9 +33,9 @@ node_modules/
 /.config/gthumb/
 /.config/nautilus/
 /.config/chromium/
-/.icons/*
-!/.icons/default/
-!/.icons/unpack-all
+/.local/share/icons/*
+!/.local/share/icons/default/
+!/.local/share/icons/unpack-all
 /.config/user-dirs.dirs
 /.config/terminal/
 /.config/content_shell/
@@ -58,3 +58,4 @@ node_modules/
 
 /.config/wpg/*
 !/.config/wpg/wpg.conf
+/.config/java/

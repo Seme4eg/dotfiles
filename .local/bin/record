@@ -3,7 +3,7 @@
 # Convert mp4 to gif
 # ffmpeg -i temp.mp4 vid.gif
 
-rec_dir="$HOME/Movies"
+rec_dir="$HOME/Pictures/DCIM"
 [ ! -d "$rec_dir" ] && mkdir "$rec_dir"
 
 filepath="${rec_dir}/rec_$(date +%H-%M-%S)"

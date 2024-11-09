@@ -1,0 +1,3 @@
+" https://stackoverflow.com/a/26898986
+let g:netrw_home=$XDG_STATE_HOME.'/vim'
+let viminfofile=$XDG_STATE_HOME.'/vim/.viminfo'

@@ -1,4 +1,3 @@
-export GOPATH=$HOME/go
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
@@ -23,8 +22,6 @@ export BROWSER=librewolf
 
 export MAKEFLAGS="-j$(nproc)"
 
-export PASSWORD_STORE_DIR=$XDG_DATA_HOME/password-store
-
 export LSP_USE_PLISTS=true
 
 # zsh-vi-mode
@@ -44,3 +41,19 @@ setopt HIST_IGNORE_ALL_DUPS   # Remove old events if new event is a duplicate
 setopt HIST_FIND_NO_DUPS      # Do not display a previously found event.
 setopt HIST_IGNORE_SPACE      # Do not record an event starting with a space.
 setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
+
+# --- cleanup (https://wiki.archlinux.org/title/XDG_Base_Directory) ---
+export PASSWORD_STORE_DIR=$XDG_DATA_HOME/password-store
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+# or run with the --extensions-dir flag, such as code --extensions-dir
+# "$XDG_DATA_HOME/vscode". This is documented and probably will not break as
+# unexpectedly, as it is has other use cases.
+export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
+export GOPATH="$XDG_DATA_HOME"/go
+export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc":"$XDG_CONFIG_HOME/gtk-2.0/gtkrc.mine"
+export ADB_KEYS_PATH="/home/earthian/Documents/tech/android/adbkeys/adbkey"
