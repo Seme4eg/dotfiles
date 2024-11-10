@@ -67,7 +67,7 @@ clean: ## removes all broken symlinks recursively
 install: dotfiles reflector pacman-install aur-install
 
 postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs \
-	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps steam
+	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps dash steam
 
 postreboot: mpv mpd
 
@@ -251,6 +251,8 @@ wine-deps: ## install wine dependencies for heroic
 		lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader sdl2 \
 		lib32-sdl2
 
+dash: ## symlink sh to dash
+	sudo ln -sfT dash /usr/bin/sh
 
 steam: ## prevent steam to create yet another file in my home dir
 	@echo 'cookie-file = ~/.config/pulse/cookie' | sudo tee -a /etc/pulse/client.conf > /dev/null
