@@ -3,7 +3,7 @@
 alias pm="sudo pacman"
 alias pmi="pm -Sy && pm -S" # install
 alias pmI="pm -S"           # install without package syncing
-alias pmr="pm -Rs"          # remove
+alias pmr="pm -Rns"         # remove
 alias pmsr="pm -Ss"         # search remotes
 alias pmsl="pm -Qs"         # search locally
 alias pml="pm -Ql"          # list package
