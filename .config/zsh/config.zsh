@@ -55,5 +55,5 @@ export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc":"$XDG_CONFIG_HOME/gtk-2.0/gtkrc.mine"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc" # :"$XDG_CONFIG_HOME/gtk-2.0/gtkrc.mine"
 export ADB_KEYS_PATH="/home/earthian/Documents/tech/android/adbkeys/adbkey"
