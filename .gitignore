@@ -54,7 +54,6 @@ node_modules/
 /.config/ags/types
 /.config/font-manager/
 /.config/legcord/
-/.config/abaddon/
 
 /.config/wpg/*
 !/.config/wpg/wpg.conf
