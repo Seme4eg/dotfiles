@@ -66,7 +66,7 @@ clean: ## removes all broken symlinks recursively
 
 install: dotfiles reflector pacman-install aur-install
 
-postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs \
+postinstall: sysoptions zsh emacs systemd wal goinstall gopkgs \
 	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps dash steam pywalfox
 
 postreboot: mpv mpd
@@ -164,14 +164,6 @@ systemd: ## enable and start all user and system systemd services
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
 	$(SUEN) goimapnotify@mail.service
-
-hyprplugins:
-	hyprpm update
-	hyprpm add https://github.com/VortexCoyote/hyprfocus
-	hyprpm enable hyprfocus
-	hyprpm add https://github.com/ItsDrike/hyprland-dwindle-autogroup
-	hyprpm enable dwindle-autogroup
-	hyprpm reload
 
 wal: ## for hyprland to not show error of undefined color var on first launch
 	wal -n -q -i "${HOME}/dotfiles/assets/wallpaper.jpg" --saturate 0.3
@@ -307,3 +299,11 @@ Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	conda env create -f environment.yaml
 	conda activate fooocus
 	pip install -r requirements_versions.txt
+
+hyprplugins:
+	hyprpm update
+	hyprpm add https://github.com/VortexCoyote/hyprfocus
+	hyprpm enable hyprfocus
+	hyprpm add https://github.com/ItsDrike/hyprland-dwindle-autogroup
+	hyprpm enable dwindle-autogroup
+	hyprpm reload
