@@ -89,6 +89,7 @@ qrencode
 qutebrowser
 reflector
 ripgrep
+rofi-wayland
 rtorrent
 shellcheck
 shfmt
@@ -99,6 +100,7 @@ sof-firmware
 solaar
 steam
 stow
+swaync
 swww
 syncthing
 systembus-notify
@@ -125,6 +127,7 @@ wine-staging
 wireguard-tools
 wireplumber
 wl-clipboard
+wlsunset
 wtype
 yt-dlp
 zbar
