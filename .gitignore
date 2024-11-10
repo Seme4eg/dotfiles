@@ -31,7 +31,6 @@ node_modules/
 /.config/heroic/*
 !/.config/heroic/config.json
 /.config/gthumb/
-/.config/nautilus/
 /.config/chromium/
 /.local/share/icons/*
 !/.local/share/icons/default/
@@ -58,3 +57,4 @@ node_modules/
 /.config/wpg/*
 !/.config/wpg/wpg.conf
 /.config/java/
+/.config/Thunar/
