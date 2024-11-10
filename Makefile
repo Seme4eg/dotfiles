@@ -67,7 +67,7 @@ clean: ## removes all broken symlinks recursively
 install: dotfiles reflector pacman-install aur-install
 
 postinstall: sysoptions zsh emacs systemd hyprplugins wal goinstall gopkgs \
-	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps dash steam
+	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps dash steam pywalfox
 
 postreboot: mpv mpd
 
@@ -257,6 +257,9 @@ dash: ## symlink sh to dash
 steam: ## prevent steam to create yet another file in my home dir
 	@echo 'cookie-file = ~/.config/pulse/cookie' | sudo tee -a /etc/pulse/client.conf > /dev/null
 
+pywalfox: ## install pywalfox for librewolf browser, see blame if won't work
+	pywalfox --browser librewolf install
+
 # --- Postreboot ---
 
 mpv:
@@ -275,10 +278,6 @@ mpd:
 
 
 # ------------  Targets to run manually  ------------
-
-librewolf: ## symlink 'native-messaging-hosts' for tridactyl and pywalfox to work
-	mkdir -p ${HOME}/.mozilla/native-messaging-hosts
-	ln -s ${HOME}/.mozilla/native-messaging-hosts ${HOME}/.librewolf
 
 icons: ## setup icons and theme (run only after you synced icons folder from other devices)
 	bash ${HOME}/.icons/unpack-all
