@@ -209,7 +209,7 @@ ags:
 	sass --no-source-map $(XDG_CONFIG_HOME)/ags/styles/main.scss $(XDG_CONFIG_HOME)/ags/compiled.scss
 
 pnpm: ## install all needed global npm packages
-	export PNPM_HOME=${HOME}/.pnpm
+	export PNPM_HOME=${XDG_DATA_HOME}/.pnpm
 	export PATH=$$PNPM_HOME:$(PATH)
 	pnpm add --global typescript-language-server
 	pnpm add --global typescript
@@ -272,7 +272,7 @@ mpv:
 	./mpvmanager
 
 mpd:
-	mkdir -p ${HOME}/.$@
+	mkdir -p ${XDG_DATA_HOME}/$@
 	systemctl --user restart $@.service
 	$(SUEN) mpd.service
 
@@ -280,7 +280,7 @@ mpd:
 # ------------  Targets to run manually  ------------
 
 icons: ## setup icons and theme (run only after you synced icons folder from other devices)
-	bash ${HOME}/.icons/unpack-all
+	bash ${XDG_DATA_HOME}/icons/unpack-all
 	nwg-look -a
 
 asus: ## install ASUS laptop specific software

@@ -1,19 +1,10 @@
+# Only XDG_RUNTIME_DIR is set by default through pam_systemd(8). It is up to the
+# user to explicitly define the other variables according to the specification
+# https://wiki.archlinux.org/title/XDG_Base_Directory
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
-export PNPM_HOME=$HOME/.pnpm
-
-typeset -U path PATH
-path=(
-  $HOME/.local/bin
-  $GOPATH/bin
-  $XDG_CONFIG_HOME/emacs/bin # $EMACSDIR? not defined
-  $XDG_CONFIG_HOME/rofi/scripts
-  $PNPM_HOME
-  $path
-)
-export PATH
 
 export EDITOR="emacsclient -c"
 export VISUAL="emacsclient -c -a emacs"
@@ -57,3 +48,17 @@ export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc" # :"$XDG_CONFIG_HOME/gtk-2.0/gtkrc.mine"
 export ADB_KEYS_PATH="/home/earthian/Documents/tech/android/adbkeys/adbkey"
+export PNPM_HOME=$XDG_DATA_HOME/pnpm
+
+# ---
+
+typeset -U path PATH
+path=(
+  $HOME/.local/bin
+  $GOPATH/bin
+  $XDG_CONFIG_HOME/emacs/bin # $EMACSDIR? not defined
+  $XDG_CONFIG_HOME/rofi/scripts
+  $PNPM_HOME
+  $path
+)
+export PATH
