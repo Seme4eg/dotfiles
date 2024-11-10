@@ -2,6 +2,7 @@
 .gitmodules
 .gitattributes
 .git-crypt
+.local/share/HOME
 
 assets
 ^/.*\.org
