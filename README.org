@@ -24,6 +24,7 @@ and adjust to your needs.
 - ~make postinstall~
 - reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
 - also check some of the targets in makefile that need/can be run manually
+- clone secrets into ~/git/secrets repo, not in HOME dir
 
 ** Todos
 *** IDEA maybe make some 5/6th workspace a scratchpad and fill it with useful widgets?
