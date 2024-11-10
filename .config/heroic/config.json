@@ -3,10 +3,10 @@
     "checkUpdatesInterval": 10,
     "enableUpdates": false,
     "addDesktopShortcuts": true,
-    "addStartMenuShortcuts": true,
+    "addStartMenuShortcuts": false,
     "autoInstallDxvk": true,
     "autoInstallVkd3d": true,
-    "autoInstallDxvkNvapi": true,
+    "autoInstallDxvkNvapi": false,
     "addSteamShortcuts": true,
     "preferSystemLibs": false,
     "checkForUpdatesOnStartup": true,
@@ -35,11 +35,14 @@
       "lib32": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/lib",
       "wineserver": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/bin/wineserver"
     },
-    "enableEsync": false,
+    "enableEsync": true,
     "enableFsync": true,
+    "enableMsync": false,
     "eacRuntime": false,
     "battlEyeRuntime": false,
     "framelessWindow": false,
+    "beforeLaunchScriptPath": "",
+    "afterLaunchScriptPath": "",
     "userInfo": {
       "name": "earthian"
     },
