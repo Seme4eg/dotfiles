@@ -2,5 +2,6 @@
 .config/imapnotify/* filter=git-crypt diff=git-crypt
 .config/syncthing/config.xml filter=git-crypt diff=git-crypt
 .config/msmtp/config filter=git-crypt diff=git-crypt
+.config/abaddon/abaddon.ini filter=git-crypt diff=git-crypt
 .netrc filter=git-crypt diff=git-crypt
 isyncrc filter=git-crypt diff=git-crypt
