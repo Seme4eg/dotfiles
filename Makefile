@@ -221,7 +221,7 @@ pnpm: ## install all needed global npm packages
 
 tlp:
 	$(SSEN) tlp.service
-	sudo ln ${HOME}/.config/01-asus.conf /etc/tlp.d/01-asus.conf
+	sudo ln ${HOME}/.config/01-asus-tlp.conf /etc/tlp.d/01-asus.conf
 
 earlyoom:
 # earlyoom -h
