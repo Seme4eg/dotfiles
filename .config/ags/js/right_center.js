@@ -22,12 +22,14 @@ function IfDisconnected() {
     transition: "slide_right",
     transitionDuration: 350,
     // "unknown" | "none" | "portal" | "limited" | "full"
-    revealChild: network.bind("connectivity")
+    revealChild: network
+      .bind("connectivity")
       .as((status) => status === "none" || status === "portal"),
     child: Widget.Label({
       className: "disconnected",
-      label: network.bind("connectivity")
-        .as((status) => status === "portal" ? "󰤩" : "󰤮")
+      label: network
+        .bind("connectivity")
+        .as((status) => (status === "portal" ? "󰤩" : "󰤮")),
     }),
   });
 }
@@ -47,7 +49,7 @@ function IfConnected() {
           let upBold = false;
           let downBold = false;
           let [down, up] = out.split(" ").map((v, i) => {
-            v = v / 1024;
+            v = Number(v);
             if (v > 1024) {
               if (i === 0) downBold = true;
               else upBold = true;
@@ -58,7 +60,7 @@ function IfConnected() {
           return { up, down, upBold, downBold };
         },
       ],
-    },
+    }
   );
 
   // connected widget
@@ -158,7 +160,9 @@ function Source() {
         label: audio.microphone.bind("volume").as((v) => (v * 100).toFixed(0)),
       }),
       Widget.Label({
-        className: audio.microphone.bind("is_muted").as((b) => (b ? "icon muted" : "icon")),
+        className: audio.microphone
+          .bind("is_muted")
+          .as((b) => (b ? "icon muted" : "icon")),
         label: audio.microphone.bind("is_muted").as((b) => (b ? "" : "")),
       }),
     ],
@@ -213,7 +217,7 @@ function Bluetooth() {
                 self.children = bluetooth.connected_devices.map(BtDevice);
                 self.visible = bluetooth.connected_devices.length > 0;
               },
-              "notify::connected-devices",
+              "notify::connected-devices"
             ),
         }),
       }),
