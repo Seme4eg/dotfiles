@@ -171,9 +171,6 @@ sysoptions: ## make changes to system files
 # https://wiki.archlinux.org/title/Swap#Swappiness
 	@echo 'vm.swappiness = 10' | sudo tee /etc/sysctl.d/99-sysctl.conf > /dev/null
 
-zsh:
-	chsh -s /usr/bin/zsh
-
 emacsbuild: ## build emacs from my PKGBUILD
 	cd ${HOME}/.config/doom/emacsbuild
 	makepkg -sir
