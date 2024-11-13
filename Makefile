@@ -48,16 +48,6 @@ ssh: ## Init ssh
 	chmod 600 $$SSHDIR/id_ed25519
 	curl -F 'file=@-' 0x0.st < $$SSHDIR/id_ed25519.pub
 
-pacman: ## add user pacman config to [options] section, add community and multilib repos
-	@if [ -z "$$(grep '\[community\]' /etc/$@.conf)" ]; then \
-		sudo sed -i '/^Architecture/ a\Include = ${HOME}/.config/$@/$@.conf' /etc/$@.conf; \
-		echo '
-		[community]
-		Include = /etc/pacman.d/mirrorlist
-
-		[multilib]
-		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
-	fi
 cleanhome: .SHELLFLAGS = -c
 cleanhome:
 	rm -rf ${HOME}/nonexist
@@ -80,10 +70,9 @@ clean: ## removes all broken symlinks recursively
 
 # --- 3 main stages ---
 
-install: dotfiles reflector pacman-install aur-install
+install: dotfiles reflector zsh pacman pacman-install aur-install
 
-postinstall: sysoptions zsh emacs systemd wal goinstall gopkgs \
-	pam-gnupg ags pnpm tlp earlyoom grubtheme wpgtk wine-deps dash steam pywalfox
+postinstall: sysoptions emacs systemd wal goinstall gopkgs \
 
 postreboot: mpv mpd
 
