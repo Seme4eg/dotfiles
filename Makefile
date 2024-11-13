@@ -62,7 +62,7 @@ cleanhome:
 
 # useful when removed some file(s) from repo and don't want to remove the
 # symlinks by hand
-clean: ## removes all broken symlinks recursively
+cleandeadlinks: ## removes all broken symlinks recursively
 	cd ${HOME}
 	find . -path ./.local/share -prune -o -path ./.cache -prune -o -xtype l -print |
 		xargs rm
