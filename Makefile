@@ -243,10 +243,6 @@ pnpm: ## install all needed global npm packages
 	pnpm add --global vscode-langservers-extracted
 	pnpm add --global dockerfile-language-server-nodejs
 
-tlp:
-	$(SSEN) tlp.service
-	sudo ln ${HOME}/.config/01-asus-tlp.conf /etc/tlp.d/01-asus.conf
-
 earlyoom:
 # earlyoom -h
 # without this change notifications won't work
@@ -303,26 +299,41 @@ mpd:
 
 # ------------  Targets to run manually  ------------
 
-icons: ## setup icons and theme (run only after you synced icons folder from other devices)
-	bash $(XDG_DATA_HOME)/icons/unpack-all
-	nwg-look -a
+# --- graphics ---
 
-asus: ## install ASUS laptop specific software
+amd: ## install ASUS laptop specific software
 # support for vulkan api
 	$(PACMAN) --needed --asdeps mesa mesa-utils lib32-mesa mesa-vdpau \
 		libva-mesa-driver vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader \
 		lib32-vulkan-icd-loader
-#	$(YAY) amdgpu_top-bin
-
-xiaomi: nvidia-all ## install stuff for nvidia hybrid laptop
-	$(PACMAN) --needed intel-media-driver libva-utils nvtop nvidia-prime
-	$(YAY) libva-nvidia-driver-git
+	$(YAY) amdgpu_top-bin
 
 nvidia-all: ## nvidia-tkg
 	rm -rf $(XDG_DATA_HOME)/utils/$@
 	git clone https://github.com/Frogging-Family/nvidia-all.git $(XDG_DATA_HOME)/utils/$@
 	cd $(XDG_DATA_HOME)/utils/$@
 	makepkg -si
+
+nvidia: nvidia-all ## install stuff for nvidia hybrid laptop
+	$(PACMAN) --needed intel-media-driver libva-utils nvtop nvidia-prime
+	$(YAY) libva-nvidia-driver-git
+
+# --- graphics end ---
+#
+# --- laptops ---
+
+asus:
+	$(SSEN) tlp.service
+	sudo ln ${HOME}/.config/01-asus-tlp.conf /etc/tlp.d/01-asus.conf
+
+lenovo: ## lenovo setup
+# XXX: TLP config separately for this laptop
+
+# --- laptops end ---
+
+icons: ## setup icons and theme (run only after you synced icons folder from other devices)
+	bash $(XDG_DATA_HOME)/icons/unpack-all
+	nwg-look -a
 
 Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	$(YAY) miniconda3
