@@ -23,7 +23,7 @@
     "nvidiaPrime": false,
     "enviromentOptions": [],
     "wrapperOptions": [],
-    "showFps": true,
+    "showFps": false,
     "useGameMode": false,
     "wineCrossoverBottle": "Heroic",
     "winePrefix": "/home/earthian/.local/share/wineprefixes/default",
