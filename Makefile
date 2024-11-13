@@ -58,6 +58,17 @@ pacman: ## add user pacman config to [options] section, add community and multil
 		[multilib]
 		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
 	fi
+cleanhome: .SHELLFLAGS = -c
+cleanhome:
+	rm -rf ${HOME}/nonexist
+	rm -rf ${HOME}/.themes
+	rm -rf ${HOME}/Desktop
+	rm -rf ${HOME}/Public
+	rm -rf ${HOME}/Templates
+	rm -rf ${HOME}/Videos
+	rm -rf ${HOME}/.npm
+	ls .bash* | xargs rm
+	rm .lesshst
 
 # useful when removed some file(s) from repo and don't want to remove the
 # symlinks by hand
