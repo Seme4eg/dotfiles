@@ -1,19 +1,20 @@
 #!/usr/bin/sh
 
-# Create temporary FIFOs
-pipe1=$(mktemp -u)
-pipe2=$(mktemp -u)
-mkfifo "$pipe1" "$pipe2"
+# this script is 10 times faster than prev version:
+#
+#❯ time (for i in {0..100}; do ./bandwidth > /dev/null 2>&1; done)
+# ( for i in {0..100}; do; ./bandwidth > /dev/null 2>&1; done; )  0.85s user 1.04s system 103% cpu 1.842 total
+# ❯ time (for i in {0..100}; do ./bandwidthv2 > /dev/null 2>&1; done)
+# ( for i in {0..100}; do; ./bandwidthv2 > /dev/null 2>&1; done; )  0.07s user 0.11s system 100% cpu 0.181 total
 
-# Run the processes to write to the FIFOs
-grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev >"$pipe1" &
-(
-  sleep 1
-  grep -E 'wlp1s0|wlp0s20f3' /proc/net/dev
-) >"$pipe2" &
+# ref: https://www.youtube.com/watch?v=w5phSVBEHhQ
 
-# Read from the FIFOs using awk
-awk '{if(l1){print $2-l1,$10-l2} else{l1=$2; l2=$10;}}' "$pipe1" "$pipe2"
+logfile="${XDG_CACHE_HOME:+$HOME/.cache}/netlog"
+[ ! -e "$logfile" ] && echo '0 0' >"$logfile"
+prevdata="$(cat "$logfile")"
 
-# Clean up by removing the FIFOs
-rm "$pipe1" "$pipe2"
+rxcurrent="$(/usr/bin/cat /sys/class/net/wlp*/statistics/rx_bytes)"
+txcurrent="$(/usr/bin/cat /sys/class/net/wlp*/statistics/tx_bytes)"
+
+echo "$(((rxcurrent - ${prevdata%% *}) / 1024)) $(((txcurrent - ${prevdata##* }) / 1024))"
+echo "$rxcurrent $txcurrent" >"$logfile"
