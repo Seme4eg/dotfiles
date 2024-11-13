@@ -33,7 +33,7 @@ setopt HIST_FIND_NO_DUPS      # Do not display a previously found event.
 setopt HIST_IGNORE_SPACE      # Do not record an event starting with a space.
 setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
 
-# --- cleanup (https://wiki.archlinux.org/title/XDG_Base_Directory) ---
+# --- ~/ cleanup (https://wiki.archlinux.org/title/XDG_Base_Directory) ---
 export PASSWORD_STORE_DIR=$XDG_DATA_HOME/password-store
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java

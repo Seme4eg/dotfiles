@@ -31,9 +31,8 @@
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT ROOT*
   - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
   - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
+  - import all gpg keys you need
   - ~make install~
-  - for *nvidia* machines install /nvidia, nvidia-prime, libva-nvidia-driver-git/,
-    for *amd* /mesa/
   - ~make postinstall~
   - reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
   - setup [[*gpg][gpg]]
