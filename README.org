@@ -27,4 +27,12 @@ and adjust to your needs.
 - clone secrets into ~/git/secrets repo, not in HOME dir
 
 ** Todos
+*** When will be installing new system -
+- make a makefile target to cleanup home dir after xdg installation. Screenshot
+  of home dir after cleaning will be in screenshots folder
+- rename ~/git to ~/repos, makes more sence, adjust all the paths and move
+  dotfiles repo there as well, make an alias that will prevent you from
+  mindlessly running 'stow .' and pollute your ~/repos dir cuz you ran it in
+  ~/repos/dotfiles.
+
 *** IDEA maybe make some 5/6th workspace a scratchpad and fill it with useful widgets?
