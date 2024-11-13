@@ -31,6 +31,8 @@ alias hyprupd="yi --noconfirm aquamarine-git hyprlang-git hypridle-git \
 
 alias homebloat="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
 
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+
 ytdcur() { # yt-dlp download current
   url="$(wl-paste)"
   url="${url%?list*}"
