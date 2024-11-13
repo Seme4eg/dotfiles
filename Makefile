@@ -28,6 +28,11 @@ test:
 	echo $$XDG_DATA_HOME
 	echo $(XDG_DATA_HOME)
 
+XDG_CONFIG_HOME=${HOME}/.config
+XDG_CACHE_HOME=${HOME}/.cache
+XDG_DATA_HOME=${HOME}/.local/share
+XDG_STATE_HOME=${HOME}/.local/state
+
 # --- Runned manually ---
 
 # generate new ssh every time
@@ -85,25 +90,43 @@ dotfiles: ## Initial deploy dotfiles
 	rm Makefile
 	cd ${HOME}/$@
 	git-crypt unlock # FIXME: remove after test on new machine
+	git submodule update --init --recursive
 	stow .
 
 reflector:
 	$(PACMAN) reflector
 	$(SSEN) reflector.timer
 
+zsh: ## change shell to zsh, we need those env vars
+	chsh -s /usr/bin/zsh
+
+
+pacman: ## add user pacman config to [options] section, add community and multilib repos
+	@if [ -z "$$(grep '\[community\]' /etc/$@.conf)" ]; then \
+		sed -i '/HookDir/d' ${HOME}/dotfiles/.config/pacman/pacman.conf # XXX explain
+		sudo sed -i '/^Architecture/ a\Include = ${HOME}/.config/$@/$@.conf' /etc/$@.conf; \
+		echo '
+		[community]
+		Include = /etc/pacman.d/mirrorlist
+
+		[multilib]
+		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
+	fi
+
+
 PACMAN_DIR := ${HOME}/.config/pacman
 pacman-install: ## Install all pacman packages
 	if [ ! -f $(PACMAN_DIR)/temp1.txt ]; then
-		cp $(PACMAN_DIR)/pkglist.txt $(PACMAN_DIR)/temp1.txt
+		cp $(PACMAN_DIR)/pkgspacman $(PACMAN_DIR)/temp1.txt
 	fi
 	sudo pacman -Syy
 	$(PACMAN) - < ${HOME}/.config/pacman/temp1.txt
 # remove orphaned packages, otherwise rust and rustup are in conflict
-	pacman -Qtdq | sudo pacman -Rns --noconfirm -
+	# pacman -Qtdq | sudo pacman -Rns --noconfirm -
 	rm $(PACMAN_DIR)/temp1.txt
 
 yay: ## install yay aur helper
-	@export YAYDIR=${XDG_DATA_HOME}/utils/$@;
+	@export YAYDIR=$(XDG_DATA_HOME)/utils/$@;
 	if [ -d "$$YAYDIR" ]; then
 		rm -rf $$YAYDIR
 	fi
@@ -170,7 +193,7 @@ wal: ## for hyprland to not show error of undefined color var on first launch
 
 goinstall: ## install go and export path
 	$(PACMAN) go
-	export GOPATH="${XDG_DATA_HOME}/go"
+	export GOPATH="$(XDG_DATA_HOME)/go"
 
 gopkgs: ## install go and its packages
 # doom golang setup
@@ -201,7 +224,7 @@ ags:
 	sass --no-source-map $(XDG_CONFIG_HOME)/ags/styles/main.scss $(XDG_CONFIG_HOME)/ags/compiled.scss
 
 pnpm: ## install all needed global npm packages
-	export PNPM_HOME=${XDG_DATA_HOME}/.pnpm
+	export PNPM_HOME=$(XDG_DATA_HOME)/.pnpm
 	export PATH=$$PNPM_HOME:$(PATH)
 	pnpm add --global typescript-language-server
 	pnpm add --global typescript
@@ -225,8 +248,8 @@ earlyoom:
 	$(SSEN) earlyoom.service
 
 grubtheme:
-	git clone git@github.com:vinceliuice/Elegant-grub2-themes.git ${XDG_DATA_HOME}/utils/$@
-	cd ${XDG_DATA_HOME}/utils/$@
+# git clone git@github.com:vinceliuice/Elegant-grub2-themes.git $(XDG_DATA_HOME)/utils/$@
+	cd $(XDG_DATA_HOME)/utils/$@
 	sudo ./install.sh -s 2k -b
 
 wpgtk:
@@ -264,7 +287,7 @@ mpv:
 	./mpvmanager
 
 mpd:
-	mkdir -p ${XDG_DATA_HOME}/$@
+	mkdir -p $(XDG_DATA_HOME)/$@
 	systemctl --user restart $@.service
 	$(SUEN) mpd.service
 
@@ -272,7 +295,7 @@ mpd:
 # ------------  Targets to run manually  ------------
 
 icons: ## setup icons and theme (run only after you synced icons folder from other devices)
-	bash ${XDG_DATA_HOME}/icons/unpack-all
+	bash $(XDG_DATA_HOME)/icons/unpack-all
 	nwg-look -a
 
 asus: ## install ASUS laptop specific software
@@ -287,15 +310,15 @@ xiaomi: nvidia-all ## install stuff for nvidia hybrid laptop
 	$(YAY) libva-nvidia-driver-git
 
 nvidia-all: ## nvidia-tkg
-	rm -rf ${XDG_DATA_HOME}/utils/$@
-	git clone https://github.com/Frogging-Family/nvidia-all.git ${XDG_DATA_HOME}/utils/$@
-	cd ${XDG_DATA_HOME}/utils/$@
+	rm -rf $(XDG_DATA_HOME)/utils/$@
+	git clone https://github.com/Frogging-Family/nvidia-all.git $(XDG_DATA_HOME)/utils/$@
+	cd $(XDG_DATA_HOME)/utils/$@
 	makepkg -si
 
 Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	$(YAY) miniconda3
-	git clone https://github.com/lllyasviel/Fooocus.git ${XDG_DATA_HOME}/utils/$@
-	cd ${XDG_DATA_HOME}/utils/$@
+	git clone https://github.com/lllyasviel/Fooocus.git $(XDG_DATA_HOME)/utils/$@
+	cd $(XDG_DATA_HOME)/utils/$@
 	conda env create -f environment.yaml
 	conda activate fooocus
 	pip install -r requirements_versions.txt
