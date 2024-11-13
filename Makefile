@@ -132,8 +132,6 @@ pacman-install: ## Install all pacman packages
 	fi
 	sudo pacman -Syy
 	$(PACMAN) - < ${HOME}/.config/pacman/temp1.txt
-# remove orphaned packages, otherwise rust and rustup are in conflict
-	# pacman -Qtdq | sudo pacman -Rns --noconfirm -
 	rm $(PACMAN_DIR)/temp1.txt
 
 yay: ## install yay aur helper
@@ -148,7 +146,7 @@ yay: ## install yay aur helper
 
 aur-install: yay ## Install all AUR packages
 	if [ ! -f $(PACMAN_DIR)/temp2.txt ]; then
-		cp $(PACMAN_DIR)/foreignpkglist.txt $(PACMAN_DIR)/temp2.txt
+		cp $(PACMAN_DIR)/pkgsaur $(PACMAN_DIR)/temp2.txt
 	fi
 	export MAKEFLAGS="-j$$(nproc)"
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
