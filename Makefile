@@ -73,6 +73,7 @@ cleandeadlinks: ## removes all broken symlinks recursively
 install: dotfiles reflector zsh pacman pacman-install aur-install
 
 postinstall: sysoptions emacs systemd wal goinstall gopkgs \
+	pam-gnupg ags pnpm earlyoom grubtheme wpgtk wine-deps dash steam librewolf
 
 postreboot: mpv mpd
 
@@ -265,8 +266,11 @@ dash: ## symlink sh to dash
 steam: ## prevent steam to create yet another file in my home dir
 	@echo 'cookie-file = ~/.config/pulse/cookie' | sudo tee -a /etc/pulse/client.conf > /dev/null
 
-pywalfox: ## install pywalfox for librewolf browser, see blame if won't work
+librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
 	pywalfox --browser librewolf install
+# path from where to link - https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=firefox-tridactyl-native
+	ln -s /usr/lib/mozilla/native-messaging-hosts/tridactyl.json \
+		${HOME}/.librewolf/native-messaging-hosts/
 
 # --- Postreboot ---
 
