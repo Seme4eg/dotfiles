@@ -245,6 +245,8 @@ grubtheme:
 
 wpgtk:
 	wpg-install.sh -G
+# apply theme
+	nwg-look -a
 
 # https://github.com/lutris/docs/blob/master/WineDependencies.md#archendeavourosmanjaroother-arch-derivatives
 wine-deps: ## install wine dependencies for heroic
