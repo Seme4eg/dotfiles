@@ -316,10 +316,11 @@ nvidia: nvidia-all ## install stuff for nvidia hybrid laptop
 
 asus:
 	$(SSEN) tlp.service
-	sudo ln ${HOME}/.config/01-asus-tlp.conf /etc/tlp.d/01-asus.conf
+	sudo ln ${HOME}/.config/tlp/01-asus.conf /etc/tlp.d/
 
 lenovo: ## lenovo setup
-# XXX: TLP config separately for this laptop
+	$(SSEN) tlp.service
+	sudo ln ${HOME}/.config/tlp/02-lenovo.conf /etc/tlp.d/
 
 # --- laptops end ---
 
