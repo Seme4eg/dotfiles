@@ -3,26 +3,14 @@
 # another one is /sys/bus/acpi/drivers/battery/*/power_supply/BAT?/status
 status_path="/sys/class/power_supply/BAT?/status"
 old_capacity=
-old_status="$DISCHARGING"
 
 _notify() { "$HOME"/.local/bin/say -e "$@"; }
 
 # shellcheck disable=SC2086
 charging() { grep -q Charging $status_path; }
 
-update_status() {
-  # shellcheck disable=SC2086
-  status=$(cat $status_path)
-  if charging && [ "$old_status" != "$status" ]; then
-    _notify -u low -t 1000 'Charging'
-  fi
-  old_status="$status"
-}
-
 while true; do
   capacity=$(cat /sys/class/power_supply/BAT?/capacity)
-
-  update_status # update charging status
 
   # don't spam notifications
   [ "$old_capacity" = "$capacity" ] && sleep 1 && continue
@@ -31,19 +19,18 @@ while true; do
     # is laptop is still discharging means i am on 60w charger
     if [ "$capacity" -lt "$old_capacity" ] && [ "$capacity" -le 15 ]; then
       _notify "$capacity% charged left"
-      # for cases when i use 60W charging and gaming - laptop is discharging
-      # and i need to know when i need to switch to another charging cable
-    elif [ "$capacity" -ge 80 ] && [ "$capacity" -gt "$old_capacity" ]; then
-      _notify "$capacity% charged, unplug"
+    # Using thunderbolt makes following lines a pain, constant notifications
+    # elif [ "$capacity" -ge 80 ] && [ "$capacity" -gt "$old_capacity" ]; then
+    #   _notify "$capacity% charged, unplug"
     fi
 
   else
     if [ "$capacity" -le 15 ]; then
       if [ "$capacity" -le 6 ]; then
         if [ "$capacity" -le 5 ]; then
-          _notify -u critical "HYBERNATING, MISSION FAILED"
+          _notify -u critical "yo man, cmon..."
         else
-          _notify "Hybernating very soon"
+          _notify "at that point you should be hybernated.."
         fi
       else
         _notify "$capacity% charge left"
