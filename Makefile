@@ -319,6 +319,8 @@ asus:
 	sudo ln ${HOME}/.config/tlp/01-asus.conf /etc/tlp.d/
 
 lenovo: ## lenovo setup
+	$(PACMAN) vulkan-intel lib32-vulkan-intel
+	echo 'options snd_hda_intel model=dell-headset-multi' | sudo tee /etc/modprobe.d/alsa-base.conf
 	$(SSEN) tlp.service
 	sudo ln ${HOME}/.config/tlp/02-lenovo.conf /etc/tlp.d/
 
