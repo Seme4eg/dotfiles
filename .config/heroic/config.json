@@ -15,7 +15,7 @@
     "defaultInstallPath": "/home/earthian/.local/share/Games/Heroic",
     "libraryTopSection": "disabled",
     "defaultSteamPath": "/home/earthian/.steam/steam",
-    "defaultWinePrefix": "/home/earthian/.local/share/wineprefixes/default",
+    "defaultWinePrefix": "/home/earthian/.local/share/Games/Heroic/Prefixes/default",
     "hideChangelogsOnStartup": false,
     "language": "en",
     "maxWorkers": 0,
@@ -26,7 +26,7 @@
     "showFps": false,
     "useGameMode": false,
     "wineCrossoverBottle": "Heroic",
-    "winePrefix": "/home/earthian/.local/share/wineprefixes/default",
+    "winePrefix": "/home/earthian/.local/share/Games/Heroic/Prefixes/default",
     "wineVersion": {
       "bin": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/bin/wine",
       "name": "Wine - Wine-GE-latest",
