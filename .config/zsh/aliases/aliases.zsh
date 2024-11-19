@@ -29,7 +29,7 @@ alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
 alias hyprupd="yi --noconfirm aquamarine-git hyprlang-git hypridle-git \
   hyprlock-git hyprutils-git hyprland-git xdg-desktop-portal-hyprland-git"
 
-alias homebloat="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
+alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
 
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 
