@@ -23,7 +23,7 @@ Utils.monitorFile(`${Utils.HOME}/.cache/wal/colors.scss`, reloadCSS);
 Utils.monitorFile(
   // directory that contains the scss files
   `${App.configDir}/styles`,
-  reloadCSS,
+  reloadCSS
 );
 
 let theme = Variable("dark");

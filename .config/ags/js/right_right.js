@@ -36,7 +36,9 @@ function CPU() {
       2000,
       "sensors -j",
       (out) => {
-        let temp = Number(JSON.parse(out)["acpitz-acpi-0"].temp1.temp1_input);
+        let temp = Number(
+          JSON.parse(out)["coretemp-isa-0000"]["Package id 0"].temp1_input
+        );
         return `${temp.toFixed(0)}°`;
       },
     ],
@@ -66,8 +68,8 @@ function CPU() {
               vertical: true,
               inverted: true,
               value: load,
-            }),
-          ),
+            })
+          )
         ),
       }),
     ],
@@ -98,17 +100,15 @@ function Memory() {
 
   return Widget.Overlay({
     className: "memory",
-    child: Widget.CircularProgress({ value: ram.bind(), }),
-    overlays: [
-      Widget.Label({ className: "circle_text", label: "󰍛", }),
-    ],
+    child: Widget.CircularProgress({ value: ram.bind() }),
+    overlays: [Widget.Label({ className: "circle_text", label: "󰍛" })],
   });
 }
 
 function Battery() {
   const classStr = Utils.merge(
     [battery.bind("charging"), battery.bind("percent")],
-    (c, p) => "percent " + (c ? "charging" : p <= 15 ? "low" : ""),
+    (c, p) => "percent " + (c ? "charging" : p <= 15 ? "low" : "")
   );
 
   const TimeRemaining = (css = "") =>

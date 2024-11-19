@@ -221,8 +221,7 @@ circular-progress {
         .icon {
           margin-top: 2px;
           font-size: 0.9em;
-          text-shadow:
-            0 0 5px color.scale($foreground, $lightness: -35%),
+          text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
             0 0 5px color.scale($foreground, $lightness: -45%),
             0 0 10px color.scale($foreground, $lightness: -45%);
         }
