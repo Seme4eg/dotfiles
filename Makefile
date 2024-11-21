@@ -325,6 +325,8 @@ lenovo: ## lenovo setup
 	echo 'options snd_hda_intel model=dell-headset-multi' | sudo tee /etc/modprobe.d/alsa-base.conf
 	sudo ln ${HOME}/.config/tlp/02-lenovo.conf /etc/tlp.d/
 	$(SSEN) tlp.service
+	echo 'ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"' |
+		sudo tee /etc/udev/rules.d/99-removable.rules
 
 # --- laptops end ---
 

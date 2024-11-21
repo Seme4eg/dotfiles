@@ -10,6 +10,7 @@ export EDITOR="emacsclient -c"
 export VISUAL="emacsclient -c -a emacs"
 export TERMINAL=foot
 export BROWSER=librewolf
+# export MANPAGER='nvim +Man!'
 
 export MAKEFLAGS="-j$(nproc)"
 
