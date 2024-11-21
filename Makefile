@@ -113,6 +113,7 @@ pacman: ## add user pacman config to [options] section, add community and multil
 		[multilib]
 		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
 	fi
+	tldr --update
 
 
 PACMAN_DIR := ${HOME}/.config/pacman
