@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 alias cat="bat"
+alias vim="nvim"
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
