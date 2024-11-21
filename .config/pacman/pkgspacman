@@ -2,6 +2,7 @@ adobe-source-han-sans-cn-fonts
 alsa-tools
 alsa-utils
 android-tools
+arch-wiki-docs
 base
 base-devel
 bat
@@ -102,10 +103,10 @@ swaync
 swww
 syncthing
 systembus-notify
+tealdeer
 texinfo
 thunar
 timeshift
-tldr
 tlp
 ttf-daddytime-mono-nerd
 ttf-firacode-nerd
@@ -122,6 +123,7 @@ vim
 virt-manager
 wf-recorder
 wget
+wikiman
 wine-staging
 wireguard-tools
 wireplumber
