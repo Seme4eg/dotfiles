@@ -23,9 +23,9 @@ ZVM_LAZY_KEYBINDINGS=false
 
 ## History
 HISTFILE="$XDG_CACHE_HOME/zhistory"
-HISTSIZE=100000 # Max events to store in internal history.
-SAVEHIST=100000 # Max events to store in history file.
+# HISTSIZE and SAVEHIST are set in grmlrc
 
+# to check which opts are active run 'setopt' in the terminal
 setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
 setopt HIST_IGNORE_DUPS       # Do not record an event that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS   # Remove old events if new event is a duplicate
