@@ -152,9 +152,10 @@ sysoptions: ## make changes to system files
 	sudo sed -i 's/^#\(HandlePowerKey\)=.*/\1=suspend/' /etc/systemd/logind.conf
 	sudo sed -i 's/^#\(HandleLidSwitch\)=.*/\1=ignore/' /etc/systemd/logind.conf
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
-	sudo sed -i 's/^#\(UserspaceHID\)=.*/\1=true/' /etc/bluetooth/input.conf
-# fix dualsense controller connection
+# fix dualsense controller connection:
 # https://github.com/bluez/bluez/issues/673#issuecomment-2156084398
+# https://github.com/ValveSoftware/SteamOS/issues/1710#issuecomment-2466422490
+	sudo sed -i 's/^#\(UserspaceHID\)=.*/\1=false/' /etc/bluetooth/input.conf
 	sudo sed -i 's/^#\(ClassicBondedOnly\)=.*/\1=false/' /etc/bluetooth/input.conf
 # for ags bluetooth service battery percentage
 	sudo sed -i 's/^#\(Experimental\) = .*/\1 = true/' /etc/bluetooth/main.conf
