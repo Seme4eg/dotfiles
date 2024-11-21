@@ -50,6 +50,8 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc" # :"$XDG_CONFIG_HOME/gtk-2
 export ADB_KEYS_PATH="/home/earthian/Documents/tech/android/adbkeys"
 export PNPM_HOME=$XDG_DATA_HOME/pnpm
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export W3M_DIR="$XDG_STATE_HOME/w3m"
+export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 
 # ---
 
