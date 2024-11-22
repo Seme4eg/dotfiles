@@ -30,6 +30,7 @@ node_modules/
 /.config/cava/
 /.config/heroic/*
 !/.config/heroic/config.json
+!/.config/heroic/hidden.png
 /.config/gthumb/
 /.config/chromium/
 /.local/share/icons/*
