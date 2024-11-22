@@ -74,8 +74,8 @@ cleandeadlinks: ## removes all broken symlinks recursively
 
 install: dotfiles reflector zsh pacman pacman-install aur-install
 
-postinstall: sysoptions emacs systemd wal goinstall gopkgs \
-	pam-gnupg ags pnpm earlyoom grubtheme wpgtk wine-deps dash steam librewolf
+postinstall: sysoptions emacs systemd wal goinstall gopkgs pam-gnupg ags pnpm \
+	earlyoom grubtheme wpgtk wine-deps dash steam librewolf captive-portal
 
 postreboot: mpv mpd
 
@@ -276,6 +276,14 @@ librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
 # path from where to link - https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=firefox-tridactyl-native
 	ln -s /usr/lib/mozilla/native-messaging-hosts/tridactyl.json \
 		${HOME}/.librewolf/native-messaging-hosts/
+
+captive-dispatcher: ## install network manager captive portal dispatcher script
+	@sudo wget --output-document \
+		/etc/NetworkManager/dispatcher.d/90-open_captive_portal \
+		'https://raw.githubusercontent.com/Seme4eg/captive-portal-sh/refs/heads/master/90-open_captive_portal'
+	@sudo chmod +x /etc/NetworkManager/dispatcher.d/90-open_captive_portal
+	@$(SSER) NetworkManager
+
 
 # --- Postreboot ---
 
