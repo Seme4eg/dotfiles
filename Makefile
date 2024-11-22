@@ -101,6 +101,7 @@ reflector:
 	$(SSEN) reflector.timer
 
 zsh: ## change shell to zsh, we need those env vars
+	$(PACMAN) zsh
 	chsh -s /usr/bin/zsh
 
 
@@ -115,7 +116,6 @@ pacman: ## add user pacman config to [options] section, add community and multil
 		[multilib]
 		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
 	fi
-	tldr --update
 
 
 PACMAN_DIR := ${HOME}/.config/pacman
@@ -126,16 +126,17 @@ pacman-install: ## Install all pacman packages
 	sudo pacman -Syy
 	$(PACMAN) - < ${HOME}/.config/pacman/temp1.txt
 	rm $(PACMAN_DIR)/temp1.txt
+	tldr --update
 
 yay: ## install yay aur helper
 	@export YAYDIR=$(XDG_DATA_HOME)/utils/$@;
 	if [ -d "$$YAYDIR" ]; then
 		rm -rf $$YAYDIR
 	fi
-	mkdir -p $$YAYDIR; 
-	git clone https://aur.archlinux.org/$@.git $$YAYDIR; 
-	cd $$YAYDIR && makepkg -si --noconfirm; 
-	yay --version; 
+	mkdir -p $$YAYDIR;
+	git clone https://aur.archlinux.org/$@.git $$YAYDIR;
+	cd $$YAYDIR && makepkg -si --noconfirm;
+	yay --version;
 
 aur-install: yay ## Install all AUR packages
 	if [ ! -f $(PACMAN_DIR)/temp2.txt ]; then
@@ -223,7 +224,7 @@ ags:
 	sass --no-source-map $(XDG_CONFIG_HOME)/ags/styles/main.scss $(XDG_CONFIG_HOME)/ags/compiled.scss
 
 pnpm: ## install all needed global npm packages
-	export PNPM_HOME=$(XDG_DATA_HOME)/.pnpm
+	export PNPM_HOME=$(XDG_DATA_HOME)/pnpm
 	export PATH=$$PNPM_HOME:$(PATH)
 	pnpm add --global typescript-language-server
 	pnpm add --global typescript
@@ -244,7 +245,7 @@ earlyoom:
 
 grubtheme: .SHELLFLAGS := -c
 grubtheme:
-# git clone git@github.com:vinceliuice/Elegant-grub2-themes.git $(XDG_DATA_HOME)/utils/$@
+	git clone git@github.com:vinceliuice/Elegant-grub2-themes.git $(XDG_DATA_HOME)/utils/$@
 	cd $(XDG_DATA_HOME)/utils/$@
 	sudo ./install.sh -s 2k -b
 
@@ -279,13 +280,13 @@ librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
 # --- Postreboot ---
 
 mpv:
-	git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \
+	@git --no-pager --literal-pathspecs -c core.preloadindex\=true -c log.showSignature\=false \
 		-c color.ui\=false -c color.diff\=false submodule update --init -- .config/mpv
-	emacsclient -e '(progn (require (quote org)) (org-babel-tangle-file "$(XDG_CONFIG_HOME)/$@/README.org"))'
+	@emacsclient -e '(progn (require (quote org)) (org-babel-tangle-file "$(XDG_CONFIG_HOME)/$@/README.org"))'
 # previous command creates .emacs.d, lazy to find out why so just delete it
-	rm -rf ${HOME}/.emacs.d
-	cd $(XDG_CONFIG_HOME)/$@
-	./mpvmanager
+	@rm -rf ${HOME}/.emacs.d
+	@cd $(XDG_CONFIG_HOME)/$@
+	@./mpvmanager sync
 
 mpd:
 	mkdir -p $(XDG_DATA_HOME)/$@
@@ -324,7 +325,6 @@ asus:
 
 lenovo: ## lenovo setup
 	$(PACMAN) vulkan-intel lib32-vulkan-intel
-	echo 'options snd_hda_intel model=dell-headset-multi' | sudo tee /etc/modprobe.d/alsa-base.conf
 	sudo ln ${HOME}/.config/tlp/02-lenovo.conf /etc/tlp.d/
 	$(SSEN) tlp.service
 
