@@ -50,15 +50,17 @@ ssh: ## Init ssh
 
 cleanhome: .SHELLFLAGS = -c
 cleanhome:
-	rm -rf ${HOME}/nonexist
-	rm -rf ${HOME}/.themes
-	rm -rf ${HOME}/Desktop
-	rm -rf ${HOME}/Public
-	rm -rf ${HOME}/Templates
-	rm -rf ${HOME}/Videos
-	rm -rf ${HOME}/.npm
-	ls .bash* | xargs rm
-	rm .lesshst
+	@cd ${HOME}
+	@rm -rf ${HOME}/.themes
+	@rm -rf ${HOME}/Desktop
+	@rm -rf ${HOME}/Public
+	@rm -rf ${HOME}/Templates
+	@rm -rf ${HOME}/Videos
+	@rm -rf ${HOME}/.npm
+	@ls .bash* | xargs rm
+	@rm .lesshst
+	@rm .viminfo
+	@rm .wget-hsts
 
 # useful when removed some file(s) from repo and don't want to remove the
 # symlinks by hand
