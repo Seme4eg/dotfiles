@@ -7,6 +7,6 @@ PartOf=graphical-session.target
 WantedBy=hyprland-session.target
 
 [Service]
-ExecStart=ags
+ExecStart=agsv1
 Restart=always
 RestartSec=3
