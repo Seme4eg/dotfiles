@@ -1,0 +1,19 @@
+#+title: Readme
+
+- Important references: [[https://aylur.github.io/ags-docs/][great ags wiki]] is the way, just learn to read.
+- For which *fonts* are used in this config just search this dir recursively. Cuz
+  i might be changing those from time to time and maintaining precise list of
+  fonts in this readme will be tedious. The only font to stay for sure is the
+  one for icons - any nerd font. I use 'daddytimemono nerd font'.
+- *Dependencies*: /pacman-contrib/ for ~checkupdates~. The rest are required by ags
+  services: /pipewire-pulse/, /upower/, /gnome-bluetooth-3.0/ (and experimental
+  enabled in bluetooth config), /network-manager/, /libdbusmenu-gtk3/.
+- How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]], yes, example is for
+  eww, but ez to rewrite on ags
+
+** Todos
+*** TODO listen on 'monitor-add/remove' signals on hyprland service
+.. and change the monitor on which the bar appears.
+
+Basically same functionality as eww-window-manager service and eww-manager
+script were doing.
