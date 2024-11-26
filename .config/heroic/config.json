@@ -52,7 +52,9 @@
     "useSteamRuntime": true,
     "showMangohud": true,
     "experimentalFeatures": {
-      "enableNewDesign": true
+      "enableNewDesign": true,
+      "automaticWinetricksFixes": true,
+      "umuSupport": false
     },
     "customThemesPath": ""
   },
