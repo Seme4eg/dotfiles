@@ -6,6 +6,7 @@ alias pmI="pm -S"           # install without package syncing
 alias pmr="pm -Rns"         # remove
 alias pmsr="pm -Ss"         # search remotes
 alias pmsl="pm -Qs"         # search locally
+alias pmsf="pm -F"          # search for packages that provide given file
 alias pml="pm -Ql"          # list package
 # If no orphans were found, the output is error: argument '-' specified with
 # empty stdin. This is expected as no arguments were passed to pacman -Rns.
