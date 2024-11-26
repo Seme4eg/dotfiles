@@ -306,12 +306,19 @@ mpd:
 
 # --- graphics ---
 
+# NOTE: do NOT install 'amdvlk & lib32-amdvlk', those are open-source drivers
+# and will take precedence over proprietary ones if installed. Last time i
+# bootstrapped the system those got somehow installed along something so do
+# check and uninstall them if present. Proprietary drivers give like +10-15%
+# more performance. To check which drivers are used: 'vulkaninfo --summary' ->
+# driverID should be 'DRIVER_ID_MESA_RADV', not 'DRIVER_ID_AMD_OPEN_SOURCE'
 amd: ## install ASUS laptop specific software
 # support for vulkan api
-	$(PACMAN) --needed --asdeps mesa mesa-utils lib32-mesa mesa-vdpau \
+	@$(PACMAN) --needed --asdeps mesa mesa-utils lib32-mesa mesa-vdpau \
 		libva-mesa-driver vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader \
-		lib32-vulkan-icd-loader
-	$(YAY) amdgpu_top-bin
+		lib32-vulkan-icd-loader vulkan-tools
+	@$(YAY) amdgpu_top-bin
+	@vulkaninfo --summary | grep -q OPEN_SOURCE && sudo pacman -Rns amdvlk lib32-amdvlk
 
 nvidia-all: ## nvidia-tkg
 	rm -rf $(XDG_DATA_HOME)/utils/$@
