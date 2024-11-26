@@ -12,6 +12,10 @@
   eww, but ez to rewrite on ags
 
 ** Todos
+*** migrate maybe some day in future to lua
+- https://aylur.github.io/astal/guide/lua/installation
+- https://aylur.github.io/ags/guide/migrate.html
+
 *** TODO listen on 'monitor-add/remove' signals on hyprland service
 .. and change the monitor on which the bar appears.
 
