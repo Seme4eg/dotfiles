@@ -339,7 +339,7 @@ asus:
 	sudo ln ${HOME}/.config/tlp/01-asus.conf /etc/tlp.d/
 
 lenovo: ## lenovo setup
-	$(PACMAN) vulkan-intel lib32-vulkan-intel
+	$(PACMAN) vulkan-intel lib32-vulkan-intel bolt
 	sudo ln ${HOME}/.config/tlp/02-lenovo.conf /etc/tlp.d/
 	$(SSEN) tlp.service
 
