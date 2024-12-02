@@ -21,19 +21,21 @@
     "maxWorkers": 0,
     "minimizeOnLaunch": false,
     "nvidiaPrime": false,
-    "enviromentOptions": [],
+    "enviromentOptions": [
+      {
+        "key": "WINEDEBUG",
+        "value": "+fixme"
+      }
+    ],
     "wrapperOptions": [],
     "showFps": false,
     "useGameMode": false,
     "wineCrossoverBottle": "Heroic",
     "winePrefix": "/home/earthian/.local/share/Games/Heroic/Prefixes/default",
     "wineVersion": {
-      "bin": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/bin/wine",
-      "name": "Wine - Wine-GE-latest",
-      "type": "wine",
-      "lib": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/lib64",
-      "lib32": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/lib",
-      "wineserver": "/home/earthian/.config/heroic/tools/wine/Wine-GE-latest/bin/wineserver"
+      "bin": "/home/earthian/.config/heroic/tools/proton/Proton-GE-latest/proton",
+      "name": "Proton - Proton-GE-latest",
+      "type": "proton"
     },
     "enableEsync": true,
     "enableFsync": true,
@@ -54,7 +56,7 @@
     "experimentalFeatures": {
       "enableNewDesign": true,
       "automaticWinetricksFixes": true,
-      "umuSupport": false
+      "umuSupport": true
     },
     "customThemesPath": ""
   },
