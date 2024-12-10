@@ -58,7 +58,8 @@
       "automaticWinetricksFixes": true,
       "umuSupport": true
     },
-    "customThemesPath": ""
+    "customThemesPath": "",
+    "allowInstallationBrokenAnticheat": true
   },
   "version": "v0"
 }
