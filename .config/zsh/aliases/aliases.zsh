@@ -26,8 +26,8 @@ alias cheatengine="xhost +local: &; gameconqueror"
 # NOTE: tlp-stat also shows the capacity
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
 
-alias hyprupd="yi --noconfirm aquamarine-git hyprlang-git hypridle-git \
-  hyprlock-git hyprutils-git hyprland-git xdg-desktop-portal-hyprland-git"
+alias hyprupd="yay -S --noconfirm aquamarine-git hyprlang-git hypridle-git \
+  hyprlock-git hyprland-git xdg-desktop-portal-hyprland-git hyprpolkitagent-git"
 
 alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
 
