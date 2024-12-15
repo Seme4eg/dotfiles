@@ -6,6 +6,15 @@ ffwaveform() {
   ffmpeg -i "${1}" -filter_complex "showwavespic=s=640x120" -frames:v 1 "${1}.png"
 }
 
+# speed up audio (for downloaded audiobooks)
+ffmpegspeedup() {
+  # param for speed is float like 1.25 or 2.0
+  ffmpeg -i "${1}" -filter:a "atempo=${2}" -vn "${3}"
+}
+
+# NOTE: convert audio to another format simple command:
+# for file in *.opus ; do ffmpeg -i "$file" "${file%.*}.mp3" ; done
+
 ###############################################################################
 #                                Filter strings                               #
 ###############################################################################
