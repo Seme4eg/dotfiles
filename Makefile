@@ -251,6 +251,8 @@ grubtheme: .SHELLFLAGS := -c
 grubtheme:
 	git clone git@github.com:vinceliuice/Elegant-grub2-themes.git $(XDG_DATA_HOME)/utils/$@
 	cd $(XDG_DATA_HOME)/utils/$@
+# commit before borked opensuse pngs naming..
+	git reset --hard 6cfd864
 	sudo ./install.sh -s 2k -b
 
 wpgtk:
