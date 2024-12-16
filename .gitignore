@@ -59,3 +59,4 @@ node_modules/
 !/.config/wpg/wpg.conf
 /.config/java/
 /.config/Thunar/
+/.config/xfce4/
