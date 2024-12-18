@@ -5,6 +5,8 @@ table.insert(default_access.rules, {
      { "application.process.binary", "=", "webcord" },
      { "application.process.binary", "=", "firefox" }
      { "application.process.binary", "=", "legcord" }
+     { "application.process.binary", "=", "vesktop" }
+     { "application.process.binary", "=", "abaddon" }
    }
    },
    default_permissions = "rx",
