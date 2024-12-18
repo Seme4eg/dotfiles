@@ -53,10 +53,10 @@ node_modules/
 /.config/ags/compiled.css
 /.config/ags/types
 /.config/font-manager/
-/.config/legcord/
 
 /.config/wpg/*
 !/.config/wpg/wpg.conf
 /.config/java/
 /.config/Thunar/
 /.config/xfce4/
+/.config/vesktop/
