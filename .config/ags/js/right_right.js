@@ -84,19 +84,33 @@ function Memory() {
       .find((line) => line.includes(what + ":"))
       .split(/\s+/);
 
+  // Ram value for laptops with less ram to not display 'cached' mem
+  // const ram = Variable(0, {
+  //   poll: [
+  //     2000,
+  //     "free",
+  //     (out) => {
+  //       // returns total, used, free, shared and cache respectively
+  //       let ram = get("Mem", out).splice(1, 5);
+
+  //       // divide (used - cached) by total
+  //       return (ram[1] - ram[4]) / ram[0];
+  //     },
+  //   ],
+  // });
+
   const ram = Variable(0, {
     poll: [
       2000,
       "free",
       (out) => {
-        // returns total, used, free, shared and cache respectively
-        let ram = get("Mem", out).splice(1, 5);
+        let ram = get("Mem", out).splice(1, 2); // returns total and used respectively
 
-        // divide (used - cached) by total
-        return (ram[1] - ram[4]) / ram[0];
+        return ram[1] / ram[0]; // divide used by total, excluding zram
       },
     ],
   });
+
 
   return Widget.Overlay({
     className: "memory",
