@@ -15,7 +15,7 @@ function reloadCSS() {
   App.resetCss();
   App.applyCss(css);
 }
-// in case you will need to reload styles manually - run 'ags -r "reloadCSS()"'
+// in case you will need to reload styles manually - run 'agsv1 -r "reloadCSS()"'
 // from terminal, after you uncomment line below.
 // globalThis.reloadCSS = reloadCSS;
 Utils.monitorFile(`${Utils.HOME}/.cache/wal/colors.scss`, reloadCSS);

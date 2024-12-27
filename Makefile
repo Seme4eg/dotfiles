@@ -224,7 +224,7 @@ pam-gnupg: ## setup pam-gnupg to unlock GnuPG keys on login
 	@echo 'session  optional  pam_gnupg.so' | sudo tee -a /etc/pam.d/system-local-login > /dev/null
 
 ags:
-	ags --init
+	agsv1 --init
 	sass --no-source-map $(XDG_CONFIG_HOME)/ags/styles/main.scss $(XDG_CONFIG_HOME)/ags/compiled.scss
 
 pnpm: ## install all needed global npm packages

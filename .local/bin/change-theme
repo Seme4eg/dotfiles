@@ -58,7 +58,7 @@ else
   wal -n -q -i "$wp" --saturate 0.3
 fi
 
-ags -r "theme = '$theme'"
+agsv1 -r "theme = '$theme'"
 
 pywalfox update & # update firefox/librewolf theme
 

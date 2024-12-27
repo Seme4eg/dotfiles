@@ -3,7 +3,7 @@
 ** How it looks
 - *Compositor*: Hyprland
 - *App launcher*: rofi
-- *Status bar*: ags
+- *Status bar*: agsv1
 - *Screen locker*: hyprlock
 - *Theme changing*: pywal&scripts
 - *Notifications*: swaync
