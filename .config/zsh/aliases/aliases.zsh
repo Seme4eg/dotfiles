@@ -26,8 +26,11 @@ alias cheatengine="xhost +local: &; gameconqueror"
 # NOTE: tlp-stat also shows the capacity
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
 
-alias hyprupd="yay -S --noconfirm aquamarine-git hyprlang-git hypridle-git \
-  hyprlock-git hyprland-git xdg-desktop-portal-hyprland-git hyprpolkitagent-git"
+hyprupd() {
+  hyprpacks=($(yay -Qsq hypr) aquamarine-git)
+  # rebuild all, otherwise annoying libhyprutils.so issue always
+  yay -S --rebuild "${hyprpacks[@]}"
+}
 
 alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
 
