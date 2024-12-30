@@ -5,7 +5,7 @@
 - *App launcher*: rofi
 - *Status bar*: agsv1
 - *Screen locker*: hyprlock
-- *Theme changing*: pywal&scripts
+- *Theme changing*: pywal, wpgtk & scripts
 - *Notifications*: swaync
 - *Terminal*: foot
 
@@ -19,17 +19,16 @@ and adjust to your needs.
 
 - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
 - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
+- import all gpg keys you need
 - ~make install~
-- ~make asus/xiaomi~
 - ~make postinstall~
-- reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
-- also check some of the targets in makefile that need/can be run manually
+- reboot, wait for the internet, login, launch hyprland, ~make postreboot~
+- setup [[*gpg][gpg]]
+- also _DO_ check targets in makefile that need to be run manually
 - clone secrets into ~/git/secrets repo, not in HOME dir
 
 ** Todos
 *** When will be installing new system -
-- make a makefile target to cleanup home dir after xdg installation. Screenshot
-  of home dir after cleaning will be in screenshots folder
 - rename ~/git to ~/repos, makes more sence, adjust all the paths and move
   dotfiles repo there as well, make an alias that will prevent you from
   mindlessly running 'stow .' and pollute your ~/repos dir cuz you ran it in

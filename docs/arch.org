@@ -29,17 +29,7 @@
     - passwd earthian
     - ~EDITOR=vim visudo~ -> uncomment wheel
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT ROOT*
-  - wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
-  - ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
-  - import all gpg keys you need
-  - ~make install~
-  - ~make postinstall~
-  - reboot, wait 5 secs for internet, login, launch hyprland, ~make postreboot~
-  - setup [[*gpg][gpg]]
-  - also _DO_ check targets in makefile that need to be run manually
-
-NOTE: (!) [[https://wiki.archlinux.org/title/Users_and_groups#Pre-systemd_groups][pre-systemd groups]] <- no need to usermod video, audio, power etc, if
-something won't work go to 'udev' page from this link
+  - further steps in main readme file
 
 ** sound
 - switch default mic to the headset one: ~wpctl status~ - grab id of your mic
@@ -80,22 +70,11 @@ _asus zenbook headset mic fix:_
   =/etc/default/grub=, check again and if it works - HDMI will b working (tho i
   recommend to use USB-C hub and plug HDMI in there so external monitor apps use
   Intel GPU cuz for now nvidia is glichy).
-- _Nvidia pc setup_: install /nvidia-dkms/, then enable drm in grub conf:
-  - ~GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia_drm.modeset=1"~
-  - done
 
 ** gpg
 - import all needed gpg keys - ~gpg --import <keyname>.gpg~, including the one for ~git-crypt~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
 
-** fingerprint sensor
-https://wiki.archlinux.org/title/fprint
-
-my xiaomi notebook pro x 2021 fingerprint sensor won't prob ever b supported
-tho: https://gitlab.freedesktop.org/libfprint/wiki/-/wikis/Unsupported-Devices
-
-xiaomi 2016 has a supported fprint sensor but enrolled prints never match.. so
-the whole fprint thing to me appeared as unreliable.
 ** Other fixes
 Xiomi laptop was draining battery like crazy in [s2idle] sleep mode, so i
 changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/etc/default/grub=
