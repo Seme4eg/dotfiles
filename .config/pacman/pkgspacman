@@ -1,5 +1,4 @@
 adobe-source-han-sans-cn-fonts
-alsa-tools
 alsa-utils
 android-tools
 arch-wiki-docs
@@ -16,7 +15,6 @@ cmake
 dart-sass
 dash
 dbeaver
-dust
 earlyoom
 easyeffects
 editorconfig-core-c
@@ -68,11 +66,9 @@ nwg-look
 okular
 openssh
 otf-hasklig-nerd
-p7zip
 pacman-contrib
 pass
 pass-otp
-passff-host
 pavucontrol
 perl-image-exiftool
 pgformatter
@@ -91,12 +87,10 @@ qutebrowser
 reflector
 ripgrep
 rofi-wayland
-rtorrent
 shellcheck
 shfmt
 slurp
 sndio
-socat
 sof-firmware
 solaar
 steam
@@ -106,9 +100,7 @@ swww
 syncthing
 systembus-notify
 tealdeer
-texinfo
 thunar
-timeshift
 tlp
 ttf-daddytime-mono-nerd
 ttf-firacode-nerd
@@ -121,7 +113,6 @@ udisks2
 unrar
 unzip
 usb_modeswitch
-vim
 virt-manager
 wf-recorder
 wget
