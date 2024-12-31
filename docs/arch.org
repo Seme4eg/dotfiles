@@ -16,7 +16,7 @@
   - ~p~ -> check which partitions you ended up with
   - ~w[rite]~ if everything is as u want
 - _pacstrap_: ~pacstrap -K /mnt base base-devel linux linux-firmware linux-headers
-  sof-firmware networkmanager wget vim man-db man-pages texinfo intel/amd-ucode~
+  sof-firmware networkmanager wget neovim man-db man-pages intel/amd-ucode~
 - ...
 - bootloader step:
   - pacman -S grub efibootmgr
