@@ -18,14 +18,12 @@
 
 configuration {
 	cache-dir: "~/.cache/rofi";
-	combi-modes: "window,drun,run";
+	combi-modes: "window,drun";
   fixed-num-lines: false;
 	display-window: "[w]";
-	display-run: "[r]";
 	display-drun: "[d]";
 	window-format: "{w}{c}{t}";
 
-	display-keys: "[k]";
 	kb-accept-entry: "Return,KP_Enter";
   kb-mode-complete: ""; // ctrl+l was here
 	kb-mode-next: "Control+l,Control+Tab";
@@ -43,9 +41,9 @@ configuration {
   kb-entry-history-down: "Control+p";
 
 	max-history-size: 25;
-	modes: "combi,run,keys";
+	modes: "combi";
 	scroll-method: 1; // 0: Per page, 1: continuous.
-	sidebar-mode: true; // show all enabled modes at the bottom
+	sidebar-mode: false; // show all enabled modes at the bottom
   inputchange {
     action: "kb-row-first";
   }
