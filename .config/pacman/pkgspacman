@@ -7,6 +7,7 @@ base-devel
 bat
 bluez
 bluez-utils
+bolt
 brightnessctl
 btop
 calf
@@ -26,6 +27,7 @@ fd
 ffmpegthumbnailer
 font-manager
 foot
+fprintd
 fzf
 git
 git-crypt
@@ -114,6 +116,7 @@ unrar
 unzip
 usb_modeswitch
 virt-manager
+vulkan-tools
 wf-recorder
 wget
 wikiman
