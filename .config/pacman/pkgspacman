@@ -29,6 +29,7 @@ font-manager
 foot
 fprintd
 fzf
+gameconqueror
 git
 git-crypt
 gnome-bluetooth-3.0
@@ -126,6 +127,7 @@ wireplumber
 wl-clipboard
 wlsunset
 wtype
+xorg-xhost
 yt-dlp
 zbar
 zoxide
