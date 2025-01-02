@@ -231,11 +231,14 @@ function BtDevice(device) {
     className: "device",
     children: [
       Widget.Icon(device.icon_name + "-symbolic"),
-      Widget.ProgressBar({
-        vertical: true,
-        inverted: true,
-        value: device.bind("battery_percentage").as((p) => p / 100),
-      }),
+      // Widget.ProgressBar({
+      //   vertical: true,
+      //   inverted: true,
+      //   value: device.bind("battery_percentage").as((p) => {
+      //     print(p)
+      //     return p / 100
+      //   }),
+      // }),
     ],
   });
 }
