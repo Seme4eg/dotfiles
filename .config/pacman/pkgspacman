@@ -25,7 +25,6 @@ expect
 eza
 fd
 ffmpegthumbnailer
-font-manager
 foot
 fprintd
 fzf
@@ -66,7 +65,6 @@ networkmanager
 networkmanager-openvpn
 noto-fonts-emoji
 nwg-look
-okular
 openssh
 otf-hasklig-nerd
 pacman-contrib
@@ -77,7 +75,6 @@ perl-image-exiftool
 pgformatter
 picard
 pipewire-alsa
-pipewire-audio
 pipewire-pulse
 playerctl
 pnpm
@@ -112,11 +109,9 @@ ttf-jetbrains-mono-nerd
 ttf-monofur
 ttf-sourcecodepro-nerd
 udiskie
-udisks2
 unrar
 unzip
 usb_modeswitch
-virt-manager
 vulkan-tools
 wf-recorder
 wget

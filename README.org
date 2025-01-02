@@ -27,6 +27,11 @@ and adjust to your needs.
 - also _DO_ check targets in makefile that need to be run manually
 - clone secrets into ~/git/secrets repo, not in HOME dir
 
+** Some bloatware i install whenever i need
+- _okular_ for signing pdfs, for now still searching for more lightweight solution
+  cuz it pulls like 60 packages along with it
+- _font-manager_ - whenever i need to mess with fonts in my system, whether its
+  status bar styling or anything else
 ** Todos
 *** When will be installing new system -
 - rename ~/git to ~/repos, makes more sence, adjust all the paths and move
