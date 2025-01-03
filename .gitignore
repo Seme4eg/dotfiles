@@ -13,7 +13,6 @@ node_modules/
 /.config/zsh/.cache/
 .zcompdump
 /.config/pulse/
-/.config/WebCord/
 /.config/dconf/
 /.config/syncthing/*
 !/.config/syncthing/config.xml
