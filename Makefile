@@ -348,7 +348,6 @@ lenovo: ## lenovo setup
 	$(PACMAN) vulkan-intel lib32-vulkan-intel bolt
 	sudo ln ${HOME}/.config/tlp/02-lenovo.conf /etc/tlp.d/
 	$(SSEN) tlp.service
-# Add 'auth      sufficient pam_fprintd.so' to the top of the auth section of /etc/pam.d/system-local-login:
 
 # --- laptops end ---
 
