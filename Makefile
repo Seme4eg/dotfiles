@@ -118,14 +118,13 @@ pacman: ## add user pacman config to [options] section, add community and multil
 	fi
 
 
-PACMAN_DIR := ${HOME}/.config/pacman
 pacman-install: ## Install all pacman packages
-	if [ ! -f $(PACMAN_DIR)/temp1.txt ]; then
-		cp $(PACMAN_DIR)/pkgspacman $(PACMAN_DIR)/temp1.txt
+	if [ ! -f $(XDG_DATA_HOME)/temp1.txt ]; then
+		cp $(XDG_DATA_HOME)/pkgspacman $(XDG_DATA_HOME)/temp1.txt
 	fi
 	sudo pacman -Syy
 	$(PACMAN) - < ${HOME}/.config/pacman/temp1.txt
-	rm $(PACMAN_DIR)/temp1.txt
+	rm $(XDG_DATA_HOME)/temp1.txt
 	tldr --update
 
 yay: ## install yay aur helper
@@ -139,12 +138,12 @@ yay: ## install yay aur helper
 	yay --version;
 
 aur-install: yay ## Install all AUR packages
-	if [ ! -f $(PACMAN_DIR)/temp2.txt ]; then
-		cp $(PACMAN_DIR)/pkgsaur $(PACMAN_DIR)/temp2.txt
+	if [ ! -f $(XDG_DATA_HOME)/temp2.txt ]; then
+		cp $(XDG_DATA_HOME)/pkgsaur $(XDG_DATA_HOME)/temp2.txt
 	fi
 	export MAKEFLAGS="-j$$(nproc)"
 	$(YAY) - < ${HOME}/.config/pacman/temp2.txt
-	rm $(PACMAN_DIR)/temp2.txt
+	rm $(XDG_DATA_HOME)/temp2.txt
 
 
 # --- Postinstall ---

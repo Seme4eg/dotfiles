@@ -14,5 +14,3 @@ alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
 alias pms="pm -Syy"                            # sync
 alias pmu="pm -Syu"                            # update
 alias pmU="pm -Su"                             # update without syncing packages
-# -Scc is more agressive approach, read bout it before using in case u decide to
-alias pmcc="pm -Sc" # Clear Cache

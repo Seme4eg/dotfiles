@@ -1,0 +1,60 @@
+#!/usr/bin/sh
+
+# application - main field that install command uses
+list_flags="remote-ls --app --columns=application,download-size,description"
+action_flags="install -y"
+placeholder="Install package (regex search) ..."
+success="Installed"
+failure="Failed to install"
+
+open_url_kbd="Control+o"
+
+while getopts ":r" Option; do
+  case $Option in
+    r) # remove package
+      list_flags="list --app --columns=name,size,description"
+      action_flags="uninstall"
+      placeholder="Remove package ..."
+      success="Removed"
+      failure="Failed to remove"
+      ;;
+    *) ;;
+  esac
+done
+
+open_url() {
+  xdg-open "https://flathub.org/apps/search?q=$1"
+}
+
+notify() {
+  # shellcheck disable=2015
+  which say && say "$1" || notify-send "$1"
+}
+
+entry=$(
+  # shellcheck disable=SC2086
+  flatpak $list_flags | sort -d |
+    rofi -dmenu -matching regex -i \
+      -theme-str "#entry { placeholder: \"$placeholder\"; }" \
+      -kb-custom-1 "$open_url_kbd"
+)
+
+rofi_exit=$?
+
+[ $rofi_exit -eq 1 ] && exit
+
+pkg=$(echo "$entry" | awk '{print $1}')
+
+case $rofi_exit in
+  10) open_url "$pkg" ;;
+  *)
+    if flatpak $action_flags "$pkg"; then
+      notify "$success 📦 $pkg"
+      flatpak list --app --columns=application >"$HOME/dotfiles/.local/share/pkgsflatpak"
+    else
+      notify "$failure 📦 $pkg"
+    fi
+    ;;
+esac
+
+exit 0

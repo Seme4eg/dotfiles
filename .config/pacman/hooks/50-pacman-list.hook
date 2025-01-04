@@ -9,4 +9,4 @@ Target = *
 [Action]
 Description = Create a backup list of all installed packages
 When = PostTransaction
-Exec = /bin/sh -c 'pacman -Qqen > "/home/earthian/dotfiles/.config/pacman/pkgspacman"; pacman -Qqem > "/home/earthian/dotfiles/.config/pacman/pkgsaur" 2> /dev/null; exit'
+Exec = /bin/sh -c 'pacman -Qqen > "/home/earthian/dotfiles/.local/share/pkgspacman"; pacman -Qqem > "/home/earthian/dotfiles/.local/share/pkgsaur" 2> /dev/null; exit'

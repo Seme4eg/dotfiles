@@ -17,7 +17,6 @@ dart-sass
 dash
 dbeaver
 earlyoom
-easyeffects
 editorconfig-core-c
 efibootmgr
 emacs-nativecomp
@@ -25,6 +24,7 @@ expect
 eza
 fd
 ffmpegthumbnailer
+flatpak
 foot
 fprintd
 fzf
@@ -70,10 +70,8 @@ otf-hasklig-nerd
 pacman-contrib
 pass
 pass-otp
-pavucontrol
 perl-image-exiftool
 pgformatter
-picard
 pipewire-alsa
 pipewire-pulse
 playerctl
@@ -83,7 +81,6 @@ poppler-glib
 pre-commit
 python-pywal
 qrencode
-qutebrowser
 reflector
 ripgrep
 rofi-wayland
@@ -92,7 +89,6 @@ shfmt
 slurp
 sndio
 sof-firmware
-solaar
 steam
 stow
 swaync
