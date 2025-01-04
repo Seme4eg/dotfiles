@@ -32,38 +32,58 @@ function ClientTitle() {
 }
 
 function Media() {
-  const title = Utils.watch(
+  const trackTitle = Utils.watch(
     null,
     mpris,
     "player-changed",
-    () => mpris.players[0]?.track_title,
-  );
+    () => {
+      let active = mpris.players.find(p => p.play_back_status === "Playing") ||
+        mpris.players.find(p => p.play_back_status === "Paused")
+
+      return active.track_title
+    }
+  )
 
   const artist = Utils.watch(
     null,
     mpris,
     "player-changed",
-    () => "by " + mpris.players[0]?.track_artists?.join(", "),
-  );
+    () => {
+      let active = mpris.players.find(p => p.play_back_status === "Playing") ||
+        mpris.players.find(p => p.play_back_status === "Paused")
 
-  const icon = Utils.watch("", mpris, "player-changed", () => {
-    if (mpris.players[0]) {
-      return mpris.players[0].play_back_status == "Playing" ? "" : "";
+      return "by " + active.track_artists?.join(", ")
     }
-  });
+  )
+  const icon = Utils.watch(
+    null,
+    mpris,
+    "player-changed",
+    () => {
+      let active = mpris.players.find(p => p.play_back_status === "Playing") ||
+        mpris.players.find(p => p.play_back_status === "Paused")
 
+      return active?.play_back_status == "Playing" ? "" : ""
+    }
+  )
+
+  const revealArtist = Utils.watch(
+    null,
+    mpris,
+    "player-changed",
+    () => {
+      let active = mpris.players.find(p => p.play_back_status === "Playing") ||
+        mpris.players.find(p => p.play_back_status === "Paused")
+
+      return !!active.track_artists?.length &&
+        active.track_artists?.join("").length > 1
+    }
+  )
   const className = mpris
     .bind("players")
     .as((p) => "media " + (p.length === 0 ? "media_hidden" : ""));
 
   const visible = mpris.bind("players").as((p) => p.length > 0);
-
-  const revealArtist = Utils.watch(false, mpris, "player-changed", () => {
-    return (
-      !!mpris.players[0]?.track_artists?.length &&
-      mpris.players[0]?.track_artists?.join("").length > 1
-    );
-  });
 
   return Widget.Box({
     className,
@@ -89,7 +109,7 @@ function Media() {
               children: [
                 Widget.Label({
                   className: "title",
-                  label: title,
+                  label: trackTitle,
                   visible,
                   maxWidthChars: 20,
                   ellipsize: true,
