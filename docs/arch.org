@@ -76,5 +76,10 @@ _asus zenbook headset mic fix:_
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
 
 ** Other fixes
+If in some games external gpu usage will be lacking -
+https://github.com/doitsujin/dxvk/issues/3694#issuecomment-2455562274. The above
+config is for d3d11 and d3d10 games. For d3d9 and d3d8 through dxvk the similar
+config would be d3d9.cachedDynamicBuffers = True ([[https://canary.discord.com/channels/812703221789097985/1324287230809739265/1324656360973012992][discord message link]]).
+
 Xiomi laptop was draining battery like crazy in [s2idle] sleep mode, so i
 changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/etc/default/grub=
