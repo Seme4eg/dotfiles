@@ -1,7 +1,6 @@
 adobe-source-han-sans-cn-fonts
 alsa-utils
 android-tools
-arch-wiki-docs
 base
 base-devel
 bat
@@ -112,7 +111,6 @@ usb_modeswitch
 vulkan-tools
 wf-recorder
 wget
-wikiman
 wine-staging
 wireguard-tools
 wireplumber

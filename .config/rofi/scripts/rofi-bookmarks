@@ -14,6 +14,7 @@ remove_bookmark="Alt+k"
 remove_bookmarks="Alt+K"
 # copies selected bookmark to clipboad (wayland only)
 yank_bookmark="Alt+y"
+open_in_emacs="Control+e"
 
 bookmarks_file="$HOME/Documents/quickmarks"
 
@@ -23,9 +24,11 @@ show_menu() {
     -theme-str '* { font: "syne mono 13"; }' \
     -kb-custom-1 "$add_bookmark" \
     -kb-accept-custom "" \
+    -kb-move-end "" \
     -kb-custom-2 "$remove_bookmark" \
     -kb-custom-3 "$remove_bookmarks" \
     -kb-custom-4 "$yank_bookmark" \
+    -kb-custom-5 "$open_in_emacs" \
     -input "$bookmarks_file")
 
   rofi_exit=$?
@@ -50,6 +53,11 @@ show_menu() {
       [ $rofi_exit -eq 12 ] && show_menu
       ;;
     13) wl-copy "$url" ;;
+    14)
+      pgrep emacs &&
+        emacsclient -e "(progn (require (quote eww)) (eww \"$url\"))" &&
+        hyprctl dispatch focuswindow class:Emacs
+      ;;
     *) xdg-open "$url" ;;
   esac
 }
