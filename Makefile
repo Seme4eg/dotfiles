@@ -75,7 +75,7 @@ cleandeadlinks: ## removes all broken symlinks recursively
 install: dotfiles reflector zsh pacman pacman-install aur-install
 
 postinstall: sysoptions emacs systemd wal goinstall gopkgs pam-gnupg ags pnpm \
-	earlyoom grubtheme wpgtk wine-deps dash steam librewolf captive-portal
+	earlyoom grubtheme gtk-theme wine-deps dash steam librewolf captive-dispatcher flatpak
 
 postreboot: mpv mpd
 
@@ -254,10 +254,20 @@ grubtheme:
 	git reset --hard 6cfd864
 	sudo ./install.sh -s 2k -b
 
-wpgtk:
+THEME=$(shell gsettings get org.gnome.desktop.interface gtk-theme | tr -d "'")
+ICONS=$(shell gsettings get org.gnome.desktop.interface icon-theme | tr -d "'")
+gtk-theme:
 	wpg-install.sh -G
 # apply theme
 	nwg-look -a
+# TODO: line to install flatpak packages from my pkgsflatpak file
+# Fix for theming in flatpak applications:
+# source: https://web.archive.org/web/20230106121332/https://itsfoss.com/flatpak-app-apply-theme/
+	sudo flatpak override --filesystem=$(XDG_DATA_HOME)/themes
+	sudo flatpak override --filesystem=$(XDG_DATA_HOME)/icons
+	sudo flatpak override --env=GTK_THEME=$(THEME)
+	sudo flatpak override --env=ICON_THEME=$(ICONS)
+
 
 # https://github.com/lutris/docs/blob/master/WineDependencies.md#archendeavourosmanjaroother-arch-derivatives
 wine-deps: ## install wine dependencies for heroic
