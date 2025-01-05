@@ -81,6 +81,7 @@ poppler-glib
 pre-commit
 python-pywal
 qrencode
+qutebrowser
 reflector
 ripgrep
 rofi-wayland
