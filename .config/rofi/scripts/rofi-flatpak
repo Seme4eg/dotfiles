@@ -12,8 +12,8 @@ open_url_kbd="Control+o"
 while getopts ":r" Option; do
   case $Option in
     r) # remove package
-      list_flags="list --app --columns=name,size,description"
-      action_flags="uninstall"
+      list_flags="list --app --columns=application,size,description"
+      action_flags="uninstall -y"
       placeholder="Remove package ..."
       success="Removed"
       failure="Failed to remove"
