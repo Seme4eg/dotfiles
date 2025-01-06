@@ -1,6 +1,5 @@
 #!/usr/bin/sh
 
-# application - main field that install command uses
 list_flags="remote-ls --app --columns=application,download-size,description"
 action_flags="install -y"
 placeholder="Install package (regex search) ..."
@@ -33,7 +32,8 @@ notify() {
 
 entry=$(
   # shellcheck disable=SC2086
-  flatpak $list_flags | sort -d |
+  flatpak $list_flags |
+    awk '{print $1 " 「 " $2 " 」 " substr($0, index($0,$3 " " $4))}' |
     rofi -dmenu -matching regex -i \
       -theme-str "#entry { placeholder: \"$placeholder\"; }" \
       -kb-custom-1 "$open_url_kbd"
@@ -48,6 +48,7 @@ pkg=$(echo "$entry" | awk '{print $1}')
 case $rofi_exit in
   10) open_url "$pkg" ;;
   *)
+    # shellcheck disable=SC2086
     if flatpak $action_flags "$pkg"; then
       notify "$success 📦 $pkg"
       flatpak list --app --columns=application >"$HOME/dotfiles/.local/share/pkgsflatpak"
