@@ -82,10 +82,12 @@ postreboot: mpv mpd
 # --- Install ---
 
 dotfiles: ## Initial deploy dotfiles
-	mkdir -p ${HOME}/.local/share/applications
-	mkdir -p ${HOME}/.local/share/fonts
+	mkdir -p $(XDG_DATA_HOME)/applications
+	mkdir -p $(XDG_DATA_HOME)/fonts
 	mkdir -p ${HOME}/.local/bin
 	mkdir -p ${HOME}/.ssh
+# otherwise msmtp fails to create logfile
+	mkdir -p $(XDG_CACHE_HOME)/msmtp
 # or otherwise unsave permissions
 	mkdir -p -m700 ${HOME}/.gnupg
 	$(PACMAN) git stow git-crypt
