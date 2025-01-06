@@ -1,0 +1,11 @@
+[Unit]
+Description=Emacs Daemon
+
+[Install]
+WantedBy=default.target
+
+[Service]
+Type=simple
+ExecStart=emacs --fg-daemon && sleep 7 && emacsclient --eval "(doom-load-session)"
+ExecStop=emacsclient --eval "(kill-emacs)"
+Restart=on-failure
