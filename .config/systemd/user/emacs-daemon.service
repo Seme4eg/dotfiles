@@ -6,6 +6,6 @@ WantedBy=default.target
 
 [Service]
 Type=simple
-ExecStart=emacs --fg-daemon && sleep 7 && emacsclient --eval "(doom-load-session)"
+ExecStart=emacs --fg-daemon
 ExecStop=emacsclient --eval "(kill-emacs)"
 Restart=on-failure
