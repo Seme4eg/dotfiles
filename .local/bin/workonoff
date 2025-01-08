@@ -7,6 +7,5 @@ else
   nmcli con up work-mp
   sleep 3
   systemctl --user start goimapnotify@zimbra
-  sleep 5
   mbsync zimbra
 fi

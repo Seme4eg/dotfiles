@@ -36,9 +36,11 @@ graphviz
 grim
 grub
 gtk-layer-shell
+intel-ucode
 jq
 languagetool
 lf
+lib32-vulkan-intel
 libsixel
 libvterm
 linux
@@ -108,6 +110,7 @@ udiskie
 unrar
 unzip
 usb_modeswitch
+vulkan-intel
 vulkan-tools
 wf-recorder
 wget
@@ -118,6 +121,7 @@ wl-clipboard
 wlsunset
 wtype
 xorg-xhost
+ydotool
 yt-dlp
 zbar
 zoxide

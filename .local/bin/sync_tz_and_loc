@@ -1,11 +1,6 @@
 #!/usr/bin/sh
 
-force=
-
-while getopts ":f" opt; do case $opt in
-  f) force=true ;;
-  *) ;;
-esac done
+[ "$1" = "-f" ] && force=true
 
 set_timezone() {
   # Get the current timezone from the system
@@ -29,7 +24,7 @@ set_coordinates() {
   coordinates=$(curl -s https://ipinfo.io/loc)
   if [ -n "$coordinates" ]; then
     say "Coordinates data updated"
-    echo "$coordinates" >"$XDG_CACHE_HOME/last_known_coordinates.txt"
+    echo "$coordinates" >"$XDG_CACHE_HOME/last_known_coordinates"
     return 0
   else
     say "Fetching new coordinates failed, using old ones"

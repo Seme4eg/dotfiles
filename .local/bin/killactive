@@ -1,11 +1,4 @@
 #!/usr/bin/sh
 
-is_fullscreen() { # total fullscreen, not just maximized window
-  [ "$(hyprctl activewindow -j | jq -r ".fullscreen")" = "true" ] &&
-    [ "$(hyprctl activewindow -j | jq -r ".fullscreenMode")" = "0" ]
-}
-
-case $@ in
-  -f) hyprctl dispatch killactive "" ;;
-  *) ! is_fullscreen && hyprctl dispatch killactive "" || say -e Nope ;;
-esac
+[ "$(hyprctl activewindow -j | jq -r ".fullscreen")" -eq "2" ] &&
+  say -e Nope || hyprctl dispatch killactive ""

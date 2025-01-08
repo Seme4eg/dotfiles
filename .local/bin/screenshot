@@ -4,7 +4,7 @@ set -eo
 
 _path=~/Pictures/Pictures/Screenshots/$(date +"grim_%d%m%Y_%H-%M-%S.png")
 
-case $@ in
+case $1 in
   --fulltoboth) # full screenshot to file and clipboard
     grim "$_path" && wl-copy <"$_path" &&
       say -e -t 1000 'Full taken to folder and clipboard'
@@ -17,7 +17,7 @@ case $@ in
     if grim -g "$(slurp)" "$_path"; then
       wl-copy <"$_path"
     else
-      say "Screenshot failed"
+      say "Screenshot failed/canceled"
     fi
     ;;
   --parttoclip) # partial screenshot to clipboard only
