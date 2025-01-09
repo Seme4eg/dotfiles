@@ -1,4 +1,7 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
+#
+# NOTE: need bash in that script otherwise printf breaks cuz dash doens't
+#  interpret those escape sequenses
 
 . "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
 
