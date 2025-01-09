@@ -2,18 +2,18 @@
 
 list_flags="remote-ls --app --columns=application,download-size,description"
 action_flags="install -y"
-placeholder="Install package (regex search) ..."
+placeholder="Install flatpak package (regex search) ..."
 success="Installed"
 failure="Failed to install"
 
-open_url_kbd="Control+o"
+kb_open_url="Control+o"
 
 while getopts ":r" Option; do
   case $Option in
     r) # remove package
       list_flags="list --app --columns=application,size,description"
       action_flags="uninstall -y"
-      placeholder="Remove package ..."
+      placeholder="Remove flatpak package ..."
       success="Removed"
       failure="Failed to remove"
       ;;
@@ -34,9 +34,10 @@ entry=$(
   # shellcheck disable=SC2086
   flatpak $list_flags |
     awk '{print $1 " 「 " $2 " 」 " substr($0, index($0,$3 " " $4))}' |
-    rofi -dmenu -matching regex -i \
+    rofi -dmenu -sync -matching regex -i \
       -theme-str "#entry { placeholder: \"$placeholder\"; }" \
-      -kb-custom-1 "$open_url_kbd"
+      -mesg "$kb_open_url - open on flathub" \
+      -kb-custom-1 "$kb_open_url"
 )
 
 rofi_exit=$?

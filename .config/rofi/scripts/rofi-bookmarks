@@ -6,28 +6,32 @@
 # man rofi-keys
 
 # adds bookmark to your bookmarks file
-add_bookmark="Control+Return"
+kb_add="Control+Return"
 # copy bookmark line to clipboard (in case you want to create it edited and just
 #   to be save) and removes chosen bookmark from file
-remove_bookmark="Alt+k"
+kb_remove="Alt+k"
 # does same as 'Alt + k', but keeps menu opened
-remove_bookmarks="Alt+K"
+kb_remove_persist="Alt+K"
 # copies selected bookmark to clipboad (wayland only)
-yank_bookmark="Alt+y"
-open_in_emacs="Control+e"
+kb_yank="Alt+y"
+kb_help="Control+h"
+kb_open_in_emacs="Control+e"
 
 bookmarks_file="$HOME/Documents/quickmarks"
 
 show_menu() {
   bookmark=$(rofi -dmenu -i \
-    -theme-str '#entry { placeholder: "Open/yank/kill bookmark:"; }' \
-    -kb-custom-1 "$add_bookmark" \
+    -theme-str '#entry { placeholder: "Open/yank/kill/emacs bookmark:"; }' \
+    -kb-custom-1 "$kb_add" \
     -kb-accept-custom "" \
     -kb-move-end "" \
-    -kb-custom-2 "$remove_bookmark" \
-    -kb-custom-3 "$remove_bookmarks" \
-    -kb-custom-4 "$yank_bookmark" \
-    -kb-custom-5 "$open_in_emacs" \
+    -kb-custom-2 "$kb_remove" \
+    -kb-custom-3 "$kb_remove_persist" \
+    -kb-custom-4 "$kb_yank" \
+    -kb-custom-5 "$kb_open_in_emacs" \
+    -kb-mode-previous "" \
+    -kb-custom-6 "$kb_help" \
+    -mesg "$kb_help - help menu" \
     -input "$bookmarks_file")
 
   rofi_exit=$?
@@ -57,8 +61,24 @@ show_menu() {
         emacsclient -e "(progn (require (quote eww)) (eww \"$url\"))" &&
         hyprctl dispatch focuswindow class:Emacs
       ;;
+    15) help_menu ;;
     *) xdg-open "$url" ;;
   esac
+}
+
+help_menu() {
+  rofi -dmenu -i -theme-str '#entry { placeholder: "<Return> to go back"; }' <<-EOM
+		${kb_add} - Add bookmark
+		${kb_remove} - Remove bookmark and close menu
+		${kb_remove_persist} - Remove bookmark and keep menu opened
+		${kb_yank} - Yank bookmark
+		${kb_open_in_emacs} - Open bookmark in emacs's eww
+		${kb_help} - Open this menu
+	EOM
+
+  [ "$?" -eq 1 ] && exit
+
+  show_menu
 }
 
 show_menu
