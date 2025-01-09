@@ -21,7 +21,6 @@ bookmarks_file="$HOME/Documents/quickmarks"
 show_menu() {
   bookmark=$(rofi -dmenu -i \
     -theme-str '#entry { placeholder: "Open/yank/kill bookmark:"; }' \
-    -theme-str '* { font: "syne mono 13"; }' \
     -kb-custom-1 "$add_bookmark" \
     -kb-accept-custom "" \
     -kb-move-end "" \

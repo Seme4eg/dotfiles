@@ -27,7 +27,7 @@ kb_show_info="Alt+o" # show info like password, security, qr, ssid
 
 backOption='← back'
 
-_rofi() { rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }' "$@"; }
+_rofi() { rofi -dmenu -i "$@"; }
 
 # --- 'config' section end ---
 
@@ -289,7 +289,6 @@ show_menu() {
 
   wifi_on && options+=("$networks")
 
-  # force monospace font to not get those fields messy
   option=$(printf '%s\n' "${options[@]}" | uniq -u | _rofi -select "$current" \
     -kb-custom-1 "$kb_quick_connect" \
     -kb-accept-custom "" \

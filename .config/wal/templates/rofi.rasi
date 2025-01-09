@@ -1,6 +1,7 @@
 * {{
   background: {background}dd;
-  foreground: {foreground}ee;
+  // foreground: {foreground}ee;
+  foreground: white; // cuz of the 'Doto' font, its too transparent
   foreground-op: {foreground}aa;
   accent-a: {color5};
   accent-a-op: {color5}99;
@@ -9,13 +10,9 @@
   border-color: {foreground}88;
   text-color: @foreground;
 
-  // bellota comfortaa shantell sans
-  // font: "bellotatext 16";
-  font: "jura 16";
-
-  // font: "Hubballi 16";
-  // font: "Source Code Pro 12";
-  // font: "Silkscreen 13";
+  font: "Doto 15"; // top 1
+  // font: "syne mono 13"; // top 2
+  // font: "jura 16"; // top 3
 }}
 
 #window {{
