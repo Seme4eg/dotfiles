@@ -1,0 +1,69 @@
+#!/usr/bin/sh
+
+kb_quick_action="Control+Return"
+kb_system="Alt+s"
+kb_user="Alt+u"
+
+current_mode=user
+
+get_services() {
+  sc --$current_mode --type=service --state=running --no-pager --legend=no |
+    awk '{print $1}'
+}
+
+# f-n alias for soystemd
+sc() { systemctl --$current_mode $@; }
+
+sc_restart() { sc daemon-reload && sc restart "$1"; }
+
+show_menu() {
+  service=$(get_services |
+    rofi -dmenu -i \
+      -theme-str '#entry { placeholder: "Do action on soystemd service:"; }' \
+      -mesg "$kb_quick_action - restart; $kb_user - user scope; $kb_system - system scope" \
+      -kb-accept-custom "" \
+      -kb-custom-1 "$kb_quick_action" \
+      -kb-custom-2 "$kb_user" \
+      -kb-custom-3 "$kb_system")
+
+  rofi_exit=$?
+
+  [ $rofi_exit -eq 1 ] && exit
+
+  case $rofi_exit in
+    10) sc_restart "$service" ;;
+    11)
+      current_mode=user
+      show_menu
+      ;;
+    12)
+      current_mode=system
+      show_menu
+      ;;
+    0) actions_menu "$service" ;;
+    *) exit 1 ;;
+  esac
+}
+
+actions_menu() {
+  service="$1"
+
+  [ "$(sc is-active "$service")" = active ] && actions="Stop" || actions="Start"
+
+  actions="$actions:Restart:...........back"
+
+  action=$(echo "$actions" | rofi -dmenu -sep ":" -i)
+
+  [ "$?" -eq 1 ] && exit
+
+  case $action in
+    Stop) sc stop "$service" ;;
+    Start) sc start "$service" ;;
+    Restart) sc_restart "$service" ;;
+    back) show_menu ;;
+  esac
+}
+
+show_menu $current_mode
+
+exit 0
