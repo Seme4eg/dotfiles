@@ -75,7 +75,7 @@ cleandeadlinks: ## removes all broken symlinks recursively
 install: dotfiles reflector zsh pacman pacman-install aur-install
 
 postinstall: sysoptions emacs systemd wal goinstall gopkgs pam-gnupg ags pnpm \
-	earlyoom grubtheme gtk-theme wine-deps dash steam librewolf captive-dispatcher flatpak
+	earlyoom grubtheme gtk-theme dash steam librewolf captive-dispatcher flatpak
 
 postreboot: mpv mpd
 
@@ -88,6 +88,8 @@ dotfiles: ## Initial deploy dotfiles
 	mkdir -p ${HOME}/.ssh
 # otherwise msmtp fails to create logfile
 	mkdir -p $(XDG_CACHE_HOME)/msmtp
+# https://github.com/lutris/docs/blob/master/WineDependencies.md#archendeavourosmanjaroother-arch-derivatives
+	mkdir -p $(XDG_DATA_HOME)/wineprefixes
 # or otherwise unsave permissions
 	mkdir -p -m700 ${HOME}/.gnupg
 	$(PACMAN) git stow git-crypt
@@ -269,18 +271,6 @@ gtk-theme:
 	sudo flatpak override --filesystem=$(XDG_DATA_HOME)/icons
 	sudo flatpak override --env=GTK_THEME=$(THEME)
 	sudo flatpak override --env=ICON_THEME=$(ICONS)
-
-
-# https://github.com/lutris/docs/blob/master/WineDependencies.md#archendeavourosmanjaroother-arch-derivatives
-wine-deps: ## install wine dependencies for heroic
-	mkdir -p "$XDG_DATA_HOME"/wineprefixes
-	$(PACMAN) wine-staging
-	$(PACMAN) --needed --asdeps giflib lib32-giflib gnutls lib32-gnutls v4l-utils \
-		lib32-v4l-utils libpulse lib32-libpulse alsa-plugins lib32-alsa-plugins \
-		alsa-lib lib32-alsa-lib sqlite lib32-sqlite libxcomposite lib32-libxcomposite \
-		ocl-icd lib32-ocl-icd libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs \
-		lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader sdl2 \
-		lib32-sdl2
 
 dash: ## symlink sh to dash
 	sudo ln -sfT dash /usr/bin/sh
