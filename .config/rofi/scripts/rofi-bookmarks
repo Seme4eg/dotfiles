@@ -14,7 +14,7 @@ kb_remove="Alt+k"
 kb_remove_persist="Alt+K"
 # copies selected bookmark to clipboad (wayland only)
 kb_yank="Alt+y"
-kb_help="Control+h"
+kb_help="Alt+h"
 kb_open_in_emacs="Control+e"
 
 bookmarks_file="$HOME/Documents/quickmarks"

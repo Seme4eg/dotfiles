@@ -14,7 +14,7 @@ get_services() {
 # f-n alias for soystemd
 sc() { systemctl --$current_mode $@; }
 
-sc_restart() { sc daemon-reload && sc restart "$1"; }
+sc_restart() { sc daemon-reload && sc restart "$1" && say "Restarted $1"; }
 
 show_menu() {
   service=$(get_services |
@@ -50,9 +50,9 @@ actions_menu() {
 
   [ "$(sc is-active "$service")" = active ] && actions="Stop" || actions="Start"
 
-  actions="$actions:Restart:...........back"
+  actions="$actions\nRestart\nback"
 
-  action=$(echo "$actions" | rofi -dmenu -sep ":" -i)
+  action=$(echo "$actions" | rofi -dmenu -i)
 
   [ "$?" -eq 1 ] && exit
 
