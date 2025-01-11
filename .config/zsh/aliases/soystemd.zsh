@@ -17,7 +17,7 @@
 # journalctl /usr/lib/systemd/systemd # messages by a specific executable
 # journalctl _PID=1 # messages by a specific process:
 alias jc="journalctl -xef -u"
-alias jcu="journalctl --user -xef -u"
+alias jcu="journalctl --user -ef -u" # -x - more verbose
 
 ###############################################################################
 #                                  Systemctl                                  #
