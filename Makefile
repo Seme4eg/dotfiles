@@ -284,6 +284,8 @@ librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
 # path from where to link - https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=firefox-tridactyl-native
 	ln -s /usr/lib/mozilla/native-messaging-hosts/tridactyl.json \
 		${HOME}/.librewolf/native-messaging-hosts/
+	ln -s $(XDG_CONFIG_HOME)/firefox/librewolf.overrides.cfg \
+		${HOME}/.librewolf/
 
 captive-dispatcher: ## install network manager captive portal dispatcher script
 	@sudo wget --output-document \
