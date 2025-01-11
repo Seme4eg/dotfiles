@@ -1,0 +1,10 @@
+[Unit]
+Description=Playerctld Daemon
+
+[Service]
+ExecStart=/usr/bin/playerctld
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
