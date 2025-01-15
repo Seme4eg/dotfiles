@@ -16,6 +16,7 @@ dart-sass
 dash
 dbeaver
 earlyoom
+easyeffects
 editorconfig-core-c
 efibootmgr
 emacs-nativecomp
@@ -69,6 +70,7 @@ otf-hasklig-nerd
 pacman-contrib
 pass
 pass-otp
+pavucontrol
 perl-image-exiftool
 pgformatter
 pipewire-alsa
