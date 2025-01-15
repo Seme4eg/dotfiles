@@ -1,11 +1,13 @@
 #!/usr/bin/sh
 
-if nmcli -g type con show --active | grep -q vpn; then
-  systemctl --user stop goimapnotify@zimbra
+is_active() { nmcli -g type con show --active | grep -q vpn; }
+
+if is_active; then
+  systemctl --user stop goimapnotify@zimbra &
   nmcli con down work-mp
 else
   nmcli con up work-mp
-  sleep 3
+  sleep 5
   systemctl --user start goimapnotify@zimbra
   mbsync zimbra
 fi
