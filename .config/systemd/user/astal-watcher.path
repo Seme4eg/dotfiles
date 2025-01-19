@@ -1,5 +1,6 @@
 [Path]
 PathModified=%h/.config/astal
+PathModified=%h/.config/astal/widget
 
 [Install]
 WantedBy=hyprland-session.target

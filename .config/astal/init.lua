@@ -18,20 +18,17 @@ local function reloadCSS()
   App:apply_css(css)
 end
 
--- XXX: ?in case you will need to reload styles manually - run 'agsv1 -r "reloadCSS()"'
--- from terminal, after you uncomment line below.
--- globalThis.reloadCSS = reloadCSS;
 astal.monitor_file(GLib.getenv("HOME") .. "/.cache/wal/colors.scss", reloadCSS)
 astal.monitor_file(astal_styles_dir, reloadCSS)
 
--- local Left = require("widget.Left")
+local Left = require("widget.Left")
 local Center = require("widget.Center")
--- local Right = require("widget.Right")
+local Right = require("widget.Right")
 
 local theme = Variable("dark")
 -- globalThis.theme = theme; -- XXX
 
-function Bar(monitor)
+local function Bar(monitor)
   return Widget.Window({
     name = "bar-" .. monitor, -- name has to be unique
     monitor = monitor,
@@ -40,13 +37,14 @@ function Bar(monitor)
     -- child: Widget.CenterBox({
     Widget.CenterBox({
       -- add 'slim' to make status bar 'slim'
-      class_name = theme(function(s) return "container_main" .. s end),
-      -- start_widget: Left(),
+      class_name = theme(function(s) return "container_main " .. s end),
       -- center_widget: Center(),
       -- end_widget: Right(),
-      start_widget = Widget.Box(),
+      start_widget = Left(),
+      -- start_widget = Widget.Box(),
       center_widget = Center(),
-      end_widget = Widget.Box()
+      end_widget = Right()
+      -- end_widget = Widget.Box()
     }),
   })
 end

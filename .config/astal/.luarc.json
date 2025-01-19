@@ -6,18 +6,18 @@
     ],
     "libraryFiles": "Opened",
     "globals": [
-      "astal",
+      "Astal",
       "GLib",
-      "Gtk",
       "Gdk",
-      "switch",
+      "Gtk",
+      "Variable",
+      "Widget",
+      "astal",
       "bind",
-      "ternary",
       "lookup_icon",
       "rem",
-      "Widget",
-      "Variable",
-      "Astal"
+      "switch",
+      "ternary"
     ]
   },
   "workspace": {

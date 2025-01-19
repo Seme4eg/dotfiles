@@ -1,9 +1,10 @@
 #+title: Readme
 
-- [[https://superuser.com/questions/1171751/restart-systemd-service-automatically-whenever-a-directory-changes-any-file-ins][hot reloading]] (the astal itself, not css)
+- [[https://superuser.com/questions/1171751/restart-systemd-service-automatically-whenever-a-directory-changes-any-file-ins][hot reloading]] (the astal itself, not css), tldr: start astal and astal-watcher
+  services
 - [[https://aylur.github.io/astal/guide/lua/installation][astal lua doc]]
-- [[https://github.com/tokyob0t/dotfiles/tree/astal/astal][advanced example]], [[https://github.com/Aylur/astal/tree/main/examples/lua/simple-bar][simple example]]
-- [[https://aylur.github.io/libastal/astal3/index.html#classes][libastal reference]]
+- [[https://github.com/tokyob0t/dotfiles/tree/astal/astal][advanced example]] ([[https://github.com/tokyob0t/dotfiles/blob/astal/img/desktop.png][pic]]), [[https://github.com/Aylur/astal/tree/main/examples/lua/simple-bar][simple example]]
+- [[https://aylur.github.io/libastal/astal3/index.html#classes][astal widgets]], [[https://docs.gtk.org/gtk3/#classes][gtk3 widgets]]
 - For which *fonts* are used in this config just search this dir recursively. Cuz
   i might be changing those from time to time and maintaining precise list of
   fonts in this readme will be tedious. The only font to stay for sure is the

@@ -1,6 +1,10 @@
 .user_info {
   @extend %box;
 
+  .tray icon {
+    font-size: 1.2em;
+  }
+
   .layout {
     @extend %shadow-text;
     font: 1.5em Iceland;

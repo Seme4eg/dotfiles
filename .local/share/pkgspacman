@@ -45,7 +45,9 @@ linux
 linux-firmware
 linux-headers
 lsp-plugins
+lua-language-server
 lua52
+luacheck
 man-db
 man-pages
 mangohud
@@ -93,6 +95,7 @@ sndio
 sof-firmware
 steam
 stow
+stylua
 swaync
 swww
 syncthing
