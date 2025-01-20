@@ -1,6 +1,13 @@
 #!/usr/bin/sh
 
-theme=dark # default to dark theme
+exec >/dev/null # redirect all standart output to dev null
+
+theme_file="$XDG_CACHE_HOME/current_theme"
+if [ ! -e "$theme_file" ]; then
+  touch "$theme_file"
+  echo dark >"$theme_file"
+fi
+
 wp=
 # means wallpaper generally generates blend color palette that is makes it hard
 # to work during daylight. If this flag is passed - move wallpaper to 'blend'
@@ -11,15 +18,18 @@ delete= # flag to delete current wp
 # makes it good for night usage.
 night=
 
-while getopts ":w:lbdn" Option; do case $Option in
-  l) theme=light ;;
+while getopts ":w:dlbDn" Option; do case $Option in
+  d) echo dark >"$theme_file" ;;
+  l) echo light >"$theme_file" ;;
   w) wp=$OPTARG ;;
   b) blend=1 ;;
-  d) delete=1 ;;
+  D) delete=1 ;;
   # means wp is good for night cuz lots of yellows and not great during day
   n) night=1 ;;
   *) ;;
 esac done
+
+theme="$(cat "$theme_file")"
 
 if [ $delete ]; then
   . "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
@@ -64,7 +74,6 @@ pywalfox update & # update firefox/librewolf theme
 
 # update emacs theme
 if [ $theme = light ]; then
-  echo yes
   emacsclient -e "(load-theme 'ewal-doom-one-light)" &
 else
   emacsclient -e "(load-theme 'ewal-doom-one)" &
