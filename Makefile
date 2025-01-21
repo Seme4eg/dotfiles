@@ -111,7 +111,10 @@ zsh: ## change shell to zsh, we need those env vars
 
 pacman: ## add user pacman config to [options] section, add community and multilib repos
 	@if [ -z "$$(grep '\[community\]' /etc/$@.conf)" ]; then \
-		sed -i '/HookDir/d' ${HOME}/dotfiles/.config/pacman/pacman.conf # XXX explain
+# on init install remove hooks setting otherwise if pacman fails its gonna
+# owerwrite the files, which is inconvenient. After successful bootstrap i see
+# that change anyway and remove it.
+		sed -i '/HookDir/d' ${HOME}/dotfiles/.config/pacman/pacman.conf
 		sudo sed -i '/^Architecture/ a\Include = ${HOME}/.config/$@/$@.conf' /etc/$@.conf; \
 		echo '
 		[community]
