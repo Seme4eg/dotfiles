@@ -349,6 +349,13 @@ nvidia: nvidia-all ## install stuff for nvidia hybrid laptop
 asus:
 	$(SSEN) tlp.service
 	sudo ln ${HOME}/.config/tlp/01-asus.conf /etc/tlp.d/
+# put following in .config/hypr/hypridle.conf
+# listener {
+#     timeout = 5
+#     on-timeout = brightnessctl -sd asus::kbd_backlight set 0
+#     on-resume = brightnessctl -rd asus::kbd_backlight
+# }
+
 
 lenovo: ## lenovo setup
 	$(PACMAN) vulkan-intel lib32-vulkan-intel bolt
