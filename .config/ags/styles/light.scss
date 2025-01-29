@@ -11,7 +11,9 @@
   }
   .player {
     text-shadow: 3px 3px $_background;
-    .icon {color: $_accent;}
+    .icon {
+      color: $_accent;
+    }
   }
 
   // center block
@@ -24,8 +26,12 @@
 
   // right block
   progressbar {
-    trough {background: $_background;}
-    progress {background: $_accent;};
+    trough {
+      background: $_background;
+    }
+    progress {
+      background: $_accent;
+    }
   }
 
   circular-progress {
@@ -36,15 +42,19 @@
   .sys_info .audio progressbar.vol_progress {
     progress {
       background: $_accent2;
-    };
+    }
   }
 
   .telemetery .bat {
-    &.charging, &.low {color: $background;}
+    &.charging,
+    &.low {
+      color: $background;
+    }
   }
 
   .telemetery {
-    .temp {color: $_accent;}
+    .temp {
+      color: $_accent;
+    }
   }
-
 }
