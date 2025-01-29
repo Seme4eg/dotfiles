@@ -328,8 +328,7 @@ mpd:
 amd: ## install ASUS laptop specific software
 # support for vulkan api
 	@$(PACMAN) --needed --asdeps mesa mesa-utils lib32-mesa mesa-vdpau \
-		libva-mesa-driver vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader \
-		lib32-vulkan-icd-loader vulkan-tools
+		libva-mesa-driver vulkan-radeon lib32-vulkan-radeon
 	@$(YAY) amdgpu_top-bin
 	@vulkaninfo --summary | grep -q OPEN_SOURCE && sudo pacman -Rns amdvlk lib32-amdvlk
 
