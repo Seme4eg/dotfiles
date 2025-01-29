@@ -28,8 +28,8 @@ alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
 
 hyprupd() {
   hyprpacks=($(yay -Qsq hypr) aquamarine-git)
-  # rebuild all, otherwise annoying libhyprutils.so issue always
-  yay -S --rebuild "${hyprpacks[@]}"
+  # better --clean and --rebuild all, otherwise annoying so issues
+  yay -S $@ "${hyprpacks[@]}" # --rebuild / --clean / --noconfirm
 }
 
 alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
