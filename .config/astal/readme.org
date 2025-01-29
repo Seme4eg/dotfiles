@@ -1,7 +1,7 @@
 #+title: Readme
 
-- [[https://superuser.com/questions/1171751/restart-systemd-service-automatically-whenever-a-directory-changes-any-file-ins][hot reloading]] (the astal itself, not css), tldr: start astal and astal-watcher
-  services
+- [[https://www.youtube.com/watch?v=9KAp_zWeI34][hot reloading]] (the astal itself, not css), http://eradman.com/entrproject, see
+  the 'exec-once' statement in hypr config for ags.
 - [[https://aylur.github.io/astal/guide/lua/installation][astal lua doc]]
 - [[https://github.com/tokyob0t/dotfiles/tree/astal/astal][advanced example]] ([[https://github.com/tokyob0t/dotfiles/blob/astal/img/desktop.png][pic]]), [[https://github.com/Aylur/astal/tree/main/examples/lua/simple-bar][simple example]]
 - [[https://aylur.github.io/libastal/astal3/index.html#classes][astal widgets]], [[https://docs.gtk.org/gtk3/#classes][gtk3 widgets]]
