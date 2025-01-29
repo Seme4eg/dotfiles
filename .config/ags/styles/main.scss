@@ -22,13 +22,14 @@ $_background: color.scale($color5, $saturation: -50%, $lightness: -40%);
 // no nesting, otherwise no worky
 menu {
   @extend %box;
-  padding: 10px;
+  padding: 0;
   margin-right: 20px;
   menuitem {
-    padding: 1px 0;
+    padding: 1px 10px;
+    color: $foreground;
     font: bold 1em Jura; // Comfortaa; Unbounded;
     &:hover {
-      background-color: color.scale($color6, $lightness: -60%);
+      background-color: $color6;
     }
   }
 }
