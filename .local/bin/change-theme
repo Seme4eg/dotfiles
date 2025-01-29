@@ -9,20 +9,13 @@ if [ ! -e "$theme_file" ]; then
 fi
 
 wp=
-# means wallpaper generally generates blend color palette that is makes it hard
-# to work during daylight. If this flag is passed - move wallpaper to 'blend'
-# dir.
-blend=
 delete= # flag to delete current wp
-# similar to 'blend' but wp is more yellow-ish and with decent contrast that
-# makes it good for night usage.
-night=
+night=  # mark wp as good for night time
 
-while getopts ":w:dlbDn" Option; do case $Option in
+while getopts ":w:dlDn" Option; do case $Option in
   d) echo dark >"$theme_file" ;;
   l) echo light >"$theme_file" ;;
   w) wp=$OPTARG ;;
-  b) blend=1 ;;
   D) delete=1 ;;
   # means wp is good for night cuz lots of yellows and not great during day
   n) night=1 ;;
@@ -35,13 +28,6 @@ if [ $delete ]; then
   . "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
   rm "$wallpaper"
   say -e "WP obliterated"
-elif [ $blend ]; then
-  # move current wallpaper to directory with blend wallpapers
-  . "$HOME/.cache/wal/colors.sh"
-  blend_wps_dir="$HOME/Pictures/DCIM/blend"
-  [ ! -d "$blend_wps_dir" ] && mkdir -p "$blend_wps_dir"
-  mv -f "$wallpaper" "$blend_wps_dir"
-  say -e "WP blendered"
 elif [ $night ]; then
   # move current wallpaper to directory with night wallpapers
   . "$HOME/.cache/wal/colors.sh"
