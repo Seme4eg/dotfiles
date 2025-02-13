@@ -1,0 +1,86 @@
+# schema checking based on latest git
+# $schema: https://f.jstanger.dev/github/ironbar/schema.json
+anchor_to_edges: true
+position: top
+# icon_theme: Paper
+start:
+  - type: workspaces
+    all_monitors: false
+    name_map:
+      "1": O
+      "2": O
+      "3": O
+      "4": O
+      "5": O
+  - type: focused
+    show_icon: false
+    truncate:
+      mode: end
+      # length: 25
+      max-length: 25
+  - type: music
+    player_type: mpris
+    truncate:
+      mode: end
+      max_length: 20
+    icons:
+      play: 
+      pause: 
+center:
+  - type: clock
+    format: "#%j %a %d/%m %H:%M"
+    justify: center
+end:
+  # - type: tray
+  - type: keyboard
+    icons:
+      layout_map:
+        "English (US)": "EN"
+        "Russian": "RU"
+  - type: script
+    cmd: "echo 󰏗  $(checkupdates | wc -l)"
+    interval: 3600000 # once an hour
+  # - type: script
+  #   mode: watch
+  #   cmd: "swaync-client -s | jq .count"
+  - type: notifications
+    show_count: true
+    icons:
+      closed_none: 󰍥
+      closed_some: 󱥂
+      closed_dnd: 󱅯
+      open_none: 󰍡
+      open_some: 󱥁
+      open_dnd: 󱅮
+  - type: sys_info
+    interval:
+      networks: 1
+    format:
+      # -  {cpu_percent}% | {temp_c:k10temp-Tccd1}°C
+      # -  {memory_used} / {memory_total} GB ({memory_percent}%)
+      # - 󰋊 {disk_used:/} / {disk_total:/} GB ({disk_percent:/}%)
+      - 󰓢 {net_up:wlp0s20f3} / {net_down:wlp0s20f3}
+      # - 󰖡 {load_average:1} | {load_average:5} | {load_average:15}
+  - type: volume
+    format: "{icon} {percentage}"
+    max_volume: 100
+    icons:
+      volume_high: 󰋋
+      volume_medium: 󰋋
+      volume_low: 󰋋
+      muted: 󰟎
+  - type: custom
+    bar:
+      - type: progress
+        orientation: vertical
+        value:
+          cmd: "~/dotfiles/.config/ags/scripts/backlight"
+          mode: watch
+        max: 100
+  # - type: custom
+  #   class: power-menu
+  #   bar:
+  #     - type: button
+  #       name: power-btn
+  #       label: 
+  #       on_click: popup:toggle
