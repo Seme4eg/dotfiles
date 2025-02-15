@@ -13,6 +13,8 @@ export BROWSER=librewolf
 
 export MAKEFLAGS="-j$(nproc)"
 
+# inlay hints in golang buffers don't work with that:
+# https://github.com/emacs-lsp/lsp-mode/issues/4357#issuecomment-1986856407
 export LSP_USE_PLISTS=true
 
 # zsh-vi-mode
