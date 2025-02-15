@@ -25,6 +25,9 @@ ZVM_LAZY_KEYBINDINGS=false
 HISTFILE="$XDG_CACHE_HOME/zhistory"
 # HISTSIZE and SAVEHIST are set in grmlrc
 
+# --- Gitlab CI Env vars ---
+export GCL_CLEANUP=true # --cleanup option
+
 # to check which opts are active run 'setopt' in the terminal
 setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
 setopt HIST_IGNORE_DUPS       # Do not record an event that was just recorded again.

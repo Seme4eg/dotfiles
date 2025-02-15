@@ -4,6 +4,7 @@ tmp/
 .github/
 *.http
 node_modules/
+.gitlab-ci-local/
 
 # dotfiles specific
 .antidote
