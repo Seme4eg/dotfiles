@@ -214,7 +214,6 @@ gopkgs: ## install go and its packages
 	go install golang.org/x/tools/cmd/godoc@latest
 	go install golang.org/x/tools/cmd/goimports@latest
 	go install golang.org/x/tools/cmd/gorename@latest
-	go install golang.org/x/tools/cmd/guru@latest
 	go install github.com/cweill/gotests/gotests@latest
 	go install github.com/fatih/gomodifytags@latest
 # emacs docker files formatting
