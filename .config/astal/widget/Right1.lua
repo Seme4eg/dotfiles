@@ -57,6 +57,7 @@ local function Layout()
   -- local DEFAULT_KB <const> = "at-translated-set-2-keyboard"
   return Widget.Label({
     class_name = "layout",
+    label = "EN",
     setup = function(self)
       self:hook(hypr, "keyboard-layout", function(_, _, layout)
         self.label = string.upper(string.sub(tostring(layout), 1, 2))
@@ -107,6 +108,7 @@ local function TrayAndLayout()
 end
 
 local function WeatherAndUpdates()
+
   -- local updatesCount = Variable("~"):poll(
   --   60 * 60 * 1000, -- once an hour
   --   { "bash", "-c", "checkupdates | wc -l" }
