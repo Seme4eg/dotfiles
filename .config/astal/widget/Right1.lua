@@ -1,5 +1,6 @@
 local astal = require("astal.gtk3")
 local Widget = require("astal.gtk3.widget")
+local json = require("../lib/json")
 local Tray = require("lgi").require("AstalTray")
 local Hyprland = require("lgi").require("AstalHyprland")
 local Variable = require("astal").Variable
@@ -108,24 +109,24 @@ local function TrayAndLayout()
 end
 
 local function WeatherAndUpdates()
+  local updatesCount = Variable("~"):poll(
+    60 * 60 * 1000, -- once an hour
+    "bash -c 'checkupdates | wc -l'",
+    function(out, _) return out end
+  )
 
-  -- local updatesCount = Variable("~"):poll(
-  --   60 * 60 * 1000, -- once an hour
-  --   { "bash", "-c", "checkupdates | wc -l" }
-  -- )
-
-  -- local weather = Variable("···"):poll(
-  --   60 * 60 * 1000,
-  --   { "bash", "-c", "$HOME/.config/ags/scripts/weather" },
-  --   function(out, _)
-  --     if #out > 8 then
-  --       return "󰒏" -- length more than 8 is an error from server
-  --     elseif #out > 0 then
-  --       return out
-  --     end
-  --     return "···"
-  --   end
-  -- )
+  local weather = Variable("···"):poll(
+    60 * 60 * 1000,
+    "bash -c $HOME/.config/ags/scripts/weather",
+    function(out, _)
+      if #out > 8 then
+        return "󰒏" -- length more than 8 is an error from server
+      elseif #out > 0 then
+        return out
+      end
+      return "···"
+    end
+  )
 
   local packageIcon = "󰏗 " --   󰏗
 
@@ -139,12 +140,45 @@ local function WeatherAndUpdates()
       Widget.Box({
         vertical = true,
         halign = "CENTER",
-        -- Widget.Label({ label = bind(weather) }),
-        -- Widget.Label({
-        --   label = bind(updatesCount):as(function(v) return packageIcon .. v end)
-        -- })
+        Widget.Label({ label = bind(weather) }),
+        Widget.Label({
+          label = bind(updatesCount):as(function(v) return packageIcon .. v end)
+        })
       })
     }
+  })
+end
+
+local function NotificationsCount(count)
+  return Widget.Revealer({
+    reveal_child = bind(count):as(function(c) return c > 0 end),
+    transition_type = "SLIDE_RIGHT",
+    transition_duration = 350,
+    Widget.Overlay({
+      class_name = "notification_counter",
+      Widget.Label({ class_name = "fg", label = bind(count):as(tostring) }),
+      overlays = {
+        Widget.Label({
+          class_name = "bg",
+          valign = "CENTER",
+          label = "󱥂"
+        })
+      }
+    })
+  })
+end
+
+local function UpdatesWeatherAndNotifs()
+  local notif_count = Variable(0):watch(
+    "bash -c 'swaync-client -s'", function(out)
+      return json.decode(out).count
+    end
+  )
+
+  return Widget.Box({
+    spacing = bind(notif_count):as(function(c) return tonumber(c) > 0 and spacing or 0 end),
+    WeatherAndUpdates(),
+    NotificationsCount(notif_count)
   })
 end
 
@@ -153,6 +187,6 @@ return function()
     class_name = "user_info",
     spacing = spacing,
     TrayAndLayout(),
-    WeatherAndUpdates()
+    UpdatesWeatherAndNotifs(),
   })
 end

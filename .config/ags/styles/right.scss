@@ -141,13 +141,15 @@ progressbar {
   }
 }
 
-circular-progress {
+circular-progress,
+circularprogress {
   color: $_accent;
   font-size: 3px;
   min-height: 27px;
   min-width: 27px; // without this both circular progress widgets break
   background: $_background;
 }
+
 .circle_text {
   opacity: 0.5;
 }
@@ -183,12 +185,6 @@ circular-progress {
       .value {
         color: $foreground;
       }
-    }
-  }
-
-  .memory {
-    circular-progress {
-      font-size: 3px;
     }
   }
 

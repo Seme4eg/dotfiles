@@ -23,7 +23,7 @@ function CPU() {
       (out) => {
         const load = out / 100;
         let copy = cpu.getValue();
-        if (copy.length >= historyLen) copy.shift();
+        copy.shift();
         copy.push(load);
         cpu.setValue(copy);
         return copy;
