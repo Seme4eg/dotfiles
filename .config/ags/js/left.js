@@ -85,6 +85,18 @@ function Media() {
 
   const visible = mpris.bind("players").as((p) => p.length > 0);
 
+  let Title = function (invisible) {
+    return Widget.Label({
+      className: "title",
+      css: invisible && "color: transparent; text-shadow: none;" || "",
+      label: trackTitle,
+      visible,
+      maxWidthChars: 20,
+      ellipsize: true,
+      truncate: "end",
+    })
+  }
+
   return Widget.Box({
     className,
     spacing: 0,
@@ -97,24 +109,14 @@ function Media() {
         child: Widget.Box({
           spacing: 10,
           children: [
-            Widget.Label({
-              className: "icon",
-              visible,
-              label: icon,
-            }),
-            Widget.Box({
-              vertical: true,
-              vpack: "center",
-              hpack: "start",
-              children: [
-                Widget.Label({
-                  className: "title",
-                  label: trackTitle,
-                  visible,
-                  maxWidthChars: 20,
-                  ellipsize: true,
-                  truncate: "end",
-                }),
+            Widget.Label({ className: "icon", visible, label: icon, }),
+            // using overlay here for that widget to not extend the bar height
+            // .. happens sometimes when there are jap. / chinese symbols in text
+            Widget.Overlay({
+              // invisible duplicate of text, keeps widget width
+              child: Title(true),
+              overlays: [
+                Title(),
                 Widget.Revealer({
                   transition: "slide_down",
                   transitionDuration: 250,

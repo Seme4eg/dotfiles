@@ -33,9 +33,11 @@
     font: bold 1em Megrim;
     letter-spacing: 2px;
     &.title {
+      margin-top: -15px;
       @extend %shadow-text;
     }
     &.artist {
+      margin-bottom: -15px;
       font: bold 0.7em Megrim;
     }
   }
