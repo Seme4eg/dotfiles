@@ -79,6 +79,7 @@ function Media() {
         active.track_artists?.join("").length > 1
     }
   )
+
   const className = mpris
     .bind("players")
     .as((p) => "media " + (p.length === 0 ? "media_hidden" : ""));
@@ -87,7 +88,7 @@ function Media() {
 
   let Title = function (invisible) {
     return Widget.Label({
-      className: "title",
+      className: revealArtist.as((i) => `title ${i === true ? "title_margin" : ""}`),
       css: invisible && "color: transparent; text-shadow: none;" || "",
       label: trackTitle,
       visible,
