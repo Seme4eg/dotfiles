@@ -17,6 +17,7 @@
   @extend %bright-text;
   font: bold 1.2em Jura; // Comfortaa; Unbounded;
   color: color.scale($foreground, $lightness: -10%);
+  padding-bottom: 2px;
 }
 
 .media {
