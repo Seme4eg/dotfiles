@@ -38,7 +38,7 @@ show_menu() {
 
   [ $rofi_exit -eq 1 ] && exit
 
-  url=$(echo "$bookmark" | cut -d ' ' -f 2)
+  url="${bookmark#* }" # cut everything after first space
 
   case $rofi_exit in
     10)
