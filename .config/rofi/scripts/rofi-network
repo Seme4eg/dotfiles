@@ -10,7 +10,7 @@ FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL BSSID)
 
 get_active_ssid() {
   nmcli -f active,ssid dev wifi |
-    awk -F '  +' '/^yes/ {$1=""; print $0}' | xargs # xargs to strip spaces
+    awk -F '  +' '/^yes/ {$1=""; gsub(/^[ \t]+|[ \t]+\$/, "", $0); print $0}'
 }
 
 initial_ssid=$(get_active_ssid)
@@ -47,12 +47,13 @@ get_field() {
 
   _networks() { nmcli -f bssid,security,ssid device wifi list; }
 
+  # NOTE: not using xargs to trim ssid string cuz it fails if ssid contains '''
   case $field in
     ssid)
-      _networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; print \$0}" | xargs
+      _networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; gsub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}"
       ;;
     security)
-      _networks | awk -F '  +' "/$bssid/ {print \$2}" | xargs
+      _networks | awk -F '  +' "/$bssid/ {gsub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
       ;;
     *)
       echo "$option"
