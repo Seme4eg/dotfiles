@@ -109,7 +109,7 @@ zsh: ## change shell to zsh, we need those env vars
 	chsh -s /usr/bin/zsh
 
 
-pacman: ## add user pacman config to [options] section, add community and multilib repos
+pacman: ## add user pacman config to [options] section, add multilib repos
 	@if [ -z "$$(grep '\[community\]' /etc/$@.conf)" ]; then \
 # on init install remove hooks setting otherwise if pacman fails its gonna
 # owerwrite the files, which is inconvenient. After successful bootstrap i see
@@ -117,9 +117,6 @@ pacman: ## add user pacman config to [options] section, add community and multil
 		sed -i '/HookDir/d' ${HOME}/dotfiles/.config/pacman/pacman.conf
 		sudo sed -i '/^Architecture/ a\Include = ${HOME}/.config/$@/$@.conf' /etc/$@.conf; \
 		echo '
-		[community]
-		Include = /etc/pacman.d/mirrorlist
-
 		[multilib]
 		Include = /etc/pacman.d/mirrorlist' | sudo tee -a /etc/$@.conf; \
 	fi
