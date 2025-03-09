@@ -93,8 +93,7 @@ function Media() {
       label: trackTitle,
       visible,
       maxWidthChars: 20,
-      ellipsize: true,
-      truncate: "end",
+      truncate: trackTitle.as((v) => v.length > 20 ? "end" : "none"),
     })
   }
 
