@@ -8,9 +8,16 @@
 FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL BSSID)
 # will b empty if no active connection
 
+# NOTE: using 'sub' and not 'gsub' in the script cuz stripping last space isn't
+# needed since:
+# - i use it to only strip SSID spaces
+# - but i print SSID last, hence
+# - trailing spaces that are present are a part of the SSID itself
+# - so i only need to strip the first ones
+
 get_active_ssid() {
   nmcli -f active,ssid dev wifi |
-    awk -F '  +' '/^yes/ {$1=""; gsub(/^[ \t]+|[ \t]+\$/, "", $0); print $0}'
+    awk -F '  +' '/^yes/ {$1=""; sub(/^[ \t]+|[ \t]+\$/, "", $0); print $0}'
 }
 
 initial_ssid=$(get_active_ssid)
@@ -50,10 +57,10 @@ get_field() {
   # NOTE: not using xargs to trim ssid string cuz it fails if ssid contains '''
   case $field in
     ssid)
-      _networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; gsub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}"
+      _networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; sub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}"
       ;;
     security)
-      _networks | awk -F '  +' "/$bssid/ {gsub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
+      _networks | awk -F '  +' "/$bssid/ {sub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
       ;;
     *)
       echo "$option"
@@ -139,11 +146,18 @@ toggle_ssid() {
 
     _connecting "$ssid"
 
+    # variable to save the connection command error, because often needed
+    error="$(nmcli device wifi connect "$ssid" password "$wifi_pass" 2>&1 >/dev/null)"
+
     # if connection failed - prompt again and remove attempted connection from
     # saved ones (cuz it does save connection even if wrong pass was provided)
-    if ! nmcli device wifi connect "$ssid" password "$wifi_pass"; then
+    if [ $? -ne 0 ]; then
       nmcli connection delete id "$1"
-      say -e "Nope."
+      if [[ "$error" =~ .*Connection.activation.failed.* ]]; then
+        say -e Nope
+      else
+        say "$error"
+      fi
       _connect "$1"
     fi
 
