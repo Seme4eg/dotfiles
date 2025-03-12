@@ -155,10 +155,12 @@ toggle_ssid() {
       nmcli connection delete id "$1"
       if [[ "$error" =~ .*Connection.activation.failed.* ]]; then
         say -e Nope
+        _connect "$1"
       else
+        # if there is some other error i most likely don't need a retry
         say "$error"
+        exit 1
       fi
-      _connect "$1"
     fi
 
     # required to show success notif
