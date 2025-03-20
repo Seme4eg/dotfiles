@@ -8,13 +8,6 @@
 FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL BSSID)
 # will b empty if no active connection
 
-# NOTE: using 'sub' and not 'gsub' in the script cuz stripping last space isn't
-# needed since:
-# - i use it to only strip SSID spaces
-# - but i print SSID last, hence
-# - trailing spaces that are present are a part of the SSID itself
-# - so i only need to strip the first ones
-
 get_active_ssid() {
   nmcli -f active,ssid dev wifi |
     awk -F '  +' '/^yes/ {$1=""; sub(/^[ \t]+|[ \t]+\$/, "", $0); print $0}'
@@ -57,10 +50,15 @@ get_field() {
   # NOTE: not using xargs to trim ssid string cuz it fails if ssid contains '''
   case $field in
     ssid)
-      _networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; sub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}"
+      # first get dirty ssid, with all spaces trimmed even tho trailing space
+      # might be a part of ssid
+      ssid=$(_networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; gsub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}")
+      # NOTE: match in grep only by words, not lines, cuz trailing spaces
+      # this should fix cases when SSID has trailing whitespace
+      nmcli -t -f ssid,security device wifi list | grep -w "$ssid" | awk -F ':' '{print $1}'
       ;;
     security)
-      _networks | awk -F '  +' "/$bssid/ {sub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
+      _networks | awk -F '  +' "/$bssid/ {gsub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
       ;;
     *)
       echo "$option"
