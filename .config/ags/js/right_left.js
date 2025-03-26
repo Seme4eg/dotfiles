@@ -8,7 +8,7 @@ export default function RLeft() {
   return Widget.Box({
     className: "user_info",
     spacing,
-    children: [TrayAndLayout(), UpdatesWeatherAndNotifs()],
+    children: [TrayAndLayout(), UpdatesAndNotifs()],
   });
 }
 
@@ -90,7 +90,7 @@ function Submap() {
   }).hook(hyprland, (_, submap) => _submap.setValue(submap), "submap");
 }
 
-function UpdatesWeatherAndNotifs() {
+function UpdatesAndNotifs() {
   let notif_count = Variable(0, {
     listen: [
       ["bash", "-c", "swaync-client -s"], // subscribe to swaync events
@@ -100,7 +100,7 @@ function UpdatesWeatherAndNotifs() {
 
   return Widget.Box({
     spacing: notif_count.bind().as(c => Number(c) > 0 ? spacing : 0),
-    children: [WeatherAndUpdates(), NotificationsCount(notif_count)],
+    children: [Updates(), NotificationsCount(notif_count)],
   });
 }
 
@@ -124,7 +124,7 @@ export function NotificationsCount(notif_count) {
   });
 }
 
-function WeatherAndUpdates() {
+function Updates() {
   const updatesCount = Variable("~", {
     poll: [
       60 * 60 * 1000, // once an hour
@@ -132,44 +132,18 @@ function WeatherAndUpdates() {
     ],
   });
 
-  // const weather = Utils.fetch('http://wttr.in/?format=3')
-  //   .then(res => res.text())
-  //   .then(print)
-  //   .catch(console.error)
-
-  const weather = Variable("···", {
-    poll: [
-      60 * 60 * 1000,
-      ["bash", "-c", "~/dotfiles/.config/ags/scripts/weather"],
-      (out) => {
-        if (out.length > 8)
-          return "󰒏"; // length more than 8 is an error from server
-        else if (out.length > 0) return out;
-        return "···";
-      },
-    ],
-  });
-
   const packageIcon = "󰏗 "; //   󰏗
 
   return Widget.Overlay({
-    className: "weather_and_updates",
-    child: Widget.Separator({
-      vertical: false,
-      vpack: "center",
-      widthRequest: 41,
+    className: "updates",
+    child: Widget.Box({
+      // vertical: true,
+      hpack: "center",
+      children: [
+        Widget.Label({
+          label: updatesCount.bind().as((u) => packageIcon + u),
+        }),
+      ],
     }),
-    overlays: [
-      Widget.Box({
-        vertical: true,
-        hpack: "center",
-        children: [
-          Widget.Label({ label: weather.bind() }),
-          Widget.Label({
-            label: updatesCount.bind().as((u) => packageIcon + u),
-          }),
-        ],
-      }),
-    ],
   });
 }
