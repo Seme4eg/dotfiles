@@ -54,7 +54,6 @@ export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc" # :"$XDG_CONFIG_HOME/gtk-2.0/gtkrc.mine"
 export ADB_KEYS_PATH="/home/earthian/Documents/tech/android/adbkeys"
 export PNPM_HOME=$XDG_DATA_HOME/pnpm
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export W3M_DIR="$XDG_STATE_HOME/w3m"
 export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
