@@ -23,7 +23,6 @@ set_timezone() {
 set_coordinates() {
   coordinates=$(curl -s https://ipinfo.io/loc)
   if [ -n "$coordinates" ]; then
-    say "Coordinates data updated"
     echo "$coordinates" >"$XDG_CACHE_HOME/last_known_coordinates"
     return 0
   else
