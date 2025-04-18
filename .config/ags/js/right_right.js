@@ -1,11 +1,27 @@
 const battery = await Service.import("battery");
 
+const spacing = 11;
+
 export default function RRight() {
   return Widget.Box({
     className: "telemetery",
-    spacing: 11,
-    children: [CPU(), Memory(), Battery()],
+    spacing,
+    children: [CPU_GPU(), Memory(), Battery()],
   });
+}
+
+function CPU_GPU() {
+  const gpu_status = Variable("disconnected", {
+    listen: [
+      ["bash", "-c", App.configDir + "/scripts/amdgpu_watcher"],
+      (out) => out,
+    ],
+  });
+
+  return Widget.Box({
+    spacing: gpu_status.bind().as((status) => status !== "disconnected" ? spacing : 0),
+    children: [CPU(), GPU(gpu_status)],
+  })
 }
 
 function CPU() {
@@ -73,6 +89,23 @@ function CPU() {
         ),
       }),
     ],
+  });
+}
+
+function GPU(status) {
+  return Widget.Revealer({
+    transition: "slide_right",
+    transitionDuration: 350,
+    revealChild: status.bind().as((status) => status !== "disconnected"),
+    child: Widget.Label({
+      className: "gpu",
+      label: status.bind().as((status) => {
+        // or 󱎓, see nerd icons search 'game'
+        if (status === "authorized") return "󰸶"
+        else if (status === "probing_done") return "󰸳"
+        return ""
+      }),
+    }),
   });
 }
 
