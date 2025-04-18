@@ -24,7 +24,7 @@ alias gpgreload="systemctl --user restart gpg-agent"
 alias cheatengine="xhost +local: &; gameconqueror"
 
 # NOTE: tlp-stat also shows the capacity
-alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BATT"
+alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 
 hyprupd() {
   sudo pacman -S --noconfirm gdb # atm not listed as dep for some hypr pkgs
