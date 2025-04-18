@@ -32,7 +32,7 @@ else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
   # /etc/systemd/logind.conf
   if single_monitor; then
-    systemctl suspend
+    systemctl sleep
   else
     hyprctl keyword monitor "eDP-1, disable"
   fi
