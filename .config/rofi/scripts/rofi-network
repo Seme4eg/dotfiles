@@ -43,22 +43,26 @@ get_networks() {
 get_field() {
   field="$1"
   option="$2"
-  bssid=$(echo "$option" | awk '{print $NF}') # get last column
+  bssid=$(echo "$option" | awk '{print $NF}')     # get last column
+  freq=$(echo "$option" | grep -oP '\d+(?= MHz)') # get frequency
 
-  _networks() { nmcli -f bssid,security,ssid device wifi list; }
+  # freqency needed to not duplicate output for same network but different
+  # frequencies
+  _networks() { nmcli -f bssid,security,freq,ssid device wifi list; }
 
   # NOTE: not using xargs to trim ssid string cuz it fails if ssid contains '''
   case $field in
     ssid)
       # first get dirty ssid, with all spaces trimmed even tho trailing space
       # might be a part of ssid
-      ssid=$(_networks | awk -F '  +' "/$bssid/ {\$1=\$2=\"\"; gsub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}")
+      ssid=$(_networks | awk -F 'MHz  ' "/$bssid.*$freq/ {\$1=\"\"; gsub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}")
+
       # NOTE: match in grep only by words, not lines, cuz trailing spaces
       # this should fix cases when SSID has trailing whitespace
-      nmcli -t -f ssid,security device wifi list | grep -w "$ssid" | awk -F ':' '{print $1}'
+      nmcli -t -f ssid,security,freq device wifi list | grep -w "$ssid.*$freq" | awk -F ':' '{print $1}'
       ;;
     security)
-      _networks | awk -F '  +' "/$bssid/ {gsub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
+      _networks | awk -F 'MHz  ' "/$bssid.*$freq/ {gsub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
       ;;
     *)
       echo "$option"
