@@ -83,6 +83,15 @@ ffboost() {
 
 # --------------
 
+# TLDR: you need the -crf flag most likely
+# ---
+# -c:v libx264 - video codec
+# -crf - Constant Rate Factor controls the quality and compression level of the
+#        video. Lower values - lower quality.
+# -preset slow - speed vs. compression efficiency (where 'ultrafast' = not much
+#                compression)
+# -c:a aac - audio codec
+# -b:a - audio bitrate
 vidcompress() {
-  ffmpeg -i "$1" -c:v libx264 -preset slow -crf 23 -c:a aac -b:a 192k "compressed_${1}"
+  ffmpeg -i "$1" -c:v libx264 -preset slow -crf 13 -c:a aac -b:a 192k "compressed_${1}"
 }
