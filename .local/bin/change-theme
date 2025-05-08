@@ -10,15 +10,12 @@ fi
 
 wp=
 delete= # flag to delete current wp
-night=  # mark wp as good for night time
 
-while getopts ":w:dlDn" Option; do case $Option in
+while getopts ":w:dlD" Option; do case $Option in
   d) echo dark >"$theme_file" ;;
   l) echo light >"$theme_file" ;;
   w) wp=$OPTARG ;;
   D) delete=1 ;;
-  # means wp is good for night cuz lots of yellows and not great during day
-  n) night=1 ;;
   *) ;;
 esac done
 
@@ -28,13 +25,6 @@ if [ $delete ]; then
   . "$HOME/.cache/wal/colors.sh" # import current theme to get cur wp path
   rm "$wallpaper"
   say -e "WP obliterated"
-elif [ $night ]; then
-  # move current wallpaper to directory with night wallpapers
-  . "$HOME/.cache/wal/colors.sh"
-  night_wps_dir="$HOME/Pictures/DCIM/night"
-  [ ! -d "$night_wps_dir" ] && mkdir -p "$night_wps_dir"
-  mv -f "$wallpaper" "$night_wps_dir"
-  say -e "WP nighted"
 fi
 
 if [ -z "$wp" ]; then
