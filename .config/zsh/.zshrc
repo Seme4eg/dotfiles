@@ -53,7 +53,9 @@ zvm_vi_yank() {
 bindkey '^p' history-substring-search-up
 bindkey '^n' history-substring-search-down
 
-fcd() { cd "$(find -type d | fzf)"; }
+fcd() {
+  cd "$(find . -type d -maxdepth 7 -not -path '*steam*' -not -path '*Steam*' -not -path '*.git/*' -not -path '*.librewolf/*' 2>/dev/null | fzf -i)"
+}
 # ^o doesn't work in foot, cuz idk. In foot use ^O
 bindkey -s '^o' 'fcd^M' # ^u in the beginning?
 
