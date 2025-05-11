@@ -46,13 +46,6 @@
     }
   }
 
-  .telemetery .bat {
-    &.charging,
-    &.low {
-      color: $background;
-    }
-  }
-
   .telemetery {
     .temp {
       color: $_accent;
