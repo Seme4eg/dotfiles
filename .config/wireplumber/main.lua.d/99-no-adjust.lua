@@ -1,10 +1,9 @@
 table.insert(default_access.rules, {
-   matches = {
-   {
-     { "application.process.binary", "=", "electron" },
-     { "application.process.binary", "=", "firefox" }
-     { "application.process.binary", "=", "vesktop" }
-   }
-   },
-   default_permissions = "rx",
+  matches = {
+    {
+      { "application.process.binary", "=", "electron" },
+      { "application.process.binary", "=", "firefox" }
+    }
+  },
+  default_permissions = "rx",
 })
