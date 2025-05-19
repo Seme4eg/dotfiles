@@ -34,8 +34,7 @@ node_modules/
 /.config/gthumb/
 /.config/chromium/
 /.local/share/icons/*
-!/.local/share/icons/default/
-!/.local/share/icons/unpack-all
+!/.local/share/icons/*.tar.*
 /.config/user-dirs.dirs
 /.config/terminal/
 /.config/content_shell/

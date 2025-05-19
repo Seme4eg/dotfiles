@@ -75,7 +75,7 @@ cleandeadlinks: ## removes all broken symlinks recursively
 install: dotfiles reflector zsh pacman pacman-install aur-install
 
 postinstall: sysoptions emacs systemd wal goinstall gopkgs pam-gnupg ags pnpm \
-	earlyoom grubtheme gtk-theme dash steam librewolf captive-dispatcher flatpak
+	earlyoom grubtheme gtk-theme dash steam librewolf captive-dispatcher cursor
 
 postreboot: mpv mpd
 
@@ -293,6 +293,13 @@ captive-dispatcher: ## install network manager captive portal dispatcher script
 	@sudo chmod +x /etc/NetworkManager/dispatcher.d/90-open_captive_portal
 	@$(SSER) NetworkManager
 
+CURSOR_DIR=${HOME}/dotfiles/.local/share/icons
+CURSOR_NAME=BreezeX-RosePine-Linux.tar.xz
+cursor: ## setup icons and theme (run only after you synced icons folder from other devices)
+	echo "Extracting $(CURSOR_DIR)/$(CURSOR_NAME) .."
+	tar -C $(CURSOR_DIR) -xf "$(CURSOR_DIR)/$(CURSOR_NAME)"
+	nwg-look -a
+
 
 # --- Postreboot ---
 
@@ -362,10 +369,6 @@ lenovo: ## lenovo setup
 
 
 # --- laptops end ---
-
-icons: ## setup icons and theme (run only after you synced icons folder from other devices)
-	bash $(XDG_DATA_HOME)/icons/unpack-all
-	nwg-look -a
 
 Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	$(YAY) miniconda3
