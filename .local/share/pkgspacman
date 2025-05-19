@@ -41,6 +41,7 @@ jq
 languagetool
 lf
 libsixel
+libvips
 libvterm
 linux
 linux-firmware
