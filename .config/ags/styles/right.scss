@@ -17,22 +17,34 @@
   }
 
   .updates {
-    font-size: 0.9em;
-    box {
-      margin-top: -2px;
+    .icon {
+      @extend %shadow-icon;
+      font-size: 2.3em;
+      margin-top: -6px;
+      margin-right: -14px;
+    }
+
+    .amount {
+      min-width: 22px;
+      padding: 0 5px;
+      font: 1.3em iceland;
+      color: color.scale($foreground, $saturation: 0%, $lightness: 30%);
     }
   }
 
   .notification_counter {
     .bg {
-      color: $_accent2;
-      opacity: 0.6;
+      // color: $_accent2;
+      color: $background;
+      text-shadow: 0 0 2px $_accent2;
+
+      // opacity: 0.6;
       font-size: 2.1em;
       margin-right: 8px;
       margin-top: 1px;
     }
     .fg {
-      min-width: 27px;
+      min-width: 31px;
       font-size: 1em;
       font-weight: bold;
     }
@@ -61,6 +73,7 @@ progressbar {
       font-size: 1.2em;
     }
     .disconnected {
+      @extend %shadow-text;
       font-size: 1.4em;
       margin-right: 8px;
     }
@@ -90,20 +103,35 @@ progressbar {
 
   .audio {
     .icon {
-      margin-left: 3px;
-    }
-    .sink .icon {
-      font: 1.3em daddytimemono nerd font;
+      @extend %shadow-icon;
+      padding: 0 5px;
+      font: 1.8em daddytimemono nerd font;
+      // cuz icons are too big they get offset
+      margin-left: -2px;
+      margin-top: -2px;
     }
 
-    .source .muted {
-      font: 0.9em daddytimemono nerd font;
-      margin-right: 5px;
+    .sink {
+      .icon {
+        margin-left: -3px;
+      }
+      &.muted .icon {
+        margin-left: -7px;
+        margin-top: 0px;
+      }
+    }
+
+    .source.muted .icon {
+      margin-left: -15px;
     }
 
     .level {
-      font: bold 0.9em megrim;
-      margin-top: 2px;
+      padding: 0 2px;
+      font: 1.3em iceland;
+    }
+
+    .muted .level {
+      color: transparent;
     }
   }
 
@@ -115,28 +143,29 @@ progressbar {
   }
 
   .bluetooth {
+    separator {
+      margin: 1px 0px;
+      min-width: 1px;
+    }
+    .disabled {
+      @extend %shadow-icon;
+      font-size: 1.6em;
+    }
     .disabled,
     .devices_block {
       margin-left: 8px;
     }
-    progressbar {
-      margin-left: 2px;
-      trough {
-        min-width: 2px;
-        progress {
-          background: $_accent2;
-          min-width: 2px;
-        }
-      }
-      &.charging {
-        progress {
-          background: $color6;
-        }
-      }
-      padding: 4px 0px;
-    }
     .device {
-      font: 1.1em daddytimemono nerd font;
+      image {
+        font: 1.7em daddytimemono nerd font;
+        color: color.scale($foreground, $saturation: 0%, $lightness: -57%);
+      }
+      label {
+        // padding: 0 1px;
+        font: 1.2em iceland;
+        min-width: 24px;
+        color: color.scale($foreground, $saturation: 0%, $lightness: 30%);
+      }
     }
   }
 }
@@ -144,14 +173,14 @@ progressbar {
 circular-progress,
 circularprogress {
   color: $_accent;
-  font-size: 3px;
+  font-size: 2px;
   min-height: 27px;
   min-width: 27px; // without this both circular progress widgets break
   background: $_background;
 }
 
 .circle_text {
-  opacity: 0.5;
+  @extend %shadow-icon;
 }
 
 .telemetery {
@@ -162,10 +191,10 @@ circularprogress {
     levelbar {
       trough {
         // top left+right bottom
-        margin: -2px 1px 1px 0px;
+        margin: -1px 1px 1px 0px;
         min-height: 1px;
         min-width: 1px;
-        background: transparent;
+        background: color.scale($foreground, $alpha: -85%);
         // background: $_background;
         .filled {
           min-width: 2px;
@@ -174,6 +203,7 @@ circularprogress {
       }
     }
 
+    // yes its a class
     .label {
       font: bold 0.8em Megrim;
       margin-top: 1px;
@@ -205,8 +235,8 @@ circularprogress {
     }
 
     .info {
-      // font: normal 1em syne mono;
-      font-size: 0.9em;
+      // or syne mono, megrim looks great, but no, need monospaced font
+      font: normal 0.9em kode mono;
     }
 
     .energy_rate {

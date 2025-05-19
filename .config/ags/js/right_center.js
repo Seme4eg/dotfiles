@@ -130,15 +130,17 @@ function AudioBlock() {
 }
 
 function Sink() {
-  const classStr = audio.speaker.bind("name").as((n) => `sink ${n}`);
+  // audio.speaker.bind("name").as((n) => `sink ${n}`);
+  const classStr = audio.speaker.bind("is_muted").as((b) => (b ? "sink muted" : "sink"))
 
-  return Widget.Box({
+  return Widget.Overlay({
     className: classStr,
-    children: [
-      Widget.Label({
-        className: "level",
-        label: audio.speaker.bind("volume").as((v) => (v * 100).toFixed(0)),
-      }),
+    child: Widget.Label({ // duplicate longest child widget to not hardcode width
+      className: "level",
+      css: "color: transparent",
+      label: audio.speaker.bind("volume").as((v) => (v * 100).toFixed(0)),
+    }),
+    overlays: [
       Widget.Label({
         className: "icon",
         // TODO:
@@ -147,23 +149,31 @@ function Sink() {
         // else is_muted "SINK" && echo 󰟎 || echo
         label: audio.speaker.bind("is_muted").as((b) => (b ? "󰟎" : "󰋋")),
       }),
+      Widget.Label({
+        className: "level",
+        label: audio.speaker.bind("volume").as((v) => (v * 100).toFixed(0)),
+      }),
     ],
   });
 }
 
 function Source() {
-  return Widget.Box({
-    className: "source",
-    children: [
+  const classStr = audio.microphone.bind("is_muted").as((b) => (b ? "source muted" : "source"))
+  return Widget.Overlay({
+    className: classStr,
+    child: Widget.Label({ // duplicate longest child widget to not hardcode width
+      className: "level",
+      css: "color: transparent",
+      label: audio.microphone.bind("volume").as((v) => (v * 100).toFixed(0)),
+    }),
+    overlays: [
+      Widget.Label({
+        className: "icon",
+        label: audio.microphone.bind("is_muted").as((b) => (b ? "" : "")),
+      }),
       Widget.Label({
         className: "level",
         label: audio.microphone.bind("volume").as((v) => (v * 100).toFixed(0)),
-      }),
-      Widget.Label({
-        className: audio.microphone
-          .bind("is_muted")
-          .as((b) => (b ? "icon muted" : "icon")),
-        label: audio.microphone.bind("is_muted").as((b) => (b ? "" : "")),
       }),
     ],
   });
@@ -214,7 +224,10 @@ function Bluetooth() {
             self.hook(
               bluetooth,
               (self) => {
-                self.children = bluetooth.connected_devices.map(BtDevice);
+                self.children = [
+                  Widget.Separator(),
+                  ...bluetooth.connected_devices.map(BtDevice)
+                ]
                 self.visible = bluetooth.connected_devices.length > 0;
               },
               "notify::connected-devices"
@@ -227,18 +240,22 @@ function Bluetooth() {
 
 /** @param {import('resource:///com/github/Aylur/ags/service/bluetooth.js').BluetoothDevice} device */
 function BtDevice(device) {
-  return Widget.Box({
+  return Widget.Overlay({
     className: "device",
-    children: [
+    // need to use lavel as min-width thing, cuz '100' value is wider than icons
+    child: Widget.Label({
+      css: "color: transparent;",
+      label: device.bind("battery_percentage").as((p) => {
+        return String(p)
+      }),
+    }),
+    overlays: [
       Widget.Icon(device.icon_name + "-symbolic"),
-      // Widget.ProgressBar({
-      //   vertical: true,
-      //   inverted: true,
-      //   value: device.bind("battery_percentage").as((p) => {
-      //     print(p)
-      //     return p / 100
-      //   }),
-      // }),
+      Widget.Label({
+        label: device.bind("battery_percentage").as((p) => {
+          return String(p)
+        }),
+      }),
     ],
-  });
+  })
 }

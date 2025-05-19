@@ -2,7 +2,7 @@ const systemtray = await Service.import("systemtray");
 const hyprland = await Service.import("hyprland");
 
 // global spacing for this whole block
-const spacing = 13;
+const spacing = 11;
 
 export default function RLeft() {
   return Widget.Box({
@@ -50,7 +50,7 @@ function LayoutAndSubmap() {
     className: "network",
     vertical: true,
     vpack: "center",
-    children: [Layout(), Submap()],
+    children: [Layout()], // , Submap() <- borked with agsv1 now
   });
 }
 
@@ -136,14 +136,14 @@ function Updates() {
 
   return Widget.Overlay({
     className: "updates",
-    child: Widget.Box({
-      // vertical: true,
-      hpack: "center",
-      children: [
-        Widget.Label({
-          label: updatesCount.bind().as((u) => packageIcon + u),
-        }),
-      ],
+    child: Widget.Label({
+      css: "color: transparent;",
+      className: "amount",
+      label: updatesCount.bind(),
     }),
+    overlays: [
+      Widget.Label({ className: "icon", label: packageIcon }),
+      Widget.Label({ className: "amount", label: updatesCount.bind() }),
+    ]
   });
 }

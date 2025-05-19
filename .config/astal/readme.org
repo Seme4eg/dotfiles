@@ -2,6 +2,9 @@
 
 : scus astal && find ~/.config/astal -type f -name "*.lua" | entr -s "systemctl --user restart astal"
 
+_NOTE_: lua lib *should* be maintained [[https://github.com/tokyob0t/astal-lua][separately]] since ags v3. If in .5-1 year it
+will be abandoned just cope with it and use jabascrept rip.
+
 - [[https://www.youtube.com/watch?v=9KAp_zWeI34][hot reloading]] (the astal itself, not css), http://eradman.com/entrproject, see
   the 'exec-once' statement in hypr config for ags.
 - [[https://aylur.github.io/astal/guide/lua/installation][astal lua doc]]

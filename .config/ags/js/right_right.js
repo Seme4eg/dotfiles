@@ -176,13 +176,8 @@ function Battery() {
         className: classStr,
         spacing: 0,
         children: [
-          Widget.Label({
-            label: battery.bind("percent").as(String),
-          }),
-          Widget.Label({
-            className: "icon",
-            label: "󱐋",
-          }),
+          Widget.Label({ label: battery.bind("percent").as(String), }),
+          Widget.Label({ className: "icon", label: "󱐋", }),
         ],
       }),
       Widget.Separator(),
