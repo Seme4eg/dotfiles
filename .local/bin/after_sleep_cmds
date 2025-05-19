@@ -1,0 +1,19 @@
+#!/usr/bin/sh
+
+# to avoid having to press a key twice to turn on the display.
+hyprctl dispatch dpms on
+systemctl --user restart wlsunset
+# Tho there is 'unlock_cmd = hyprctl dispatch exec change-theme'
+#  in hypridle config it doesn't get fired for some reason after unlocking
+#  system after sleep. So we need to explicitly call 'change-theme' in this
+#  script.
+change-theme
+sync_tz_and_loc
+
+# update mail stuff
+mbsync -a
+pgrep emacs && emacsclient -e '(my-mu4e-update-index)'
+systemctl --user restart goimapnotify@mail
+systemctl --user restart goimapnotify@gmail
+
+touch ~/yesyes
