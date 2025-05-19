@@ -10,6 +10,8 @@ filepath="${rec_dir}/rec_$(date +%H-%M-%S)"
 
 # grep first alsa_output, command is taken from wf-recorder man page
 get_sink() { pactl list sources | grep -e 'Name.*alsa_output' | head -n1; }
+# NOTE: if need mic sound, replace f-n above with this one
+get_source() { pactl list sources | grep -e 'Name.*alsa_input' | head -n1; }
 
 while getopts ":vVpPsg" opt; do case $opt in
   v) # vid without system sounds
@@ -17,12 +19,12 @@ while getopts ":vVpPsg" opt; do case $opt in
     wf-recorder -f "${filepath}.mp4"
     ;;
   V) # with system sounds
-    say -e 'Recording started'
+    say -e -t 1000 'Recording started'
     wf-recorder --audio="$(get_sink)" -f "${filepath}.mp4"
     ;;
   s) # stop current recording
     # sigint, not sigkill, otherwise no mime type
-    pkill -2 record && say -e "Recorded"
+    pkill -2 wf-recorder && say -e -t 100 "Recorded"
     ;;
   # Super inefficient, mp4 records take 2-3 times less space..
   g) # gif version
