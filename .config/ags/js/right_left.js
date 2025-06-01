@@ -125,7 +125,7 @@ export function NotificationsCount(notif_count) {
 }
 
 function Updates() {
-  const updatesCount = Variable("~", {
+  const updatesCount = Variable("0", {
     poll: [
       60 * 60 * 1000, // once an hour
       ["bash", "-c", "checkupdates | wc -l"],
@@ -138,7 +138,7 @@ function Updates() {
     className: "updates",
     child: Widget.Label({
       css: "color: transparent;",
-      className: "amount",
+      className: updatesCount.bind().as(v => v > 99 ? "amount" : "amount padded"),
       label: updatesCount.bind(),
     }),
     overlays: [

@@ -26,9 +26,11 @@
 
     .amount {
       min-width: 22px;
-      padding: 0 5px;
       font: 1.3em iceland;
       color: color.scale($foreground, $saturation: 0%, $lightness: 30%);
+      &.padded {
+        padding: 0 5px;
+      }
     }
   }
 
