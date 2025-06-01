@@ -18,8 +18,8 @@ alias nmssaveedit="cd Downloads/nms/jdk-22.0.2/bin && ./java -jar ~/Downloads/nm
 # https://github.com/tadfisher/pass-otp#examples - more examples
 alias otpdecode="wl-paste | zbarimg -q --raw - | wl-copy"
 
-alias gpgconf="sudo gpgconf --list-options gpg-agent" # list all config options
-alias gpgreload="systemctl --user restart gpg-agent"
+alias gpgconf="sudo gpgconf --list-options gpg-agent"  # list all config options
+alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passwords
 
 alias cheatengine="xhost +local: &; gameconqueror"
 
