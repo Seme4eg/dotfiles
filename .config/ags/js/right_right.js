@@ -165,7 +165,11 @@ function Battery() {
       className: "time_remaining",
       label: battery
         .bind("time_remaining")
-        .as((t) => `${(t / 60).toFixed(0)}m`),
+        .as((t) => {
+          let remaining = (t / 60).toFixed(0)
+          if (remaining > 999) remaining = ' '
+          return remaining + 'm'
+        }),
     });
 
   return Widget.Box({
