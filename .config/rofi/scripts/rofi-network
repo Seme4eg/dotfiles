@@ -5,15 +5,10 @@
 
 # BSSID to correctly obtain SSID of network, since those can have tricky names
 # NOTE: keep BSSID last! cuz awk print $NF below
-FIELDS=(ACTIVE SSID SECURITY FREQ RATE SIGNAL BSSID)
+FIELDS=(ACTIVE SSID SECURITY FREQ SIGNAL BSSID)
 # will b empty if no active connection
 
-get_active_ssid() {
-  nmcli -f active,ssid dev wifi |
-    awk -F '  +' '/^yes/ {$1=""; sub(/^[ \t]+|[ \t]+\$/, "", $0); print $0}'
-}
-
-initial_ssid=$(get_active_ssid)
+initial_ssid=
 
 # --- somewhat of a 'config' section ---
 
@@ -36,38 +31,17 @@ assert_status() { [ "$1" -eq 1 ] && exit; }
 wifi_on() { [ "$(nmcli radio wifi)" = "enabled" ]; }
 
 get_networks() {
-  # awk NF to filter empty lines from output
-  nmcli -f "$(printf '%s,' "${FIELDS[@]}")" device wifi list | awk NF
+  # add && NF if there will be some empty lines
+  nmcli -f "$(printf '%s,' "${FIELDS[@]}")" device wifi list --rescan no | awk '!($2 == "--")'
+  # nmcli -f ACTIVE,SSID,SECURITY,FREQ,SIGNAL,BSSID device wifi list --rescan no | awk NF
 }
 
 get_field() {
   field="$1"
   option="$2"
-  bssid=$(echo "$option" | awk '{print $NF}')     # get last column
-  freq=$(echo "$option" | grep -oP '\d+(?= MHz)') # get frequency
-
-  # freqency needed to not duplicate output for same network but different
-  # frequencies
-  _networks() { nmcli -f bssid,security,freq,ssid device wifi list; }
-
-  # NOTE: not using xargs to trim ssid string cuz it fails if ssid contains '''
-  case $field in
-    ssid)
-      # first get dirty ssid, with all spaces trimmed even tho trailing space
-      # might be a part of ssid
-      ssid=$(_networks | awk -F 'MHz  ' "/$bssid.*$freq/ {\$1=\"\"; gsub(/^[ \t]+|[ \t]+\$/, \"\", \$0); print \$0}")
-
-      # NOTE: match in grep only by words, not lines, cuz trailing spaces
-      # this should fix cases when SSID has trailing whitespace
-      nmcli -t -f ssid,security,freq device wifi list | grep -w "$ssid.*$freq" | awk -F ':' '{print $1}'
-      ;;
-    security)
-      _networks | awk -F 'MHz  ' "/$bssid.*$freq/ {gsub(/^[ \t]+|[ \t]+\$/, \"\", \$2); print \$2}"
-      ;;
-    *)
-      echo "$option"
-      ;;
-  esac
+  bssid=$(echo "$option" | awk '{print $NF}') # get last column
+  device_name=$(nmcli -t -f device,type device | grep wifi$ | awk -F: '{print $1}')
+  nmcli -t -f "$field" device wifi list --rescan no ifname "$device_name" bssid "$bssid"
 }
 
 wifi_status() {
@@ -282,33 +256,38 @@ update_networks() {
   local new
   local networks
 
+  get_networks_rescan() {
+    nmcli -f "$(printf '%s,' "${FIELDS[@]}")" device wifi list | awk '!($2 == "--")'
+  }
+
   while true; do
-    sleep 1
-    networks=$(get_networks)
+    networks=$(get_networks_rescan)
     new=$(echo "$networks" | wc -l)
 
     # -w for 'wait' to not spam tnose notification until user refreshes
     [ "$current" -ne "$new" ] && say -w -e "Networks changed, refresh ($kb_refresh)"
+    sleep 1
   done
 }
 
 show_menu() {
+  # start background networks list updating, and kill it later by pid
+  # start it as soon as possible
+  update_networks &
+  update_pid=$!
+
   local state
   state=$(wifi_status)
   networks=$(get_networks)
-
   local current
   current=$(echo -e "$networks" | grep "^yes")
-
-  # start background networks list updating, and kill it later by pid
-  update_networks &
-  update_pid=$!
+  initial_ssid=$(get_field ssid "$current")
 
   local -a options=("$state")
 
   wifi_on && options+=("$networks")
 
-  option=$(printf '%s\n' "${options[@]}" | uniq -u | _rofi -select "$current" \
+  option=$(printf '%s\n' "${options[@]}" | _rofi -select "$current" \
     -kb-custom-1 "$kb_quick_connect" \
     -kb-accept-custom "" \
     -kb-custom-2 "$kb_quick_forget" \
