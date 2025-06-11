@@ -25,6 +25,15 @@
       {
         "key": "WINEDEBUG",
         "value": "+fixme"
+      },
+      {
+        "key": "DXVK_CONFIG",
+        "value": "d3d11.cachedDynamicResources = a"
+      },
+      {
+        // https://github.com/doitsujin/dxvk/issues/4436#issuecomment-2466646597
+        "key": "LD_PRELOAD",
+        "value": "\"\""
       }
     ],
     "wrapperOptions": [],
@@ -45,6 +54,9 @@
     "framelessWindow": false,
     "beforeLaunchScriptPath": "",
     "afterLaunchScriptPath": "",
+    "disableUMU": false,
+    "verboseLogs": false,
+    "downloadProtonToSteam": false,
     "userInfo": {
       "name": "earthian"
     },
