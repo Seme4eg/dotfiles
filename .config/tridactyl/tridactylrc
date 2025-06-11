@@ -64,6 +64,7 @@ bind ;r hint -qb
 bind ;R composite hint -pipe a href | jsb -p tri.excmds.tabopen("about:reader?url=" + JS_ARG)
 
 bind ;M composite js document.location.href.replace('https://', 'ytdl://') | shellescape | js -p 'PATH="$PATH:/usr/local/bin" mpv ' + JS_ARG | !s
+bind ,s composite js document.location.href | shellescape | exclaim ytdcur
 
 # rudimentary find mode
 bind / fillcmdline find

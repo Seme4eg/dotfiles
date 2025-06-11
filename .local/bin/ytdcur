@@ -1,0 +1,7 @@
+#!/usr/bin/sh
+
+url="$1"
+url="${url%?list*}"
+say "Downloading $url"
+yt-dlp -x --output "${HOME}/Music/__dw/%(artist)s - %(title)s.%(ext)s" "${url}" &&
+  say "Downloaded $url"
