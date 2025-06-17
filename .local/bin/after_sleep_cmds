@@ -15,5 +15,3 @@ mbsync -a
 pgrep emacs && emacsclient -e '(my-mu4e-update-index)'
 systemctl --user restart goimapnotify@mail
 systemctl --user restart goimapnotify@gmail
-
-touch ~/yesyes
