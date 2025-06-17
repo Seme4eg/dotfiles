@@ -3,14 +3,13 @@
 # horrible, unreadable, but still a reference:
 # https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
 
+# #############################################################################
+#                        somewhat of a 'config' section                       #
+###############################################################################
+
 # BSSID to correctly obtain SSID of network, since those can have tricky names
 # NOTE: keep BSSID last! cuz awk print $NF below
 FIELDS=(ACTIVE SSID SECURITY FREQ SIGNAL BSSID)
-# will b empty if no active connection
-
-initial_ssid=
-
-# --- somewhat of a 'config' section ---
 
 kb_refresh="Control+r"
 kb_restart="Control+R"
@@ -24,7 +23,13 @@ backOption='← back'
 
 _rofi() { rofi -dmenu -i "$@"; }
 
-# --- 'config' section end ---
+# #############################################################################
+#                             'config' section end                            #
+###############################################################################
+
+# will b empty if no active connection
+initial_ssid=
+device_name=$(nmcli -t -f device,type device | grep wifi$ | awk -F: '{print $1}')
 
 assert_status() { [ "$1" -eq 1 ] && exit; }
 
