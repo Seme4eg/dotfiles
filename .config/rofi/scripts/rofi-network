@@ -75,7 +75,7 @@ restart_wifi() {
 }
 
 ssid_connected() {
-  active_ssid=$(get_active_ssid)
+  active_ssid=$(nmcli -t -f active,ssid device wifi list --rescan no ifname "$device_name" | awk -F: '/^yes/ {print $2}')
   [ "$active_ssid" = "$1" ]
 }
 
