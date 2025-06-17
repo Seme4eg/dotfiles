@@ -100,7 +100,7 @@ toggle_ssid() {
   _connecting() { say -t 2000 -e "Connecting to $1..."; }
 
   _connect() {
-    protected() { [ "$security" != "--" ]; }
+    protected() { [ "$security" != "" ]; }
 
     if protected; then
       wifi_pass=$(_rofi -password -theme-str '#entry { placeholder: "password .."; }')
