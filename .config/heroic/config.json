@@ -31,7 +31,6 @@
         "value": "d3d11.cachedDynamicResources = a"
       },
       {
-        // https://github.com/doitsujin/dxvk/issues/4436#issuecomment-2466646597
         "key": "LD_PRELOAD",
         "value": "\"\""
       }
