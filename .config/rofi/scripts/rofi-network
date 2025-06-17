@@ -45,7 +45,6 @@ get_field() {
   field="$1"
   option="$2"
   bssid=$(echo "$option" | awk '{print $NF}') # get last column
-  device_name=$(nmcli -t -f device,type device | grep wifi$ | awk -F: '{print $1}')
   nmcli -t -f "$field" device wifi list --rescan no ifname "$device_name" bssid "$bssid"
 }
 
@@ -91,21 +90,14 @@ ssid_saved() {
   fi
 }
 
-forget_ssid() {
-  nmcli connection delete id "$1"
-  say -e "Deleted $1."
-}
+forget_ssid() { nmcli connection delete id "$1" && say -e "Deleted $1."; }
 
 toggle_ssid() {
   ssid="$1"
   security="$2"
 
-  _success() {
-    say -e "Connected to $1."
-  }
-  _connecting() {
-    say -t 2000 -e "Connecting to $1..."
-  }
+  _success() { say -e "Connected to $1."; }
+  _connecting() { say -t 2000 -e "Connecting to $1..."; }
 
   _connect() {
     protected() { [ "$security" != "--" ]; }
@@ -194,8 +186,6 @@ window{
 }
 
 show_info() {
-  local ssid="$1"
-  local security="$2"
   local -a options
   options=("$(nmcli dev wifi show-password)" "$backOption")
   printf '%s\n' "${options[@]}" | _rofi
@@ -209,7 +199,6 @@ ssid_menu() {
   local security="$2"
   local connected
   local qrOption="Generate QR"
-  local connected
 
   if ssid_connected "$ssid"; then
     connected="Disconnect ($kb_quick_connect)"
@@ -247,7 +236,7 @@ ssid_menu() {
   case "$action" in
     10 | "$connected") toggle_ssid "$ssid" "$security" ;;
     11 | "$saved") forget_ssid "$ssid" ;;
-    12 | "$show_info") show_info "$ssid" "$security" ;;
+    12 | "$show_info") show_info ;;
     "$qrOption") show_qr "$1" ;;
     "$backOption") show_menu ;;
     *) echo "No option chosen." ;;
@@ -326,7 +315,7 @@ show_menu() {
       ;;
     10) toggle_ssid "$ssid" "$security" ;;
     11) forget_ssid "$ssid" ;;
-    12) show_info "$ssid" "$security" ;;
+    12) show_info ;;
     13)
       networks=$(get_networks)
       show_menu
