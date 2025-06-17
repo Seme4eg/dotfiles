@@ -1,6 +1,11 @@
+# To know the mime type of a file:
+# xdg-mime query filetype [file]
+
 [Default Applications]
 text/plain=emacsclient.desktop
 audio/mpeg=mpv.desktop
+audio/opus=mpv.desktop
+audio/ogg=mpv.desktop
 image/jpeg=mpv.desktop
 image/heic=mpv.desktop
 image/png=mpv.desktop
