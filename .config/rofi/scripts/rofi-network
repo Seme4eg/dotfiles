@@ -265,16 +265,17 @@ update_networks() {
 }
 
 show_menu() {
-  # start background networks list updating, and kill it later by pid
-  # start it as soon as possible
-  update_networks &
-  update_pid=$!
-
   local state
   state=$(wifi_status)
   networks=$(get_networks)
   local current
   current=$(echo -e "$networks" | grep "^yes")
+
+  # start background networks list updating, and kill it later by pid
+  # start it as soon as possible
+  update_networks &
+  update_pid=$!
+
   initial_ssid=$(get_field ssid "$current")
 
   local -a options=("$state")
