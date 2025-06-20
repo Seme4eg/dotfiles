@@ -48,7 +48,7 @@ alias ssce="ssc enable"
 alias sscd="ssc disable"
 alias sscs="ssc start"
 alias ssck="scu kill -s SIGKILL"
-alias sscr="ssc daemon-reload && systemctl restart"
+alias sscr="ssc restart"
 alias sscS="ssc status"
 
 # --- list commands ---
