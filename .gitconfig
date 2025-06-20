@@ -10,6 +10,9 @@
 [push]
   default = current
 [merge]
+  # https://www.ductile.systems/zdiff3/
+  # TLDR: in the middle its the original code - above the remote changes
+  #   and below are yours.
   conflictstyle = zdiff3
 [rerere]
   enabled = true
