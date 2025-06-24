@@ -187,7 +187,8 @@ window{
 
 show_info() {
   local -a options
-  options=("$(nmcli dev wifi show-password)" "$backOption")
+  options=("$(nmcli connection show --show-secrets "$1" | grep -wE 'ssid:|key-mgmt:|psk:')" "$backOption")
+
   printf '%s\n' "${options[@]}" | _rofi
   assert_status $?
   show_menu
@@ -236,7 +237,7 @@ ssid_menu() {
   case "$action" in
     10 | "$connected") toggle_ssid "$ssid" "$security" ;;
     11 | "$saved") forget_ssid "$ssid" ;;
-    12 | "$show_info") show_info ;;
+    12 | "$show_info") show_info "$ssid" ;;
     "$qrOption") show_qr "$1" ;;
     "$backOption") show_menu ;;
     *) echo "No option chosen." ;;
@@ -316,7 +317,7 @@ show_menu() {
       ;;
     10) toggle_ssid "$ssid" "$security" ;;
     11) forget_ssid "$ssid" ;;
-    12) show_info ;;
+    12) show_info "$ssid" ;;
     13)
       networks=$(get_networks)
       show_menu
