@@ -6,6 +6,7 @@ text/plain=emacsclient.desktop
 audio/mpeg=mpv.desktop
 audio/opus=mpv.desktop
 audio/ogg=mpv.desktop
+audio/flac=mpv.desktop
 image/jpeg=mpv.desktop
 image/heic=mpv.desktop
 image/png=mpv.desktop
