@@ -1,8 +1,10 @@
 #+title: Setup
 
-1. [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
+1. See your https://my.nextdns.io/ DoH. Set librewolf to 'Max Protection' in
+   Security tab, set DoH there AND add your work urls to DoH exceptions (above
+   the protection setting), will take some time for work urls to start working.
+2. [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
    settings page
-2. [optional] [[https://my.nextdns.io/4c7229/setup][setup nextdns]]
 3. settings -> privacy & security -> certificates -> authorities tab -> import
    ca.crt from secrets repo
 4. In case you ever decide to go back to stock firefox user
