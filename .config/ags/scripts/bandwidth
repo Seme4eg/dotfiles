@@ -10,11 +10,24 @@
 # ref: https://www.youtube.com/watch?v=w5phSVBEHhQ
 
 logfile="${XDG_CACHE_HOME:+$HOME/.cache}/netlog"
-[ ! -e "$logfile" ] && echo '0 0' >"$logfile"
+
+# if [ -s "$logfile" ]; then
+#   echo '0 0' >"$logfile"
+# fi
+
+# Find the default active interface
+current_iface=$(ip route get 1 2>/dev/null | awk '{print $5}' | head -n 1)
+
+# If no interface found, print 0 0 and exit
+if [ -z "$current_iface" ]; then
+  echo "0 0"
+  exit 0
+fi
+
 prevdata="$(cat "$logfile")"
 
-rxcurrent="$(/usr/bin/cat /sys/class/net/wlp*/statistics/rx_bytes)"
-txcurrent="$(/usr/bin/cat /sys/class/net/wlp*/statistics/tx_bytes)"
+rxcurrent="$(/usr/bin/cat /sys/class/net/"$current_iface"/statistics/rx_bytes)"
+txcurrent="$(/usr/bin/cat /sys/class/net/"$current_iface"/statistics/tx_bytes)"
 
 echo "$(((rxcurrent - ${prevdata%% *}) / 1024)) $(((txcurrent - ${prevdata##* }) / 1024))"
 echo "$rxcurrent $txcurrent" >"$logfile"
