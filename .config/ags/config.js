@@ -29,7 +29,7 @@ Utils.monitorFile(
 let theme = Variable("dark");
 globalThis.theme = theme;
 
-function Bar(monitor = 0) {
+function Bar(monitor) {
   return Widget.Window({
     name: `bar-${monitor}`, // name has to be unique
     monitor,
