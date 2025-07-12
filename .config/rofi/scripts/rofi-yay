@@ -1,0 +1,56 @@
+#!/usr/bin/sh
+
+placeholder="Install package (supports regex) ..."
+kb_open_url="Control+o"
+kb_force_search="Control+Return"
+
+# fore aur package removal i use rofi-pacman package cuz its faster
+
+query=$(rofi -dmenu)
+
+open_url() {
+  yay -Si "$1" | awk -F ' : ' '/^URL/{print $2}' | xargs xdg-open
+}
+
+rofi_call() {
+  # shellcheck disable=SC2086
+  entry=$(
+    yay -Sas "$1" |
+      sed -E 'N; s/^aur\/([^ ]+) +[^ ]+ +\(\+([0-9]+) +([^)]+)\).*\n *(.*)/\1 「 \2 | \3 」 \4/' |
+      rofi -dmenu -matching regex -i \
+        -mesg "$kb_open_url - Open package url" \
+        -theme-str "#entry { placeholder: \"$placeholder\"; }" \
+        -kb-accept-custom "" \
+        -kb-custom-1 "$kb_open_url" \
+        -kb-custom-2 "$kb_force_search"
+  )
+
+  rofi_exit=$?
+
+  [ $rofi_exit -eq 1 ] && exit
+
+  pkg=$(echo "$entry" | awk '{print $1}')
+
+  ## if package not found means user wants to search for something else
+  if ! yay -Si "$pkg"; then
+    rofi_call "$pkg"
+  fi
+
+  case $rofi_exit in
+    10) open_url "$pkg" ;;
+    11) rofi_call "$pkg" ;;
+    *)
+      # NOTE: didn't find a way to pass all the color theme and as soon as
+      # process finishes there is no way to type another command
+      # footclient --hold yay -S "$pkg"
+      footclient &
+      sleep 0.2
+      # wl-copy & wl-paste don't work
+      wtype "yay -S $pkg"
+      ;;
+  esac
+}
+
+rofi_call "$query"
+
+exit 0
