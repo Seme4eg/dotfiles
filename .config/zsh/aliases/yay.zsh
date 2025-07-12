@@ -2,7 +2,7 @@
 
 alias yi="yay -S"                          # install
 alias yr="yay -Rs"                         # remove
-alias ysr="yay -Ss"                        # search remotes
+alias ysr="yay -Sas"                       # search remotes
 alias ysl="yay -Qs"                        # search locally
 alias yfc="yay -Pcc"                       # yay fix cache
 alias ys="yay -Syy && yay -Pcc >/dev/null" # sync and fix cache
