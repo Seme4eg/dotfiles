@@ -16,6 +16,7 @@ kb_remove_persist="Alt+K"
 kb_yank="Alt+y"
 kb_help="Alt+h"
 kb_open_in_emacs="Control+e"
+kb_open_file_in_emacs="Alt+e"
 
 bookmarks_file="$HOME/Documents/quickmarks"
 
@@ -29,8 +30,9 @@ show_menu() {
     -kb-custom-3 "$kb_remove_persist" \
     -kb-custom-4 "$kb_yank" \
     -kb-custom-5 "$kb_open_in_emacs" \
+    -kb-custom-6 "$kb_open_file_in_emacs" \
     -kb-mode-previous "" \
-    -kb-custom-6 "$kb_help" \
+    -kb-custom-7 "$kb_help" \
     -mesg "$kb_help - help menu" \
     -input "$bookmarks_file")
 
@@ -61,7 +63,12 @@ show_menu() {
         emacsclient -e "(progn (require (quote eww)) (eww \"$url\"))" &&
         hyprctl dispatch focuswindow class:Emacs
       ;;
-    15) help_menu ;;
+    15)
+      pgrep emacs &&
+        emacsclient -e "(find-file \"$bookmarks_file\")" &&
+        hyprctl dispatch focuswindow class:Emacs
+      ;;
+    16) help_menu ;;
     *) xdg-open "$url" ;;
   esac
 }
@@ -73,6 +80,7 @@ help_menu() {
 		${kb_remove_persist} - Remove bookmark and keep menu opened
 		${kb_yank} - Yank bookmark
 		${kb_open_in_emacs} - Open bookmark in emacs's eww
+		${kb_open_file_in_emacs} - Open bookmarks file in emacs
 		${kb_help} - Open this menu
 	EOM
 
