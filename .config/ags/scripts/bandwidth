@@ -11,7 +11,7 @@
 
 logfile="${XDG_CACHE_HOME:+$HOME/.cache}/netlog"
 
-if [ ! -s "$logfile" ]; then
+if [ ! -s "$logfile" ] || [ "$(/usr/bin/cat "$logfile")" = " " ]; then
   echo '0 0' >"$logfile"
 fi
 
