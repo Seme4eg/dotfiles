@@ -83,3 +83,5 @@ config would be d3d9.cachedDynamicBuffers = True ([[https://canary.discord.com/c
 
 Xiomi laptop was draining battery like crazy in [s2idle] sleep mode, so i
 changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/etc/default/grub=
+
+For any problems that happen to system first see ~journalctl -b 0 --no-pager~
