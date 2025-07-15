@@ -1,28 +1,6 @@
 #!/usr/bin/sh
 
-# TODO: use pactl instead of wpctl: 'pactl list short sinks'
-# and fix all remaining posix compliance errors
+nextID=$(pactl list short sinks | grep --invert-match -i HDMI |
+  grep --invert-match "$(pactl get-default-sink)" | cut -f 1)
 
-# card_name() {
-#   wpctl inspect @DEFAULT_AUDIO_SINK@ | grep alsa.card_name | cut -d'=' -f 2
-# }
-
-# get_headphones_id() {
-#   output=$(wpctl status | grep 'Speaker + Headphones')
-#   regex='([0-9]+)\.'
-
-#   if expr "$output" : "$regex" >/dev/null; then
-#     # Extract the ID from the matched portion
-#     echo "${BASH_REMATCH[1]}"
-#   fi
-# }
-
-# case $(card_name) in
-#   *"EDIFIER S880DB"*)
-#     get_headphones_id
-#     wpctl set-default "$(get_headphones_id)"
-#     ;;
-#   *)
-#     wpctl clear-default
-#     ;;
-# esac
+pactl set-default-sink "$nextID"
