@@ -27,11 +27,20 @@ alias cheatengine="xhost +local: &; gameconqueror"
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 
 hyprupd() {
-  sudo pacman -S --noconfirm gdb # atm not listed as dep for some hypr pkgs
-  hyprpacks=($(yay -Qsq hypr) aquamarine-git)
-  # better --rebuild all, otherwise annoying so issues
-  yay -S $@ "${hyprpacks[@]}" # --rebuild / --noconfirm
-  sudo pacman -Rns --noconfirm gdb
+  # NOTE: Sometimes there are annoying .so lib files issue. If encountering try
+  # --rebuild all flag
+
+  # NOTE: need manuall update of all these
+  # secondary packages, need to build first
+  yay -S aquamarine-git hyprcursor-git hyprgraphics-git hyprland-qt-support-git \
+    hyprland-qtutils-git hyprlang-git hyprutils-git hyprwayland-scanner-git
+
+  # user level packages that are explicitly installed
+  yay -S hypridle-git hyprlock-git hyprpolkitagent-git \
+    xdg-desktop-portal-hyprland-git rose-pine-hyprcursor
+
+  # only then hpyrland itself
+  yay -S hyprland-git
 }
 
 alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
