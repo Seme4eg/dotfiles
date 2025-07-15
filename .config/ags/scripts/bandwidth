@@ -11,9 +11,9 @@
 
 logfile="${XDG_CACHE_HOME:+$HOME/.cache}/netlog"
 
-# if [ -s "$logfile" ]; then
-#   echo '0 0' >"$logfile"
-# fi
+if [ ! -s "$logfile" ]; then
+  echo '0 0' >"$logfile"
+fi
 
 # Find the default active interface
 current_iface=$(ip route get 1 2>/dev/null | awk '{print $5}' | head -n 1)
