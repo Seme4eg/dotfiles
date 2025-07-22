@@ -16,7 +16,7 @@ kb_remove_persist="Alt+K"
 kb_yank="Alt+y"
 kb_help="Alt+h"
 kb_open_in_emacs="Control+e"
-kb_open_file_in_emacs="Alt+e"
+kb_edit_entry_in_emacs="Alt+e"
 
 bookmarks_file="$HOME/Documents/quickmarks"
 
@@ -30,7 +30,7 @@ show_menu() {
     -kb-custom-3 "$kb_remove_persist" \
     -kb-custom-4 "$kb_yank" \
     -kb-custom-5 "$kb_open_in_emacs" \
-    -kb-custom-6 "$kb_open_file_in_emacs" \
+    -kb-custom-6 "$kb_edit_entry_in_emacs" \
     -kb-mode-previous "" \
     -kb-custom-7 "$kb_help" \
     -mesg "$kb_help - help menu" \
@@ -64,8 +64,10 @@ show_menu() {
         hyprctl dispatch focuswindow class:Emacs
       ;;
     15)
+      linenum=$(grep -n "$url" "$bookmarks_file" | head -n 1 | cut -d: -f1)
+      echo "linenum = $linenum"
       pgrep emacs &&
-        emacsclient -e "(find-file \"$bookmarks_file\")" &&
+        emacsclient -e "(progn (find-file \"$bookmarks_file\") (goto-line $linenum) (evil-scroll-line-to-center (line-number-at-pos)))" &&
         hyprctl dispatch focuswindow class:Emacs
       ;;
     16) help_menu ;;
@@ -80,7 +82,7 @@ help_menu() {
 		${kb_remove_persist} - Remove bookmark and keep menu opened
 		${kb_yank} - Yank bookmark
 		${kb_open_in_emacs} - Open bookmark in emacs's eww
-		${kb_open_file_in_emacs} - Open bookmarks file in emacs
+		${kb_edit_entry_in_emacs} - Edit given entry in emacs
 		${kb_help} - Open this menu
 	EOM
 
