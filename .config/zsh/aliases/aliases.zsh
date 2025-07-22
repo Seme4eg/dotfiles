@@ -27,17 +27,18 @@ alias cheatengine="xhost +local: &; gameconqueror"
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 
 hyprupd() {
-  # NOTE: Sometimes there are annoying .so lib files issue. If encountering try
-  # --rebuild all flag
-
   # NOTE: need manuall update of all these
   # secondary packages, need to build first
-  yay -S aquamarine-git hyprcursor-git hyprgraphics-git hyprland-qt-support-git \
-    hyprland-qtutils-git hyprlang-git hyprutils-git hyprwayland-scanner-git
+  #  '--answerclean i' to avoid .so files issues
+  yay -S hyprutils-git --answerclean i
+  yay -S aquamarine-git --answerclean i
+  yay -S hyprcursor-git hyprgraphics-git \
+    hyprland-qt-support-git hyprland-qtutils-git hyprlang-git hyprwayland-scanner-git
 
   # user level packages that are explicitly installed
+  yay -S xdg-desktop-portal-hyprland-git --answerclean i
   yay -S hypridle-git hyprlock-git hyprpolkitagent-git \
-    xdg-desktop-portal-hyprland-git rose-pine-hyprcursor
+    rose-pine-hyprcursor
 
   # only then hpyrland itself
   yay -S hyprland-git
