@@ -21,7 +21,13 @@ else
   if single_monitor && [ ! -e "$ignore_lid_file" ]; then
     systemctl sleep
   else
-    hyprctl keyword monitor "eDP-1, disable"
+    # FIXME: bugged atm, closing lid , disabling monitor and then connecting
+    # to another monitor results in me needing to enable+disable the laptop
+    # monitor again for compositor to move all my windows to new monitor.
+    # As a fix you can write a watcher script that will b connected to hyprland
+    # socket and watch for monitor connect event, but that's a rare case to
+    # write a script for it. For now will be disabling monitor by hand.
+    # hyprctl keyword monitor "eDP-1, disable"
     rm "$ignore_lid_file"
   fi
 fi
