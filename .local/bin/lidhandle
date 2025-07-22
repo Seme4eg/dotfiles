@@ -1,8 +1,15 @@
 #!/usr/bin/sh
 
 state=$1
+# NOTE: sometimes need to close laptop but not put it in sleep since i will be
+# connecting it to external monitor while lid is closed. so i need some temp
+# file to prevent sleeping logic when needed.
+ignore_lid_file=~/.cache/lidignore
 
-single_monitor() { [ "$(hyprctl -j monitors | gojq -r '. | length')" -eq 1 ]; }
+single_monitor() {
+  [ "$(hyprctl -j monitors | gojq -r '. | length')" -eq 1 ] &&
+    [ "$(hyprctl -j monitors | gojq -r '.[0].name')" = "eDP-1" ]
+}
 
 if [ "${state}" = "on" ]; then
   if ! single_monitor; then
@@ -11,9 +18,10 @@ if [ "${state}" = "on" ]; then
 else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
   # /etc/systemd/logind.conf
-  if single_monitor; then
+  if single_monitor && [ ! -e "$ignore_lid_file" ]; then
     systemctl sleep
   else
     hyprctl keyword monitor "eDP-1, disable"
+    rm "$ignore_lid_file"
   fi
 fi
