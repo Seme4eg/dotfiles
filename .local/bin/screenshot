@@ -25,7 +25,11 @@ case $1 in
     grim -g "$(slurp)" - | wl-copy || say "Screenshot failed"
     ;;
   --ocr) # ocr the screenshot
-    grim -g "$(slurp)" - | tesseract -l eng+rus - stdout | wl-copy -n &&
+    grim -g "$(slurp)" - | tesseract -l eng - stdout | wl-copy -n &&
+      say -e -t 1000 "done" || say -e -t 1000 "failed"
+    ;;
+  --ocr-ru) # ocr the screenshot
+    grim -g "$(slurp)" - | tesseract -l rus - stdout | wl-copy -n &&
       say -e -t 1000 "done" || say -e -t 1000 "failed"
     ;;
 esac
