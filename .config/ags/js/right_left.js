@@ -98,29 +98,19 @@ function UpdatesAndNotifs() {
     ],
   });
 
-  return Widget.Box({
-    spacing: notif_count.bind().as(c => Number(c) > 0 ? spacing : 0),
-    children: [Updates(), NotificationsCount(notif_count)],
+  const failedServicesCount = Variable("0", {
+    poll: [
+      60 * 60 * 1000, // once an hour
+      ["bash", "-c", "systemctl --user --failed --quiet | wc -l"],
+    ],
   });
-}
 
-// NOTE: do NOT import the notifications service of ags, it will start the ags
-//  notif daemon, which will break swaync
-export function NotificationsCount(notif_count) {
-  return Widget.Revealer({
-    revealChild: notif_count.bind().as(c => c > 0),
-    transition: "slide_right",
-    transitionDuration: 350,
-    child: Widget.Overlay({
-      className: "notification_counter",
-      child: Widget.Label({
-        className: "fg",
-        label: notif_count.bind().as(String)
-      }),
-      overlays: [
-        Widget.Label({ className: "bg", vpack: "center", label: "󱥂", }),
-      ],
-    }),
+  const showSpacing = Utils.derive([notif_count, failedServicesCount], (notif_count, failedServicesCount) => {
+    return notif_count > 0 || failedServicesCount > 0
+  })
+
+  return Widget.Box({
+    children: [Updates(), FailedServicesCount(failedServicesCount), NotificationsCount(notif_count)],
   });
 }
 
@@ -145,5 +135,43 @@ function Updates() {
       Widget.Label({ className: "icon", label: packageIcon }),
       Widget.Label({ className: "amount", label: updatesCount.bind() }),
     ]
+  });
+}
+
+// exists mostly to see when xdg portal service failed
+export function FailedServicesCount(count) {
+  return Widget.Revealer({
+    revealChild: count.bind().as(c => c > 0),
+    transition: "slide_right",
+    transitionDuration: 350,
+    child: Widget.Label({
+      className: "failed_service_counter",
+      css: count.bind().as(c => c > 0 ? "margin-left: " + (spacing - 5) + "px;" : 0),
+      hpack: "right",
+      label: "",
+    }),
+  });
+}
+
+// NOTE: do NOT import the notifications service of ags, it will start the ags
+//  notif daemon, which will break swaync
+export function NotificationsCount(notif_count) {
+  return Widget.Revealer({
+    revealChild: notif_count.bind().as(c => c > 0),
+    transition: "slide_right",
+    transitionDuration: 350,
+    child: Widget.Box({
+      css: notif_count.bind().as(c => c > 0 ? "margin-left: " + (spacing) + "px;" : 0),
+      child: Widget.Overlay({
+        className: "notification_counter",
+        child: Widget.Label({
+          className: "fg",
+          label: notif_count.bind().as(String)
+        }),
+        overlays: [
+          Widget.Label({ className: "bg", vpack: "center", label: "󱥂", }),
+        ],
+      }),
+    })
   });
 }
