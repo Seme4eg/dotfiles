@@ -59,3 +59,4 @@ node_modules/
 /.config/Thunar/
 /.config/xfce4/
 /.config/vesktop/
+/.config/systemd/user/timers.target.wants/
