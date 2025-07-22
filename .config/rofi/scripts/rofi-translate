@@ -1,0 +1,26 @@
+#!/usr/bin/sh
+
+kb_with_yank="Control+Return"
+
+text=$(rofi -dmenu)
+
+rofi_exit=$?
+[ $rofi_exit -eq 1 ] && exit
+
+lang=$(printf 'ru\nen' | rofi -dmenu -mesg "$kb_with_yank - yank result" \
+  -kb-accept-custom "" \
+  -kb-custom-1 "$kb_with_yank")
+
+rofi_exit=$?
+[ $rofi_exit -eq 1 ] && exit
+
+# basic shell URL encoding
+text_encoded=$(echo "$text" | sed 's/ /%20/g' | sed 's/?/%3F/g' | sed 's/&/%26/g')
+
+result=$(
+  curl -s "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${text_encoded}" | \
+    jq -r '.[0][0][0]')
+
+say -e "$result"
+
+[ "$rofi_exit" -eq 10 ] && wl-copy "$result"
