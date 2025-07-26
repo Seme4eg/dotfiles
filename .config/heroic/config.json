@@ -1,5 +1,6 @@
 {
   "defaultSettings": {
+    "analyticsOptIn": true,
     "checkUpdatesInterval": 10,
     "enableUpdates": false,
     "addDesktopShortcuts": true,
@@ -48,6 +49,8 @@
     "enableEsync": true,
     "enableFsync": true,
     "enableMsync": false,
+    "enableWineWayland": false,
+    "enableHDR": false,
     "eacRuntime": false,
     "battlEyeRuntime": false,
     "framelessWindow": false,
@@ -56,6 +59,8 @@
     "disableUMU": false,
     "verboseLogs": false,
     "downloadProtonToSteam": false,
+    "advertiseAvxForRosetta": false,
+    "noTrayIcon": false,
     "userInfo": {
       "name": "earthian"
     },
