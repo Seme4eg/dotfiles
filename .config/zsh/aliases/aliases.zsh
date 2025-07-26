@@ -53,5 +53,5 @@ alias rsync_archive='sudo rsync -rP --delete ~/mem-arch/' # .. and append destin
 ytdcur() { # yt-dlp download current
   url="$(wl-paste)"
   url="${url%?list*}"
-  yt-dlp -x --output "${HOME}/Music/__dw/%(artist)s - %(title)s.%(ext)s" "${url}"
+  yt-dlp -x --output "${HOME}/Music/__dw/%(title)s.%(ext)s" "${url}"
 }
