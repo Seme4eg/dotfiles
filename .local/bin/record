@@ -15,11 +15,13 @@ get_source() { pactl list sources | grep -e 'Name.*alsa_input' | head -n1; }
 
 while getopts ":vVpPsg" opt; do case $opt in
   v) # vid without system sounds
-    say -e 'Recording started'
+    say -t 3000 'Recording starting in 3s..'
+    sleep 3
     wf-recorder -f "${filepath}.mp4"
     ;;
   V) # with system sounds
-    say -e -t 1000 'Recording started'
+    say -t 3000 'Recording starting in 3s..'
+    sleep 3
     wf-recorder --audio="$(get_sink)" -f "${filepath}.mp4"
     ;;
   s) # stop current recording
