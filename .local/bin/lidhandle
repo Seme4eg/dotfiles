@@ -13,7 +13,8 @@ single_monitor() {
 
 if [ "${state}" = "on" ]; then
   if ! single_monitor; then
-    hyprctl keyword monitor "eDP-1,highrr,0x0,${DISPLAY_SCALE}"
+    # hyprctl keyword monitorv2[eDP-1]:disabled 0
+    sed -i 's/disabled = 1/disabled = 0/' ~/.config/hypr/hyprland.conf
   fi
 else
   # in order for this to work gotta have 'HandleLidSwitch=ignore' set in
@@ -27,7 +28,7 @@ else
     # As a fix you can write a watcher script that will b connected to hyprland
     # socket and watch for monitor connect event, but that's a rare case to
     # write a script for it. For now will be disabling monitor by hand.
-    # hyprctl keyword monitor "eDP-1, disable"
+    # hyprctl keyword monitorv2[eDP-1]:disabled 1
     rm "$ignore_lid_file"
   fi
 fi
