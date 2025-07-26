@@ -16,7 +16,7 @@ if [ ! -s "$logfile" ] || [ "$(/usr/bin/cat "$logfile")" = " " ]; then
 fi
 
 # Find the default active interface
-current_iface=$(ip route show default | awk '/default via/ {print $5}')
+current_iface=$(ip route show default | head -n 1 | awk '/default via/ {print $5}')
 
 # If no interface found, print 0 0 and exit
 if [ -z "$current_iface" ]; then
