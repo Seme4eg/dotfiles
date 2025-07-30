@@ -20,37 +20,36 @@
   background: alpha(@color6, 0.2);
 }
 
+.notification-group {
+  background-color: transparent;
+}
+
 .notification-group-headers {
   /* font: 1em shantell sans; */
   font-weight: bold;
   font-size: 1.25rem;
+  text-shadow: 3px 3px @background;
   color: @foreground;
   letter-spacing: 2px;
   font: bold 1em Megrim;
+  margin-left: -33px;
 }
 
 .notification-group-icon {
   color: alpha(@color13, 0.7);
+  text-shadow: 1px 1px 3px @background;
   margin-right: 8px;
-  /* border: 1px solid @color3 */
 }
 
-.notification-group-collapse-button {
-  background: transparent;
-  border: none;
-}
-
-.notification-group-collapse-button:hover {
-  background: alpha(@color6, 0.2);
-}
-
+.notification-group-collapse-button,
 .notification-group-close-all-button {
-  background: transparent;
+  background: alpha(@background, 0.8);
   border: none;
 }
 
+.notification-group-collapse-button:hover,
 .notification-group-close-all-button:hover {
-  background: alpha(@color6, 0.2);
+  background: alpha(@color6, 0.7);
 }
 
 .notification {
