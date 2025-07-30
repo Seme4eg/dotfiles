@@ -75,10 +75,6 @@ life.
 - ~sll()~ - Prints details of symlinks given as arguments.
 - ~Start(), Restart(), Stop(), Force-Reload(), Reload()~ - Functions for
   controlling daemons. Example usage: % Restart ssh
-- ~trans()~ - Translates a word from german to english (-D) or vice versa (-E).
-- ~vim()~ - Wrapper for vim(1). It tries to set the title and hands vim the
-  environment variable VIM_OPTIONS on the command line. So the user may define
-  command line options, she always wants, in her .zshrc.local.
 - ~whatwhen()~ - Searches the history for a given pattern and lists the results by
   date. The first argument is the search pattern. The second and third ones are
   optional and denote a search range (default: -100).
