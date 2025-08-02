@@ -1,0 +1,8 @@
+{
+  "keyMappings": "# Insert your preferred key mappings here.\nunmap d\nunmap x\nmap d removeTab\nunmap X\nunmap u\nmap u restoreTab\nmap <c-d> scrollPageDown\nmap <c-u> scrollPageUp\nunmap g$\nmap <a-9> lastTab\nmap ' Marks.activateGotoMode\nmap <c-v> passNextKey\nmap <c-f> scrollFullPageDown\nmap <c-b> scrollFullPageUp\nunmap t\nmap t Vomnibar.activateTabSelection\n\nmap R reload hard\nunmap ^\nmap <c-o> visitPreviousTab\nunmap yt\nmap D duplicateTab\nmap J nextTab\nmap K previousTab\n\n# unmap unused defaults to reduce amount of lines in help menu\nunmap gs\nunmap zL\nunmap zH\nunmap gf\nunmap gF\nunmap b\nunmap B\nunmap gT\nunmap gt\n# use alt-0\nunmap g0",
+  "ignoreKeyboardLayout": true,
+  "scrollStepSize": 200,
+  "grabBackFocus": true,
+  "searchEngines": "g: https://www.google.com/search?q=%s Google\ny: https://www.youtube.com/results?search_query=%s Youtube\nd: https://duckduckgo.com/?q=%s DuckDuckGo\nyx: https://yandex.ru/search?text=%s Yandex",
+  "settingsVersion": "2.3"
+}

@@ -1,15 +1,9 @@
 #+title: Setup
 
-1. See your https://my.nextdns.io/ DoH. Set librewolf to 'Max Protection' in
-   Security tab, set DoH there AND add your work urls to DoH exceptions (above
-   the protection setting), will take some time for work urls to start working.
-2. [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
-   settings page
-3. settings -> privacy & security -> certificates -> authorities tab -> import
-   ca.crt from secrets repo
-4. In case you ever decide to go back to stock firefox user
-   https://github.com/yokoffing/Betterfox user.js
-5. To fix pywalfox for librewolf run ~pywalfox install --browser librewolf~
-
-=enhancer-for-youtube.json= <- import on 'enhancer for youtube' extension settings
-page.
+- See your https://my.nextdns.io/ DoH. Insructions see in nextdns 'setup' tab
+- [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
+  settings page
+- Somewhere in security section of browser add your certificates (authorities
+  tab -> import ca.crt from secrets repo)
+- In case you ever decide to go back to stock firefox user
+  https://github.com/yokoffing/Betterfox user.js

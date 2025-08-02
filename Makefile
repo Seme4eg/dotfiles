@@ -75,7 +75,7 @@ cleandeadlinks: ## removes all broken symlinks recursively
 install: dotfiles reflector zsh pacman pacman-install aur-install
 
 postinstall: sysoptions emacs systemd wal goinstall gopkgs pam-gnupg ags pnpm \
-	earlyoom grubtheme gtk-theme dash steam librewolf captive-dispatcher cursor
+	earlyoom grubtheme gtk-theme dash steam captive-dispatcher cursor
 
 postreboot: mpv mpd
 
@@ -278,14 +278,6 @@ dash: ## symlink sh to dash
 steam: ## prevent steam to create yet another file in my home dir
 	@echo 'cookie-file = ~/.config/pulse/cookie' | sudo tee -a /etc/pulse/client.conf > /dev/null
 
-librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
-	pywalfox --browser librewolf install
-# path from where to link - https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=firefox-tridactyl-native
-	ln -s /usr/lib/mozilla/native-messaging-hosts/tridactyl.json \
-		${HOME}/.librewolf/native-messaging-hosts/
-	ln -s $(XDG_CONFIG_HOME)/firefox/librewolf.overrides.cfg \
-		${HOME}/.librewolf/
-
 captive-dispatcher: ## install network manager captive portal dispatcher script
 	@sudo wget --output-document \
 		/etc/NetworkManager/dispatcher.d/90-open_captive_portal \
@@ -369,6 +361,8 @@ lenovo: ## lenovo setup
 
 
 # --- laptops end ---
+#
+# --- optional / manual ---
 
 Fooocus: ## download and setup fooocus (https://github.com/lllyasviel/Fooocus)
 	$(YAY) miniconda3
@@ -385,3 +379,11 @@ hyprplugins:
 	hyprpm add https://github.com/ItsDrike/hyprland-dwindle-autogroup
 	hyprpm enable dwindle-autogroup
 	hyprpm reload
+
+librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
+	pywalfox --browser librewolf install
+# path from where to link - https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=firefox-tridactyl-native
+	ln -s /usr/lib/mozilla/native-messaging-hosts/tridactyl.json \
+		${HOME}/.librewolf/native-messaging-hosts/
+	ln -s $(XDG_CONFIG_HOME)/firefox/librewolf.overrides.cfg \
+		${HOME}/.librewolf/

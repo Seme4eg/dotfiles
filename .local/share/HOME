@@ -4,7 +4,6 @@
 ├── .config -> dotfiles/.config
 ├── .eclipse
 ├── .gnupg
-├── .librewolf
 ├── .local
 ├── .pki
 ├── .ssh

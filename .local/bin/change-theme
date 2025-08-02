@@ -46,8 +46,6 @@ fi
 
 agsv1 -r "theme = '$theme'"
 
-pywalfox update & # update firefox/librewolf theme
-
 # update emacs theme
 if [ $theme = light ]; then
   emacsclient -e "(load-theme 'ewal-doom-one-light)" &
