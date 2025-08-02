@@ -98,14 +98,14 @@ function UpdatesAndNotifs() {
     ],
   });
 
-  const failedServicesCount = Variable("0", {
+  let failedServicesCount = Variable(0, {
     poll: [
-      60 * 60 * 1000, // once an hour
+      60 * 1000, // once a minute
       ["bash", "-c", "systemctl --user --failed --quiet | wc -l"],
     ],
   });
 
-  const showSpacing = Utils.derive([notif_count, failedServicesCount], (notif_count, failedServicesCount) => {
+  let showSpacing = Utils.derive([notif_count, failedServicesCount], (notif_count, failedServicesCount) => {
     return notif_count > 0 || failedServicesCount > 0
   })
 
