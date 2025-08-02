@@ -1,0 +1,7 @@
+{
+ :show-original false
+ :show-original-phonetics false
+ :show-translation-phonetics false
+ :no-ansi true
+ :indent 2
+}

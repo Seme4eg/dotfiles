@@ -26,9 +26,7 @@ pick_lang() {
 
 target_lang="$(pick_lang "Russian" 'Target lanaguage..')"
 
-result=$(trans -show-original n -show-original-phonetics n \
-  -show-translation-phonetics n -no-ansi -indent 2 \
-  ${source_lang:+-sl "$source_lang"} -tl "$target_lang" "'$text'")
+result=$(trans ${source_lang:+-sl "$source_lang"} -tl "$target_lang" "'$text'")
 
 say -e -u critical "$result"
 
