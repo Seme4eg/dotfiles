@@ -60,3 +60,4 @@ node_modules/
 /.config/zsh/plugins.zsh
 /.local/share/icons/*
 !/.local/share/icons/*.tar.*
+/.config/BraveSoftware/
