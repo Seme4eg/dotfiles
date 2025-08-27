@@ -1,0 +1,12 @@
+[Unit]
+Description=Update all global lsps installed via pnpm
+
+[Timer]
+# at midnight (00:00:00)
+OnCalendar=monthly
+# if the system is off during the scheduled time, run the service immediately upon boot
+Persistent=true
+Unit=update_lsps.service
+
+[Install]
+WantedBy=timers.target

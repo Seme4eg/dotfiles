@@ -195,6 +195,7 @@ systemd: ## enable and start all user and system systemd services
 	$(SUEN) syncthing.service
 	$(SUEN) udiskie.service
 	$(SUEN) mpd-mpris.service
+	$(SUEN) update_lsps.timer
 
 wal: ## for hyprland to not show error of undefined color var on first launch
 	wal -n -q -i "${HOME}/dotfiles/assets/wallpaper.jpg" --saturate 0.3
