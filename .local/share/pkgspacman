@@ -80,7 +80,7 @@ pipewire-alsa
 pipewire-pulse
 playerctl
 pnpm
-podman-docker
+podman
 poppler-glib
 pre-commit
 python-pywal
