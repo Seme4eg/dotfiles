@@ -3,5 +3,6 @@ EDITOR='emacsclient -c'
 edit_new_pass="false"
 notify='true'
 default_user="418@duck.com"
+default_user2="hatless-rinse-exit@duck.com"
 
 _notify () { say -e "$1"; }
