@@ -23,6 +23,8 @@ ZVM_INIT_MODE=sourcing # <- needed BEFORE zvm gets sourced
 # Do the initialization when the script is sourced (i.e. Initialize instantly)
 ZVM_LAZY_KEYBINDINGS=false
 
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
+
 ## History
 HISTFILE="$XDG_CACHE_HOME/zhistory"
 # HISTSIZE and SAVEHIST are set in grmlrc
