@@ -82,6 +82,10 @@ _asus zenbook headset mic fix:_
 - then there is also [[https://wiki.archlinux.org/title/External_GPU#AMDGPU][this arch wiki link]]
   - @echo 'options amdgpu pcie_gen_cap=0x80000' | sudo tee /etc/modprobe.d/amd-egpu-pcie-speed.conf > /dev/null
 
+** camera on lenovo laptop
+uses ipu6 camera, modules loaded, but still not working, guess cuz need to
+install those ipu6 packages from AUR, but was too lazy to bother a that time
+
 ** Other fixes
 If in some games external gpu usage will be lacking -
 https://github.com/doitsujin/dxvk/issues/3694#issuecomment-2455562274. The above
