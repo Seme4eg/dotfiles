@@ -40,7 +40,7 @@ ssh: ## Init ssh
 	export SSHDIR=${HOME}/.$@
 	$(PACMAN) open$@
 	mkdir -p $$SSHDIR
-	ssh-keygen -C "418@duck.com" -P ""
+	ssh-keygen -C "for github"
 # create AUR keypair
 	ssh-keygen -f $$SSHDIR/aur
 	eval "$$(ssh-agent -s)"
