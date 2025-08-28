@@ -321,7 +321,7 @@ mpd:
 # check and uninstall them if present. Proprietary drivers give like +10-15%
 # more performance. To check which drivers are used: 'vulkaninfo --summary' ->
 # driverID should be 'DRIVER_ID_MESA_RADV', not 'DRIVER_ID_AMD_OPEN_SOURCE'
-amd: ## install ASUS laptop specific software
+amd: ## install AMD specific software
 # support for vulkan api
 	@$(PACMAN) --needed --asdeps mesa mesa-utils lib32-mesa mesa-vdpau \
 		libva-mesa-driver vulkan-radeon lib32-vulkan-radeon
@@ -341,17 +341,6 @@ nvidia: nvidia-all ## install stuff for nvidia hybrid laptop
 # --- graphics end ---
 #
 # --- laptops ---
-
-asus:
-	$(SSEN) tlp.service
-	sudo ln ${HOME}/.config/tlp/01-asus.conf /etc/tlp.d/
-# put following in .config/hypr/hypridle.conf
-# listener {
-#     timeout = 5
-#     on-timeout = brightnessctl -sd asus::kbd_backlight set 0
-#     on-resume = brightnessctl -rd asus::kbd_backlight
-# }
-
 
 lenovo: ## lenovo setup
 	$(PACMAN) vulkan-intel lib32-vulkan-intel bolt
