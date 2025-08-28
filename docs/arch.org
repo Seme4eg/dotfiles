@@ -74,6 +74,13 @@ _asus zenbook headset mic fix:_
 ** gpg
 - import all needed gpg keys - ~gpg --import <keyname>.gpg~, including the one for ~git-crypt~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
+** GPU (lenovo)
+- before doing anything and going to any of the links below DO check which gen
+  is your GPU using:
+  - =inxi -Ga= / =inxi -Gxxx= and look for 'gen' there and any info that is shown
+    related to your gpu
+- then there is also [[https://wiki.archlinux.org/title/External_GPU#AMDGPU][this arch wiki link]]
+  - @echo 'options amdgpu pcie_gen_cap=0x80000' | sudo tee /etc/modprobe.d/amd-egpu-pcie-speed.conf > /dev/null
 
 ** Other fixes
 If in some games external gpu usage will be lacking -

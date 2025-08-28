@@ -346,9 +346,6 @@ lenovo: ## lenovo setup
 	$(PACMAN) vulkan-intel lib32-vulkan-intel bolt
 	sudo ln ${HOME}/.config/tlp/02-lenovo.conf /etc/tlp.d/
 	$(SSEN) tlp.service
-# https://wiki.archlinux.org/title/External_GPU#AMDGPU
-	@echo 'options amdgpu pcie_gen_cap=0x40000' | sudo tee /etc/modprobe.d/amd-egpu-pcie-speed.conf > /dev/null
-
 
 # --- laptops end ---
 #
