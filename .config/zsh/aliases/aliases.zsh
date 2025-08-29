@@ -50,8 +50,6 @@ hyprupd() {
 
 alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
 
-alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
-
 alias rsync_archive='sudo rsync -rP --delete ~/mem-arch/' # .. and append destination
 
 ytdcur() { # yt-dlp download current

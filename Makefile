@@ -108,7 +108,6 @@ zsh: ## change shell to zsh, we need those env vars
 	$(PACMAN) zsh
 	chsh -s /usr/bin/zsh
 
-
 pacman: ## add user pacman config to [options] section, add multilib repos
 	@if [ -z "$$(grep '\[community\]' /etc/$@.conf)" ]; then \
 # on init install remove hooks setting otherwise if pacman fails its gonna

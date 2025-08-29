@@ -24,7 +24,6 @@
 ├── .pnpm-store -> dotfiles/.pnpm-store
 ├── .steampath -> /home/earthian/.steam/sdk32/steam
 ├── .steampid -> /home/earthian/.steam/steam.pid
-├── .wget-hsts
 └── .zshenv -> dotfiles/.zshenv
 
 19 directories, 9 files
