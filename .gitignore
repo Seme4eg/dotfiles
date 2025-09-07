@@ -62,3 +62,4 @@ node_modules/
 !/.local/share/icons/*.tar.*
 /.config/BraveSoftware/
 /.config/systemd/user/graphical-session.target.wants/
+/.config/zsh/.zcompcache/
