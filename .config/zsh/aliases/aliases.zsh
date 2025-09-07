@@ -5,14 +5,10 @@ alias vim="nvim"
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
-alias pn="pnpm"
 alias spd="speedtest"
 
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file or use < <(commmand) like wl-paste
-alias picgen="cd $XDG_DATA_HOME/utils/Fooocus && conda activate fooocus && \
-  python entry_with_update.py --always-download-new-model"
-alias nmssaveedit="cd Downloads/nms/jdk-22.0.2/bin && ./java -jar ~/Downloads/nms/NMSSaveEditor.jar"
 
 # Paste image from clipboard, decode it with zbar and copy it back to clipboard
 # https://github.com/tadfisher/pass-otp#examples - more examples
