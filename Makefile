@@ -131,12 +131,13 @@ pacman-install: ## Install all pacman packages
 	tldr --update
 
 yay: ## install yay aur helper
-	@export YAYDIR=$(XDG_DATA_HOME)/utils/$@;
+	@export YAYDIR=$(XDG_CACHE_HOME)/$@;
 	if [ -d "$$YAYDIR" ]; then
 		rm -rf $$YAYDIR
 	fi
 	mkdir -p $$YAYDIR;
 	git clone https://aur.archlinux.org/$@.git $$YAYDIR;
+	sudo pacman -Syy
 	cd $$YAYDIR && makepkg -si --noconfirm;
 	yay --version;
 
