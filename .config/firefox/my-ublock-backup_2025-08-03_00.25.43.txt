@@ -1,12 +1,13 @@
 {
-  "timeStamp": 1754170372806,
+  "timeStamp": 1756559772280,
   "version": "1.65.0",
   "userSettings": {
     "advancedUserEnabled": true,
-    "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/yokoffing/filterlists/main/annoyance_list.txt\nhttps://raw.githubusercontent.com/yokoffing/filterlists/main/click2load.txt\nhttps://raw.githubusercontent.com/yokoffing/filterlists/main/youtube_clear_view.txt",
+    "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt\nhttps://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/gijsdev/ublock-hide-yt-shorts/master/list.txt\nhttps://raw.githubusercontent.com/yokoffing/filterlists/main/annoyance_list.txt\nhttps://raw.githubusercontent.com/yokoffing/filterlists/main/click2load.txt\nhttps://raw.githubusercontent.com/yokoffing/filterlists/main/youtube_clear_view.txt",
     "importedLists": [
       "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt",
       "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
+      "https://raw.githubusercontent.com/gijsdev/ublock-hide-yt-shorts/master/list.txt",
       "https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyance_list.txt",
       "https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load.txt",
       "https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube_clear_view.txt"
@@ -34,10 +35,11 @@
     "easylist-annoyances",
     "ublock-annoyances",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyance_list.txt",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/BrowseWebsitesWithoutLoggingIn.txt",
+    "https://raw.githubusercontent.com/yokoffing/filterlists/main/annoyance_list.txt",
+    "https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load.txt",
     "https://raw.githubusercontent.com/yokoffing/filterlists/main/youtube_clear_view.txt",
-    "https://raw.githubusercontent.com/yokoffing/filterlists/main/click2load.txt"
+    "https://raw.githubusercontent.com/gijsdev/ublock-hide-yt-shorts/master/list.txt"
   ],
   "hiddenSettings": {},
   "whitelist": [
@@ -47,5 +49,5 @@
   "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
   "urlFilteringString": "",
   "hostnameSwitchesString": "no-large-media: behind-the-scene false",
-  "userFilters": "! Title: Hide YouTube Shorts\n! Description: Hide all traces of YouTube shorts videos on YouTube\n! Version: 1.8.0\n! Last modified: 2023-01-08 20:02\n! Expires: 2 weeks (update frequency)\n! Homepage: https://github.com/gijsdev/ublock-hide-yt-shorts\n! License: https://github.com/gijsdev/ublock-hide-yt-shorts/blob/master/LICENSE.md\n\n! Hide all videos containing the phrase \"#shorts\"\nyoutube.com##ytd-grid-video-renderer:has(#video-title:has-text(#shorts))\nyoutube.com##ytd-grid-video-renderer:has(#video-title:has-text(#Shorts))\nyoutube.com##ytd-grid-video-renderer:has(#video-title:has-text(#short))\nyoutube.com##ytd-grid-video-renderer:has(#video-title:has-text(#Short))\n\n! Hide all videos with the shorts indicator on the thumbnail\nyoutube.com##ytd-grid-video-renderer:has([overlay-style=\"SHORTS\"])\nyoutube.com##ytd-rich-item-renderer:has([overlay-style=\"SHORTS\"])\nyoutube.com##ytd-video-renderer:has([overlay-style=\"SHORTS\"])\nyoutube.com##ytd-item-section-renderer.ytd-section-list-renderer[page-subtype=\"subscriptions\"]:has(ytd-video-renderer:has([overlay-style=\"SHORTS\"]))\n\n! Hide shorts button in sidebar\nyoutube.com##ytd-guide-entry-renderer:has-text(Shorts)\nyoutube.com##ytd-mini-guide-entry-renderer:has-text(Shorts)\n\n! Hide shorts section on homepage\nyoutube.com##ytd-rich-section-renderer:has(#rich-shelf-header:has-text(Shorts))\nyoutube.com##ytd-reel-shelf-renderer:has(.ytd-reel-shelf-renderer:has-text(Shorts))\n\n! Hide shorts tab on channel pages\n! Old style\nyoutube.com##tp-yt-paper-tab:has(.tp-yt-paper-tab:has-text(Shorts))\n! New style (2023-10)\nyoutube.com##yt-tab-shape:has-text(/^Shorts$/)\n\n! Hide shorts in video descriptions\nyoutube.com##ytd-reel-shelf-renderer.ytd-structured-description-content-renderer:has-text(\"Shorts remixing this video\")\n\n! Remove empty spaces in grid\nyoutube.com##ytd-rich-grid-row,#contents.ytd-rich-grid-row:style(display: contents !important)\n\n\n!!! MOBILE !!!\n\n! Hide all videos in home feed containing the phrase \"#shorts\"\nm.youtube.com##ytm-rich-item-renderer:has(#video-title:has-text(#shorts))\nm.youtube.com##ytm-rich-item-renderer:has(#video-title:has-text(#Shorts))\nm.youtube.com##ytm-rich-item-renderer:has(#video-title:has-text(#short))\nm.youtube.com##ytm-rich-item-renderer:has(#video-title:has-text(#Short))\n\n! Hide all videos in subscription feed containing the phrase \"#shorts\"\nm.youtube.com##ytm-item-section-renderer:has(#video-title:has-text(#shorts))\nm.youtube.com##ytm-item-section-renderer:has(#video-title:has-text(#Shorts))\nm.youtube.com##ytm-item-section-renderer:has(#video-title:has-text(#short))\nm.youtube.com##ytm-item-section-renderer:has(#video-title:has-text(#Short))\n\n! Hide shorts button in the bottom navigation bar\nm.youtube.com##ytm-pivot-bar-item-renderer:has(.pivot-shorts)\n\n! Hide all videos with the shorts indicator on the thumbnail\nm.youtube.com##ytm-video-with-context-renderer:has([data-style=\"SHORTS\"])\n\n! Hide shorts sections\nm.youtube.com##ytm-rich-section-renderer:has(ytm-reel-shelf-renderer:has(.reel-shelf-title-wrapper:has-text(Shorts)))\nm.youtube.com##ytm-reel-shelf-renderer.item:has(.reel-shelf-title-wrapper:has-text(Shorts))\n\n! Hide shorts tab on channel pages\nm.youtube.com##.single-column-browse-results-tabs>a:has-text(Shorts)"
+  "userFilters": "||googlevideo.com/videoplayback$xhr,3p,method=get,domain=www.youtube.com"
 }
