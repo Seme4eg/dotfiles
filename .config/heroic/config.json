@@ -3,7 +3,7 @@
     "analyticsOptIn": true,
     "checkUpdatesInterval": 10,
     "enableUpdates": false,
-    "addDesktopShortcuts": true,
+    "addDesktopShortcuts": false,
     "addStartMenuShortcuts": false,
     "autoInstallDxvk": true,
     "autoInstallVkd3d": true,
@@ -51,6 +51,7 @@
     "enableMsync": false,
     "enableWineWayland": false,
     "enableHDR": false,
+    "enableWoW64": true,
     "eacRuntime": false,
     "battlEyeRuntime": false,
     "framelessWindow": false,
@@ -61,6 +62,7 @@
     "downloadProtonToSteam": false,
     "advertiseAvxForRosetta": false,
     "noTrayIcon": false,
+    "showValveProton": true,
     "userInfo": {
       "name": "earthian"
     },
