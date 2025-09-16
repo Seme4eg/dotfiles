@@ -374,3 +374,26 @@ librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
 		${HOME}/.librewolf/native-messaging-hosts/
 	ln -s $(XDG_CONFIG_HOME)/firefox/librewolf.overrides.cfg \
 		${HOME}/.librewolf/
+
+XHOME: ## things to enable when i'm home
+# zapret settings in secrets
+	@sudo systemctl enable --now zapret_discord_youtube
+	@systemctl --user enable --now v2raya-lite
+	@sed -i 's/^# \(exec-once = solaar -w hide\)$$/\1/' ${HOME}/dotfiles/.config/hypr/exec-once.conf
+	@echo "Super-Shift-b" is your friend now
+# ================================ IMPORTANT: ================================
+# "- set 'gptel-proxy' var in emacs to 'localhost:20171'
+# "- for anything that requires proxy now - redirect it to that local v2raya proxy
+# "- change tailscale ip to local homelab ip
+
+XHOME-uninstall:
+	@sudo systemctl stop zapret_discord_youtube
+	@sudo systemctl disable zapret_discord_youtube
+	@systemctl --user stop v2raya-lite
+	@systemctl --user disable v2raya-lite
+	@pkill solaar
+	@sed -i 's/^\(exec-once = solaar -w hide\)$$/# \1/' ${HOME}/dotfiles/.config/hypr/exec-once.conf
+# ================================ IMPORTANT: ================================
+# "- unset 'gptel-proxy' var in emacs
+# "- for anything that required proxy - remove it, don't slow down things
+# "- change local homelab ip to tailscale one
