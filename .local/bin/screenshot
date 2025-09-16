@@ -26,11 +26,11 @@ case $1 in
     ;;
   --drawtoclip)
     say -e -t 1000 'Part screenshot to clipboard'
-    grim -g "$(slurp)" - | swappy -f - -o - | wl-copy || say "Screenshot failed"
+    grim -g "$(slurp)" - | satty -f - || say "Screenshot failed"
     ;;
   --drawtoboth)
     say -e -t 1000 'Part screenshot to clipboard'
-    if grim -g "$(slurp)" - | swappy -f - -o "$_path"; then
+    if grim -g "$(slurp)" - | satty -f - --save-after-copy -o "$_path"; then
       wl-copy <"$_path"
     else
       say "Screenshot failed/canceled"

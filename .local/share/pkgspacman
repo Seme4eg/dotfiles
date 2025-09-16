@@ -89,6 +89,7 @@ qutebrowser
 reflector
 ripgrep
 rsync
+satty
 scrcpy
 shfmt
 slurp
@@ -98,7 +99,6 @@ solaar
 steam
 stow
 stylua
-swappy
 swaync
 swww
 syncthing
