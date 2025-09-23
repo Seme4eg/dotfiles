@@ -378,8 +378,11 @@ librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
 XHOME: ## things to enable when i'm home
 # zapret settings in secrets
 	@sudo systemctl enable --now zapret_discord_youtube
+# for zapret to pick up the correct network interface
+	@sudo systemctl restart NetworkManager
 	@systemctl --user enable --now v2raya-lite
 	@sed -i 's/^# \(exec-once = solaar -w hide\)$$/\1/' ${HOME}/dotfiles/.config/hypr/exec-once.conf
+	@solaar -w hide
 	@echo "Super-Shift-b" is your friend now
 # ================================ IMPORTANT: ================================
 # "- set 'gptel-proxy' var in emacs to 'localhost:20171'
@@ -389,6 +392,7 @@ XHOME: ## things to enable when i'm home
 XHOME-uninstall:
 	@sudo systemctl stop zapret_discord_youtube
 	@sudo systemctl disable zapret_discord_youtube
+	@sudo systemctl restart NetworkManager
 	@systemctl --user stop v2raya-lite
 	@systemctl --user disable v2raya-lite
 	@pkill solaar
