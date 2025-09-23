@@ -1,0 +1,7 @@
+#+title: Setup
+
+- [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
+  settings page
+- Somewhere in security section of browser add your _certificates_ (authorities
+  tab -> import ca.crt from secrets repo)
+- See your https://my.nextdns.io/ DoH. Insructions see in nextdns 'setup' tab

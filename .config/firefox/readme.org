@@ -1,9 +1,0 @@
-#+title: Setup
-
-- See your https://my.nextdns.io/ DoH. Insructions see in nextdns 'setup' tab
-- [[https://github.com/yokoffing/filterlists#guidelines][uBO filters + settings]], there is a backup file in this dir, import it on uBO
-  settings page
-- Somewhere in security section of browser add your certificates (authorities
-  tab -> import ca.crt from secrets repo)
-- In case you ever decide to go back to stock firefox user
-  https://github.com/yokoffing/Betterfox user.js

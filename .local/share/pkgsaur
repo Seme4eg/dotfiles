@@ -2,7 +2,6 @@ agsv1
 amdgpu_top-bin
 brave-bin
 cgo-git
-firefox-tridactyl-native
 goimapnotify-git
 gojq
 golangci-lint-bin
@@ -11,7 +10,6 @@ hypridle-git
 hyprland-git
 hyprlock-git
 hyprpolkitagent-git
-librewolf-bin
 mbsync-git
 mu
 numix-circle-icon-theme-git

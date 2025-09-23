@@ -247,7 +247,7 @@ earlyoom:
 # without this change notifications won't work
 # https://github.com/rfjakob/earlyoom/issues/270#issuecomment-1155020972
 	sudo sed -i 's/^\(DynamicUser=true\)/# \1/' /usr/lib/systemd/system/earlyoom.service
-	@echo EARLYOOM_ARGS=-m 5 -r 3600 -n --avoid '(^|/)(init|systemd|Hyprland|sshd)$$' --prefer '(^|/)(emacs|librewolf|steam|vesktop)$$' |
+	@echo EARLYOOM_ARGS=-m 5 -r 3600 -n --avoid '(^|/)(init|systemd|Hyprland|sshd)$$' --prefer '(^|/)(emacs|brave|steam|vesktop)$$' |
 		sudo tee /etc/default/earlyoom > /dev/null
 	$(SSEN) earlyoom.service
 
@@ -366,14 +366,6 @@ hyprplugins:
 	hyprpm add https://github.com/ItsDrike/hyprland-dwindle-autogroup
 	hyprpm enable dwindle-autogroup
 	hyprpm reload
-
-librewolf: ## setup pywalfox and tridactyl native, see blame if won't work
-	pywalfox --browser librewolf install
-# path from where to link - https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=firefox-tridactyl-native
-	ln -s /usr/lib/mozilla/native-messaging-hosts/tridactyl.json \
-		${HOME}/.librewolf/native-messaging-hosts/
-	ln -s $(XDG_CONFIG_HOME)/firefox/librewolf.overrides.cfg \
-		${HOME}/.librewolf/
 
 XHOME: ## things to enable when i'm home
 # zapret settings in secrets
