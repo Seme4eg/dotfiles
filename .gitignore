@@ -51,6 +51,8 @@ node_modules/
 /.config/unity3d/
 /.config/user-dirs.dirs
 /.config/vesktop/
+/.config/v2raya/*
+!/.config/v2raya/config.json
 /.config/wpg/*
 !/.config/wpg/wpg.conf
 /.config/xfce4/
