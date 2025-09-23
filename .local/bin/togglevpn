@@ -1,0 +1,33 @@
+#!/usr/bin/sh
+
+vpn_name="$1"
+mail_name="$2"
+
+# in format of vpn_name:vpn
+active_networks="$(nmcli -g name,type con show --active)"
+
+is_active() { echo "${active_networks}" | grep -q "${vpn_name}"; }
+
+if is_active; then
+  [ -n "$mail_name" ] && systemctl --user stop "goimapnotify@${mail_name}" &
+  nmcli con down "${vpn_name}"
+else
+  # brind down any other running vpn
+  if is_active vpn; then
+    current="$(echo "$active_networks" | grep vpn | cut -d: -f 1)"
+    nmcli con down "${current}"
+  fi
+
+  # need to start web-interface to connect
+  if [ "${vpn_name}" = cisco ]; then
+    nm-applet &
+    sleep 1
+  fi
+
+  nmcli con up "${vpn_name}"
+  sleep 5
+  [ -n "$mail_name" ] && systemctl --user start "goimapnotify@${mail_name}"
+  mbsync "$mail_name"
+
+  [ "${vpn_name}" = cisco ] && pkill nm-applet
+fi
