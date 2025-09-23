@@ -65,3 +65,4 @@ node_modules/
 /.config/BraveSoftware/
 /.config/systemd/user/graphical-session.target.wants/
 /.config/zsh/.zcompcache/
+/.config/droidcam
