@@ -1,7 +1,9 @@
 .
+├── .android
 ├── Books
 ├── .cache
 ├── .cert
+├── .codeium
 ├── .config -> dotfiles/.config
 ├── Documents
 ├── dotfiles
@@ -26,4 +28,4 @@
 ├── .steampid -> /home/earthian/.steam/steam.pid
 └── .zshenv -> dotfiles/.zshenv
 
-19 directories, 9 files
+20 directories, 8 files
