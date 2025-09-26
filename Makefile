@@ -380,7 +380,7 @@ XHOME: ## things to enable when i'm home
 	@sudo nmcli con reload cisco
 	@echo "Super-Shift-b" is your friend now
 # ================================ IMPORTANT: ================================
-# "- set 'gptel-proxy' var in emacs to 'localhost:20171'
+# "- set 'gptel-proxy' var in emacs to 'localhost:20171' for http proxy
 # "- for anything that requires proxy now - redirect it to that local v2raya proxy
 # "- change tailscale ip to local homelab ip
 
