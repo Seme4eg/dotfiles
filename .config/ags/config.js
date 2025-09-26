@@ -29,10 +29,10 @@ Utils.monitorFile(
 let theme = Variable("dark");
 globalThis.theme = theme;
 
-function Bar(monitor) {
+function Bar() {
   return Widget.Window({
-    name: `bar-${monitor}`, // name has to be unique
-    monitor,
+    name: `statusbar`, // name has to be unique
+    // monitor,
     anchor: ["top", "left", "right"],
     exclusivity: "exclusive",
     // layer: "top",
