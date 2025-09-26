@@ -1,0 +1,13 @@
+[Unit]
+Description=Password store update via entr
+After=network-online.target
+Wants=network-online.target
+
+[Install]
+WantedBy=default.target
+
+[Service]
+Type=simple
+ExecStart=pass_update
+Restart=always
+RestartSec=30
