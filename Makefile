@@ -375,7 +375,8 @@ XHOME: ## things to enable when i'm home
 	@systemctl --user enable --now v2raya-lite
 	@sed -i 's/^# \(exec-once = solaar -w hide\)$$/\1/' ${HOME}/dotfiles/.config/hypr/exec-once.conf
 	@solaar -w hide
-	@sudo chmod 600 cisco.nmconnection
+	@cd ${HOME}/git/secrets/w_mg
+	@sudo chmod 600 cisco-proxy.nmconnection
 	@sudo cp -f ${HOME}/git/secrets/w_mg/cisco-proxy.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
 	@sudo nmcli con reload cisco
 	@echo "Super-Shift-b" is your friend now
@@ -390,7 +391,8 @@ XHOME-uninstall:
 	@sudo systemctl restart NetworkManager
 	@systemctl --user stop v2raya-lite
 	@systemctl --user disable v2raya-lite
-	@pkill solaar
+	@pgrep solaar && pkill solaar
+	@cd ${HOME}/git/secrets/w_mg
 	@sudo chmod 600 cisco.nmconnection
 	@sudo cp -f ${HOME}/git/secrets/w_mg/cisco.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
 	@sudo nmcli con reload cisco
