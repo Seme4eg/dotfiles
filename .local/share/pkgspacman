@@ -75,7 +75,6 @@ otf-hasklig-nerd
 pacman-contrib
 pass
 pass-otp
-pavucontrol
 perl-image-exiftool
 pgformatter
 pipewire-alsa
@@ -126,6 +125,7 @@ wf-recorder
 wget
 wine-staging
 wireguard-tools
+wiremix
 wireplumber
 wl-clipboard
 wlsunset
