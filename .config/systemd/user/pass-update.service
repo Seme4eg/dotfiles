@@ -8,6 +8,6 @@ WantedBy=default.target
 
 [Service]
 Type=simple
-ExecStart=pass_update
+ExecStart=%h/.local/bin/pass_update
 Restart=always
 RestartSec=30
