@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=wiremix
+Comment=A simple TUI audio mixer for Pipewire
+Exec=alacritty --class=TUI.float -e wiremix
+Terminal=false
+Type=Application
+Icon=wiremix

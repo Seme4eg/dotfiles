@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=btop++
+Comment=Resource monitor that shows usage and stats for processor, memory, disks, network and processes
+Exec=alacritty --class=TUI.float -e btop
+Terminal=false
+Type=Application
+Icon=btop
