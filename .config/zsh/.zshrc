@@ -56,7 +56,7 @@ bindkey '^n' history-substring-search-down
 fcd() {
   cd "$(find . -type d -maxdepth 7 -not -path '*steam*' -not -path '*Steam*' -not -path '*.git/*' 2>/dev/null | fzf -i)"
 }
-# ^o doesn't work in foot, cuz idk. In foot use ^O
+# ^o doesn't work in foot, cuz idk. In foot use ^O. Alacritty ok
 bindkey -s '^o' 'fcd^M' # ^u in the beginning?
 
 export ZSH_AUTOSUGGEST_STRATEGY=(completion history)

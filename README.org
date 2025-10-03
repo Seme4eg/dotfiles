@@ -7,7 +7,7 @@
 - *Screen locker*: hyprlock
 - *Theme changing*: pywal, wpgtk & scripts
 - *Notifications*: swaync
-- *Terminal*: foot
+- *Terminal*: alacritty
 
 [[https://www.youtube.com/watch?v=jHLok6jFJkE][Youtube demo]]
 

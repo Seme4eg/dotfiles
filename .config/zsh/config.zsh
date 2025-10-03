@@ -8,7 +8,7 @@ export XDG_STATE_HOME=$HOME/.local/state
 
 export EDITOR="emacsclient -c"
 export VISUAL="emacsclient -c -a emacs"
-export TERMINAL=foot
+export TERMINAL=alacritty
 export BROWSER=brave
 
 export MAKEFLAGS="-j$(nproc)"
