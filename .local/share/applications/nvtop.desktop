@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=nvtop
+GenericName=GPU Process Monitor
+Type=Application
+Exec=alacritty --class=TUI.float -e nvtop
+Icon=nvtop
+Terminal=false
+Categories=System;Monitor;
+X-AppImage-Integrate=false
