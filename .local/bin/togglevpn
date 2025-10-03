@@ -6,9 +6,9 @@ mail_name="$2"
 # in format of vpn_name:vpn
 active_networks="$(nmcli -g name,type con show --active)"
 
-is_active() { echo "${active_networks}" | grep -q "${vpn_name}"; }
+is_active() { echo "${active_networks}" | grep -q "$1"; }
 
-if is_active; then
+if is_active "$vpn_name"; then
   [ -n "$mail_name" ] && systemctl --user stop "goimapnotify@${mail_name}" &
   nmcli con down "${vpn_name}"
 else
