@@ -1,6 +1,7 @@
 agsv1
 brave-bin
 cgo-git
+droidcam
 goimapnotify-git
 gojq
 golangci-lint-bin
@@ -18,6 +19,7 @@ python-pyclip
 rofi-lbonn-wayland-git
 rose-pine-hyprcursor
 telegram-tdlib-git
+v4l2loopback-dc-dkms
 vesktop-bin
 webtorrent-cli
 wpgtk-git
