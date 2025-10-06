@@ -12,9 +12,9 @@ if is_active "$vpn_name"; then
   [ -n "$mail_name" ] && systemctl --user stop "goimapnotify@${mail_name}" &
   nmcli con down "${vpn_name}"
 else
-  # brind down any other running vpn
-  if is_active vpn; then
-    current="$(echo "$active_networks" | grep vpn | cut -d: -f 1)"
+  # brind down any other running vpn (:vpn as i'm looking for type)
+  if is_active :vpn; then
+    current="$(echo "$active_networks" | grep :vpn | head -n1 | cut -d: -f 1)"
     nmcli con down "${current}"
   fi
 
