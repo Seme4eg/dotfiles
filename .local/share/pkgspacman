@@ -39,6 +39,10 @@ graphviz
 grim
 grub
 gtk-layer-shell
+hypridle
+hyprland
+hyprlock
+hyprpolkitagent
 jq
 languagetool
 lf
@@ -56,6 +60,7 @@ man-db
 man-pages
 mangohud
 mediainfo
+mesa
 mpc
 mpd
 mpd-mpris
@@ -91,6 +96,7 @@ qrencode
 qutebrowser
 reflector
 ripgrep
+rofi
 rsync
 satty
 scrcpy
@@ -123,6 +129,8 @@ udiskie
 unrar
 unzip
 usb_modeswitch
+vulkan-intel
+vulkan-radeon
 vulkan-tools
 wf-recorder
 wget
@@ -133,6 +141,7 @@ wireplumber
 wl-clipboard
 wlsunset
 wtype
+xdg-desktop-portal-hyprland
 xorg-xhost
 ydotool
 yt-dlp
