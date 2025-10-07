@@ -26,24 +26,6 @@ alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 # alias clicker="ydotoold &; sleep 0.4; ydotool mousemove --absolute 300 250; ydotool click -r 3000 0xC0"
 # clicker() { ydotoold &; sleep 0.4; ydotool click -r 3000 0xC0; }
 
-hyprupd() {
-  # NOTE: need manuall update of all these
-  # secondary packages, need to build first
-  #  '--answerclean i' to avoid .so files issues
-  yay -S hyprutils-git --answerclean i
-  yay -S aquamarine-git --answerclean i
-  yay -S hyprcursor-git hyprgraphics-git \
-    hyprland-qt-support-git hyprland-qtutils-git hyprlang-git hyprwayland-scanner-git
-
-  # user level packages that are explicitly installed
-  yay -S xdg-desktop-portal-hyprland-git --answerclean i
-  yay -S hypridle-git hyprlock-git hyprpolkitagent-git \
-    rose-pine-hyprcursor
-
-  # only then hpyrland itself
-  yay -S hyprland-git
-}
-
 alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
 
 alias rsync_archive='sudo rsync -rP --delete ~/mem-arch/' # .. and append destination
