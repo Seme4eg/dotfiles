@@ -1,5 +1,12 @@
 #+title: Readme
 
+Installation of V1:
+
+#+begin_src sh
+sudo pacman -U gjs-2:1.82.1-2-x86_64.pkg.tar.zst
+makepkg --install --clean --syncdeps --rmdeps
+#+end_src
+
 - Important references: [[https://aylur.github.io/ags-docs/][great ags wiki]] is the way, just learn to read.
 - For which *fonts* are used in this config just search this dir recursively. Cuz
   i might be changing those from time to time and maintaining precise list of
