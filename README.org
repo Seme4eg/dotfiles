@@ -32,6 +32,13 @@ and adjust to your needs.
   cuz it pulls like 60 packages along with it
 - _font-manager_ - whenever i need to mess with fonts in my system, whether its
   status bar styling or anything else
+** TUIs
+For now don't need them but maybe some day idk
+- Hyprland Monitor Settings - hyprmon
+- TUI AI - crush (by Charm)
+- Discord - Equibob | Theme System24.
+- Docker - lazydocker
+
 ** Todos
 *** When will be installing new system -
 - rename ~/git to ~/repos, makes more sence, adjust all the paths and move
