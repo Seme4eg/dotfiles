@@ -44,6 +44,7 @@ rofi_call() {
       # process finishes there is no way to type another command
       # footclient --hold yay -S "$pkg"
       alacritty &
+      sleep 0.2
       # wl-copy & wl-paste don't work
       wtype "yay -S $pkg"
       ;;
