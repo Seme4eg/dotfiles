@@ -12,5 +12,5 @@ alias pml="pm -Ql"          # list package
 # empty stdin. This is expected as no arguments were passed to pacman -Rns.
 alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
 alias pms="pm -Syy"                            # sync
-alias pmu="pm -Syu"                            # update
+alias pmu="sscs reflector && sudo pacman -Syu" # update
 alias pmU="pm -Su"                             # update without syncing packages
