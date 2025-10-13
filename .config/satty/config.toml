@@ -13,7 +13,7 @@ copy-command = "wl-copy"
 # Increase or decrease the size of the annotations
 annotation-size-factor = 1
 # Filename to use for saving action. Omit to disable saving to file. Might contain format specifiers: https://docs.rs/chrono/latest/chrono/format/strftime/index.html
-# output-filename = "/Pictures/Pictures/Screenshots/satty-%Y-%m-%d_%H:%M:%S.png"
+output-filename = "/home/earthian/Pictures/Pictures/Screenshots/%Y%m%d-%H%M%S_satty.png"
 # After copying the screenshot, save it to a file as well
 save-after-copy = false
 # Hide toolbars by default
@@ -34,7 +34,7 @@ actions-on-right-click = []
 actions-on-enter = ["save-to-clipboard"]
 # Actions to trigger on Escape key (order is important)
 # [possible values: save-to-clipboard, save-to-file, exit]
-actions-on-escape = ["exit"]
+actions-on-escape = ["save-to-clipboard"]
 # request no window decoration. Please note that the compositor has the final say in this. At this point. requires xdg-decoration-unstable-v1.
 no-window-decoration = true
 # experimental feature: adjust history size for brush input smooting (0: disabled, default: 0, try e.g. 5 or 10)
