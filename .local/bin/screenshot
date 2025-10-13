@@ -2,7 +2,7 @@
 
 set -eo
 
-_path=~/Pictures/Pictures/Screenshots/$(date +"grim_%d%m%Y_%H-%M-%S.png")
+_path=~/Pictures/Pictures/Screenshots/$(date +"%Y%m%d-%H%M%S_grim.png")
 
 case $1 in
   --fulltoboth) # full screenshot to file and clipboard
