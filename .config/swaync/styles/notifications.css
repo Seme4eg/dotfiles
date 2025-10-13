@@ -66,9 +66,7 @@
   border: 1px solid @color13;
 } /* or color5 */
 .notification.critical {
-  background: alpha(black, 0.89);
-  border: 1px solid white;
-  color: #eeeeee;
+  border: 1px solid @foreground;
 }
 
 .notification-content {
