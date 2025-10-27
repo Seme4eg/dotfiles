@@ -113,6 +113,7 @@ swaync
 swww
 syncthing
 systembus-notify
+systemctl-tui
 tailscale
 tealdeer
 tesseract
@@ -139,7 +140,6 @@ wine-staging
 wireguard-tools
 wiremix
 wireplumber
-wl-clip-persist
 wl-clipboard
 wlsunset
 wtype
