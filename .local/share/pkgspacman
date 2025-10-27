@@ -5,6 +5,7 @@ android-tools
 base
 base-devel
 bat
+bluetui
 bluez
 bluez-utils
 bolt
