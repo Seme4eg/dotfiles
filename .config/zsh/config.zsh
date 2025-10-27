@@ -6,7 +6,8 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-export EDITOR="emacsclient -c"
+export EDITOR="emacsclient"
+# gui editor, apps fall back to 'EDITOR' if that one isn't set
 export VISUAL="emacsclient -c -a emacs"
 export TERMINAL=alacritty
 export BROWSER=brave

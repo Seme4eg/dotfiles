@@ -35,6 +35,7 @@ git
 git-crypt
 gnome-bluetooth-3.0
 go
+gofumpt
 graphviz
 grim
 grub
