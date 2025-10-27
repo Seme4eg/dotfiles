@@ -1,7 +1,7 @@
 
 fps = 60.0 # Limit rendering frames per second (unlimited if unset)
 theme = "default" # Theme to use (see Themes section)
-tab = "output" # Initial tab
+tab = "input" # Initial tab
 enforce_max_volume = false # Whether to prevent increasing volume past max_volume
 
 keybindings = [
