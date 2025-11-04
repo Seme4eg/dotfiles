@@ -1,5 +1,7 @@
 #+title: Zsh
 
+- C-r :: history substring search (viz fzf)
+
 Grml docs: https://grml.org/zsh/grmlzshrc.html
 
 [[https://wiki.archlinux.org/title/Zsh#Sample_.zshrc_files][Sample .zshrc files]]
