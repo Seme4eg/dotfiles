@@ -19,8 +19,6 @@ alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passw
 
 alias cheatengine="xhost +local: &; gameconqueror"
 
-# NOTE: tlp-stat also shows the capacity
-alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 
 # bind = SUPERCTRL, W, exec, pkill ydotool || ydotoold & { sleep 0.4; ydotool click -r 3000 0xC0; }
 # alias clicker="ydotoold &; sleep 0.4; ydotool mousemove --absolute 300 250; ydotool click -r 3000 0xC0"
