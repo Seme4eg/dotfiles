@@ -19,6 +19,8 @@ alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passw
 
 alias cheatengine="xhost +local: &; gameconqueror"
 
+# mount torrent folder on homelab
+alias mttorrent="sudo mount -t nfs -o vers=4 192.168.1.81:/home/earthian/data/torrents $XDG_DATA_HOME/torrents"
 
 # bind = SUPERCTRL, W, exec, pkill ydotool || ydotoold & { sleep 0.4; ydotool click -r 3000 0xC0; }
 # alias clicker="ydotoold &; sleep 0.4; ydotool mousemove --absolute 300 250; ydotool click -r 3000 0xC0"
