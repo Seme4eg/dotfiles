@@ -24,14 +24,9 @@ alias jcu="journalctl --user -ef -u" # -x - more verbose
 ###############################################################################
 
 # soystemd --user
-alias sc="systemctl"
-alias scu="sc --user"
+alias scu="systemctl --user"
 alias scue="scu enable"
 alias scud="scu disable"
-alias scus="scu start"
-# there is also 'reload' but it aint applicable to all services
-alias scur="scu daemon-reload && systemctl --user restart"
-alias scuS="scu status"
 
 # --- list commands ---
 #   lookup 'sc list-*'. But most of the times 'list-*' command can be omitted in
@@ -45,9 +40,6 @@ alias sculfailed="sc --user --failed"
 alias ssc="sudo systemctl"
 alias ssce="ssc enable"
 alias sscd="ssc disable"
-alias sscs="ssc start"
-alias sscr="ssc restart"
-alias sscS="ssc status"
 
 # --- list commands ---
 #   lookup 'sc list-*'. But most of the times 'list-*' command can be omitted in

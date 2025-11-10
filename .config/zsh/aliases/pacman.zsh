@@ -10,7 +10,7 @@ alias pmsf="pm -F"          # search for packages that provide given file
 alias pml="pm -Ql"          # list package
 # If no orphans were found, the output is error: argument '-' specified with
 # empty stdin. This is expected as no arguments were passed to pacman -Rns.
-alias pmro="pacman -Qtdq | sudo pacman -Rns -" # remove orphaned
-alias pms="pm -Syy"                            # sync
-alias pmu="sscs reflector && sudo pacman -Syu" # update
-alias pmU="pm -Su"                             # update without syncing packages
+alias pmro="pacman -Qtdq | sudo pacman -Rns -"                 # remove orphaned
+alias pms="pm -Syy"                                            # sync
+alias pmu="sudo systemctl start reflector && sudo pacman -Syu" # update
+alias pmU="pm -Su"                                             # update without syncing packages
