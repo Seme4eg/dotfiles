@@ -52,7 +52,7 @@ case $rofi_exit in
     # shellcheck disable=SC2086
     if flatpak $action_flags "$pkg"; then
       notify "$success 📦 $pkg"
-      flatpak list --app --columns=application >"$HOME/dotfiles/.local/share/pkgsflatpak"
+      flatpak list --app --columns=application >"$DOTFILES_PATH/.local/share/pkgsflatpak"
     else
       notify "$failure 📦 $pkg"
     fi

@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 
 [ ! -d ~/Pictures/DCIM/Avbl ] &&
-  icon="$HOME/dotfiles/assets/avatar.jpg" ||
+  icon="$DOTFILES_PATH/assets/avatar.jpg" ||
   icon=$(find ~/Pictures/DCIM/Avbl/ -type f | sort --random-sort | head -n 1)
 
 # swaync-client -rs

@@ -31,7 +31,7 @@ if [ -z "$wp" ]; then
   # wp=$(find ~/Pictures/DCIM/wps/pc/ -type f | shuf -n 1)
   # sort instead of shuf cuz latter seems to quite often repeat same results
   [ ! -d ~/Pictures/DCIM/wps ] &&
-    wp="$HOME/dotfiles/assets/wallpaper.jpg" ||
+    wp="$DOTFILES_PATH/assets/wallpaper.jpg" ||
     wp=$(find ~/Pictures/DCIM/wps/pc/ -type f | sort --random-sort | head -n 1)
 fi
 
