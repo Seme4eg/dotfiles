@@ -9,6 +9,9 @@ source $DOTFILES_PATH/install/config/swappiness.sh
 # systemd services
 source $DOTFILES_PATH/install/config/system-services.sh
 source $DOTFILES_PATH/install/config/user-services.sh
+source $DOTFILES_PATH/install/config/fast-shutdown.sh
+source $DOTFILES_PATH/install/config/increase-sudo-tries.sh
+source $DOTFILES_PATH/install/config/ssh-flakiness.sh
 
 # apps
 source $DOTFILES_PATH/install/config/emacs.sh
@@ -22,9 +25,6 @@ source $DOTFILES_PATH/install/config/pam-gnupg.sh
 source $DOTFILES_PATH/install/config/pnpm.sh
 source $DOTFILES_PATH/install/config/theme.sh
 source $DOTFILES_PATH/install/config/dash.sh
-source $DOTFILES_PATH/install/config/fast-shutdown.sh
-source $DOTFILES_PATH/install/config/increase-sudo-tries.sh
-source $DOTFILES_PATH/install/config/ssh-flakiness.sh
 
 # hardware
 source $DOTFILES_PATH/install/config/hardware/bluetooth.sh
