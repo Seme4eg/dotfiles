@@ -3,9 +3,11 @@
 *.log
 tmp/
 .github/
+.env
 *.http
 node_modules/
 .gitlab-ci-local/
+.dir-locals.el
 
 # dotfiles specific
 .antidote
