@@ -13,7 +13,7 @@ while true; do
   capacity=$(cat /sys/class/power_supply/BAT?/capacity)
 
   # don't spam notifications
-  [ "$old_capacity" = "$capacity" ] && sleep 1 && continue
+  [ "$old_capacity" = "$capacity" ] && sleep 30 && continue
 
   if charging; then
     # is laptop is still discharging means i am on 60w charger
