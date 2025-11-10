@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+
+# things to enable when i'm home
+
+flag="$1"
+
+case $1 in
+  -u | --uninstall)
+    sudo systemctl stop zapret_discord_youtube
+    sudo systemctl disable zapret_discord_youtube
+    sudo systemctl restart NetworkManager
+    systemctl --user stop v2raya-lite
+    systemctl --user disable v2raya-lite
+    pgrep solaar && pkill solaar
+    cd $HOME/git/secrets/w_mg
+    sudo chmod 600 cisco.nmconnection
+    sudo cp -f $HOME/git/secrets/w_mg/cisco.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
+    sudo nmcli con reload cisco
+    sed -i 's/^\(exec-once = solaar -w hide\)$$/# \1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
+    echo '================================ IMPORTANT: ================================'
+    echo "- unset 'gptel-proxy' var in emacs"
+    echo "- for anything that required proxy - remove it, don't slow down things"
+    echo "- change local homelab ip to tailscale one"
+
+    exit 0
+    ;;
+esac
+
+# zapret settings in secrets
+sudo systemctl enable --now zapret_discord_youtube
+# for zapret to pick up the correct network interface
+sudo systemctl restart NetworkManager
+systemctl --user enable --now v2raya-lite
+sed -i 's/^# \(exec-once = solaar -w hide\)$$/\1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
+solaar -w hide
+cd "$HOME"/git/secrets/w_mg
+sudo chmod 600 cisco-proxy.nmconnection
+sudo cp -f $HOME/git/secrets/w_mg/cisco-proxy.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
+sudo nmcli con reload cisco
+echo "Super-Shift-b" is your friend now
+echo "================================ IMPORTANT: ================================"
+echo "- set 'gptel-proxy' var in emacs to 'localhost:20171' for http proxy"
+echo "- for anything that requires proxy now - redirect it to that local v2raya proxy"
+echo "- change tailscale ip to local homelab ip"
