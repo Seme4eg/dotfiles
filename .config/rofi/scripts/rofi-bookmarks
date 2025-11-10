@@ -71,7 +71,7 @@ show_menu() {
         hyprctl dispatch focuswindow class:Emacs
       ;;
     16) help_menu ;;
-    *) xdg-open "$url" ;;
+    *) xdg-open "$url" >/dev/null 2>&1 ;;
   esac
 }
 

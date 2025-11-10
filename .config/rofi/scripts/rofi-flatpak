@@ -22,7 +22,7 @@ while getopts ":r" Option; do
 done
 
 open_url() {
-  xdg-open "https://flathub.org/apps/search?q=$1"
+  xdg-open "https://flathub.org/apps/search?q=$1" >/dev/null 2>&1
 }
 
 notify() {
