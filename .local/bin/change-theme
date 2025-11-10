@@ -38,7 +38,7 @@ fi
 # https://github.com/dylanaraps/pywal/wiki/Getting-Started#how-to-use-wal
 if [ $theme = light ]; then
   wpg -L -s "$wp"
-  wal -n -q -l -i "$wp" --saturate 0.3
+  wal -n -q -l -i "$wp" --saturate 0.7
 else
   wpg -s "$wp"
   wal -n -q -i "$wp" --saturate 0.3
