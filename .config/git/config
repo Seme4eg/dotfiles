@@ -1,3 +1,5 @@
+# See https://git-scm.com/docs/git-config
+
 [user]
   name = earthian
   email = 418@duck.com
@@ -5,30 +7,40 @@
   excludesfile = ~/.gitignore
 [github]
   user = seme4eg
+[init]
+	defaultBranch = master
 [pull]
   rebase = true
 [push]
   default = current
+	autoSetupRemote = true
 [merge]
   # https://www.ductile.systems/zdiff3/
   # TLDR: in the middle its the original code - above the remote changes
   #   and below are yours.
   conflictstyle = zdiff3
 [rerere]
-  enabled = true
+	enabled = true           # Record and reuse conflict resolutions
+	autoupdate = true        # Apply stored conflict resolutions automatically
 [rebase]
   autostash = true
   autosquash = true
 [diff]
   algorithm = histogram
   submodule = log
-  colorMoved = default
   colorMovedWS = allow-indentation-change
+  # default
+	colorMoved = plain       # Highlight moved blocks in diffs
+	mnemonicPrefix = true    # More intuitive refs in diff output
 [submodule]
   recurse=true
   propagateBranches=true
   fetchJobs=3
 [fetch]
   parallel=3
+[branch]
+	sort = -committerdate    # Sort branches by most recent commit first
+[tag]
+	sort = -version:refname  # Sort version numbers as you would expect
 [includeIf "gitdir:~/git/work_mp/"]
   path = ~/git/work_mp/.gitconfig
