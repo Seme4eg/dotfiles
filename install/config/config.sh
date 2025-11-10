@@ -11,3 +11,5 @@ mkdir -p $HOME/.local/share/wineprefixes
 git submodule update --init --recursive
 
 stow .
+
+fc-cache
