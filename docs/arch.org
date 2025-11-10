@@ -1,5 +1,7 @@
 #+title: Arch
 
+For any problems that happen to system first see ~journalctl -b 0 --no-pager~
+
 ** Installation
 - follow official arch installation guide
 - _disk partitioning_ (using /fdisk/):
@@ -31,7 +33,8 @@
   - *FROM NOW ON DO THINGS ONLY AS NORMAL USER, NOT ROOT*
   - further steps in main readme file
 
-** sound
+** Hardware
+*** sound
 - switch default mic to the headset one: ~wpctl status~ - grab id of your mic
   (SOURCE device) - ~wpctl set-default ...~
 - also have some cards disabled in =51-alsa-disable.conf=. Each time you change
@@ -62,19 +65,20 @@ _asus zenbook headset mic fix:_
   Choose the correct card > "Show Unconnected Pins" > 0x19 > "Override" >
   "Microphone")
 
-** hyprland
-- _Nvidia hybrid laptop setup_: install /nvidia/ drivers, done. In order for HDMI
-  port to work (which is often connected directly to Nvidia gpu) hyprland must
-  be able to be launched only using Nvidia gpu (do it via ~WLR_DRM_DEVICES~ var).
-  If it launches you're good to go. Otherwise set ~nvidia-drm.modeset=1~ in
-  =/etc/default/grub=, check again and if it works - HDMI will b working (tho i
-  recommend to use USB-C hub and plug HDMI in there so external monitor apps use
-  Intel GPU cuz for now nvidia is glichy).
+*** graphics
+**** Nvidia
+For current nvidia setup check Hypr wiki and omarchy
+=install/config/hardware/nvidia= script.
 
-** gpg
-- import all needed gpg keys - ~gpg --import <keyname>.gpg~, including the one for ~git-crypt~
-- set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
-** GPU (lenovo)
+_Nvidia hybrid laptop setup_: install /nvidia/ drivers, done. In order for HDMI
+port to work (which is often connected directly to Nvidia gpu) hyprland must be
+able to be launched only using Nvidia gpu (do it via ~WLR_DRM_DEVICES~ var).  If
+it launches you're good to go. Otherwise set ~nvidia-drm.modeset=1~ in
+=/etc/default/grub=, check again and if it works - HDMI will b working (tho i
+recommend to use USB-C hub and plug HDMI in there so external monitor apps use
+Intel GPU cuz for now nvidia is glichy).
+
+**** GPU (lenovo)
 - before doing anything and going to any of the links below DO check which gen
   is your GPU using:
   - =inxi -Ga= / =inxi -Gxxx= and look for 'gen' there and any info that is shown
@@ -82,10 +86,23 @@ _asus zenbook headset mic fix:_
 - then there is also [[https://wiki.archlinux.org/title/External_GPU#AMDGPU][this arch wiki link]]
   - @echo 'options amdgpu pcie_gen_cap=0x80000' | sudo tee /etc/modprobe.d/amd-egpu-pcie-speed.conf > /dev/null
 
-** camera on lenovo laptop
+**** Other fixes
+If in some games external gpu usage will be lacking -
+https://github.com/doitsujin/dxvk/issues/3694#issuecomment-2455562274. The above
+config is for d3d11 and d3d10 games. For d3d9 and d3d8 through dxvk the similar
+config would be d3d9.cachedDynamicBuffers = True ([[https://canary.discord.com/channels/812703221789097985/1324287230809739265/1324656360973012992][discord message link]]).
+
+*** camera on lenovo laptop
 uses ipu6 camera, modules loaded, but still not working, guess cuz need to
 install those ipu6 packages from AUR, but was too lazy to bother a that time
-** using android camera on lenovo laptop (droidcam)
+*** battery
+# NOTE: tlp-stat also shows the capacity
+alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
+
+Xiomi laptop was draining battery like crazy in [s2idle] sleep mode, so i
+changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/etc/default/grub=
+
+*** using android camera on lenovo laptop (droidcam)
 - install droidcam on android (exists only on playstore)
 - install droidcam from aur,
 - set resolution to better one in =/etc/modprobe.d/droidcam.conf=
@@ -93,17 +110,19 @@ install those ipu6 packages from AUR, but was too lazy to bother a that time
 - then =sudo modprobe v4l2loopback-dc=
 - all should work
 
-** battery
-# NOTE: tlp-stat also shows the capacity
-alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
+** gpg
+- import all needed gpg keys - ~gpg --import <keyname>.gpg~, including the one for ~git-crypt~
+- set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
+** other apps
+*** fooocus (leftover from makefile)
+#+begin_src sh
+XDG_DATA_HOME=$HOME/.local/share
 
-** Other fixes
-If in some games external gpu usage will be lacking -
-https://github.com/doitsujin/dxvk/issues/3694#issuecomment-2455562274. The above
-config is for d3d11 and d3d10 games. For d3d9 and d3d8 through dxvk the similar
-config would be d3d9.cachedDynamicBuffers = True ([[https://canary.discord.com/channels/812703221789097985/1324287230809739265/1324656360973012992][discord message link]]).
-
-Xiomi laptop was draining battery like crazy in [s2idle] sleep mode, so i
-changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/etc/default/grub=
-
-For any problems that happen to system first see ~journalctl -b 0 --no-pager~
+# download and setup fooocus (https://github.com/lllyasviel/Fooocus)
+yay -S --noconfirm miniconda3
+git clone https://github.com/lllyasviel/Fooocus.git $XDG_DATA_HOME/utils/Fooocus
+cd $XDG_DATA_HOME/utils/Fooocus
+conda env create -f environment.yaml
+conda activate fooocus
+pip install -r requirements_versions.txt
+#+end_src
