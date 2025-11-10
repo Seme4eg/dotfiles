@@ -5,6 +5,8 @@
 \.local/share/HOME
 
 assets
+install
+install.sh
 ^/.*\.org
 docs
 Makefile

@@ -14,16 +14,30 @@
 [[assets/demo.png]]
 
 ** Bootstrapping
+*NOTE:* currently borked 100%, didn't test after migrated off Makefile.
+
 The list below is my personall fresh install process. Check targets in Makefile
 and adjust to your needs.
 
-- wget https://raw.githubusercontent.com/Seme4eg/dotfiles/master/Makefile
-- ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
-- import all gpg keys you need
-- ~make install~
-- ~make postinstall~
-- reboot, wait for the internet, login, launch hyprland, ~make postreboot~
-- setup [[*gpg][gpg]]
+- XXX? ssh needed to clone dotfiles ?
+
+#+begin_src sh
+export SSHDIR=${HOME}/.$@
+sudo pacman -S --noconfirm open$@
+mkdir -p $SSHDIR
+ssh-keygen -C "for github"
+# create AUR keypair
+ssh-keygen -f $SSHDIR/aur
+eval "$(ssh-agent -s)"
+ssh-add $SSHDIR/id_ed25519
+chmod 600 $SSHDIR/id_ed25519
+curl -F 'file=@-' 0x0.st <$SSHDIR/id_ed25519.pub
+#+end_src
+
+- clone that repo into =~/dotfiles=
+- XXX? ~make ssh~ -> add ssh pub key that's stored in printed 0x0 link to github
+- import all gpg keys you need (see /docs/arch)
+- run =~/dotfiles/install.sh= script
 - also _DO_ check targets in makefile that need to be run manually
 - clone secrets into ~/git/secrets repo, not in HOME dir
 
@@ -32,7 +46,8 @@ and adjust to your needs.
   cuz it pulls like 60 packages along with it
 - _font-manager_ - whenever i need to mess with fonts in my system, whether its
   status bar styling or anything else
-** TUIs
+
+** TUIs to keep in mind
 For now don't need them but maybe some day idk
 - Hyprland Monitor Settings - hyprmon
 - TUI AI - crush (by Charm)
@@ -40,7 +55,9 @@ For now don't need them but maybe some day idk
 - Docker - lazydocker
 
 ** Todos
-*** When will be installing new system -
+*** add uwf firewall (see omarchy)
+*** migrate to limine & btrfs (see omarchy)
+*** When will be installing new system
 - rename ~/git to ~/repos, makes more sence, adjust all the paths and move
   dotfiles repo there as well, make an alias that will prevent you from
   mindlessly running 'stow .' and pollute your ~/repos dir cuz you ran it in
