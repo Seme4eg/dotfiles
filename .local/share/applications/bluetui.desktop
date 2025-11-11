@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=bluetui
-Comment=A simple bluetooth management TUI
-Exec=alacritty --class=TUI.float -e bluetui
-Terminal=false
-Type=Application
-Icon=bluetui

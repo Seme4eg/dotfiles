@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=systemctl TUI
-Comment=A fast, simple TUI for interacting with systemd services and their logs
-Exec=alacritty --class=TUI.float -e sudo systemctl-tui
-Terminal=false
-Type=Application
-Icon=systemctl-tui
