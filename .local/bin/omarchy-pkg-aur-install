@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# just in case replacement for rofi-yay
+
+fzf_args=(
+  --multi
+  --preview 'yay -Siia {1}'
+  --preview-label='ctrl-o: open url, alt-b/B: toggle PKGBUILD, alt-j/k: scroll, tab: multi-select'
+  --preview-label-pos='bottom'
+  --preview-window 'down:65%:wrap'
+  --bind "ctrl-o:execute-silent(yay -Si {1} | grep '^URL' | sed 's/^URL.*: //' | xargs xdg-open)+abort"
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up'
+  --bind 'alt-k:preview-up,alt-j:preview-down'
+  --bind 'alt-b:change-preview:yay -Gpa {1} | tail -n +5'
+  --bind 'alt-B:change-preview:yay -Siia {1}'
+  --color 'pointer:green,marker:green'
+)
+
+pkg_names=$(yay -Slqa | fzf "${fzf_args[@]}")
+
+if [[ -n "$pkg_names" ]]; then
+  # Convert newline-separated selections to space-separated for yay
+  if echo "$pkg_names" | tr '\n' ' ' |
+    xargs yay -S --noconfirm; then
+    say "Installed 📦 $pkg_names"
+  else
+    say "Failed to install 📦 $pkg_names"
+  fi
+  echo
+  read -p "Press Enter to continue..."
+fi

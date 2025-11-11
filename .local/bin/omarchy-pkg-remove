@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# just in case replacement for rofi-pacman -r
+
+fzf_args=(
+  --multi
+  --preview 'yay -Qi {1}'
+  --preview-label='ctrl-o: open url, alt-j/k: scroll, tab: multi-select'
+  --preview-label-pos='bottom'
+  --preview-window 'down:65%:wrap'
+  --bind "ctrl-o:execute-silent(yay -Si {1} | grep '^URL' | sed 's/^URL.*: //' | xargs xdg-open)+abort"
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up'
+  --bind 'alt-k:preview-up,alt-j:preview-down'
+  --color 'pointer:red,marker:red'
+)
+
+pkg_names=$(yay -Qqe | fzf "${fzf_args[@]}")
+
+if [[ -n "$pkg_names" ]]; then
+  # Convert newline-separated selections to space-separated for yay
+  if echo "$pkg_names" | tr '\n' ' ' |
+    xargs sudo pacman -Rns --noconfirm; then
+    say "Removed 📦 $pkg_names"
+  else
+    say "Failed to remove 📦 $pkg_names"
+  fi
+  echo
+  read -p "Press Enter to continue..."
+fi
