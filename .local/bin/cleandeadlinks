@@ -8,3 +8,7 @@
 cd $HOME
 find . -path ./.local/share -prune -o -path ./.cache -prune -o -xtype l -print |
   xargs rm
+
+# separately remove broken desktop files
+find ~/.local/share/applications -xtype l -print |
+  xargs rm
