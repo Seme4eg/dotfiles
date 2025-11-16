@@ -30,6 +30,7 @@ fd
 ffmpegthumbnailer
 flatpak
 fprintd
+freerdp
 fzf
 gameconqueror
 git
@@ -98,6 +99,7 @@ python-pywal
 qrencode
 qutebrowser
 reflector
+remmina
 ripgrep
 rofi
 rsync
