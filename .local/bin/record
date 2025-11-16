@@ -1,41 +1,57 @@
 #!/usr/bin/sh
 
-# Convert mp4 to gif
-# ffmpeg -i temp.mp4 vid.gif
+# copy of function in recording script
+screenrecording_active() {
+  pgrep -f "gpu-screen-recorder" >/dev/null || pgrep -x slurp >/dev/null
+}
 
-rec_dir="$HOME/Pictures/DCIM"
-[ ! -d "$rec_dir" ] && mkdir "$rec_dir"
+# just launch the script itself, it will handle finishing recording
+if screenrecording_active; then
+  omarchy-cmd-screenrecord
+  exit 0
+fi
 
-filepath="${rec_dir}/rec_$(date +%H-%M-%S)"
+case $(echo "  Region\n  Region + Audio\n  Display\n  Display + Audio" |
+  rofi -dmenu -i) in
+  *"Region + Audio"*) omarchy-cmd-screenrecord region --with-audio ;;
+  *Region*) omarchy-cmd-screenrecord ;;
+  *"Display + Audio"*) omarchy-cmd-screenrecord output --with-audio ;;
+  *Display*) omarchy-cmd-screenrecord output ;;
+  *) exit 0 ;;
+esac
 
-# grep first alsa_output, command is taken from wf-recorder man page
-get_sink() { pactl list sources | grep -e 'Name.*alsa_output' | head -n1; }
-# NOTE: if need mic sound, replace f-n above with this one
-get_source() { pactl list sources | grep -e 'Name.*alsa_input' | head -n1; }
+###############################################################################
+#                             wf-recorder version                             #
+###############################################################################
 
-while getopts ":vVpPsg" opt; do case $opt in
-  v) # vid without system sounds
-    say -t 3000 'Recording starting in 3s..'
-    sleep 3
-    wf-recorder -f "${filepath}.mp4"
-    ;;
-  V) # with system sounds
-    say -t 3000 'Recording starting in 3s..'
-    sleep 3
-    wf-recorder --audio="$(get_sink)" -f "${filepath}.mp4"
-    ;;
-  s) # stop current recording
-    # sigint, not sigkill, otherwise no mime type
-    pkill -2 wf-recorder && say -e -t 100 "Recorded"
-    ;;
-  # Super inefficient, mp4 records take 2-3 times less space..
-  g) # gif version
-    wf-recorder -g "$(slurp)" -c gif -r 14 -f "${filepath}.gif"
-    ;;
-  P) # part of screen with system sounds
-    wf-recorder -g "$(slurp)" --audio="$(get_sink)" -f "${filepath}.mp4"
-    ;;
-  p | *) # record part of screen - (based on my usage this one is mose frequent)
-    wf-recorder -g "$(slurp)" -f "${filepath}.mp4"
-    ;;
-esac done
+# rec_dir="$HOME/Pictures/DCIM"
+# [ ! -d "$rec_dir" ] && mkdir "$rec_dir"
+
+# filepath="${rec_dir}/rec_$(date +%H-%M-%S).mp4"
+
+# # grep first alsa_output, command is taken from wf-recorder man page
+# get_sink() { pactl list sources | grep -e 'Name.*alsa_output' | head -n1; }
+# # NOTE: if need mic sound, replace f-n above with this one
+# get_source() { pactl list sources | grep -e 'Name.*alsa_input' | head -n1; }
+
+# if pgrep wf-recorder; then
+#   # sigint, not sigkill, otherwise no mime type
+#   pkill -2 wf-recorder && say -e -t 1000 "Screen recording saved to $rec_dir"
+#   exit 0
+# fi
+
+# case $(echo "  Region\n  Region + Audio\n  Display\n  Display + Audio" | rofi -dmenu -i) in
+#   *"Region + Audio"*)
+#     wf-recorder -g "$(slurp)" --audio="$(get_sink)" -f "${filepath}"
+#     ;;
+#   *Region*)
+#     wf-recorder -g "$(slurp)" -f "${filepath}"
+#     ;;
+#   *"Display + Audio"*)
+#     wf-recorder --audio="$(get_sink)" -f "${filepath}"
+#     ;;
+#   *Display*)
+#     wf-recorder -f "${filepath}"
+#     ;;
+#   *) exit 0 ;;
+# esac

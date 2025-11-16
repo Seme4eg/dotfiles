@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# https://git.dec05eba.com/gpu-screen-recorder/about/
+
+rec_dir="$HOME/Pictures/DCIM"
+[ ! -d "$rec_dir" ] && mkdir "$rec_dir"
+
+SCOPE=""
+AUDIO="false"
+
+for arg in "$@"; do
+  case "$arg" in
+    --with-audio) AUDIO="true" ;;
+    output | region) SCOPE="$arg" ;;
+  esac
+done
+
+start_screenrecording() {
+  local filepath="${rec_dir}/rec_$(date +%H-%M-%S).mp4"
+  local audio_args=""
+
+  # Merge audio tracks into one - separate tracks only play one at a time in most players
+  [[ "$AUDIO" == "true" ]] && audio_args="-a default_output|default_input"
+
+  gpu-screen-recorder -w "$@" -f 60 -c mp4 -o "$filepath" $audio_args &
+}
+
+stop_screenrecording() {
+  pkill -SIGINT -f "gpu-screen-recorder" # SIGINT required to save video properly
+
+  # Wait a maximum of 5 seconds to finish before hard killing
+  local count=0
+  while pgrep -f "gpu-screen-recorder" >/dev/null && [ $count -lt 50 ]; do
+    sleep 0.1
+    count=$((count + 1))
+  done
+
+  if pgrep -f "gpu-screen-recorder" >/dev/null; then
+    pkill -9 -f "gpu-screen-recorder"
+    say "Recording process had to be force-killed. Video may be corrupted." -u critical -t 5000
+  else
+    say "Screen recording saved to $rec_dir" -t 2000
+  fi
+}
+
+screenrecording_active() {
+  pgrep -f "gpu-screen-recorder" >/dev/null || pgrep -x slurp >/dev/null
+}
+
+if screenrecording_active; then
+  if pgrep -x slurp >/dev/null; then
+    pkill -x slurp 2>/dev/null
+  else
+    stop_screenrecording
+  fi
+elif [[ "$SCOPE" == "output" ]]; then
+  if ! output=$(slurp -o -f "%o"); then
+    exit 1
+  fi
+
+  if [[ -z "$output" ]]; then
+    say "Rec: Could not detect monitor" -u critical
+    exit 1
+  fi
+
+  start_screenrecording "$output"
+else
+  scale=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .scale')
+
+  if ! region=$(slurp -f "%wx%h+%x+%y"); then
+    exit 1
+  fi
+
+  if [[ "$region" =~ ^([0-9]+)x([0-9]+)\+([0-9]+)\+([0-9]+)$ ]]; then
+    w=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[1]} * $scale}")
+    h=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[2]} * $scale}")
+    x=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[3]} * $scale}")
+    y=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[4]} * $scale}")
+    scaled_region="${w}x${h}+${x}+${y}"
+  else
+    scaled_region="$region"
+  fi
+
+  start_screenrecording region -region "$scaled_region"
+fi

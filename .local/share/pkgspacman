@@ -45,6 +45,7 @@ hypridle
 hyprland
 hyprlock
 hyprpolkitagent
+intel-media-driver
 jq
 languagetool
 lf
@@ -137,7 +138,6 @@ usb_modeswitch
 vulkan-intel
 vulkan-radeon
 vulkan-tools
-wf-recorder
 wget
 wine-staging
 wireguard-tools
