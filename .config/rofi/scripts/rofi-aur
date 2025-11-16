@@ -46,7 +46,7 @@ rofi_call() {
       alacritty &
       sleep 0.2
       # wl-copy & wl-paste don't work
-      wtype "yay -S $pkg"
+      wtype "yay -S --noconfirm $pkg"
       ;;
   esac
 }

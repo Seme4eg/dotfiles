@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# just in case replacement for rofi-yay
+# just in case replacement for rofi-aur
 
 fzf_args=(
   --multi
