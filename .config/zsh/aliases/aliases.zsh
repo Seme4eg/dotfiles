@@ -5,7 +5,6 @@ alias vim="nvim"
 # du -h --max-depth=1 ~/ | sort -h # make an alias?
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
-alias spd="speedtest"
 
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file or use < <(commmand) like wl-paste
