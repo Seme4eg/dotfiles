@@ -1,6 +1,0 @@
-#!/usr/bin/sh
-
-# use entr instead of git hook to not slow down my pass script
-find ~/.local/share/password-store |
-  entr -p -n "pass git pull --rebase && pass git push || say 'failed to update pass repo'" ||
-  say 'Failed to start entr on pass'
