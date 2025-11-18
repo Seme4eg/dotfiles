@@ -23,6 +23,8 @@ alias jcu="journalctl --user -ef -u" # -x - more verbose
 #                                  Systemctl                                  #
 ###############################################################################
 
+# NOTE: below are only aliases for actions that can't be achieved via systemctl-tui
+
 # soystemd --user
 alias scu="systemctl --user"
 alias scue="scu enable"
@@ -31,10 +33,9 @@ alias scud="scu disable"
 # --- list commands ---
 #   lookup 'sc list-*'. But most of the times 'list-*' command can be omitted in
 #   favour of '--type' and '--state' flags
-alias sculservices="sc --user --type=service --state=running"
-alias scultargets="sc --user --type=target"
-alias scultimers="sc --user --type=timer"
-alias sculfailed="sc --user --failed"
+alias scultargets="systemctl-tui -s user -l '*.target'"
+alias scultimers="systemctl-tui -s user -l '*.timer'"
+alias sculfailed="systemctl --user --failed"
 
 # --- soystemd sudo ---
 alias ssc="sudo systemctl"
@@ -42,9 +43,6 @@ alias ssce="ssc enable"
 alias sscd="ssc disable"
 
 # --- list commands ---
-#   lookup 'sc list-*'. But most of the times 'list-*' command can be omitted in
-#   favour of '--type' and '--state' flags
-alias sclservices="sc --type=service --state=running"
-alias scltargets="sc --type=target"
-alias scltimers="sc --type=timer"
-alias sclfailed="sc --failed"
+alias scltargets="systemctl-tui -s global -l '*.target'"
+alias scltimers="systemctl-tui -s global -l '*.timer'"
+alias sclfailed="systemctl --failed"
