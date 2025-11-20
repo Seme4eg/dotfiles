@@ -1,48 +1,91 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 
 set -eo
 
 _path=~/Pictures/Pictures/Screenshots/$(date +"%Y%m%d-%H%M%S_grim.png")
 
+dir_path="${_path%/*}"
+[[ ! -d "$dir_path" ]] && mkdir -p "$dir_path"
+
+get_rectangles() {
+  local active_workspace=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .activeWorkspace.id')
+  hyprctl monitors -j | jq -r --arg ws "$active_workspace" '.[] | select(.activeWorkspace.id == ($ws | tonumber)) | "\(.x),\(.y) \((.width / .scale) | floor)x\((.height / .scale) | floor)"'
+  hyprctl clients -j | jq -r --arg ws "$active_workspace" '.[] | select(.workspace.id == ($ws | tonumber)) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"'
+}
+
+# taken from omarchy
+get_selection() {
+  RECTS=$(get_rectangles)
+  wayfreeze &
+  PID=$!
+  sleep .1
+  SELECTION=$(echo "$RECTS" | slurp 2>/dev/null)
+  kill $PID 2>/dev/null
+
+  # If the selction area is L * W < 20, we'll assume you were trying to select whichever
+  # window or output it was inside of to prevent accidental 2px snapshots
+  if [[ "$SELECTION" =~ ^([0-9]+),([0-9]+)[[:space:]]([0-9]+)x([0-9]+)$ ]]; then
+    if ((${BASH_REMATCH[3]} * ${BASH_REMATCH[4]} < 20)); then
+      click_x="${BASH_REMATCH[1]}"
+      click_y="${BASH_REMATCH[2]}"
+
+      while IFS= read -r rect; do
+        if [[ "$rect" =~ ^([0-9]+),([0-9]+)[[:space:]]([0-9]+)x([0-9]+) ]]; then
+          rect_x="${BASH_REMATCH[1]}"
+          rect_y="${BASH_REMATCH[2]}"
+          rect_width="${BASH_REMATCH[3]}"
+          rect_height="${BASH_REMATCH[4]}"
+
+          if ((click_x >= rect_x && click_x < rect_x + rect_width && click_y >= rect_y && click_y < rect_y + rect_height)); then
+            SELECTION="${rect_x},${rect_y} ${rect_width}x${rect_height}"
+            break
+          fi
+        fi
+      done <<<"$RECTS"
+    fi
+  fi
+  echo "${SELECTION}"
+}
+
 case $1 in
-  --fulltoboth) # full screenshot to file and clipboard
+  --fulltoboth) # full screenshot to file & clipboard
     grim "$_path" && wl-copy <"$_path" &&
-      say -e -t 1000 'Full taken to folder and clipboard'
+      say -e -t 1000 'Screenshot saved to folder & clipboard' ||
+      say -t 1000 'Screenshot failed'
     ;;
   --fulltoclip) # full screenshot to clipboard only
-    grim - | wl-copy && say -e -t 1000 'Full taken to clipboard'
+    grim - | wl-copy &&
+      say -e -t 1000 'Screenshot saved to clipboard' ||
+      say -t 1000 'Screenshot failed'
     ;;
-  --parttoboth) # partial screenshot to file and clipboard
-    say -e -t 1000 'Part screenshot to folder and clipboard'
-    if grim -g "$(slurp)" "$_path"; then
+  --parttoboth) # partial screenshot to file & clipboard
+    if grim -g "$(get_selection)" "$_path"; then
       wl-copy <"$_path"
+      say -e -t 1000 'Screenshot saved to folder & clipboard'
     else
-      say "Screenshot failed/canceled"
+      say -e "Screenshot failed/canceled"
     fi
     ;;
   --parttoclip) # partial screenshot to clipboard only
-    say -e -t 1000 'Part screenshot to clipboard'
-    grim -g "$(slurp)" - | wl-copy || say "Screenshot failed"
+    grim -g "$(get_selection)" - | wl-copy
     ;;
   --drawtoclip)
-    say -e -t 1000 'Part screenshot to clipboard'
-    grim -g "$(slurp)" - | satty -f - || say "Screenshot failed"
+    grim -g "$(get_selection)" - | satty -f - &&
+      say -e -t 1000 'Screenshot saved to clipboard'
     ;;
   --drawtoboth)
-    say -e -t 1000 'Part screenshot to clipboard'
-    if grim -g "$(slurp)" - | satty -f - --save-after-copy -o "$_path"; then
+    if grim -g "$(get_selection)" - | satty -f - --save-after-copy -o "$_path"; then
       wl-copy <"$_path"
-    else
-      say "Screenshot failed/canceled"
+      say -e -t 1000 'Screenshot saved to folder & clipboard'
     fi
     ;;
   --ocr) # ocr the screenshot
-    grim -g "$(slurp)" - | tesseract -l eng - stdout | wl-copy -n &&
-      say -e -t 1000 "done" || say -e -t 1000 "failed"
+    grim -g "$(get_selection)" - | tesseract -l eng - stdout | wl-copy -n &&
+      say -e -t 1000 "done" || say "Failed to OCR screenshot"
     ;;
   --ocr-ru) # ocr the screenshot
-    grim -g "$(slurp)" - | tesseract -l rus - stdout | wl-copy -n &&
-      say -e -t 1000 "done" || say -e -t 1000 "failed"
+    grim -g "$(get_selection)" - | tesseract -l rus - stdout | wl-copy -n &&
+      say -e -t 1000 "done" || say "Failed to OCR screenshot"
     ;;
 esac
 
