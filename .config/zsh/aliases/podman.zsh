@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 alias pd="podman"
-alias pdu="pd up -d"
+alias pds="pd start"
 alias pdstop="pd stop"
 alias pdl="pd logs --follow --since 10m"
 alias pdrm="pd rm -fv"
