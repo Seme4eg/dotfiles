@@ -57,6 +57,7 @@ For now don't need them but maybe some day idk
 ** Todos
 *** add uwf firewall (see omarchy)
 *** migrate to limine & btrfs (see omarchy)
+see for '.*limine.*' files and 'limine' entries in omarchy repo
 *** When will be installing new system
 - rename ~/git to ~/repos, makes more sence, adjust all the paths and move
   dotfiles repo there as well, make an alias that will prevent you from
