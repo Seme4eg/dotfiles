@@ -5,8 +5,8 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-WorkingDirectory=%h/dotfiles/
-ExecStart=make pnpm
+WorkingDirectory=%h/dotfiles/install/config
+ExecStart=sh -c ./pnpm.sh
 StandardOutput=journal
 StandardError=journal
 
