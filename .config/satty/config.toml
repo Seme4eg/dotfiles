@@ -1,6 +1,6 @@
 [general]
 # Start Satty in fullscreen mode
-fullscreen = false
+fullscreen = true
 
 # Exit directly after copy/save action
 early-exit = true
