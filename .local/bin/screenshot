@@ -69,6 +69,9 @@ case $1 in
   --parttoclip) # partial screenshot to clipboard only
     grim -g "$(get_selection)" - | wl-copy
     ;;
+  --parttoclipnofreeze) # partial screenshot to clipboard without freezing screen
+    grim -g "$(slurp)" - | wl-copy
+    ;;
   --drawtoclip)
     grim -g "$(get_selection)" - | satty -f - &&
       say -e -t 1000 'Screenshot saved to clipboard'
