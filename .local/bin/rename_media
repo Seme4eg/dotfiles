@@ -1,0 +1,29 @@
+#!/bin/bash
+
+for file in *.{jpg,jpeg,JPG,JPEG,heic,HEIC,mov,MOV,mp4,MP4,avi,AVI}; do
+  if [[ -f "$file" ]]; then
+    # Get file creation/modification date
+    date=$(exiftool -d "%Y%m%d_%H%M%S" -ExtractEmbedded "$file" -S |
+      grep CreateDate -m 1 | cut -d' ' -f2)
+
+    if [ -z "$date" ]; then
+      echo "No metadata for file ${file}"
+      continue
+    fi
+
+    # Get file extension (lowercase)
+    ext="${file##*.}"
+    ext_lower=$(echo "$ext" | tr '[:upper:]' '[:lower:]')
+
+    # Rename file
+    new_name="PXL_${date}.${ext_lower}"
+
+    # Avoid overwriting existing files
+    if [[ ! -f "$new_name" ]]; then
+      mv -n "$file" "$new_name"
+      echo "Renamed: $file -> $new_name"
+    # else
+    #   echo "Skipped: $new_name already exists"
+    fi
+  fi
+done
