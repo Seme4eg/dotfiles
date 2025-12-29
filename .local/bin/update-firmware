@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+echo -e "\e[32mUpdate Firmware\e[0m"
+
+pkg="fwupd"
+
+if ! command -v "$pkg" &>/dev/null; then
+  sudo pacman -S --noconfirm --needed "$pkg" || exit 1
+fi
+
+# Secondary check to handle states where pacman doesn't actually register an error
+if ! pacman -Q "$pkg" &>/dev/null; then
+  echo -e "\033[31mError: Package '$pkg' did not install\033[0m" >&2
+  exit 1
+fi
+
+fwupdmgr refresh
+sudo fwupdmgr update
