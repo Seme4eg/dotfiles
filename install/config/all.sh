@@ -30,6 +30,7 @@ source $DOTFILES_PATH/install/config/dash.sh
 source $DOTFILES_PATH/install/config/hardware/bluetooth.sh
 source $DOTFILES_PATH/install/config/hardware/network.sh
 source $DOTFILES_PATH/install/config/hardware/ignore-power-key.sh
+source $DOTFILES_PATH/install/config/hardware/usb-autosuspend.sh
 
 source $DOTFILES_PATH/install/config/hardware/lenovo.sh
 source $DOTFILES_PATH/install/config/hardware/amd.sh
