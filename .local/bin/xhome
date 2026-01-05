@@ -32,7 +32,7 @@ sudo systemctl enable --now zapret_discord_youtube
 sudo systemctl restart NetworkManager
 systemctl --user enable --now v2raya-lite
 sed -i 's/^# \(exec-once = solaar -w hide\)$$/\1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
-solaar -w hide
+solaar -w hide &
 cd "$HOME"/git/secrets/w_mg
 sudo chmod 600 cisco-proxy.nmconnection
 sudo cp -f $HOME/git/secrets/w_mg/cisco-proxy.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
