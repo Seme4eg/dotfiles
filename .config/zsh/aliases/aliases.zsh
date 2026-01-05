@@ -9,10 +9,6 @@ alias jq="gojq"
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' 0x0.st" # < file or use < <(commmand) like wl-paste
 
-# Paste image from clipboard, decode it with zbar and copy it back to clipboard
-# https://github.com/tadfisher/pass-otp#examples - more examples
-alias otpdecode="wl-paste | zbarimg -q --raw - | wl-copy"
-
 alias gpgconf="sudo gpgconf --list-options gpg-agent"  # list all config options
 alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passwords
 
