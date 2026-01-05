@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+ip route get 1 | sed -n '1p'
+hyprctl output create headless phone_vnc &>/dev/null
+sudo ufw allow 5900/tcp &>/dev/null
+sudo ufw reload
+wayvnc -dp -f 60 -o phone_vnc 0.0.0.0 & # -g
+sleep 0.2
+read -p "Press Enter to continue..."
+vnc_stop

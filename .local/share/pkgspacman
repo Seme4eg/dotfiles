@@ -141,6 +141,7 @@ usb_modeswitch
 vulkan-intel
 vulkan-radeon
 vulkan-tools
+wayvnc
 wget
 wine-staging
 wireguard-tools
