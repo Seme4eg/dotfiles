@@ -1,0 +1,36 @@
+#+title: Long time this file should've appeared
+
+- _Controller_ doesn't work? - PROTON_PREFER_SDL=1
+  - if still doesn't work - close heroic and launch this game from steam WITH
+    steam input. If heroic is opened - won't work. NO need to change proton
+    version from GE to steam one,
+- Adding _friends_:
+  - In settings -> advanced -> EOS Overlay section -> install
+  - go to game page from your library, in burger menu find option 'Enable EOS
+    Overlay', when game launches you will get a login overlay, login and from it
+    add friends
+- do NOT disable setting 'automatically add new games to steam' as there might
+  be games where controller doesn't work if you don't start game from within
+  steam. And adding games manually is a pain.
+- how to make cheatengine work on games:
+  - download .exe cheatengine file
+  - use 'run exe on prefix' in game you need
+- how to start _cheatengine_ in same prefix as the game:
+  - download cheatengine
+  - in game settings in heroic do 'run exe on prefix', choose that cheatengine
+    exe file, install it
+  - download needed .ct file, put it under the path
+    =/home/earthian/.local/share/Games/Heroic/Prefixes/default/<game>/drive_c/Program
+    Files/Cheat Engine/<file>.CT= (example)
+  - create a .bat executable file in
+    =/home/earthian/.local/share/Games/Heroic/<game>/fix.bat= or whichever game
+    you need
+#+begin_src bat
+:: start /B "null" "C:\Program Files\Cheat Engine\Cheat Engine.exe"
+start /B "null" "C:\Program Files\Cheat Engine\<file>.CT"
+
+ping -n 20 localhost > nul
+
+<game>.exe %*
+#+end_src
+  - set that .bat file in 'advanced' settings tab as 'alternative EXE to run'.

@@ -34,6 +34,7 @@ node_modules/
 /.config/heroic/*
 !/.config/heroic/config.json
 !/.config/heroic/hidden.png
+!/.config/heroic/readme.org
 /.config/Thunar/
 /.config/java/
 /.config/neofetch/
