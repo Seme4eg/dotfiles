@@ -66,6 +66,5 @@ swaync-client -rs &
 
 swww img "$wp" -t=any \
   --transition-duration=2 \
-  --transition-step=255 \
   --transition-bezier=0,0,1,1 \
   --transition-fps=60 &
