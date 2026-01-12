@@ -31,6 +31,7 @@ alias homediff="diff <(tree -L 1 -a --dirsfirst) dotfiles/.local/share/HOME"
 #   it is essentially the '--info=' flag with sane params for all the info you
 #   need. Run `rsync --info=help' to see all flags and levels`
 alias rsync_archive='rsync --archive --info=progress2 --exclude=.stversions --delete ~/mem-arch/ earthian@100.95.49.75:~/archive'
+alias rsync_archive_local='rsync --archive --info=progress2 --exclude=.stversions --delete ~/mem-arch/ earthian@192.168.1.81:~/archive'
 alias rsync_archive_dry='rsync --archive --itemize-changes --dry-run --exclude=.stversions --delete ~/mem-arch/ earthian@100.95.49.75:~/archive'
 
 ytdcur() { # yt-dlp download current
