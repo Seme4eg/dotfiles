@@ -8,6 +8,7 @@ case $1 in
   -u | --uninstall)
     sudo systemctl stop zapret_discord_youtube
     sudo systemctl disable zapret_discord_youtube
+    sudo rm /etc/NetworkManager/dispatcher.d/99-zapret_restart
     sudo systemctl restart NetworkManager
     systemctl --user stop v2raya-lite
     systemctl --user disable v2raya-lite
@@ -16,7 +17,7 @@ case $1 in
     sudo chmod 600 cisco.nmconnection
     sudo cp -f $HOME/git/secrets/w_mg/cisco.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
     sudo nmcli con reload cisco
-    sed -i 's/^\(exec-once = solaar -w hide\)$$/# \1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
+    sed -i 's/^\(exec-once = solaar -w hide\)$/# \1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
     echo '================================ IMPORTANT: ================================'
     echo "- unset 'gptel-proxy' var in emacs"
     echo "- for anything that required proxy - remove it, don't slow down things"
@@ -27,11 +28,12 @@ case $1 in
 esac
 
 # zapret settings in secrets
+sudo ln -s $HOME/git/secrets/zapret/99-zapret_restart /etc/NetworkManager/dispatcher.d/
 sudo systemctl enable --now zapret_discord_youtube
 # for zapret to pick up the correct network interface
 sudo systemctl restart NetworkManager
 systemctl --user enable --now v2raya-lite
-sed -i 's/^# \(exec-once = solaar -w hide\)$$/\1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
+sed -i 's/^# \(exec-once = solaar -w hide\)$/\1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
 solaar -w hide &
 cd "$HOME"/git/secrets/w_mg
 sudo chmod 600 cisco-proxy.nmconnection
