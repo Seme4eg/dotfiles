@@ -8,7 +8,7 @@
     "autoInstallDxvk": true,
     "autoInstallVkd3d": true,
     "autoInstallDxvkNvapi": false,
-    "addSteamShortcuts": false,
+    "addSteamShortcuts": true,
     "preferSystemLibs": false,
     "checkForUpdatesOnStartup": true,
     "autoUpdateGames": false,
