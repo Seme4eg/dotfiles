@@ -2,7 +2,7 @@
 Description=Execute scripts on IMAP mailbox changes (new/deleted/updated messages) using IDLE, golang version.
 
 [Service]
-Environment=PASSWORD_STORE_DIR=%h/.local/share/password-store/main
+Environment=PASSWORD_STORE_DIR=%h/.local/share/password-store/
 Type=simple
 ExecStart=/usr/bin/goimapnotify -conf %h/.config/imapnotify/%i.yaml
 Restart=always
