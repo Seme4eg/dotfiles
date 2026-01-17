@@ -1,0 +1,17 @@
+#!/bin/bash
+
+pass=$(pass work/mg/rdp | head -n1)
+user=$(pass work/mg/rdp | grep 'user: ' | cut -d' ' -f 2)
+server=$(pass work/mg/rdp | grep 'server: ' | cut -d' ' -f 2)
+
+if ! nmcli -g name,type con show --active | grep cisco; then
+  togglevpn cisco
+  exit 1
+fi
+
+# removed some auth pkgs as those slow down connection process by a lot
+xfreerdp3 /u:"$user" /p:"$pass" /v:"$server" \
+  -grab-keyboard /title:"Windows RDP" /dynamic-resolution \
+  /drive:arch,/home/earthian/.local/share/rdp \
+  /auth-pkg-list:!kerberos,!u2u \
+  /gfx:AVC444 /floatbar:sticky:off,default:visible,show:fullscreen
