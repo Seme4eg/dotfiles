@@ -2,5 +2,5 @@
 
 pkill wayvnc
 hyprctl output remove phone_vnc &>/dev/null
-sudo ufw deny 5900/tcp &>/dev/null
+sudo ufw delete allow 5900/tcp &>/dev/null
 sudo ufw reload

@@ -1,0 +1,8 @@
+address=0.0.0.0
+use_relative_paths=true
+enable_auth=true
+username=hamster
+password=some_enthropy
+# rsa_private_key_file=rsa_key.pem
+private_key_file=./vnc_certs/vnc.key
+certificate_file=./vnc_certs/vnc.crt

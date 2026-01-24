@@ -1,0 +1,7 @@
+#+title: Readme
+
+- for _user and password_ see config file in this dir
+- i tried _sunshine & moonlight_ combo, but no way to use headless there as 2nd
+  monitor while not disabling the primary one.. But yea, it works better than
+  wayvnc.
+- [[https://wiki.archlinux.org/title/TigerVNC][tigervnc]] is only for X11
