@@ -1,0 +1,6 @@
+#+title: Readme
+
+if at any time you will need to have output all all your devices - from laptop
+and hdmi tv lets say:
+- =pactl load-module module-combine-sink= - will create combined sink in your
+  wiremix / pavucontrol. If doesn't work - try changing profiles.
