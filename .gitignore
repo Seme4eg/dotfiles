@@ -69,3 +69,4 @@ node_modules/
 /.config/droidcam
 /.config/freerdp/
 /.config/remmina/
+/.config/wayvnc/vnc_certs/
