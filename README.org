@@ -55,13 +55,6 @@ For now don't need them but maybe some day idk
 - Docker - lazydocker
 
 ** Todos
-*** add uwf firewall (see omarchy)
 *** migrate to limine & btrfs (see omarchy)
 see for '.*limine.*' files and 'limine' entries in omarchy repo
-*** When will be installing new system
-- rename ~/git to ~/repos, makes more sence, adjust all the paths and move
-  dotfiles repo there as well, make an alias that will prevent you from
-  mindlessly running 'stow .' and pollute your ~/repos dir cuz you ran it in
-  ~/repos/dotfiles.
-
 *** IDEA maybe make some 5/6th workspace a scratchpad and fill it with useful widgets?
