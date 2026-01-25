@@ -1,0 +1,11 @@
+#+title: Results of my testing of that terminal
+
+Its much slower than alacritty, alacritty opens in an instant, which is most
+important thing for me. Ghostty opens in .3-.4 seconds.
+
+=bind = SUPERCTRL, Return, exec, [float] ghostty= won't work, use =... [float]
+ghostty ghostty --gtk-single-instance=false=
+
+there is also systemd user service for ghostty to also keep it working in
+background and =quit-after-last-window-closed = false= config setting, which all
+break that float window opening as "ghostty 1.2.0 uses ipc to open new windows in the old process and this is expected in such case, nothing to do with the hyprland update"

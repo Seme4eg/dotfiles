@@ -3,7 +3,7 @@
 
 [Default Applications]
 
-text/plain=emacsclient.desktop
+text/plain=emacsclient-frame.desktop
 
 audio/mpeg=mpv.desktop
 audio/opus=mpv.desktop
