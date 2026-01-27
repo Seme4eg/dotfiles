@@ -4,7 +4,7 @@ pass=$(pass work/mg/rdp | head -n1)
 user=$(pass work/mg/rdp | grep 'user: ' | cut -d' ' -f 2)
 server=$(pass work/mg/rdp | grep 'server: ' | cut -d' ' -f 2)
 
-if ! nmcli -g name,type con show --active | grep cisco; then
+if ! nmcli -g name,type con show --active | grep cisco >/dev/null; then
   togglevpn cisco
   sleep 2
 fi
