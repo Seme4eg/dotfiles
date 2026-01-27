@@ -25,6 +25,7 @@ source $DOTFILES_PATH/install/config/pam-gnupg.sh
 source $DOTFILES_PATH/install/config/pnpm.sh
 source $DOTFILES_PATH/install/config/theme.sh
 source $DOTFILES_PATH/install/config/dash.sh
+source $DOTFILES_PATH/install/config/vnc.sh
 
 # hardware
 source $DOTFILES_PATH/install/config/hardware/bluetooth.sh
