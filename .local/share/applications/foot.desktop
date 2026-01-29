@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Exec=foot
+Icon=foot
+Terminal=false
+Categories=System;TerminalEmulator;
+Keywords=shell;prompt;command;commandline;
+# for xdg-terminal-exec flags to work with hyprland windowrules
+X-TerminalArgExec=-e
+X-TerminalArgAppId=--app-id=
+X-TerminalArgTitle=--title=
+X-TerminalArgDir=--working-directory=
+
+Name=Foot
+GenericName=Terminal
+Comment=A wayland native terminal emulator

@@ -43,7 +43,7 @@ rofi_call() {
       # NOTE: didn't find a way to pass all the color theme and as soon as
       # process finishes there is no way to type another command
       # footclient --hold yay -S "$pkg"
-      alacritty &
+      footclient &
       sleep 0.2
       # wl-copy & wl-paste don't work
       wtype "yay -S --noconfirm $pkg"

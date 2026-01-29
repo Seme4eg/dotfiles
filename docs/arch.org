@@ -113,6 +113,27 @@ changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/
 ** gpg
 - import all needed gpg keys - ~gpg --import <keyname>.gpg~, including the one for ~git-crypt~
 - set *trust* level with ~gpg --edit-key <KEY_ID>~ -> gpg> trust -> 5 -> y
+** terminals
+_Tried_:
+- ghostty - slow still
+- kitty - too bloated for my needs + slow-ish
+- alacritty - no symbolic fonts support (for btop), no sixel - no images
+- foot - perfect
+
+_Switching_ (besides replacing all occurances of old terminal name in dots):
+- _hyprland windowrules_ - for float.TUI initial class to work you need to write
+  curstom .desktop file for new terminal (take original .desktop file and just
+  add there the ~X-Terminal..~ params, example find in foot/alacritty desktop
+  files). Those specify how you want to pass app-id arg into launching the app.
+- _theming_ - when any TUI is invoked via .desktop file with ~Terminal=true~ in it
+  or via ~xdg-terminal-open~ the terminal gets invoked in non-iteractive shell,
+  which means no zsh config / bashrc are called, so the ~/usr/bin/cat
+  ~/.cache/wal/sequences~ part doesn't get called, so - no colors that wal has
+  set, only default theme. So only those terminals will have the current color
+  scheme when invoked via those methods that support the coloring via terminal
+  config itself. So write a pywal template, include the colors config *in the
+  beginning of main config* and enjoy.
+
 ** other apps
 *** fooocus (leftover from makefile)
 #+begin_src sh

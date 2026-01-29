@@ -1,6 +1,6 @@
 #+title: Results of my testing of that terminal
 
-Its much slower than alacritty, alacritty opens in an instant, which is most
+Its much slower than alacritty/foot, those open in an instant, which is most
 important thing for me. Ghostty opens in .3-.4 seconds.
 
 =bind = SUPERCTRL, Return, exec, [float] ghostty= won't work, use =... [float]
