@@ -31,6 +31,9 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 export HISTFILE="$XDG_CACHE_HOME/zhistory"
 # HISTSIZE and SAVEHIST are set in grmlrc
 
+# for some reason they dev couldn't add it as config option.. idk
+export MANGA_TUI_DATA_DIR="~/Documents/02-other/manga"
+
 # --- Gitlab CI Env vars ---
 export GCL_CLEANUP=true # --cleanup option
 
