@@ -5,6 +5,7 @@ set -e
 pass=$(pass work/mg/rdp | head -n1)
 user=$(pass work/mg/rdp | grep 'user: ' | cut -d' ' -f 2)
 smb_remote=$(pass work/mg/rdp | grep 'smb_path: ' | cut -d' ' -f 2)
+# NOTE: if going to change that - change it as well in 'togglevpn' script
 smb_local="$HOME/git/work_mg/smb/"
 
 mkdir -p "$smb_local"
