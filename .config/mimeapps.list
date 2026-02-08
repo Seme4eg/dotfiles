@@ -37,9 +37,10 @@ application/ogg=mpv.desktop
 application/pdf=emacsclient.desktop
 
 text/html=brave-browser.desktop
+
 x-scheme-handler/http=brave-browser.desktop
 x-scheme-handler/https=brave-browser.desktop
-
 x-scheme-handler/mailto=emacsclient-mail.desktop
 x-scheme-handler/eclipse+command=_usr_lib_dbeaver_.desktop
 x-scheme-handler/discord=vesktop.desktop
+x-scheme-handler/magnet=webtorrent-cli.desktop

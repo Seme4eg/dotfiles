@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Magnet Handler CLI
+Exec=xdg-terminal-exec --app-id=TUI.float webtorrent %u
+Icon=utilities-terminal
+Terminal=true
+Type=Application
+MimeType=x-scheme-handler/magnet;
