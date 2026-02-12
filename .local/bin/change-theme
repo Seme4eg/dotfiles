@@ -64,7 +64,4 @@ swaync-client -rs &
 
 # wait # for all child processes to finish
 
-swww img "$wp" -t=any \
-  --transition-duration=2 \
-  --transition-bezier=0,0,1,1 \
-  --transition-fps=60 &
+hyprctl hyprpaper wallpaper ", $wp, "

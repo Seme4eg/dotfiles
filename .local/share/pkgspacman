@@ -45,6 +45,7 @@ gtk-layer-shell
 hypridle
 hyprland
 hyprlock
+hyprpaper
 hyprpolkitagent
 intel-media-driver
 jq
@@ -115,7 +116,6 @@ steam
 stow
 stylua
 swaync
-swww
 syncthing
 systembus-notify
 systemctl-tui
