@@ -19,6 +19,8 @@ export MAKEFLAGS="-j$(nproc)"
 # https://github.com/emacs-lsp/lsp-mode/issues/4357#issuecomment-1986856407
 export LSP_USE_PLISTS=true
 
+export DIALOGRC=$XDG_CONFIG_HOME/dialog/.dialogrc
+
 # zsh-vi-mode
 # https://github.com/jeffreytse/zsh-vi-mode/issues/24#issuecomment-873029329
 export ZVM_INIT_MODE=sourcing # <- needed BEFORE zvm gets sourced
