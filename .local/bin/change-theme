@@ -59,9 +59,6 @@ fi
 # [ -f $XDG_CACHE_HOME/wal/cava-config ] &&
 #   mv -f $XDG_CACHE_HOME/wal/cava-config $XDG_CONFIG_HOME/cava/config
 
-# SwayNC
 swaync-client -rs &
-
-# wait # for all child processes to finish
 
 hyprctl hyprpaper wallpaper ", $wp, "
