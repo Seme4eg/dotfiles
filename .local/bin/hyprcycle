@@ -1,0 +1,28 @@
+#!/usr/bin/sh
+
+direction=$1 # prev / next
+layout=$(hyprctl activeworkspace -j | gojq -r '.tiledLayout')
+echo $layout
+
+has_floating() {
+  cur_workspace=$(hyprctl activeworkspace -j | gojq '.id')
+  count=$(hyprctl clients -j |
+    gojq "[.[] | select(.workspace.id == $cur_workspace and .floating == true)] | length")
+  [ "$count" -gt 0 ]
+}
+
+if has_floating; then
+  hyprctl dispatch cyclenext $direction
+  exit
+fi
+
+case $layout in
+  monocle)
+    hyprctl dispatch layoutmsg cycle$direction
+    exit
+    ;;
+  master)
+    hyprctl dispatch layoutmsg roll$direction
+    exit
+    ;;
+esac
