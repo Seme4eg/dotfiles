@@ -15,7 +15,7 @@ list_wps() {
 }
 
 rofi_dmenu() {
-  rofi -dmenu -i -show-icons -select "${wallpaper#"$wp_dir/"}" -theme-str "
+  rofi -dmenu -i -show-icons -select ""${wallpaper#"$wp_dir/"}"" -theme-str "
   #entry { placeholder: \"Wallpaper to apply..\"; }
   element-icon {
     border-radius: 10;
