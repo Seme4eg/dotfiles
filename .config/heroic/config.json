@@ -43,7 +43,7 @@
     "winePrefix": "/home/earthian/.local/share/Games/Heroic/Prefixes/default",
     "wineVersion": {
       "bin": "/home/earthian/.config/heroic/tools/proton/Proton-GE-latest/proton",
-      "name": "Proton - Proton-GE-latest",
+      "name": "Proton-GE-latest",
       "type": "proton"
     },
     "enableEsync": true,

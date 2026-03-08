@@ -19,15 +19,16 @@
   - download cheatengine
   - in game settings in heroic do 'run exe on prefix', choose that cheatengine
     exe file, install it
-  - download needed .ct file, put it under the path
+  - [optionally] download needed .ct file, put it under the path
     =/home/earthian/.local/share/Games/Heroic/Prefixes/default/<game>/drive_c/Program
     Files/Cheat Engine/<file>.CT= (example)
   - create a .bat executable file in
     =/home/earthian/.local/share/Games/Heroic/<game>/fix.bat= or whichever game
     you need
 #+begin_src bat
-:: start /B "null" "C:\Program Files\Cheat Engine\Cheat Engine.exe"
-start /B "null" "C:\Program Files\Cheat Engine\<file>.CT"
+start /B "null" "C:\Program Files\Cheat Engine\Cheat Engine.exe"
+:: or if using .ct file:
+:: start /B "null" "C:\Program Files\Cheat Engine\<file>.CT"
 
 ping -n 20 localhost > nul
 
