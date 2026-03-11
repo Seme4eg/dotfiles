@@ -1,10 +1,21 @@
 #!/usr/bin/bash
 
-ip route get 1 | sed -n '1p'
-hyprctl output create headless phone_vnc &>/dev/null
-sudo ufw allow 5900/tcp &>/dev/null
-sudo ufw reload
-wayvnc -dp -f 60 -o phone_vnc & # -g
+PORT=5900
+
+hyprctl output create headless phone_vnc >/dev/null
+sudo ufw allow $PORT/tcp >/dev/null
+sudo ufw reload >/dev/null
+wayvnc -dp -f 60 -o phone_vnc &>/dev/null & # -g
+
+# if phone connected via usb - reverse socket connection
+if adb devices | grep -w -q device; then
+  adb reverse tcp:$PORT tcp:$PORT >/dev/null
+else
+  # output the machine ip on current network
+  ip route get 1 | sed -n '1p'
+fi
+
 sleep 0.2
+
 read -p "Press Enter to continue..."
 vnc_stop
