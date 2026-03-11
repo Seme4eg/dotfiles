@@ -7,7 +7,7 @@ echo $layout
 has_floating() {
   cur_workspace=$(hyprctl activeworkspace -j | gojq '.id')
   count=$(hyprctl clients -j |
-    gojq "[.[] | select(.workspace.id == $cur_workspace and .floating == true)] | length")
+    gojq "[.[] | select(.workspace.id == $cur_workspace and .floating == true and .pinned == false)] | length")
   [ "$count" -gt 0 ]
 }
 
