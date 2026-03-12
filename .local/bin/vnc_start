@@ -2,6 +2,24 @@
 
 PORT=5900
 
+vnc_stop() {
+  pkill wayvnc
+  hyprctl output remove phone_vnc >/dev/null
+  sudo ufw delete allow $PORT/tcp >/dev/null
+  sudo ufw reload >/dev/null
+  echo "Cleanup finished. Exiting."
+  exit 0
+}
+
+trapfn() {
+  echo "
+Ctrl+C received. Performing cleanup..."
+  vnc_stop
+}
+
+# Trap the SIGINT signal (Ctrl+C) and run the cleanup function
+trap 'trapfn' INT HUP
+
 hyprctl output create headless phone_vnc >/dev/null
 sudo ufw allow $PORT/tcp >/dev/null
 sudo ufw reload >/dev/null
@@ -18,4 +36,5 @@ fi
 sleep 0.2
 
 read -p "Press Enter to continue..."
+
 vnc_stop
