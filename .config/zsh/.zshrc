@@ -81,7 +81,6 @@ eval "$(zoxide init zsh)" # z / zi[nteractive] (using fzf if u have it)
 # --- Sourcing ---
 for file in "$ZDOTDIR/"aliases/*; do source "$file"; done
 for file in "$ZDOTDIR/"modules/*; do source "$file"; done
-source "${ZDOTDIR}/funcs.zsh"
 source "${ZDOTDIR}"/ffmpeg # ffmpeg postprocessing functions for my audios
 
 # i have cat aliased to 'bat' so i need to call cat directly
