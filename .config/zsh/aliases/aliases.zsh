@@ -7,7 +7,7 @@ alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
 
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-alias 0x0="curl -F 'file=@-' 0x0.st" # < file or use < <(commmand) like wl-paste
+alias 0x0="curl -F 'file=@-' https://0x0.st" # < file or use < <(commmand) like wl-paste
 
 alias gpgconf="sudo gpgconf --list-options gpg-agent"  # list all config options
 alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passwords
