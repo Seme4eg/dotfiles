@@ -26,6 +26,7 @@ source $DOTFILES_PATH/install/config/pnpm.sh
 source $DOTFILES_PATH/install/config/theme.sh
 source $DOTFILES_PATH/install/config/dash.sh
 source $DOTFILES_PATH/install/config/vnc.sh
+source $DOTFILES_PATH/install/config/tailscale.sh
 
 # hardware
 source $DOTFILES_PATH/install/config/hardware/bluetooth.sh
