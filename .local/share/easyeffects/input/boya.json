@@ -105,7 +105,7 @@
                 "intensity": 0.0,
                 "mute": false
             },
-            "bypass": true,
+            "bypass": false,
             "fixed-quantum": false,
             "input-gain": 0.0,
             "output-gain": 0.0,
@@ -406,7 +406,7 @@
                 },
                 "band4": {
                     "frequency": 53.14,
-                    "gain": 0.0,
+                    "gain": -0.04,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 4.36,
@@ -434,12 +434,12 @@
                     "q": 4.36,
                     "slope": "x1",
                     "solo": false,
-                    "type": "Bell",
+                    "type": "Off",
                     "width": 4.0
                 },
                 "band7": {
                     "frequency": 101.55,
-                    "gain": 7.3,
+                    "gain": 3.3,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 4.36,
@@ -473,7 +473,7 @@
             },
             "mode": "IIR",
             "num-bands": 32,
-            "output-gain": 28.0,
+            "output-gain": 30.0,
             "pitch-left": 0.0,
             "pitch-right": 0.0,
             "right": {
@@ -765,7 +765,7 @@
                 },
                 "band4": {
                     "frequency": 53.14,
-                    "gain": 0.0,
+                    "gain": -0.04,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 4.36,
@@ -793,12 +793,12 @@
                     "q": 4.36,
                     "slope": "x1",
                     "solo": false,
-                    "type": "Bell",
+                    "type": "Off",
                     "width": 4.0
                 },
                 "band7": {
                     "frequency": 101.55,
-                    "gain": 7.3,
+                    "gain": 3.3,
                     "mode": "RLC (BT)",
                     "mute": false,
                     "q": 4.36,
@@ -868,11 +868,41 @@
             "stereo-split": false,
             "wet": 0.0
         },
+        "pitch#0": {
+            "anti-alias": false,
+            "bypass": true,
+            "cents": 0.0,
+            "dry": -100.0,
+            "input-gain": 0.0,
+            "octaves": 0.0,
+            "output-gain": 0.0,
+            "overlap-length": 8,
+            "quick-seek": false,
+            "rate-difference": 0.0,
+            "seek-window": 15,
+            "semitones": -1.0,
+            "sequence-length": 40,
+            "tempo-difference": 0.0,
+            "wet": 0.0
+        },
         "plugins_order": [
+            "rnnoise#0",
             "equalizer#0",
-            "compressor#0",
             "gate#0",
-            "crystalizer#0"
-        ]
+            "compressor#0",
+            "crystalizer#0",
+            "pitch#0"
+        ],
+        "rnnoise#0": {
+            "bypass": false,
+            "enable-vad": false,
+            "input-gain": 0.0,
+            "model-name": "\"\"",
+            "output-gain": 0.0,
+            "release": 20.0,
+            "use-standard-model": true,
+            "vad-thres": 50.0,
+            "wet": 0.0
+        }
     }
 }
