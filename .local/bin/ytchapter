@@ -1,0 +1,14 @@
+#!/usr/bin/sh
+
+nextorprev=${1:-next}
+arrow_key=right
+
+[ $nextorprev = 'prev' ] && arrow_key=left
+
+yt_client=$(hyprctl clients -j |
+  gojq "[.[] | select(.title | contains(\" - YouTube - \"))] | .[0]")
+
+if [ "$yt_client" != "null" ]; then
+  address=$(echo "$yt_client" | jq -r '.address')
+  hyprctl dispatch sendshortcut "control, $arrow_key, address:$address"
+fi
