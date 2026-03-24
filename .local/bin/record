@@ -2,7 +2,7 @@
 
 # copy of function in recording script
 screenrecording_active() {
-  pgrep -f "gpu-screen-recorder" >/dev/null || pgrep -x slurp >/dev/null
+  pgrep -f "^gpu-screen-recorder" >/dev/null || pgrep -x slurp >/dev/null
 }
 
 # just launch the script itself, it will handle finishing recording
@@ -11,12 +11,14 @@ if screenrecording_active; then
   exit 0
 fi
 
-case $(echo "  Region\n  Region + Audio\n  Display\n  Display + Audio" |
+case $(echo "  Region\n  Region + Audio\n  Region + Audio + Mic\n  Display\n  Display + Audio\n  Display + Audio + Mic" |
   rofi -dmenu -i) in
-  *"Region + Audio"*) omarchy-cmd-screenrecord region --with-audio ;;
-  *Region*) omarchy-cmd-screenrecord ;;
-  *"Display + Audio"*) omarchy-cmd-screenrecord output --with-audio ;;
-  *Display*) omarchy-cmd-screenrecord output ;;
+  *Region) omarchy-cmd-screenrecord ;;
+  *"Region + Audio") omarchy-cmd-screenrecord region --with-desktop-audio ;;
+  *"Region + Audio + Mic") omarchy-cmd-screenrecord region --with-desktop-audio --with-microphone-audio ;;
+  *Display) omarchy-cmd-screenrecord output ;;
+  *"Display + Audio") omarchy-cmd-screenrecord output --with-desktop-audio ;;
+  *"Display + Audio + Mic") omarchy-cmd-screenrecord output --with-desktop-audio --with-microphone-audio ;;
   *) exit 0 ;;
 esac
 

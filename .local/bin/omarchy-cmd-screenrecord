@@ -1,50 +1,99 @@
 #!/bin/bash
 
+# man gpu-screen-recorder
 # https://git.dec05eba.com/gpu-screen-recorder/about/
 
 rec_dir="$HOME/Pictures/DCIM"
 [ ! -d "$rec_dir" ] && mkdir "$rec_dir"
 
-SCOPE=""
-AUDIO="false"
+SCOPE="region"
+DESKTOP_AUDIO="false"
+MICROPHONE_AUDIO="false"
+RECORDING_FILE="/tmp/omarchy-screenrecord-filename"
+proc_name="^gpu-screen-recorder"
 
 for arg in "$@"; do
   case "$arg" in
-    --with-audio) AUDIO="true" ;;
+    --with-desktop-audio) DESKTOP_AUDIO="true" ;;
+    --with-microphone-audio) MICROPHONE_AUDIO="true" ;;
     output | region) SCOPE="$arg" ;;
   esac
 done
 
 start_screenrecording() {
   local filepath="${rec_dir}/rec_$(date +%H-%M-%S).mp4"
-  local audio_args=""
+  local audio_devices=""
+  local audio_args=()
 
-  # Merge audio tracks into one - separate tracks only play one at a time in most players
-  [[ "$AUDIO" == "true" ]] && audio_args="-a default_output|default_input"
+  [[ $DESKTOP_AUDIO == "true" ]] && audio_devices+="default_output"
+  echo $audio_devices
 
-  gpu-screen-recorder -w "$@" -f 60 -c mp4 -o "$filepath" $audio_args &
+  if [[ $MICROPHONE_AUDIO == "true" ]]; then
+    echo withmic
+    # Merge audio tracks into one - separate tracks only play one at a time in most players
+    [[ -n $audio_devices ]] && audio_devices+="|"
+    audio_devices+="default_input"
+  fi
+
+  [[ -n $audio_devices ]] && audio_args+=(-a "$audio_devices" -ac aac)
+
+  gpu-screen-recorder -w "$@" -fallback-cpu-encoding yes \
+    -o "$filepath" "${audio_args[@]}" &
+  local pid=$!
+
+  # Wait for recording to actually start (file appears after portal selection)
+  while kill -0 $pid 2>/dev/null && [[ ! -f $filepath ]]; do
+    sleep 0.2
+  done
+
+  if kill -0 $pid 2>/dev/null; then
+    echo "$filepath" >"$RECORDING_FILE"
+  fi
 }
 
 stop_screenrecording() {
-  pkill -SIGINT -f "gpu-screen-recorder" # SIGINT required to save video properly
+  pkill -SIGINT -f $proc_name # SIGINT required to save video properly
 
   # Wait a maximum of 5 seconds to finish before hard killing
   local count=0
-  while pgrep -f "gpu-screen-recorder" >/dev/null && [ $count -lt 50 ]; do
+  while pgrep -f $proc_name >/dev/null && ((count < 50)); do
     sleep 0.1
     count=$((count + 1))
   done
 
-  if pgrep -f "gpu-screen-recorder" >/dev/null; then
-    pkill -9 -f "gpu-screen-recorder"
-    say "Recording process had to be force-killed. Video may be corrupted." -u critical -t 5000
+  if pgrep -f $proc_name >/dev/null; then
+    pkill -9 -f $proc_name
+    say "Recording process had to be force-killed. Video may be corrupted." -u critical
   else
-    say "Screen recording saved to $rec_dir" -t 2000
+    trim_first_frame
+    local filename=$(cat "$RECORDING_FILE" 2>/dev/null)
+
+    (
+      ACTION=$(say "Recording saved to $rec_dir, click to open" -t 2000 -A "default=open")
+      [[ $ACTION == "default" ]] && mpv "$filename"
+    ) &
+  fi
+
+  rm -f "$RECORDING_FILE"
+}
+
+# Trim the first 100ms of the video to avoid the noise problem
+trim_first_frame() {
+  local latest
+  latest=$(cat "$RECORDING_FILE" 2>/dev/null)
+
+  if [[ -n $latest && -f $latest ]]; then
+    local trimmed="${latest%.mp4}-trimmed.mp4"
+    if ffmpeg -y -ss 0.1 -i "$latest" -c copy "$trimmed" -loglevel quiet 2>/dev/null; then
+      mv "$trimmed" "$latest"
+    else
+      rm -f "$trimmed"
+    fi
   fi
 }
 
 screenrecording_active() {
-  pgrep -f "gpu-screen-recorder" >/dev/null || pgrep -x slurp >/dev/null
+  pgrep -f $proc_name >/dev/null || pgrep -x slurp >/dev/null
 }
 
 if screenrecording_active; then
@@ -53,33 +102,10 @@ if screenrecording_active; then
   else
     stop_screenrecording
   fi
-elif [[ "$SCOPE" == "output" ]]; then
-  if ! output=$(slurp -o -f "%o"); then
-    exit 1
-  fi
-
-  if [[ -z "$output" ]]; then
-    say "Rec: Could not detect monitor" -u critical
-    exit 1
-  fi
-
-  start_screenrecording "$output"
-else
-  scale=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .scale')
-
-  if ! region=$(slurp -f "%wx%h+%x+%y"); then
-    exit 1
-  fi
-
-  if [[ "$region" =~ ^([0-9]+)x([0-9]+)\+([0-9]+)\+([0-9]+)$ ]]; then
-    w=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[1]} * $scale}")
-    h=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[2]} * $scale}")
-    x=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[3]} * $scale}")
-    y=$(awk "BEGIN {printf \"%.0f\", ${BASH_REMATCH[4]} * $scale}")
-    scaled_region="${w}x${h}+${x}+${y}"
-  else
-    scaled_region="$region"
-  fi
-
-  start_screenrecording region -region "$scaled_region"
+  exit 0
 fi
+
+case $SCOPE in
+  output) start_screenrecording "$(slurp -o -f "%o")" ;;
+  region) start_screenrecording "$(slurp -f "%wx%h+%x+%y")" ;;
+esac
