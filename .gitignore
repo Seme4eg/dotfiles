@@ -71,3 +71,4 @@ node_modules/
 /.config/remmina/
 /.config/wayvnc/vnc_certs/
 /.config/easyeffects/
+/.config/gpu-screen-recorder/
