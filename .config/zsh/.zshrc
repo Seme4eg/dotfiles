@@ -66,6 +66,7 @@ bindkey '^ ' autosuggest-accept
 # I am just not using it that much and its can't come up with any key to bind
 # it on
 # bindkey '^[h' fzf-history-widget # alt + h
+bindkey '^_' fzf-history-widget # Ctrl + /
 
 # --- fzf-tab ---
 # set list-colors to enable filename colorizing
