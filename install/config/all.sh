@@ -31,7 +31,7 @@ source $DOTFILES_PATH/install/config/tailscale.sh
 # hardware
 source $DOTFILES_PATH/install/config/hardware/bluetooth.sh
 source $DOTFILES_PATH/install/config/hardware/network.sh
-source $DOTFILES_PATH/install/config/hardware/ignore-power-key.sh
+source $DOTFILES_PATH/install/config/hardware/suspend-on-power-key.sh
 source $DOTFILES_PATH/install/config/hardware/usb-autosuspend.sh
 
 source $DOTFILES_PATH/install/config/hardware/lenovo.sh
