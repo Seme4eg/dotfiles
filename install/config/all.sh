@@ -29,6 +29,7 @@ source $DOTFILES_PATH/install/config/vnc.sh
 source $DOTFILES_PATH/install/config/tailscale.sh
 
 # hardware
+source $DOTFILES_PATH/install/config/hardware/intel.sh
 source $DOTFILES_PATH/install/config/hardware/bluetooth.sh
 source $DOTFILES_PATH/install/config/hardware/network.sh
 source $DOTFILES_PATH/install/config/hardware/suspend-on-power-key.sh
