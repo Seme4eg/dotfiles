@@ -2,7 +2,6 @@
 
 direction=$1 # prev / next
 layout=$(hyprctl activeworkspace -j | gojq -r '.tiledLayout')
-echo $layout
 
 has_floating() {
   cur_workspace=$(hyprctl activeworkspace -j | gojq '.id')
@@ -23,6 +22,8 @@ case $layout in
     ;;
   master)
     hyprctl dispatch layoutmsg roll$direction
+    # FIXME: https://github.com/hyprwm/Hyprland/discussions/13655
+    [ $direction = "next" ] && hyprctl dispatch layoutmsg focusmaster
     exit
     ;;
 esac
