@@ -1,11 +1,19 @@
 #!/usr/bin/bash
 
-PORT=5900
+port=5900
+vnc_highres=vnc_highres
+vnc_lowres=vnc_lowres
+
+output_name=$vnc_lowres
+
+cable_connected() { adb devices | grep -w -q device; }
+
+cable_connected && output_name=$vnc_highres
 
 vnc_stop() {
   pkill wayvnc
-  hyprctl output remove phone_vnc >/dev/null
-  sudo ufw delete allow $PORT/tcp >/dev/null
+  hyprctl output remove $output_name >/dev/null
+  sudo ufw delete allow $port/tcp >/dev/null
   sudo ufw reload >/dev/null
   echo "Cleanup finished. Exiting."
   exit 0
@@ -20,14 +28,14 @@ Ctrl+C received. Performing cleanup..."
 # Trap the SIGINT signal (Ctrl+C) and run the cleanup function
 trap 'trapfn' INT HUP
 
-hyprctl output create headless phone_vnc >/dev/null
-sudo ufw allow $PORT/tcp >/dev/null
+hyprctl output create headless $output_name >/dev/null
+sudo ufw allow $port/tcp >/dev/null
 sudo ufw reload >/dev/null
-wayvnc -dp -f 60 -o phone_vnc &>/dev/null & # -g
+wayvnc -dp -f 120 -o $output_name &>/dev/null & # -g
 
 # if phone connected via usb - reverse socket connection
-if adb devices | grep -w -q device; then
-  adb reverse tcp:$PORT tcp:$PORT >/dev/null
+if cable_connected; then
+  adb reverse tcp:$port tcp:$port >/dev/null
 else
   # output the machine ip on current network
   ip route get 1 | sed -n '1p'
