@@ -1,5 +1,5 @@
 {
-  "version": "3.0.9",
+  "version": "3.0.17",
   "settings": {
     "applyvideofilters": false,
     "backdropcolor": "#000000",
@@ -18,9 +18,7 @@
       "position": "absolute"
     },
     "controls": [
-      "cinema-mode",
       "size",
-      "pop-up-player",
       "screenshot",
       "options"
     ],
@@ -29,7 +27,7 @@
     "controlspeedmousebutton": false,
     "controlvolume": false,
     "controlvolumemousebutton": false,
-    "convertshorts": true,
+    "convertshorts": false,
     "customcolors": {
       "--dimmer-text": "#cccccc",
       "--hover-background": "#232323",
@@ -44,7 +42,7 @@
     "customtheme": false,
     "darktheme": true,
     "date": 1673735487878,
-    "defaultvolume": true,
+    "defaultvolume": false,
     "disableautoplay": true,
     "executescript": false,
     "expanddescription": true,
@@ -82,7 +80,7 @@
     "ignorepopupplayer": false,
     "localecode": "en_US",
     "localedir": "ltr",
-    "miniplayer": true,
+    "miniplayer": false,
     "miniplayerposition": "top-left",
     "miniplayersize": "400x225",
     "newestcomments": false,
@@ -90,12 +88,12 @@
     "pauseforegroundtab": true,
     "pausevideos": true,
     "popuplayersize": "640x360",
-    "previousversion": "0.0.0",
+    "previousversion": "3.0.16",
     "qualityembeds": "medium",
     "qualityembedsfullscreen": "large",
     "qualityplaylists": "hd720",
     "qualityplaylistsfullscreen": "hd1440",
-    "qualityvideos": "hd720",
+    "qualityvideos": "hd1080",
     "qualityvideosfullscreen": "hd1440",
     "reload": false,
     "reversemousewheeldirection": false,
@@ -105,10 +103,10 @@
     "speed": 1,
     "speedvariation": 0.5,
     "stopvideos": false,
-    "theatermode": true,
+    "theatermode": false,
     "theme": "enhanced-dark",
-    "themevariant": "dark-burly-wood.css",
-    "update": 0,
+    "themevariant": "dark-aqua.css",
+    "update": 1773513932201,
     "vendorthemevariant": "youtube-deep-dark.css",
     "videofilters": {
       "blur": 0,
@@ -125,6 +123,6 @@
     "volumevariation": 5,
     "whatsnew": false,
     "wideplayer": true,
-    "wideplayerviewport": true
+    "wideplayerviewport": false
   }
 }
