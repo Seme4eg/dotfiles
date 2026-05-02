@@ -60,6 +60,27 @@ For now don't need them but maybe some day idk
   networkmanaged makes discord clients infinitely 'DTLS Connecting':
   - launch discord client via ~firejail --net=wlan0 --noprofile <client>~, replace
     wlan0 with your active network interface ([[https://github.com/tailscale/tailscale/issues/10396#issuecomment-3871203280][source]])
+- tailscale access local addresses using the homelab:
+  - [[https://tailscale.com/docs/features/subnet-routers#connect-to-tailscale-as-a-subnet-router][main doc]]:
+    - host machine:
+      - enable IP forwarding (1st option that is there)
+      - advertise subnet routes
+        - sudo tailscale set --advertise-routes=192.168.1.1/32
+          - 32 is for specific ip, if needing to advertise whole local network use 192.168.1.0/24
+    - tailscale admin panel:
+      - add ACL as shown in main doc, replace example IP ranges with yours
+        #+begin_src
+       {
+	  "src": ["seme4eg@github", "192.168.1.1/32"],
+	  "dst": ["tag:main", "192.168.1.1/32"],
+	  "ip":  ["*"],
+       }
+        #+end_src
+    - client machine (IMPORTANT):
+      - ~sudo tailscale set --accept-routes~ on to discover
+        newly advertised IPs
+    - ...
+    - remove IP forwarding & disadvertise the stuff
 
 ** Todos
 *** migrate to limine & btrfs (see omarchy)
