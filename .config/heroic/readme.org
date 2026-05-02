@@ -1,9 +1,12 @@
 #+title: Long time this file should've appeared
 
-- _Controller_ doesn't work? - PROTON_PREFER_SDL=1
-  - if still doesn't work - close heroic and launch this game from steam WITH
-    steam input. If heroic is opened - won't work. NO need to change proton
-    version from GE to steam one,
+- _Controller issues:_
+  - disconnects right after connecting: via ~bluetoothctl~ first PAIR device (not
+    connect) and then TRUST it
+  - doesn't work? - PROTON_PREFER_SDL=1
+    - if still doesn't work - close heroic and launch this game from steam WITH
+      steam input. If heroic is opened - won't work. NO need to change proton
+      version from GE to steam one,
 - Adding _friends_:
   - In settings -> advanced -> EOS Overlay section -> install
   - go to game page from your library, in burger menu find option 'Enable EOS
