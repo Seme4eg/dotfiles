@@ -81,6 +81,18 @@ For now don't need them but maybe some day idk
         newly advertised IPs
     - ...
     - remove IP forwarding & disadvertise the stuff
+- fix for hyprland being sluggish & unresponsive after sleep & loading cpu by
+  4.4% constantly:
+  1. Don't unplug the egpu, _first power it off_, then after some time unplug
+  2. read [[https://wiki.hypr.land/Configuring/Performance/#:~:text=much%20about%20animations.-,Fractional%20scaling,updated%20on%20March%2027%2C%202026][Performance hypr wiki page]]
+  3. +change display scale from 1.666667 to 1.6+
+  4. its prob some power saving mode fuckup on amd side, read =amd-udev.sh= file
+  5. Fix Intel iGPU Stutter: If using Intel, TLP defaults can be too aggressive. Edit /etc/tlp.conf and set INTEL_GPU_MIN_FREQ_ON_AC to a higher value (e.g., 500).
+
+** Gamescope
+Steam command + mangohud overlay. Yes, pass already scaled height & width.
+
+DXVK_CONFIG="d3d11.cachedDynamicResources = a" VK_LOADER_LAYERS_ENABLE=VK_LAYER_MANGOHUD_overlay_x86_64 gamescope -W 1800 -H 1200 -r 120 -e -- %command%
 
 ** Todos
 *** migrate to limine & btrfs (see omarchy)
