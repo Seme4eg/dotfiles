@@ -63,10 +63,11 @@ export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 export ZSH_AUTOSUGGEST_HIGLIGHT_STYLE="fg=5"
 bindkey '^ ' autosuggest-accept
 
-# I am just not using it that much and its can't come up with any key to bind
-# it on
-# bindkey '^[h' fzf-history-widget # alt + h
-bindkey '^_' fzf-history-widget # Ctrl + /
+# NOTE: don't bind to '^_' (Ctrl + /) as it conflicts with many bindings in
+# emacs vterm for some reason
+# going for just 'alt + h' will make it so when you press escape sequence in
+# terminal and then press 'h' it will trigger that command as well
+bindkey '^[^H' fzf-history-widget # alt + ctrl + h
 
 # --- fzf-tab ---
 # set list-colors to enable filename colorizing
