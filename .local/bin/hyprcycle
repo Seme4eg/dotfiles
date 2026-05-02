@@ -20,6 +20,17 @@ case $layout in
     hyprctl dispatch layoutmsg cycle$direction
     exit
     ;;
+  scrolling)
+    direction_opt=$(hyprctl getoption scrolling:direction | head -n1 | cut -d' ' -f2)
+    _direction=
+    if [ $direction = "prev" ]; then
+      [ $direction_opt = down ] && _direction=up || _direction=left
+    else
+      [ $direction_opt = down ] && _direction=down || _direction=right
+    fi
+    hyprctl dispatch layoutmsg focus $_direction
+    exit
+    ;;
   master)
     hyprctl dispatch layoutmsg roll$direction
     # FIXME: https://github.com/hyprwm/Hyprland/discussions/13655
