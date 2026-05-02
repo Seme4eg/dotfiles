@@ -1,22 +1,184 @@
-/* Special */
+/**
+ * Aether Theme with Sharp Corners (Hyprland-inspired)
+ * GTK4/Adwaita Custom Styling
+ * Taken from https://github.com/bjarneo/aether/blob/main/templates/gtk.css
+ */
+
+/* Dynamic color palette from Aether */
 @define-color background {background};
 @define-color foreground {foreground};
-@define-color cursor {cursor};
 
-/* Colors */
-@define-color color0 {color0};
-@define-color color1 {color1};
-@define-color color2 {color2};
-@define-color color3 {color3};
-@define-color color4 {color4};
-@define-color color5 {color5};
-@define-color color6 {color6};
-@define-color color7 {color7};
-@define-color color8 {color8};
-@define-color color9 {color9};
-@define-color color10 {color10};
-@define-color color11 {color11};
-@define-color color12 {color12};
-@define-color color13 {color13};
-@define-color color14 {color14};
-@define-color color15 {color15};
+@define-color black {color0};
+@define-color red {color1};
+@define-color green {color2};
+@define-color yellow {color3};
+@define-color blue {color4};
+@define-color magenta {color5};
+@define-color cyan {color6};
+@define-color white {color7};
+@define-color bright_black {color8};
+@define-color bright_red {color9};
+@define-color bright_green {color10};
+@define-color bright_yellow {color11};
+@define-color bright_blue {color12};
+@define-color bright_magenta {color13};
+@define-color bright_cyan {color14};
+@define-color bright_white {color15};
+
+/* Adwaita Color Overrides */
+@define-color accent_bg_color @blue;
+@define-color accent_fg_color @background;
+@define-color accent_color @cyan;
+
+@define-color window_bg_color @background;
+@define-color window_fg_color @foreground;
+
+/* Sidebar background and content */
+@define-color view_bg_color @black;
+@define-color view_fg_color @foreground;
+@define-color sidebar_bg_color @black;
+@define-color sidebar_fg_color @foreground;
+@define-color sidebar_backdrop_color @black;
+@define-color sidebar_shade_color @black;
+
+@define-color headerbar_bg_color @background;
+@define-color headerbar_fg_color @foreground;
+@define-color headerbar_backdrop_color @black;
+@define-color headerbar_shade_color @black;
+@define-color card_bg_color @background;
+@define-color card_fg_color @foreground;
+
+@define-color popover_bg_color @black;
+@define-color popover_fg_color @foreground;
+
+@define-color destructive_bg_color @red;
+@define-color destructive_fg_color @background;
+
+@define-color success_bg_color @green;
+@define-color success_fg_color @background;
+
+@define-color warning_bg_color @yellow;
+@define-color warning_fg_color @background;
+
+@define-color error_bg_color @red;
+@define-color error_fg_color @background;
+
+@define-color dialog_bg_color @background;
+@define-color dialog_fg_color @foreground;
+
+@define-color borders alpha(@foreground, 0.1);
+
+/* GTK3 Adwaita Legacy Color Variables */
+@define-color theme_fg_color @foreground;
+@define-color theme_text_color @foreground;
+@define-color theme_bg_color @background;
+@define-color theme_base_color @black;
+@define-color theme_selected_bg_color @blue;
+@define-color theme_selected_fg_color @background;
+@define-color insensitive_bg_color @background;
+@define-color insensitive_fg_color @bright_black;
+@define-color insensitive_base_color @black;
+@define-color theme_unfocused_fg_color @foreground;
+@define-color theme_unfocused_text_color @foreground;
+@define-color theme_unfocused_bg_color @background;
+@define-color theme_unfocused_base_color @black;
+@define-color theme_unfocused_selected_bg_color @blue;
+@define-color theme_unfocused_selected_fg_color @background;
+@define-color unfocused_insensitive_color @bright_black;
+@define-color unfocused_borders alpha(@foreground, 0.1);
+@define-color warning_color @yellow;
+@define-color error_color @red;
+@define-color success_color @green;
+@define-color destructive_color @red;
+
+/* Content View Colors */
+@define-color content_view_bg @black;
+@define-color text_view_bg @black;
+
+/* GtkMessageDialog styling */
+/* Target the entire dialog's background */
+messagedialog {
+    background-color: @dialog_bg_color;
+}
+
+/* Target the main message label inside the dialog */
+messagedialog label {
+    color: @dialog_fg_color;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+/* Target the secondary, more detailed text (if any) */
+messagedialog .secondary-text {
+    font-size: 10pt;
+    font-style: italic;
+}
+
+/* Target the buttons in the dialog's action area */
+messagedialog button {
+    background-color: @black;
+    color: @foreground;
+    border: 1px solid @bright_black;
+    padding: 10px;
+}
+
+messagedialog button:hover {
+    background-color: @blue;
+}
+
+banner revealer widget {
+    background: @bright_black;
+    padding: 5px;
+    color: @foreground;
+}
+
+/* GtkAlertDialog styling */
+alertdialog.background {
+    background-color: @dialog_bg_color;
+    color: @dialog_fg_color;
+}
+
+alertdialog .titlebar {
+    background-color: @headerbar_bg_color;
+    color: @headerbar_fg_color;
+}
+
+alertdialog box {
+    background-color: @dialog_bg_color;
+}
+
+alertdialog label {
+    color: @dialog_fg_color;
+}
+
+filechooser .dialog-action-box {
+    border-top: 1px solid @bright_black;
+}
+
+filechooser .dialog-action-box:backdrop {
+    border-top-color: @black;
+}
+
+filechooser #pathbarbox {
+    border-bottom: 1px solid @bright_black;
+}
+
+filechooserbutton:drop(active) {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+toast {
+    background-color: @black;
+    color: @foreground;
+}
+
+toast button.circular.flat.image-button:hover {
+    color: @background;
+    background-color: @red;
+}
+
+/* Sharp corners, Hyprland-inspired */
+* {
+    border-radius: 0;
+}

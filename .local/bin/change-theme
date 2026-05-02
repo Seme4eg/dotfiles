@@ -46,6 +46,10 @@ fi
 
 agsv1 -r "theme = '$theme'"
 
+# gtk themes update
+cp -f ~/.config/wal/templates/gtk-colors.css ~/.config/gtk-3.0/gtk.css
+cp -f ~/.config/wal/templates/gtk-colors.css ~/.config/gtk-4.0/gtk.css
+
 # update emacs theme
 if [ $theme = light ]; then
   emacsclient -e "(load-theme 'ewal-doom-one-light)" &
