@@ -74,3 +74,4 @@ node_modules/
 /.config/gpu-screen-recorder/
 /.config/gtk-3.0/gtk.css
 /.config/gtk-4.0/gtk.css
+/.config/Element/
