@@ -2,6 +2,9 @@
 
 export GOPATH="$HOME/.local/share/go"
 
+# emacs different yaml formatter
+go install github.com/google/yamlfmt/cmd/yamlfmt@latest
+
 # doom golang setup
 go install golang.org/x/tools/gopls@latest
 go install github.com/x-motemen/gore/cmd/gore@latest
