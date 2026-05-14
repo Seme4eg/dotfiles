@@ -29,8 +29,6 @@ Ctrl+C received. Performing cleanup..."
 trap 'trapfn' INT HUP
 
 hyprctl output create headless $output_name >/dev/null
-sudo ufw allow $port/tcp >/dev/null
-sudo ufw reload >/dev/null
 wayvnc -dp -f 120 -o $output_name &>/dev/null & # -g
 
 # if phone connected via usb - reverse socket connection
@@ -39,6 +37,8 @@ if cable_connected; then
 else
   # output the machine ip on current network
   ip route get 1 | sed -n '1p'
+  sudo ufw allow $port/tcp >/dev/null
+  sudo ufw reload >/dev/null
 fi
 
 sleep 0.2
