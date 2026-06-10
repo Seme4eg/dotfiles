@@ -12,6 +12,24 @@ ffmpegspeedup() {
   ffmpeg -i "${1}" -filter:a "atempo=${2}" -vn "${3}"
 }
 
+ffmpeg_rotate() {
+  local filename="${2%.*}"
+  local ext="${2##*.}"
+
+  local transpose=""
+  case $1 in
+    left) transpose="transpose=2" ;;
+    right) transpose="transpose=1" ;;
+    flip) transpose="transpose" ;;
+    *)
+      echo "Usage: rotate_video <filename> <left|right|flip>"
+      return 1
+      ;;
+  esac
+
+  ffmpeg -i "$2" -vf "$transpose" "${filename}_1.${ext}"
+}
+
 # NOTE: convert audio to another format simple command:
 # for file in *.opus ; do ffmpeg -i "$file" "${file%.*}.mp3" ; done
 
