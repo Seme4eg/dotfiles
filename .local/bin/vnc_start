@@ -1,5 +1,12 @@
 #!/usr/bin/bash
 
+# bit of debugging advise
+# - NOTE: if zapret service works on 'any' interface (means on all) - it will
+#    BREAK localhost vnc setup, you will just see black screen
+# - to debug:
+#   - remove all &>/dev/null-s (BUT DON'T TO PUT & WHERE ITS NEEDED)
+#   - add '-L debug' to wayvnc command
+
 port=5900
 vnc_highres=vnc_highres
 vnc_lowres=vnc_lowres
@@ -21,7 +28,7 @@ vnc_stop() {
 
 trapfn() {
   echo "
-Ctrl+C received. Performing cleanup..."
+Interrupt received. Performing cleanup..."
   vnc_stop
 }
 
@@ -30,6 +37,8 @@ trap 'trapfn' INT HUP
 
 hyprctl output create headless $output_name >/dev/null
 wayvnc -dp -f 120 -o $output_name &>/dev/null & # -g
+# DEBUG:
+# wayvnc -dp -L debug -o "$output_name" &
 
 # if phone connected via usb - reverse socket connection
 if cable_connected; then
