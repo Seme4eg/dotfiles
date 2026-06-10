@@ -1,6 +1,7 @@
 \.git
 \.gitmodules
 \.gitattributes
+\.gitignore
 \.git-crypt
 \.local/share/HOME
 
