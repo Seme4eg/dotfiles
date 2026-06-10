@@ -6,6 +6,7 @@
 # - to debug:
 #   - remove all &>/dev/null-s (BUT DON'T TO PUT & WHERE ITS NEEDED)
 #   - add '-L debug' to wayvnc command
+# - use 'adb shell wm size' to get native device resolution in case you will be scripting all that
 
 port=5900
 vnc_highres=vnc_highres
@@ -26,7 +27,7 @@ cable_connected() {
 }
 
 if cable_connected; then
-  # if its samsung tablet
+  # if its samsung tablet (-l to get model listed)
   if adb devices -l | grep -w -q SM_T555; then
     output_name=$old_tablet
   else
