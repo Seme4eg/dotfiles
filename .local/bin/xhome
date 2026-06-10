@@ -17,9 +17,9 @@ case $1 in
     sudo chmod 600 cisco.nmconnection
     sudo cp -f $HOME/git/secrets/w_mg/cisco.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
     sudo nmcli con reload cisco
+    sudo sed -i 's/^\(export USE_PROXY\)=.*/\1=false/' ~/dotfiles/.config/zsh/config.zsh
     sed -i 's/^\(exec-once = solaar -w hide\)$/# \1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
     echo '================================ IMPORTANT: ================================'
-    echo "- unset 'gptel-proxy' var in emacs"
     echo "- for anything that required proxy - remove it, don't slow down things"
     echo "- change local homelab ip to tailscale one"
 
@@ -32,6 +32,8 @@ sudo ln -s $HOME/git/secrets/zapret/99-zapret_restart /etc/NetworkManager/dispat
 sudo systemctl enable --now zapret_discord_youtube
 # for zapret to pick up the correct network interface
 sudo systemctl restart NetworkManager
+user_hosts_list=~/.local/share/zapret-discord-youtube-linux/zapret-latest/lists/list-general-user.txt
+[ ! -f "$user_hosts_list" ] && echo ajay.app | sudo tee "$user_hosts_list"
 systemctl --user enable --now v2raya-lite
 sed -i 's/^# \(exec-once = solaar -w hide\)$/\1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
 solaar -w hide &
@@ -39,8 +41,10 @@ cd "$HOME"/git/secrets/w_mg
 sudo chmod 600 cisco-proxy.nmconnection
 sudo cp -f $HOME/git/secrets/w_mg/cisco-proxy.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
 sudo nmcli con reload cisco
+sudo sed -i 's/^\(export USE_PROXY\)=.*/\1=true/' ~/dotfiles/.config/zsh/config.zsh
+
 echo "Super-Shift-b" is your friend now
 echo "================================ IMPORTANT: ================================"
-echo "- set 'gptel-proxy' var in emacs to 'localhost:20171' for http proxy"
+echo "- check zsh 'xhome' aliases file, some useful stuff in there"
 echo "- for anything that requires proxy now - redirect it to that local v2raya proxy"
 echo "- change tailscale ip to local homelab ip"
