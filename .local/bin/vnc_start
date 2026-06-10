@@ -10,12 +10,29 @@
 port=5900
 vnc_highres=vnc_highres
 vnc_lowres=vnc_lowres
+old_tablet=old_tablet
 
 output_name=$vnc_lowres
 
-cable_connected() { adb devices | grep -w -q device; }
+case $1 in
+  -s) output_name=$old_tablet ;;
+esac
 
-cable_connected && output_name=$vnc_highres
+cable_connected() {
+  # sometimes needed to refresh device list
+  adb kill-server &>/dev/null
+  adb start-server &>/dev/null
+  adb devices | grep -w -q device
+}
+
+if cable_connected; then
+  # if its samsung tablet
+  if adb devices -l | grep -w -q SM_T555; then
+    output_name=$old_tablet
+  else
+    output_name=$vnc_highres
+  fi
+fi
 
 vnc_stop() {
   pkill wayvnc
