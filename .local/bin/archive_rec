@@ -1,0 +1,16 @@
+#!/usr/bin/sh
+
+trapfn() {
+  easyeffects -q
+}
+
+# Trap the SIGINT signal (Ctrl+C) and run the cleanup function
+trap 'trapfn' INT HUP
+
+echo "WAIT FOR 3 SECONDS! FFMPEG ISN'T RECORDING YET"
+
+# Audio Archive record func
+pgrep easyeffects >/dev/null || setsid easyeffects -w
+name="$1"
+datetime=$(date +'%Y-%m-%d %H.%M.%S')
+ffmpeg -f pulse -i default ~/"$datetime ${name:-default_recording}".mp3
