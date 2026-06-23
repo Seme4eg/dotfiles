@@ -4,6 +4,29 @@
 
 flag="$1"
 
+chromium_desktop_path="$HOME/.local/share/applications/chromium-proxy.desktop"
+chromium_proxy="socks://localhost:20170"
+case $1 in
+  -u | --uninstall) chromium_proxy="socks://100.95.49.75:9080" ;;
+esac
+
+chromium_desktop="[Desktop Entry]
+Name=Proxied Chromium
+Exec=/usr/bin/chromium --proxy-server=$chromium_proxy %U
+Terminal=false
+Icon=chromium
+Type=Application
+Actions=new-window;new-private-window;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=/usr/bin/chromium --proxy-server=$chromium_proxy %U
+
+[Desktop Action new-private-window]
+Name=New Incognito Window
+Exec=/usr/bin/chromium --incognito --proxy-server=$chromium_proxy %U
+"
+
 case $1 in
   -u | --uninstall)
     sudo systemctl stop zapret_discord_youtube
@@ -14,6 +37,7 @@ case $1 in
     systemctl --user disable v2raya-lite
     pgrep solaar && pkill solaar
     cd $HOME/git/secrets/w_mg
+    echo "$chromium_desktop" >"$chromium_desktop_path"
     sudo chmod 600 cisco.nmconnection
     sudo cp -f $HOME/git/secrets/w_mg/cisco.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
     sudo nmcli con reload cisco
@@ -38,6 +62,7 @@ systemctl --user enable --now v2raya-lite
 sed -i 's/^# \(exec-once = solaar -w hide\)$/\1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
 solaar -w hide &
 cd "$HOME"/git/secrets/w_mg
+echo "$chromium_desktop" >"$chromium_desktop_path"
 sudo chmod 600 cisco-proxy.nmconnection
 sudo cp -f $HOME/git/secrets/w_mg/cisco-proxy.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
 sudo nmcli con reload cisco

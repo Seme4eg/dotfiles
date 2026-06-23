@@ -14,9 +14,6 @@ alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passw
 
 alias randstr="openssl rand -hex" # and pass length
 
-alias chromium-it="chromium --proxy-server=socks://localhost:20170"
-alias chromium-ru="chromium --proxy-server=socks://100.95.49.75:9080"
-
 alias cheatengine="xhost +local: &; gameconqueror"
 
 # mount torrent folder on homelab
