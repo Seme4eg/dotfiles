@@ -1,7 +1,7 @@
 # install all needed global npm packages
 
 export PNPM_HOME=$HOME/.local/share/pnpm
-export PATH=$PNPM_HOME:$PATH
+export PATH=$PNPM_HOME/bin:$PATH
 # pnpm add --global typescript-language-server
 # pnpm add --global typescript
 pnpm add --global yaml-language-server
