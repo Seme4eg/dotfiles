@@ -8,3 +8,5 @@ tmp/
 node_modules/
 .gitlab-ci-local/
 .dir-locals.el
+
+**/.claude/settings.local.json

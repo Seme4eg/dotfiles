@@ -17,6 +17,7 @@ cmake
 dart-sass
 dash
 dbeaver
+direnv
 earlyoom
 easyeffects
 editorconfig-core-c

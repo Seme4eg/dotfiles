@@ -88,6 +88,8 @@ source "${ZDOTDIR}"/ffmpeg # ffmpeg postprocessing functions for my audios
 # i have cat aliased to 'bat' so i need to call cat directly
 (/usr/bin/cat ~/.cache/wal/sequences &) # pywal
 
+eval "$(direnv hook zsh)"
+
 # For Fooocus
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 

@@ -44,3 +44,4 @@ x-scheme-handler/mailto=emacsclient-mail.desktop
 x-scheme-handler/eclipse+command=_usr_lib_dbeaver_.desktop
 x-scheme-handler/discord=vesktop.desktop
 x-scheme-handler/magnet=webtorrent-cli.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
