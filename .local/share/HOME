@@ -18,10 +18,8 @@
 ├── .pki
 ├── .ssh
 ├── .steam
-├── .var
+├── .swt
 ├── .editorconfig -> dotfiles/.editorconfig
-├── .gitconfig -> dotfiles/.gitconfig
-├── .gitignore -> dotfiles/.gitignore
 ├── .netrc -> dotfiles/.netrc
 ├── .pnpm-store -> dotfiles/.pnpm-store
 ├── .steampath -> /home/earthian/.steam/sdk32/steam
