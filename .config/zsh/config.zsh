@@ -11,7 +11,7 @@ export DOTFILES_PATH=$HOME/dotfiles
 export EDITOR="emacsclient"
 # gui editor, apps fall back to 'EDITOR' if that one isn't set
 export VISUAL="emacsclient -c -a emacs"
-export BROWSER=brave
+export BROWSER=brave-origin
 
 export MAKEFLAGS="-j$(nproc)"
 

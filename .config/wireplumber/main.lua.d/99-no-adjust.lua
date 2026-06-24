@@ -7,7 +7,7 @@ table.insert(default_access.rules, {
   matches = {
     {
       { "application.process.binary", "=", "electron" },
-      { "application.process.binary", "=", "brave" },
+      { "application.process.binary", "=", "brave-origin" },
     },
   },
   default_permissions = "rx",

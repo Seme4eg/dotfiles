@@ -6,7 +6,7 @@ sudo sed -i 's/^\(DynamicUser=true\)/# \1/' \
 
 echo EARLYOOM_ARGS=-m 5 -r 3600 -n \
   --avoid '(^|/)(init|systemd|Hyprland|sshd)$$' \
-  --prefer '(^|/)(emacs|brave|steam|vesktop)$$' |
+  --prefer '(^|/)(emacs|brave-origin|steam|vesktop)$$' |
   sudo tee /etc/default/earlyoom >/dev/null
 
 sudo systemctl --now enable earlyoom.service
