@@ -15,6 +15,7 @@ alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passw
 alias randstr="openssl rand -hex" # and pass length
 
 alias cheatengine="xhost +local: &; gameconqueror"
+alias ppmcalc="~/Documents/02-other/beverages/ppmcalc"
 
 # mount torrent folder on homelab
 alias mttorrent="sudo mount -t nfs -o vers=4 192.168.50.51:/home/earthian/data/torrents $XDG_DATA_HOME/torrents"
