@@ -11,7 +11,6 @@
 /.config/chromium/
 /.config/content_shell/
 /.config/dconf/
-/.config/discord/
 /.config/dlv/
 /.config/doom/
 /.config/emacs/
@@ -40,7 +39,6 @@
 /.config/terminal/
 /.config/unity3d/
 /.config/user-dirs.dirs
-/.config/vesktop/
 /.config/v2raya/*
 /.config/wpg/*
 !/.config/wpg/wpg.conf
