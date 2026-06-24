@@ -5,7 +5,6 @@ cht.sh-git
 droidcam
 goimapnotify-git
 gojq
-golangci-lint-bin
 heroic-games-launcher-bin
 manga-tui
 mbsync-git
@@ -13,7 +12,6 @@ mu
 numix-circle-icon-theme-git
 ookla-speedtest-bin
 pam-gnupg
-python-pyclip
 rose-pine-hyprcursor
 telegram-tdlib
 v2raya-bin
