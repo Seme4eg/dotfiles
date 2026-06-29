@@ -11,13 +11,13 @@ has_floating() {
 }
 
 if has_floating; then
-  hyprctl dispatch cyclenext $direction
+  hyprctl dispatch "hl.dsp.window.cycle_next(\"$direction\")"
   exit
 fi
 
 case $layout in
   monocle)
-    hyprctl dispatch layoutmsg cycle$direction
+    hyprctl dispatch "hl.dsp.layout(\"cycle$direction\")"
     exit
     ;;
   scrolling)
@@ -28,11 +28,11 @@ case $layout in
     else
       [ $direction_opt = down ] && _direction=down || _direction=right
     fi
-    hyprctl dispatch layoutmsg focus $_direction
+    hyprctl dispatch "hl.dsp.layout(\"focus $_direction\")"
     exit
     ;;
   master)
-    hyprctl dispatch layoutmsg roll$direction
+    hyprctl dispatch "hl.dsp.layout(\"roll$direction\")"
     exit
     ;;
 esac

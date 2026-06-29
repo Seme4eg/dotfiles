@@ -1,4 +1,4 @@
 #!/usr/bin/sh
 
 [ "$(hyprctl activewindow -j | jq -r ".fullscreen")" -eq "2" ] &&
-  say -e Nope || hyprctl dispatch killactive ""
+  say -e Nope || hyprctl dispatch 'hl.dsp.window.close()'

@@ -10,5 +10,5 @@ yt_client=$(hyprctl clients -j |
 
 if [ "$yt_client" != "null" ]; then
   address=$(echo "$yt_client" | jq -r '.address')
-  hyprctl dispatch sendshortcut "control, $arrow_key, address:$address"
+  hyprctl dispatch "hl.dsp.send_shortcut({ mods = \"control\", key = \"$arrow_key\", window = \"address:$address\"})"
 fi
