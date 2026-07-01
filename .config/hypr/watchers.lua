@@ -31,16 +31,6 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("systemctl --user start hyprpolkitagent.service")
 end)
 
-cur_mon = nil
-prev_mon = nil
-
-hl.on("monitor.focused", function(m)
-  if m.name ~= cur_mon then
-    prev_mon = cur_mon
-    cur_mon = m.name
-  end
-end)
-
 hl.on("monitor.added", function(m)
   -- logic for my home monitor
   if m.description == "Huawei Technologies Co. Inc. XWU-CBA 0x00000001" then
@@ -55,11 +45,8 @@ hl.on("monitor.added", function(m)
     end, { timeout = 300, type = "oneshot" })
   else
     -- otherwise its some random 2nd monitor and just move 4th and 5th workspace there
-    local ws = hl.get_active_workspace()
     hl.dispatch(hl.dsp.workspace.move({ workspace = 4, monitor = m.name }))
     hl.dispatch(hl.dsp.workspace.move({ workspace = 5, monitor = m.name }))
-    if ws == nil then return; end
-    hl.dispatch(hl.dsp.focus({ workspace = ws.id }))
   end
 end)
 

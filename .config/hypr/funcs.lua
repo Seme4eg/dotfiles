@@ -16,6 +16,20 @@ function yt_chapter(dir)
   end
 end
 
+function layout_bind(bind_table)
+  return function()
+    local workspace = hl.get_active_special_workspace() or
+        hl.get_active_workspace()
+
+    if not workspace then return; end
+
+    local layout = workspace.tiled_layout
+    if bind_table[layout] then
+      hl.dispatch(bind_table[layout])
+    end
+  end
+end
+
 function cycle_window(direction) -- "prev" | "next"
   local ws = hl.get_active_workspace()
   if ws == nil then return end
@@ -56,22 +70,6 @@ function cycle_window(direction) -- "prev" | "next"
     -- dwindle / default: plain focus cycle
     hl.dispatch(hl.dsp.window.cycle_next(direction))
   end
-end
-
-function swap_mons()
-  local mons = hl.get_monitors()
-  if #mons < 2 then return end -- need 2+ monitors
-
-  if not prev_mon or prev_mon == cur_mon then
-    for _, m in pairs(mons) do
-      if m.name ~= cur_mon then
-        prev_mon = m.name; break
-      end
-    end
-  end
-  if not prev_mon then return end
-
-  hl.dispatch(hl.dsp.workspace.swap_monitors({ monitor1 = cur_mon, monitor2 = prev_mon }))
 end
 
 -------------------------------------------------------------------------------

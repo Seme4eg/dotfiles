@@ -229,11 +229,11 @@ hl.window_rule({
 
 hl.layer_rule({
   name = "layerrules_rofi",
-  match = {
-    namespace = "match:namespace rofi",
-  },
+  match = { namespace = "rofi", },
   blur = true,
   ignore_alpha = 0.5,
+  dim_around = true,
+  xray = true,
   animation = "popin 85%",
 })
 

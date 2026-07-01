@@ -42,7 +42,7 @@ hl.monitor({
 
 -- WORKSPACE RULES
 hl.workspace_rule({
-  workspace = "r[1-2]",
+  workspace = "r[1-3]",
   monitor = laptop_mon,
 })
 

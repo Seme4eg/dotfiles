@@ -1,7 +1,7 @@
 mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("footclient"))
-hl.bind(mainMod .. " + CTRL + Return", hl.dsp.exec_cmd("[float] foot"))
+hl.bind(mainMod .. " + CTRL + Return", hl.dsp.exec_cmd("foot", { float = true }))
 
 hl.bind(
   mainMod .. " + SHIFT + M",
@@ -13,7 +13,7 @@ hyprctl dispatch 'hl.dsp.focus({window = "class:org.qutebrowser.qutebrowser"})'
 ]]))
 -- bind = SUPERSHIFT, V, exec, [workspace 2; fullscreen] say -e "Starting $(wl-paste) in mpv..."; mpv "$(wl-paste)" || say -e 'Not valid url?'
 hl.bind(mainMod .. " + SHIFT + V",
-  hl.dsp.exec_cmd("[workspace 5 silent] pkill vnc_start || xdg-terminal-exec vnc_start"))
+  hl.dsp.exec_cmd("pkill vnc_start || xdg-terminal-exec vnc_start", { workspace = "5 silent" }))
 
 -- script to prevent accidentially closing games trying to switch to workspace 1
 hl.bind(mainMod .. " + Q", function()
@@ -109,15 +109,14 @@ hl.bind(mainMod .. " + SHIFT + bracketright", yt_chapter)
 hl.bind(mainMod .. " + 7", function() yt_chapter("prev") end)
 hl.bind(mainMod .. " + 8", yt_chapter)
 
--- --- Windows / layout binds ---
+-- --- Windows binds ---
 
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + ALT + F", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + ALT + F", hl.dsp.window.pin())
-hl.bind(
-  mainMod .. " + C",
-  hl.dsp.window.center() --[[ legacy `1` arg (respect-reserved) has no typed equivalent in 0.55 ]]
-)
+hl.bind(mainMod .. " + ALT + F", function()
+  hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+  hl.dispatch(hl.dsp.window.pin())
+end)
+hl.bind(mainMod .. " + C", hl.dsp.window.center())
 hl.bind(mainMod .. " + ALT + P", hl.dsp.window.pin())
 
 -- option 2 is like fullscreen, but leaves intact contents of window
@@ -132,24 +131,39 @@ hl.bind(mainMod .. " + T", hl.dsp.window.set_prop({ prop = "opaque", value = "to
 hl.bind(mainMod .. " + J", function() cycle_window("next") end)
 hl.bind(mainMod .. " + K", function() cycle_window("prev") end)
 
--- master related:
-hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.layout("swapwithmaster auto"))
-hl.bind(mainMod .. " + SHIFT + N", hl.dsp.layout("orientationnext"))
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.layout("orientationprev"))
+hl.bind(mainMod .. " + SHIFT + Return", layout_bind({
+  master = hl.dsp.layout("swapwithmaster auto"),
+  scrolling = hl.dsp.layout("fit visible")
+}))
+hl.bind(mainMod .. " + SHIFT + N", layout_bind({
+  master = hl.dsp.layout("orientationnext"),
+  scrolling = function()
+    hl.config({ scrolling = { direction = "down" } })
+  end
+}))
+hl.bind(mainMod .. " + SHIFT + P", layout_bind({
+  master = hl.dsp.layout("orientationprev"),
+  scrolling = function()
+    hl.config({ scrolling = { direction = "right" } })
+  end
+}))
 
 -- scrolling related:
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.layout("swapcol r"))
-hl.bind(mainMod .. " + SHIFT + H", hl.dsp.layout("swapcol l"))
-hl.bind(mainMod .. " + SHIFT + K", hl.dsp.layout("colresize +conf"))
-hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("colresize -conf"))
-hl.bind(mainMod .. " + SHIFT + CTRL + J", hl.dsp.layout("fit all"))
-hl.bind(mainMod .. " + SHIFT + CTRL + K", hl.dsp.layout("colresize all 0.5"))
-hl.bind(mainMod .. " + SHIFT + Return", hl.dsp.layout("fit visible"))
--- Fix for focused window sliding away when colresizing all columns
-hl.bind(mainMod .. " + SHIFT + CTRL + K", hl.dsp.layout("colresize -conf"))
-hl.bind(mainMod .. " + SHIFT + CTRL + K", hl.dsp.layout("colresize +conf"))
-hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("hyprctl keyword -r scrolling:direction down"))
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("hyprctl keyword -r scrolling:direction right"))
+hl.bind(mainMod .. " + SHIFT + L", layout_bind({ scrolling = hl.dsp.layout("swapcol r") }))
+hl.bind(mainMod .. " + SHIFT + H", layout_bind({ scrolling = hl.dsp.layout("swapcol l") }))
+hl.bind(mainMod .. " + SHIFT + CTRL + H", layout_bind({ scrolling = hl.dsp.layout("consume_or_expel prev") }))
+hl.bind(mainMod .. " + SHIFT + CTRL + L", layout_bind({ scrolling = hl.dsp.layout("consume_or_expel next") }))
+hl.bind(mainMod .. " + SHIFT + K", layout_bind({ scrolling = hl.dsp.layout("colresize +conf") }))
+hl.bind(mainMod .. " + SHIFT + J", layout_bind({ scrolling = hl.dsp.layout("colresize -conf") }))
+hl.bind(mainMod .. " + SHIFT + CTRL + J", layout_bind({ scrolling = hl.dsp.layout("fit all") }))
+hl.bind(mainMod .. " + SHIFT + CTRL + K", layout_bind({
+  scrolling = function()
+    hl.dispatch(hl.dsp.layout("colresize all 0.5"))
+    -- Fix for focused window sliding away when colresizing all columns
+    hl.dispatch(hl.dsp.layout("colresize -conf"))
+    hl.dispatch(hl.dsp.layout("colresize +conf"))
+  end
+}))
 
 -- --- H J K L for tiled & float windows ---
 
@@ -179,7 +193,10 @@ hl.bind(mainMod .. " + SHIFT + CTRL + 1", function()
   hl.dispatch(hl.dsp.workspace.move({ workspace = w.id, monitor = -1 }))
 end)
 
-hl.bind(mainMod .. " + SHIFT + CTRL + code:49", swap_mons)
+hl.bind(mainMod .. " + CTRL + O", hl.dsp.focus({ last = true }))
+
+hl.bind(mainMod .. " + SHIFT + CTRL + code:49",
+  hl.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = -1 }))
 
 hl.bind(mainMod .. " + CTRL + mouse:272", hl.dsp.window.drag())
 hl.bind(mainMod .. " + ALT + mouse:272", hl.dsp.window.resize())

@@ -1,7 +1,7 @@
 -- --- Apps ---
 
 hl.bind(mainMod .. " + A", hl.dsp.submap("apps"))
-hl.define_submap("apps", function()
+hl.define_submap("apps", "reset", function()
   hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("gtk-launch steam.desktop"))
   hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("pkill -9 steam"))
   hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("emacsclient -c || emacs"))
@@ -26,7 +26,7 @@ end)
 -- --- Rofi ---
 
 hl.bind(mainMod .. " + E", hl.dsp.submap("rofi"))
-hl.define_submap("rofi", function()
+hl.define_submap("rofi", "reset", function()
   hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("pkill rofi || rofi -show-icons -show combi"))
   -- passing cache-dir from here cuz idk how to pass XDG_CACHE_HOME to rofi config
   -- bind = SUPER, I, exec, pkill rofi || rofi -show run -cache-dir $XDG_CACHE_HOME/rofi
@@ -63,7 +63,7 @@ end)
 -- --- Translate ---
 
 hl.bind(mainMod .. " + U", hl.dsp.submap("translate"))
-hl.define_submap("translate", function()
+hl.define_submap("translate", "reset", function()
   hl.bind(mainMod .. " + U", hl.dsp.exec_cmd("kill rofi || rofi-translate"))
   hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd("kill rofi || rofi-translate t"))
   hl.bind(mainMod .. " + E", hl.dsp.exec_cmd('say -e -u critical "$(trans -sl en -tl ru "$(wl-paste)")"'))
@@ -75,7 +75,7 @@ end)
 -- --- Work stuff ---
 
 hl.bind(mainMod .. " + V", hl.dsp.submap("work"))
-hl.define_submap("work", function()
+hl.define_submap("work", "reset", function()
   hl.bind(
     mainMod .. " + D",
     hl.dsp.exec_cmd("xdg-open \"$(grep daily ~/Documents/quickmarks | cut -d' ' -f2)\" >/dev/null 2>&1")
@@ -87,7 +87,7 @@ end)
 -- --- Theme / wallpapers ---
 
 hl.bind(mainMod .. " + W", hl.dsp.submap("theme"))
-hl.define_submap("theme", function()
+hl.define_submap("theme", "reset", function()
   hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("change-theme"))
   hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("change-theme -d"))
   hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("change-theme -l"))
@@ -101,7 +101,7 @@ end)
 -- bindO - hold to trigger
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("screenshot --fulltoboth"), { long_press = true })
 hl.bind(mainMod .. " + S", hl.dsp.submap("screenshot"))
-hl.define_submap("screenshot", function()
+hl.define_submap("screenshot", "reset", function()
   hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("screenshot --fulltoboth"))
   hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("screenshot --fulltoclip"))
   -- 's' for select
@@ -122,7 +122,7 @@ end)
 -- --- Notifications ---
 
 hl.bind(mainMod .. " + N", hl.dsp.submap("notifs"))
-hl.define_submap("notifs", function()
+hl.define_submap("notifs", "reset", function()
   hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
   hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("swaync-client --hide-latest"))
   -- closes latest only if those are still 'floating', not in control-center
