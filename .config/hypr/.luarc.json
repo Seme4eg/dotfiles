@@ -9,6 +9,7 @@
       "hl"
     ],
     "disable": [
+      "undefined-global",
       "lowercase-global"
     ]
   }

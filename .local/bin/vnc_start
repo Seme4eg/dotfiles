@@ -9,15 +9,24 @@
 # - use 'adb shell wm size' to get native device resolution in case you will be scripting all that
 
 port=5900
-vnc_highres=vnc_highres
-vnc_lowres=vnc_lowres
-old_tablet=old_tablet
 
-output_name=$vnc_lowres
+output_name="vnc_pixel"
+position="auto-center-right"
+# NOTE: 120 fps for phone outputs cuz hyprland might sometimes lower main
+# monitor to match refresh rate of 2nd monitor
+refresh=120
+scale=1
 
-case $1 in
-  -s) output_name=$old_tablet ;;
-esac
+is_pixel() { adb devices -l | grep -w -q Pixel_9; }
+# TODO:
+# is_nothing() { adb devices -l | grep -w -q ???; }
+is_samsung() { adb devices -l | grep -w -q SM_T555; }
+
+if is_samsung; then
+  output_name="vnc_samsung"
+  position="auto-center-down"
+  refresh=60
+fi
 
 cable_connected() {
   # sometimes needed to refresh device list
@@ -26,20 +35,74 @@ cable_connected() {
   adb devices | grep -w -q device
 }
 
+if is_pixel && cable_connected; then
+  scale=1.5
+fi
+
+# if internet connection - always lower fps
+cable_connected && refresh=60
+
+device_mode() {
+  if ! cable_connected; then
+    echo preferred
+    return 0
+  fi
+
+  out="$(adb shell wm size | cut -d':' -f 2 | tr -d '\r ' | tail -n1)"
+  h=${out%x*}
+  w=${out#*x}
+
+  d=1
+  [ $w -gt 1100 ] && d=2
+
+  size="$((w / d))x$((h / d))"
+
+  printf '%s@%s' "$size" "$refresh"
+}
+
+# per-phone corner rounding (phone screen cutout / aesthetic)
+rounding=20 # default / CMF
 if cable_connected; then
-  # if its samsung tablet (-l to get model listed)
-  if adb devices -l | grep -w -q SM_T555; then
-    output_name=$old_tablet
-  else
-    output_name=$vnc_highres
+  if is_samsung; then
+    rounding=5
+  elif is_pixel; then
+    rounding=42
   fi
 fi
 
+state_file="$HOME/.cache/hypr-vnc-state.lua"
+cat >"$state_file" <<EOF
+hl.monitor({
+  output = "${output_name}",
+  mode = "$(device_mode)",
+  bitdepth = 10,
+  cm = "auto",
+  position = "${position}",
+  scale = ${scale},
+})
+
+hl.window_rule({
+  match = {
+    workspace = "m[${output_name}]",
+  },
+  rounding = ${rounding},
+})
+
+-- vnc monitors convenience
+hl.bind("SUPER + CTRL + 4", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+hl.bind("SUPER + SHIFT + 4", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+EOF
+
+hyprctl reload &>/dev/null
+
 vnc_stop() {
-  pkill wayvnc
   hyprctl output remove $output_name >/dev/null
-  sudo ufw delete allow $port/tcp >/dev/null
-  sudo ufw reload >/dev/null
+  rm -f "$state_file"
+  pkill wayvnc
+  if ! cable_connected; then
+    sudo ufw delete allow $port/tcp >/dev/null
+    sudo ufw reload >/dev/null
+  fi
   echo "Cleanup finished. Exiting."
   exit 0
 }
@@ -51,7 +114,7 @@ Interrupt received. Performing cleanup..."
 }
 
 # Trap the SIGINT signal (Ctrl+C) and run the cleanup function
-trap 'trapfn' INT HUP
+trap 'trapfn' INT HUP TERM
 
 hyprctl output create headless $output_name >/dev/null
 wayvnc -dp -f 120 -o $output_name &>/dev/null & # -g

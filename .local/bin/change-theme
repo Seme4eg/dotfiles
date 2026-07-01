@@ -66,3 +66,6 @@ fi
 swaync-client -rs &
 
 hyprctl hyprpaper wallpaper ", $wp, "
+
+# for colors to propagate from wal file to hypr config
+hyprctl reload
