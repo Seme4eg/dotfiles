@@ -1,4 +1,48 @@
 #+title: Hyprland info
 
+Do the ~lsp-workspace-folder-add~ on that 'hypr' folder for lua lsp to kick in and pick up hl.* meta stuff
+
+Lua hypr stuff: https://wiki.hypr.land/Configuring/Advanced-and-Cool/Expanding-functionality/
+
 ** Apps to use on Wayland
 https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
+
+** Debugging lua funcs
+**1. `hyprctl repl` — main weapon.** Live REPL against running Hyprland. Poke objects before write code. `hyprctl repl` start interactive Lua session or take one-off string, eval against live compositor, print via tostring, exit Ctrl+D.
+
+**2. `hyprctl eval` — test dispatch, no bind.** `hyprctl eval` issue Lua string, run dynamically, return "ok" or error raised. Fire exact dispatch before wiring to key:
+
+repl = inspect/print values. eval = run action, get ok/error. Unsure dispatch valid? eval tell you.
+
+**3. Notification = print-debug inside func.** Bound func no print to terminal. Surface state via notify:
+
+```lua
+hl.notification.create({ text = "fs=" .. tostring(w and w.fullscreen), timeout = 3000, icon = "ok" })
+```
+
+**5. Log tail.** Run Hyprland error/notify to stdout. Tail live log while test:
+
+```sh
+tail -f $XDG_RUNTIME_DIR/hypr/*/hyprland.log
+```
+
+Workflow: repl to inspect fields → build func → eval the dispatch alone → bind → notify at branches if misbehave → tail log for popped errors.
+
+** TODOs
+- https://wiki.hypr.land/Configuring/Advanced-and-Cool/Gestures/
+- https://wiki.hypr.land/Configuring/Advanced-and-Cool/Permissions/
+
+#+begin_src lua
+-- Please note permission changes here require a Hyprland restart and are not applied on-the-fly
+-- for security reasons
+
+-- hl.config({
+--   ecosystem = {
+--     enforce_permissions = true,
+--   },
+-- })
+
+-- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
+-- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
+-- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
+#+end_src
