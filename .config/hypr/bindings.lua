@@ -165,6 +165,8 @@ hl.bind(mainMod .. " + SHIFT + CTRL + K", layout_bind({
   end
 }))
 
+hl.bind("SUPER + tab", cycle_layout)
+
 -- --- H J K L for tiled & float windows ---
 
 hl.bind(mainMod .. " + ALT + H", hl.dsp.window.move({ direction = "l" }))
