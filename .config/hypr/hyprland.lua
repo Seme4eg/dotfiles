@@ -153,8 +153,8 @@ hl.config({
     default_monitor = laptop_mon
   },
   dwindle = {
-    -- 0 - follow mouse, 1 - split to top left, 2 - split to bottom right
-    force_split = 0,
+    force_split = 2,
+    preserve_split = true,
   },
   master = {
     new_status = "master",
