@@ -114,7 +114,6 @@ hl.define_submap("screenshot", "reset", function()
   -- 'o' for OCR
   hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("screenshot --ocr"))
   hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("screenshot --otpdecode"))
-  hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("screenshot --ocr-ru"))
   hl.bind(mainMod .. " + bracketleft", hl.dsp.submap("reset"))
   hl.bind("catchall", hl.dsp.submap("reset"))
 end)

@@ -83,16 +83,13 @@ case $1 in
     fi
     ;;
   --ocr) # ocr the screenshot
-    grim -g "$(get_selection)" - | tesseract -l eng - stdout | wl-copy -n &&
+    lang=$(printf 'eng\nrus' | rofi -dmenu -i)
+    grim -g "$(get_selection)" - | tesseract -l $lang - stdout | wl-copy -n &&
       say -e -t 1000 "done" || say "Failed to OCR screenshot"
     ;;
   --otpdecode) # Paste image from clipboard, decode it with zbar and copy it back to clipboard
     # https://github.com/tadfisher/pass-otp#examples - more examples
     grim -g "$(get_selection)" - | zbarimg -q --raw - | wl-copy &&
-      say -e -t 1000 "done" || say "Failed to OCR screenshot"
-    ;;
-  --ocr-ru) # ocr the screenshot
-    grim -g "$(get_selection)" - | tesseract -l rus - stdout | wl-copy -n &&
       say -e -t 1000 "done" || say "Failed to OCR screenshot"
     ;;
 esac
