@@ -233,10 +233,6 @@ hl.animation({
 hl.gesture({
   fingers = 3,
   direction = "horizontal",
-  action = "workspace",
+  action = "workspace", -- "scroll_move"
 })
-hl.gesture({
-  fingers = 3,
-  direction = "vertical",
-  action = "fullscreen",
-})
+hl.gesture({ fingers = 3, direction = "vertical", action = "fullscreen", })

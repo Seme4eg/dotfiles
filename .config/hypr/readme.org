@@ -29,7 +29,6 @@ tail -f $XDG_RUNTIME_DIR/hypr/*/hyprland.log
 Workflow: repl to inspect fields → build func → eval the dispatch alone → bind → notify at branches if misbehave → tail log for popped errors.
 
 ** TODOs
-- https://wiki.hypr.land/Configuring/Advanced-and-Cool/Gestures/
 - https://wiki.hypr.land/Configuring/Advanced-and-Cool/Permissions/
 
 #+begin_src lua
