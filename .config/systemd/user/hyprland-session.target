@@ -1,6 +1,7 @@
 [Unit]
-Description=Hyprland Compositor Session;
+Description=Hyprland Compositor Session
 Documentation=man:systemd.special(7);
-BindsTo=graphical-session.target;
-Wants=graphical-session-pre.target;
-After=graphical-session-pre.target;
+BindsTo=graphical-session.target
+Wants=graphical-session-pre.target
+After=graphical-session-pre.target
+PropagatesStopTo=graphical-session.target
