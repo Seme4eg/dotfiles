@@ -9,6 +9,9 @@ proxy_claude() {
 proxy() {
   export HTTPS_PROXY=http://localhost:20171
   export HTTP_PROXY=http://localhost:20171
+  export https_proxy=http://localhost:20171
+  export http_proxy=http://localhost:20171
+  export all_proxy=socks5://localhost:20170
   zsh
 }
 
