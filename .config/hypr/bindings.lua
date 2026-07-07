@@ -133,7 +133,8 @@ hl.bind(mainMod .. " + K", function() cycle_window("prev") end)
 
 hl.bind(mainMod .. " + SHIFT + Return", layout_bind({
   master = hl.dsp.layout("swapwithmaster auto"),
-  scrolling = hl.dsp.layout("fit visible")
+  scrolling = hl.dsp.layout("fit visible"),
+  dwindle = hl.dsp.layout("togglesplit")
 }))
 hl.bind(mainMod .. " + SHIFT + N", layout_bind({
   master = hl.dsp.layout("orientationnext"),
