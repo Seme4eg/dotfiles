@@ -62,7 +62,7 @@ hl.window_rule({
 -- Dynamic opacity for certain tabs in brave browser
 hl.window_rule({
   match = {
-    title = ".*(YouTube|Zoom|Daily) - Brave Origin$",
+    title = ".*(YouTube|Zoom|Daily|Google.Maps) - Brave Origin$",
   },
   opacity = "1 1",
 })
