@@ -46,7 +46,7 @@ hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("systemctl --user restart ags"))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("agsv1 --toggle-window statusbar"))
 hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("hyprlock"))
 -- create a file to ignore lid-close event once, needed when plugging back to hub
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("touch ~/.cache/lidignore"), { locked = true })
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("touch " .. lid_ignore), { locked = true })
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("record"))
 -- minus - code 20, plus - code 21
 hl.bind(mainMod .. " + SHIFT + CTRL + code:20", function() set_laptop(false) end)
