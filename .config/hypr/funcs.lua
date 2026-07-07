@@ -67,8 +67,7 @@ function cycle_window(direction) -- "prev" | "next"
     end
     hl.dispatch(hl.dsp.layout("focus " .. d))
   else
-    -- dwindle / default: plain focus cycle
-    hl.dispatch(hl.dsp.window.cycle_next(direction))
+    hl.dispatch(hl.dsp.window.cycle_next({ next = direction == "next" }))
   end
 end
 
