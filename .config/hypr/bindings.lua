@@ -148,6 +148,8 @@ hl.bind(mainMod .. " + SHIFT + P", layout_bind({
     hl.config({ scrolling = { direction = "right" } })
   end
 }))
+hl.bind("mouse_right", layout_bind({ scrolling = hl.dsp.layout("move +col") }))
+hl.bind("mouse_left", layout_bind({ scrolling = hl.dsp.layout("move -col") }))
 
 -- scrolling related:
 hl.bind(mainMod .. " + SHIFT + L", layout_bind({ scrolling = hl.dsp.layout("swapcol r") }))
