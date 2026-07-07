@@ -1,13 +1,15 @@
 #!/usr/bin/sh
 
 # to avoid having to press a key twice to turn on the display.
-hyprctl dispatch 'hl.dsp.dpms("on")'
+hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
 systemctl --user restart wlsunset
 # Tho there is 'unlock_cmd = hyprctl dispatch exec change-theme'
 #  in hypridle config it doesn't get fired for some reason after unlocking
 #  system after sleep. So we need to explicitly call 'change-theme' in this
 #  script.
 change-theme
+
+sleep 1 # delay for PAM readiness, then turn on display.
 sync_tz_and_loc
 
 # update mail stuff
