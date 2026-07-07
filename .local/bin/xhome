@@ -6,8 +6,14 @@ flag="$1"
 
 chromium_desktop_path="$HOME/.local/share/applications/chromium-proxy.desktop"
 chromium_proxy="socks://localhost:20170"
+cisco_con_path="$HOME/git/secrets/w_mg"
+cisco_con_name="cisco-proxy"
+
 case $1 in
-  -u | --uninstall) chromium_proxy="socks://100.95.49.75:9080" ;;
+  -u | --uninstall)
+    chromium_proxy="socks://100.95.49.75:9080"
+    cisco_con_name="cisco"
+    ;;
 esac
 
 chromium_desktop="[Desktop Entry]
@@ -27,22 +33,26 @@ Name=New Incognito Window
 Exec=/usr/bin/chromium --incognito --proxy-server=$chromium_proxy %U
 "
 
+echo "$chromium_desktop" >"$chromium_desktop_path"
+
+# cisco vpn
+sudo chmod 600 "${cisco_con_path}/${cisco_con_name}.nmconnection"
+sudo cp -f "${cisco_con_path}/${cisco_con_name}.nmconnection" /etc/NetworkManager/system-connections/cisco.nmconnection
+sudo nmcli con reload cisco
+
 case $1 in
   -u | --uninstall)
+    # remove zapret
     sudo systemctl stop zapret_discord_youtube
     sudo systemctl disable zapret_discord_youtube
     sudo rm /etc/NetworkManager/dispatcher.d/99-zapret_restart
     sudo systemctl restart NetworkManager
+
     systemctl --user stop v2raya-lite
     systemctl --user disable v2raya-lite
     pgrep solaar && pkill solaar
-    cd $HOME/git/secrets/w_mg
-    echo "$chromium_desktop" >"$chromium_desktop_path"
-    sudo chmod 600 cisco.nmconnection
-    sudo cp -f $HOME/git/secrets/w_mg/cisco.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
-    sudo nmcli con reload cisco
-    sudo sed -i 's/^\(export USE_PROXY\)=.*/\1=false/' ~/dotfiles/.config/zsh/config.zsh
-    sed -i 's/^\(exec-once = solaar -w hide\)$/# \1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
+    sed -i '/AT_HOME=/d' ~/dotfiles/.config/zsh/config.zsh
+
     echo '================================ IMPORTANT: ================================'
     echo "- for anything that required proxy - remove it, don't slow down things"
     echo "- change local homelab ip to tailscale one"
@@ -51,22 +61,18 @@ case $1 in
     ;;
 esac
 
-# zapret settings in secrets
+# zapret
 sudo ln -s $HOME/git/secrets/zapret/99-zapret_restart /etc/NetworkManager/dispatcher.d/
 sudo systemctl enable --now zapret_discord_youtube
 # for zapret to pick up the correct network interface
 sudo systemctl restart NetworkManager
 user_hosts_list=~/.local/share/zapret-discord-youtube-linux/zapret-latest/lists/list-general-user.txt
+# fix sponsorblock being blocked as well
 [ ! -f "$user_hosts_list" ] && echo ajay.app | sudo tee "$user_hosts_list"
+
 systemctl --user enable --now v2raya-lite
-sed -i 's/^# \(exec-once = solaar -w hide\)$/\1/' $DOTFILES_PATH/.config/hypr/exec-once.conf
 solaar -w hide &
-cd "$HOME"/git/secrets/w_mg
-echo "$chromium_desktop" >"$chromium_desktop_path"
-sudo chmod 600 cisco-proxy.nmconnection
-sudo cp -f $HOME/git/secrets/w_mg/cisco-proxy.nmconnection /etc/NetworkManager/system-connections/cisco.nmconnection
-sudo nmcli con reload cisco
-sudo sed -i 's/^\(export USE_PROXY\)=.*/\1=true/' ~/dotfiles/.config/zsh/config.zsh
+echo "export AT_HOME=true" >>"$XDG_CONFIG_HOME/zsh/config.zsh"
 
 echo "Super-Shift-b" is your friend now
 echo "================================ IMPORTANT: ================================"

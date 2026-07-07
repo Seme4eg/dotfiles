@@ -5,7 +5,9 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("systemctl --user start hyprland-session.target")
   -- /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
   -- fix for logitech bolt receiver waking up system immediately after suspend, see arch wiki
-  hl.exec_cmd("solaar -w hide")
+  if os.getenv("AT_HOME") == "true" then
+    hl.exec_cmd("solaar -w hide")
+  end
   hl.exec_cmd("change-theme")
   -- force update everything on every hyprland launch
   hl.exec_cmd("sync_tz_and_loc -f")
