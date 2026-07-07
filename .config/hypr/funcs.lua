@@ -119,26 +119,24 @@ function file_exists(p)
   end; return false
 end
 
-local function last_mon()
-  local mons = hl.get_monitors()
-  return #mons == 1
-end
-
 -- laptop panel is the only active monitor? (disabled ones drop from get_monitors)
 local function only_laptop_active()
-  return last_mon() and mons[1].name == laptop_mon
+  local mons = hl.get_monitors()
+  if #mons ~= 1 then return false; end
+  return mons[1].name == laptop_mon
 end
 
-function set_laptop(enabled)
-  if not enabled then
-    if last_mon() then
+function set_laptop(enable)
+  local mons = hl.get_monitors()
+  if not enable then
+    if #mons == 1 then
       hl.exec_cmd("say -e 'Last screen'")
       return
     end
   end
 
-  hl.monitor({ output = laptop_mon, disabled = not enabled })
-  if enabled then
+  hl.monitor({ output = laptop_mon, disabled = not enable })
+  if enable then
     os.remove(edp_off_flag)
   else
     local f = io.open(edp_off_flag, "w"); if f then f:close() end
