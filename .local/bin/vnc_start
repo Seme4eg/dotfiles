@@ -10,7 +10,7 @@
 
 port=5900
 
-output_name="vnc_pixel"
+output_name="vnc_headless"
 position="auto-center-right"
 # NOTE: 120 fps for phone outputs cuz hyprland might sometimes lower main
 # monitor to match refresh rate of 2nd monitor
@@ -18,12 +18,10 @@ refresh=120
 scale=1
 
 is_pixel() { adb devices -l | grep -w -q Pixel_9; }
-# TODO:
-# is_nothing() { adb devices -l | grep -w -q ???; }
+is_nothing() { adb devices -l | grep -w -q A001; }
 is_samsung() { adb devices -l | grep -w -q SM_T555; }
 
 if is_samsung; then
-  output_name="vnc_samsung"
   position="auto-center-down"
   refresh=60
 fi
@@ -35,9 +33,8 @@ cable_connected() {
   adb devices | grep -w -q device
 }
 
-if is_pixel && cable_connected; then
-  scale=1.5
-fi
+is_pixel && cable_connected && scale=1.5
+is_nothing && cable_connected && scale=1.33
 
 # if internet connection - always lower fps
 cable_connected && refresh=60
