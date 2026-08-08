@@ -124,6 +124,7 @@ hl.config({
     focus_on_activate = true,
     key_press_enables_dpms = true,
     animate_manual_resizes = true,
+    allow_session_lock_restore = true,
     animate_mouse_windowdragging = true,
     -- don't track initial workspace on which window was opened, 1 - default
     initial_workspace_tracking = 0,
