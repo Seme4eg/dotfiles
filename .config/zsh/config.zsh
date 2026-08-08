@@ -69,6 +69,8 @@ export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME"/claude
 
+. "${ZDOTDIR}"/secrets.zsh
+
 # ---
 
 typeset -U path PATH
