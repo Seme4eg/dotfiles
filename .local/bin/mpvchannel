@@ -1,0 +1,5 @@
+#!/usr/bin/sh
+
+url="$(wl-paste)"
+
+yt-dlp --flat-playlist --print webpage_url "$url" | setsid mpv --playlist=-
