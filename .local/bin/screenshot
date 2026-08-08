@@ -84,7 +84,7 @@ case $1 in
     ;;
   --ocr) # ocr the screenshot
     lang=$(printf 'eng\nrus' | rofi -dmenu -i)
-    grim -g "$(get_selection)" - | tesseract -l $lang - stdout | wl-copy -n &&
+    grim -g "$(slurp)" - | tesseract -l $lang - stdout | wl-copy -n &&
       say -e -t 1000 "done" || say "Failed to OCR screenshot"
     ;;
   --otpdecode) # Paste image from clipboard, decode it with zbar and copy it back to clipboard
