@@ -207,7 +207,7 @@ hl.animation({
   enabled = true,
   speed = 2,
   bezier = "default",
-  style = "fade 60%",
+  style = "fade",
 })
 hl.animation({
   leaf = "border",
