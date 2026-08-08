@@ -73,6 +73,10 @@ hl.config({
   decoration = {
     rounding = 13,
     rounding_power = 4,
+    motion_blur = {
+      enabled = true,
+      -- samples = 7 -- default
+    },
     shadow = {
       enabled = false,
     },
