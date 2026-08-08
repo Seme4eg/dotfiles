@@ -59,7 +59,8 @@
 /.config/easyeffects/
 /.config/gpu-screen-recorder/
 /.config/gtk-3.0/gtk.css
-/.config/gtk-4.0/gtk.css
+/.config/gtk-4.0/*
+!/.config/gtk-4.0/settings.ini
 /.config/Element/
 /.config/claude/*
 !/.config/claude/settings.json
