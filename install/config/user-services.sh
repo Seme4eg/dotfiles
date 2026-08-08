@@ -7,3 +7,5 @@ systemctl --user enable --now syncthing.service
 systemctl --user enable --now udiskie.service
 systemctl --user enable --now mpd-mpris.service
 systemctl --user enable --now update_lsps.timer
+systemctl --user enable --now hyprpaper.service
+systemctl --user enable --now foot-server.service

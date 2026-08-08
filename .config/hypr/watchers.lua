@@ -14,10 +14,13 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("wl-paste --watch cliphist store")
   -- preserve the data in the clipboard after the application is closed
   hl.exec_cmd("doom env")
-  hl.exec_cmd("foot --server")
+
+  -- Using soystemd user service for now:
+  -- hl.exec_cmd("foot --server")
+  -- hl.exec_cmd("hyprpaper")
+
   hl.exec_cmd("sleep 10; mbsync mailru")
   hl.exec_cmd("brightnessctl -r")
-  hl.exec_cmd("hyprpaper")
   -- hot reload any changes in ags bar
   hl.exec_cmd("find ~/.config/ags -type f -name \"*.js\" | entr -p -s \"systemctl --user restart ags\"")
   hl.exec_cmd("$DOTFILES_PATH/install/first-run/all.sh")
