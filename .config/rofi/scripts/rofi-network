@@ -1,4 +1,5 @@
 #!/bin/env bash
+# FIXME: #!/bin/env is non-portable, should be #!/usr/bin/env bash
 
 # horrible, unreadable, but still a reference:
 # https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
@@ -6,10 +7,6 @@
 # #############################################################################
 #                        somewhat of a 'config' section                       #
 ###############################################################################
-
-# BSSID to correctly obtain SSID of network, since those can have tricky names
-# NOTE: keep BSSID last! cuz awk print $NF below
-FIELDS=(ACTIVE SSID SECURITY FREQ SIGNAL BSSID)
 
 kb_refresh="Control+r"
 kb_restart="Control+R"
@@ -27,26 +24,89 @@ _rofi() { rofi -dmenu -i "$@"; }
 #                             'config' section end                            #
 ###############################################################################
 
-# will b empty if no active connection
-initial_ssid=
-device_name=$(nmcli -t -f device,type device | grep wifi$ | awk -F: '{print $1}')
-
 assert_status() { [ "$1" -eq 1 ] && exit; }
 
 wifi_on() { [ "$(nmcli radio wifi)" = "enabled" ]; }
 
-get_networks() {
-  # add && NF if there will be some empty lines
-  nmcli -f "$(printf '%s,' "${FIELDS[@]}")" device wifi list --rescan no | awk '!($2 == "--")'
-  # nmcli -f ACTIVE,SSID,SECURITY,FREQ,SIGNAL,BSSID device wifi list --rescan no | awk NF
+# managed wifi adapters (connectable)
+wifi_devs() {
+  nmcli -t -f device,type,state device status |
+    awk -F: '$2=="wifi" && $3!="unmanaged" {print $1}'
 }
 
-get_field() {
-  field="$1"
-  option="$2"
-  bssid=$(echo "$option" | awk '{print $NF}') # get last column
-  nmcli -t -f "$field" device wifi list --rescan no ifname "$device_name" bssid "$bssid"
+# ------------------------------------------------------------------ data ---
+
+# terse scan of all adapters; unescape nmcli's \: \\ and emit tab-separated
+# active|ssid|security|signal|device|freq
+scan() {
+  nmcli -t -f active,ssid,security,signal,device,freq device wifi list --rescan "${1:-no}" |
+    awk '{
+      gsub(/\\\\/,"\x02"); gsub(/\\:/,"\x01")
+      n = split($0, f, ":"); line = ""
+      for (i = 1; i <= n; i++) {
+        gsub(/\x01/, ":", f[i]); gsub(/\x02/, "\\", f[i])
+        line = line (i > 1 ? "\t" : "") f[i]
+      }
+      print line
+    }'
 }
+
+# one row per ssid, best signal across adapters/bands wins; sorted by signal
+# \037-separated (tab is IFS whitespace: read would collapse empty fields)
+# ssid|security|signal|bestdev|activedevs|bands
+aggregate() {
+  awk -F'\t' '
+    $2 == "" { next }
+    {
+      s = $2
+      if (!(s in sig) || $4+0 > sig[s]+0) { sig[s] = $4; dev[s] = $5; sec[s] = $3 }
+      if ($1 == "yes") act[s] = act[s] (act[s] ? "," : "") $5
+      f = $6+0
+      if (f < 3000) b24[s] = 1; else if (f < 5900) b5[s] = 1; else b6[s] = 1
+    }
+    END {
+      for (s in sig) {
+        band = (s in b24) ? "2.4" : ""
+        if (s in b5) band = band (band ? "+" : "") "5"
+        if (s in b6) band = band (band ? "+" : "") "6"
+        printf "%s\037%s\037%s\037%s\037%s\037%s\n", s, sec[s], sig[s], dev[s], act[s], band
+      }
+    }
+  ' | sort -t$'\037' -k3,3nr
+}
+
+declare -a SSIDS SECS SIGS DEVS ACTS BANDS
+SCAN=
+
+load_networks() {
+  SCAN=$(scan "$1")
+  MULTI_DEV=$(wifi_devs | sed -n 2p) # nonempty when 2+ adapters
+  SSIDS=() SECS=() SIGS=() DEVS=() ACTS=() BANDS=()
+  local ssid sec sig dev act band
+  SSID_W=1 SEC_W=1 BAND_W=1
+  while IFS=$'\037' read -r ssid sec sig dev act band; do
+    SSIDS+=("$ssid") SECS+=("$sec") SIGS+=("$sig") DEVS+=("$dev") ACTS+=("$act") BANDS+=("$band")
+    [ ${#ssid} -gt "$SSID_W" ] && SSID_W=${#ssid}
+    [ ${#sec} -gt "$SEC_W" ] && SEC_W=${#sec}
+    [ ${#band} -gt "$BAND_W" ] && BAND_W=${#band}
+  done < <(aggregate <<<"$SCAN")
+  [ "$SSID_W" -gt 32 ] && SSID_W=32
+}
+
+net_row() { # $1 idx
+  local mark=' '
+  [ "${ACTS[$1]}" ] && mark='>'
+  printf "%s %-${SSID_W}.${SSID_W}s   %-${SEC_W}s   %-${BAND_W}s   %s%%" \
+    "$mark" "${SSIDS[$1]}" "${SECS[$1]:--}" "${BANDS[$1]}" "${SIGS[$1]}"
+  [ "${ACTS[$1]}" ] && [ "$MULTI_DEV" ] && printf '  @%s' "${ACTS[$1]}"
+  printf '\n'
+}
+
+# Parses the list of known connections to see if it already contains the SSID.
+# nmcli connection show -- more detailed list of saved networks
+ssid_saved() { nmcli -g NAME connection | grep -Fqx "$1"; }
+
+# -------------------------------------------------------------- actions ---
 
 wifi_status() {
   if wifi_on; then
@@ -68,121 +128,158 @@ toggle_wifi() {
   fi
 }
 
+# main toggle row: 1 adapter = plain radio toggle, 2+ = chooser
+# per-adapter disable = nmcli managed no (NM ignores it until re-enabled here)
+adapter_menu() {
+  local devs
+  devs=$(nmcli -t -f device,type,state device status | awk -F: '$2=="wifi"{print $1":"$3}')
+  if ! wifi_on || [ "$(wc -l <<<"$devs")" -le 1 ]; then
+    toggle_wifi
+    return
+  fi
+
+  local allOff="All Wi-Fi off" rows='' dev state choice
+  while IFS=: read -r dev state; do
+    if [ "$state" = "unmanaged" ]; then
+      rows+="Enable $dev (disabled)"$'\n'
+    else
+      rows+="Disable $dev ($state)"$'\n'
+    fi
+  done <<<"$devs"
+
+  choice=$(printf '%s\n%s%s' "$allOff" "$rows" "$backOption" |
+    _rofi -theme-str '#entry { placeholder: "wifi:"; }')
+  assert_status $?
+
+  case "$choice" in
+    "$allOff") toggle_wifi ;;
+    Disable\ * | Enable\ *)
+      dev=${choice#* }
+      dev=${dev%% *}
+      case "$choice" in
+        Disable*) nmcli device set "$dev" managed no && say -e "Disabled $dev." ;;
+        *) nmcli device set "$dev" managed yes && say -e "Enabled $dev." ;;
+      esac
+      show_menu
+      ;;
+    *) show_menu ;;
+  esac
+}
+
 restart_wifi() {
   say -t 3000 -e "Restarting wifi"
   nmcli networking off && nmcli networking on
   show_menu
 }
 
-ssid_connected() {
-  active_ssid=$(nmcli -t -f active,ssid device wifi list --rescan no ifname "$device_name" | awk -F: '/^yes/ {print $2}')
-  [ "$active_ssid" = "$1" ]
-}
-
-ssid_saved() {
-  # Parses the list of known connections to see if it already contains the SSID.
-  # nmcli connection show -- more detailed list of saved networks
-  if nmcli -g NAME connection | grep -wqx "$1"; then
-    echo "Forget"
-    return 0
-  else
-    return 1
-  fi
-}
-
 forget_ssid() { nmcli connection delete id "$1" && say -e "Deleted $1."; }
 
-toggle_ssid() {
-  ssid="$1"
-  security="$2"
-
-  _success() { say -e "Connected to $1."; }
-  _connecting() { say -t 2000 -e "Connecting to $1..."; }
-
-  _connect() {
-    protected() { [ "$security" != "" ]; }
-
-    if protected; then
-      wifi_pass=$(_rofi -password -theme-str '#entry { placeholder: "password .."; }')
-      assert_status $?
-    fi
-
-    # if no password provided - quit that script and restore initial connection
-    # maybe show return to main menu instead?
-    if [ ! "$wifi_pass" ] && protected; then
-      # no need to restore initial connection if it wasn't disbanded
-      ssid_connected "$initial_ssid" && exit 1
-      nmcli connection up id "$initial_ssid"
-      say -e "Restored connection to $initial_ssid."
-      exit 1
-    fi
-
-    _connecting "$ssid"
-
-    # variable to save the connection command error, because often needed
-    error="$(nmcli device wifi connect "$ssid" password "$wifi_pass" 2>&1 >/dev/null)"
-
-    # if connection failed - prompt again and remove attempted connection from
-    # saved ones (cuz it does save connection even if wrong pass was provided)
-    if [ $? -ne 0 ]; then
-      nmcli connection delete id "$1"
-      if [[ "$error" =~ .*Connection.activation.failed.* ]]; then
-        say -e Nope
-        _connect "$1"
-      else
-        # if there is some other error i most likely don't need a retry
-        say "$error"
-        exit 1
-      fi
-    fi
-
-    # required to show success notif
-    return 0
+# 2+ wifi adapters: chooser sorted by this ssid's signal, best preselected
+pick_dev() { # $1 ssid -> stdout device
+  local -a devs
+  mapfile -t devs < <(wifi_devs)
+  [ ${#devs[@]} -eq 0 ] && {
+    say -e "No wifi adapter."
+    return 1
+  }
+  [ ${#devs[@]} -eq 1 ] && {
+    echo "${devs[0]}"
+    return
   }
 
-  if ssid_connected "$ssid"; then
+  local rows choice
+  rows=$(awk -F'\t' -v s="$1" '
+    $2 == s && ($4+0 > best[$5]+0 || !($5 in best)) { best[$5] = $4 }
+    END { for (d in best) print best[d] "\t" d }
+  ' <<<"$SCAN" | sort -nr | awk -F'\t' '{ printf "%-12s %s%%\n", $2, $1 }')
+  [ "$rows" ] || rows=$(printf '%s\n' "${devs[@]}")
+
+  choice=$(printf '%s\n%s' "$rows" "$backOption" |
+    _rofi -theme-str '#entry { placeholder: "adapter:"; }')
+  [ "$choice" ] || return 1
+  [ "$choice" = "$backOption" ] && return 2
+  echo "${choice%% *}"
+}
+
+toggle_ssid() { # $1 idx, $2 device (set on retry)
+  local ssid="${SSIDS[$1]}" sec="${SECS[$1]}" dev="$2"
+
+  if [ "${ACTS[$1]}" ]; then
     nmcli connection down id "$ssid" && say -e "Disconnected from $ssid."
-  else
-    if ssid_saved "$ssid"; then
-      _connecting "$ssid"
-      nmcli connection up id "$ssid" && _success "$ssid"
+    return
+  fi
+
+  if [ -z "$dev" ]; then
+    dev=$(pick_dev "$ssid")
+    case $? in
+      2)
+        show_menu
+        return
+        ;;           # back
+      1) return 1 ;; # esc
+    esac
+  fi
+
+  if ssid_saved "$ssid"; then
+    say -t 2000 -e "Connecting to $ssid..."
+    nmcli connection up id "$ssid" ifname "$dev" && say -e "Connected to $ssid."
+    return
+  fi
+
+  local pass=
+  if [ "$sec" ] && [ "$sec" != "--" ]; then
+    pass=$(_rofi -password -theme-str '#entry { placeholder: "password .."; }' </dev/null)
+    [ "$pass" ] || return 1
+  fi
+
+  say -t 2000 -e "Connecting to $ssid..."
+  # FIXME: password on nmcli argv (visible in /proc); acceptable for personal box
+  local -a cmd=(nmcli device wifi connect "$ssid" ifname "$dev")
+  [ "$pass" ] && cmd+=(password "$pass")
+
+  # variable to save the connection command error, because often needed
+  local error
+  # if connection failed - prompt again and remove attempted connection from
+  # saved ones (cuz it does save connection even if wrong pass was provided)
+  if ! error=$("${cmd[@]}" 2>&1 >/dev/null); then
+    nmcli connection delete id "$ssid" >/dev/null 2>&1
+    if [[ "$error" == *"activation failed"* ]]; then
+      say -e Nope
+      toggle_ssid "$1" "$dev"
     else
-      _connect "$ssid" && _success "$ssid"
+      # if there is some other error i most likely don't need a retry
+      say "$error"
+      return 1
     fi
+  else
+    say -e "Connected to $ssid."
   fi
 }
 
-show_qr() {
-  local ssid="$1"
+show_qr() { # $1 ssid
+  local ssid="$1" sec pass img
+  pass=$(nmcli -s -g 802-11-wireless-security.psk connection show "$ssid")
+  sec=$(nmcli -g 802-11-wireless-security.key-mgmt connection show "$ssid")
+  case "$sec" in
+    '') sec=nopass ;;
+    none) sec=WEP ;;
+    *) sec=WPA ;;
+  esac
 
-  local security
-  security=$(nmcli dev wifi show-password | awk '/^Security/ {print $2}')
-
-  local password
-  password="$(nmcli dev wifi show-password | awk '/^Password/ {print $2}')"
-
-  local qrcode_path="$HOME/.cache/rofi/$ssid.png"
-
-  [ -e "$qrcode_path" ] && rm "$qrcode_path"
-
-  # FIXME: idk why it doesn't work, format is correct, info gets decoded
-  # correctly
   # https://github.com/zxing/zxing/wiki/Barcode-Contents#wi-fi-network-config-android-ios-11
-
-  # all those params are necessary?
-  # qrencode -t png -o "$qrcode_path" -l H -s 25 -m 2 --dpi=192 \
-  qrencode -t png -o "$qrcode_path" -s 25 \
-    "WIFI:S:${ssid};T:${security};P:${password};;"
+  esc() { sed 's/[\\;,:"]/\\&/g' <<<"$1"; }
+  img=$(mktemp --suffix=.png)
+  qrencode -t png -o "$img" -s 25 "WIFI:S:$(esc "$ssid");T:$sec;P:$(esc "$pass");;"
 
   _rofi -theme-str "
 entry{enabled:false;}
 textbox-prompt-colon{str:\"\";}
 window{
   border-radius:6mm; padding:1mm; width:100mm; height:100mm;
-  background-image:url(\"$qrcode_path\",both);
-}"
+  background-image:url(\"$img\",both);
+}" </dev/null
 
-  rm "$qrcode_path"
+  rm -f "$img"
 }
 
 show_info() {
@@ -195,27 +292,19 @@ show_info() {
 }
 
 # A submenu for a specific device that allows connecting, pairing, and trusting
-ssid_menu() {
-  local ssid="$1"
-  local security="$2"
-  local connected
-  local qrOption="Generate QR"
+ssid_menu() { # $1 idx
+  local idx="$1" ssid="${SSIDS[$1]}"
+  local connected saved="Forget ($kb_quick_forget)" info="Show info & pass ($kb_show_info)"
+  local qrOption="Generate QR" action
 
-  if ssid_connected "$ssid"; then
+  if [ "${ACTS[$idx]}" ]; then
     connected="Disconnect ($kb_quick_connect)"
   else
     connected="Connect ($kb_quick_connect)"
   fi
 
-  local -a options=("$connected")
-
-  if ssid_saved "$ssid"; then
-    saved="$(ssid_saved "$ssid") ($kb_quick_forget)"
-    show_info="Show info & pass ($kb_show_info)"
-    options+=("$saved" "$show_info")
-    which qrencode >/dev/null && options+=("$qrOption")
-  fi
-
+  local -a options=("$connected" "$saved" "$info")
+  command -v qrencode >/dev/null && options+=("$qrOption")
   options+=("$backOption")
 
   # Open rofi menu, read chosen option
@@ -228,62 +317,54 @@ ssid_menu() {
       -kb-custom-3 "$kb_show_info" \
       -theme-str "#entry { placeholder: \"$ssid:\"; }"
   )
-  assert_status $?
+  rofi_exit=$?
+  assert_status $rofi_exit
 
   # pressed keybinding is more important than selected entry
-  [ "$rofi_exit" -ne 0 ] && action="$rofi_exit"
-
   # Match action option to command
-  case "$action" in
-    10 | "$connected") toggle_ssid "$ssid" "$security" ;;
-    11 | "$saved") forget_ssid "$ssid" ;;
-    12 | "$show_info") show_info "$ssid" ;;
-    "$qrOption") show_qr "$1" ;;
-    "$backOption") show_menu ;;
+  case "$rofi_exit:$action" in
+    10:* | 0:"$connected") toggle_ssid "$idx" ;;
+    11:* | 0:"$saved") forget_ssid "$ssid" ;;
+    12:* | 0:"$info") show_info "$ssid" ;;
+    0:"$qrOption") show_qr "$ssid" ;;
+    0:"$backOption") show_menu ;;
     *) echo "No option chosen." ;;
   esac
 }
 
 # autoupdate network list
+# FIXME: background rescan poll every 1s - battery drain, interferes with connects
 update_networks() {
-  local current
-  current=$(echo "$networks" | wc -l)
-  local new
-  local networks
-
-  get_networks_rescan() {
-    nmcli -f "$(printf '%s,' "${FIELDS[@]}")" device wifi list | awk '!($2 == "--")'
-  }
-
+  local cur=${#SSIDS[@]} new
   while true; do
-    networks=$(get_networks_rescan)
-    new=$(echo "$networks" | wc -l)
-
-    # -w for 'wait' to not spam tnose notification until user refreshes
-    [ "$current" -ne "$new" ] && say -w -e "Networks changed, refresh ($kb_refresh)"
     sleep 1
+    new=$(scan auto | aggregate | wc -l)
+    # -w for 'wait' to not spam tnose notification until user refreshes
+    [ "$new" -ne "$cur" ] && say -w -e "Networks changed, refresh ($kb_refresh)"
   done
 }
 
-show_menu() {
-  local state
+show_menu() { # $1 rescan mode for nmcli (no|auto|yes)
+  local state idx i sel=0
   state=$(wifi_status)
-  networks=$(get_networks)
-  local current
-  current=$(echo -e "$networks" | grep "^yes")
+  load_networks "$1"
+
+  local -a rows=("$state")
+  if wifi_on; then
+    for i in "${!SSIDS[@]}"; do
+      rows+=("$(net_row "$i")")
+      [ "$sel" -eq 0 ] && [ "${ACTS[$i]}" ] && sel=$((i + 1))
+    done
+  fi
 
   # start background networks list updating, and kill it later by pid
   # start it as soon as possible
   update_networks &
   update_pid=$!
+  trap 'kill $update_pid 2>/dev/null' EXIT
 
-  initial_ssid=$(get_field ssid "$current")
-
-  local -a options=("$state")
-
-  wifi_on && options+=("$networks")
-
-  option=$(printf '%s\n' "${options[@]}" | _rofi -select "$current" \
+  # rofi 2.0 quirk: plain -format i prints -1 on kb-custom keys; 'i s' works
+  idx=$(printf '%s\n' "${rows[@]}" | _rofi -format 'i s' -selected-row "$sel" \
     -kb-custom-1 "$kb_quick_connect" \
     -kb-accept-custom "" \
     -kb-custom-2 "$kb_quick_forget" \
@@ -291,37 +372,30 @@ show_menu() {
     -kb-custom-4 "$kb_refresh" \
     -kb-custom-5 "$kb_restart" \
     -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }')
-
   rofi_exit=$?
 
-  kill $update_pid
+  kill $update_pid 2>/dev/null
+  assert_status $rofi_exit
+  idx=${idx%% *}                         # strip ssid text, index is authoritative
+  [ "$idx" ] && [ "$idx" -ge 0 ] || exit # typed custom input
 
-  [ $rofi_exit -eq 1 ] && exit
-
-  ssid="$(get_field ssid "$option")"
-  security="$(get_field security "$option")"
+  local nid=$((idx - 1)) # rows[0] is the wifi toggle
 
   case $rofi_exit in
     0)
-      case $option in
-        "$state") toggle_wifi ;;
-        *)
-          # no point in showing a 1-entry submenu if ssid isn't saved
-          if ssid_saved "$ssid"; then
-            ssid_menu "$ssid" "$security"
-          else
-            toggle_ssid "$ssid" "$security"
-          fi
-          ;;
-      esac
+      if [ "$idx" -eq 0 ]; then
+        adapter_menu
+      # no point in showing a 1-entry submenu if ssid isn't saved
+      elif ssid_saved "${SSIDS[$nid]}"; then
+        ssid_menu "$nid"
+      else
+        toggle_ssid "$nid"
+      fi
       ;;
-    10) toggle_ssid "$ssid" "$security" ;;
-    11) forget_ssid "$ssid" ;;
-    12) show_info "$ssid" ;;
-    13)
-      networks=$(get_networks)
-      show_menu
-      ;;
+    10) [ "$idx" -gt 0 ] && toggle_ssid "$nid" ;;
+    11) [ "$idx" -gt 0 ] && forget_ssid "${SSIDS[$nid]}" ;;
+    12) [ "$idx" -gt 0 ] && show_info "${SSIDS[$nid]}" ;;
+    13) show_menu auto ;;
     14) restart_wifi ;;
     *) exit ;;
   esac
