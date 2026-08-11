@@ -49,6 +49,11 @@ agsv1 -r "theme = '$theme'"
 # gtk themes update
 cp -f ~/.cache/wal/gtk-colors.css ~/.config/gtk-3.0/gtk.css
 cp -f ~/.cache/wal/gtk-colors.css ~/.config/gtk-4.0/gtk.css
+if [ $theme = light ]; then
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+else
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+fi
 
 # update emacs theme
 if [ $theme = light ]; then
