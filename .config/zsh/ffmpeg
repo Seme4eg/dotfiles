@@ -20,7 +20,7 @@ ffmpeg_rotate() {
   case $1 in
     left) transpose="transpose=2" ;;
     right) transpose="transpose=1" ;;
-    flip) transpose="vflip" ;;
+    flip) transpose="vflip,hflip" ;;
     *)
       echo "Usage: rotate_video <filename> <left|right|flip>"
       return 1
