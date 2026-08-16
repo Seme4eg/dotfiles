@@ -27,3 +27,15 @@ Do only what I asked. Nothing extra.
 - Single source of truth for facts (constants, schemas, validation rules, enums): never duplicate, not even twice. Applies to knowledge, not to code shape.
 - Exception to the abstraction rule: IO boundaries (network, clock, fs, vendor SDK) earn a seam immediately — the test double is the 2nd implementation.
 - Once 3+ cases share an axis of change, replace the growing conditional with a table or registry.
+
+# Secrets
+
+- Never commit secrets, keys, or credentials.
+- Never log sensitive data (passwords, tokens, PII).
+- Never print a secret's value to explain or verify it.
+
+# Libraries and Dependencies
+
+- Install dependencies in project environments, not globally
+- Add or update dependencies in project config files, not as one-off manual installs
+- If a dependency is installed locally, read its source code when needed instead of guessing, even if it is gitignored
