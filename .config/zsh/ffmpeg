@@ -112,5 +112,55 @@ ffboost() {
 # -b:a - audio bitrate
 # -an - disable audio
 vidcompress() {
-  ffmpeg -i "$1" -c:v libx264 -preset slow -crf 28 -c:a aac -b:a 192k "compressed_${1}"
+  if [[ -z "$1" || ! -f "$1" ]]; then
+    echo "usage: vidcompress <video-file>" >&2
+    return 1
+  fi
+  local dir base
+  local crf=28
+  dir=$(dirname -- "$1")
+  base=$(basename -- "$1")
+  out="${dir}/${base%.*}.crf${crf}.mp4"
+  ffmpeg -nostdin -n -i "$1" \
+    -c:v libx264 -preset slow -crf "$crf" \
+    -c:a aac -b:a 128k \
+    -movflags +faststart \
+    "$out" || return 1
+  if [[ -s "$out" ]]; then
+    gio trash "$1"
+  else
+    echo "output missing/empty, keeping original: $1" >&2
+    return 1
+  fi
+}
+
+# List mp4 files under dir (default: .) whose video bitrate exceeds
+# threshold (default: 20 Mb/s) — i.e. not yet compressed.
+vidfind_uncompressed() {
+  local dir="${1:-.}" threshold="${2:-20000000}" br
+  find "$dir" -type f -iname '*.mp4' -print0 |
+    while IFS= read -r -d '' f; do
+      br=$(ffprobe -v error -select_streams v:0 \
+        -show_entries stream=bit_rate -of default=nw=1:nk=1 "$f")
+      # some containers lack per-stream bitrate -> fall back to overall
+      if ! [[ "$br" =~ ^[0-9]+$ ]]; then
+        br=$(ffprobe -v error -show_entries format=bit_rate \
+          -of default=nw=1:nk=1 "$f")
+        [[ "$br" =~ ^[0-9]+$ ]] || continue
+      fi
+      ((br > threshold)) && printf '%s\n' "$f"
+    done
+}
+
+# Compress every mp4 under dir (default: .) whose video bitrate
+# exceeds threshold (default: 20 Mb/s).
+vidcompress_all() {
+  local f
+  vidfind_uncompressed "${1:-.}" "${2:-20000000}" |
+    while IFS= read -r f; do
+      [[ "$f" == *.compressed.mp4 ]] && continue    # never recompress own output
+      [[ -e "${f%.*}.compressed.mp4" ]] && continue # already done, skip quietly
+      echo "compressing: $f"
+      vidcompress "$f"
+    done
 }
