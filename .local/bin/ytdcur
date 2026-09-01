@@ -1,10 +1,70 @@
 #!/usr/bin/sh
 
 url="${1:-$(wl-paste)}"
-url="${url%?list*}"
-say "Downloading $url"
-yt-dlp -x -o "${HOME}/Music/__dw/%(artist,creator,uploader)s - %(title)s.%(ext)s" "${url}" &&
-  say "Downloaded $url"
+url="${url%\&list*}"
+say -e "Downloading $url"
+# picks first non-empty field first of artist/creator/uploader
+out="${HOME}/Music/__dw/%(artist,creator,uploader)s - %(title)s.%(ext)s"
+
+# yt-dlp INNERTUBE_CLIENTS keys - no CLI flag lists them, keep in sync by hand
+CLIENTS="web web_safari web_embedded web_music web_creator
+android android_vr ios mweb tv tv_downgraded tv_simply"
+STATS="${XDG_DATA_HOME:-$HOME/.local/share}/ytdlp-extractors"
+
+rcf=$(mktemp)
+logf=$(mktemp)
+trap 'rm -f "$rcf" "$logf"' EXIT INT TERM
+
+# every client gets a line, so order() is a sort and bump() only edits
+seed_stats() {
+  mkdir -p "$(dirname "$STATS")"
+  [ -f "$STATS" ] || : >"$STATS"
+  for c in $CLIENTS; do
+    grep -qE "^[0-9]+ $c\$" "$STATS" || printf '0 %s\n' "$c" >>"$STATS"
+  done
+}
+
+# most successful first, -s keeps file order among ties
+order() { sort -k1,1nr -s "$STATS" | cut -d' ' -f2; }
+
+bump() {
+  n=$(grep -E "^[0-9]+ $1\$" "$STATS" | cut -d' ' -f1)
+  sed -i "s/^[0-9]* $1\$/$((n + 1)) $1/" "$STATS"
+}
+
+# 0 ok, 1 failed, 2 downloaded but client name was rejected by yt-dlp
+dl() {
+  {
+    yt-dlp -x \
+      --extractor-args "youtube:player_client=$1" \
+      --retries 3 --fragment-retries 3 \
+      -o "$out" "$url"
+    echo "$?" >"$rcf"
+  } 2>&1 | tee "$logf"
+  [ "$(cat "$rcf")" -eq 0 ] || return 1
+  grep -qF "Skipping unsupported client \"$1\"" "$logf" && return 2
+  return 0
+}
+
+seed_stats
+first=1
+for client in $(order); do
+  [ "$first" = 1 ] || say "Retrying $url with $client client"
+  first=0
+  dl "$client"
+  case $? in
+    0)
+      bump "$client"
+      say "Downloaded $url"
+      exit 0
+      ;;
+    2)
+      say -e "Downloaded $url (client $client rejected, stats not updated)"
+      exit 0
+      ;;
+  esac
+done
+say -e "Failed $url"
 
 # // yt-dlp -j <url> to get the info of the vid
 # {
