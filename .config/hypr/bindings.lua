@@ -109,6 +109,8 @@ hl.bind(mainMod .. " + SHIFT + bracketright", yt_chapter)
 hl.bind(mainMod .. " + 7", function() yt_chapter("prev") end)
 hl.bind(mainMod .. " + 8", yt_chapter)
 
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("footclient -D $HOME/temp claude"))
+
 -- --- Windows binds ---
 
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
