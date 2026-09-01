@@ -74,9 +74,9 @@ end
 -- taken from hypr wiki
 function cycle_layout()
   local layouts   = {
-    -- "scrolling",
+    "scrolling",
     "dwindle",
-    -- "master",
+    "master",
     "monocle"
   }
   local workspace = hl.get_active_workspace()
