@@ -67,7 +67,7 @@ hl.config({
       nogroup_border_active = { colors = { color5, color6 }, angle = 45 },
       nogroup_border = "rgba(00000000)",
     },
-    layout = "monocle",    -- dwindle / master / scrolling / monocle
+    layout = "monocle", -- dwindle / master / scrolling / monocle
     allow_tearing = false, -- DON'T TURN IT ON, breaks games fps
   },
   decoration = {
@@ -82,8 +82,8 @@ hl.config({
     },
     blur = {
       enabled = true, -- enable dual kavase window background blur
-      size = 2,       -- minimum 1
-      passes = 2,     -- minimum 1, more passes = more resource intensive.
+      size = 2, -- minimum 1
+      passes = 2, -- minimum 1, more passes = more resource intensive.
       xray = true,
     },
     glow = {
@@ -105,10 +105,10 @@ hl.config({
     kb_options = "ctrl:swapcaps, grp:win_space_toggle",
     repeat_rate = 100,
     repeat_delay = 280,
-    sensitivity = 1.0,  -- mouse input sensitivity. -1.0 to 1.0.
+    sensitivity = 1.0, -- mouse input sensitivity. -1.0 to 1.0.
     accel_profile = "flat",
     focus_on_close = 2, -- focus most recent window
-    -- follow_mouse = 1 # <- default
+    follow_mouse = 1, -- <- default
     -- float_switch_override_focus = 2 # NOTE: testing again, default - 1, 0 - disabled
     touchpad = {
       -- disable_while_typing = false, -- uncomment when gaming without mouse
@@ -124,6 +124,8 @@ hl.config({
     focus_on_activate = true,
     key_press_enables_dpms = true,
     animate_manual_resizes = true,
+    enable_swallow = true,
+    swallow_regex = "footclient",
     allow_session_lock_restore = true,
     animate_mouse_windowdragging = true,
     -- don't track initial workspace on which window was opened, 1 - default
@@ -133,9 +135,9 @@ hl.config({
     anr_missed_pings = 3,
   },
   binds = {
-    workspace_back_and_forth = true,     -- switch to current workspace to switch to previous one
-    workspace_center_on = 1,             -- center cursor on last window when switching to workspace
-    focus_preferred_method = 1,          -- find focus by longer shared edges
+    workspace_back_and_forth = true, -- switch to current workspace to switch to previous one
+    workspace_center_on = 1, -- center cursor on last window when switching to workspace
+    focus_preferred_method = 1, -- find focus by longer shared edges
     movefocus_cycles_fullscreen = false, -- <- is default on wiki, but seems that not
   },
   xwayland = {
@@ -155,7 +157,7 @@ hl.config({
     no_hardware_cursors = 2,
     persistent_warps = true,
     warp_on_change_workspace = 1,
-    default_monitor = laptop_mon
+    default_monitor = laptop_mon,
   },
   dwindle = {
     force_split = 2,
@@ -240,4 +242,4 @@ hl.gesture({
   direction = "horizontal",
   action = "workspace", -- "scroll_move"
 })
-hl.gesture({ fingers = 3, direction = "vertical", action = "fullscreen", })
+hl.gesture({ fingers = 3, direction = "vertical", action = "fullscreen" })
