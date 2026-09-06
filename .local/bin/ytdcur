@@ -1,8 +1,19 @@
 #!/usr/bin/sh
 
-url="${1:-$(wl-paste)}"
+url="${1:-$(wl-paste 2>/dev/null)}"
+
+case "$url" in
+  https://www.youtube.com/watch\?v=*) ;;
+  *)
+    say -e "not yt link" >&2
+    exit 1
+    ;;
+esac
+
 url="${url%\&list*}"
+
 say -e "Downloading $url"
+
 # picks first non-empty field first of artist/creator/uploader
 out="${HOME}/Music/__dw/%(artist,creator,uploader)s - %(title)s.%(ext)s"
 
@@ -49,7 +60,7 @@ dl() {
 seed_stats
 first=1
 for client in $(order); do
-  [ "$first" = 1 ] || say "Retrying $url with $client client"
+  [ "$first" = 1 ] || say - e "Retrying $url with $client client"
   first=0
   dl "$client"
   case $? in

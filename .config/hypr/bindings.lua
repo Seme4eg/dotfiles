@@ -108,6 +108,7 @@ hl.bind(mainMod .. " + SHIFT + bracketleft", function() yt_chapter("prev") end)
 hl.bind(mainMod .. " + SHIFT + bracketright", yt_chapter)
 hl.bind(mainMod .. " + 7", function() yt_chapter("prev") end)
 hl.bind(mainMod .. " + 8", yt_chapter)
+hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("ytdcur"))
 
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("footclient -D $HOME/temp claude"))
 
