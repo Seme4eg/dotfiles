@@ -109,7 +109,7 @@ hl.window_rule({
 
 hl.window_rule({
   match = {
-    class = "(xdg-desktop-portal-gtk|DesktopEditors)",
+    class = "(xdg-desktop-portal-gtk|DesktopEditors|nm-openconnect-auth-dialog)",
   },
   tag = "+floating-window",
 })
