@@ -1,0 +1,7 @@
+#!/bin/bash
+s=$(printf '60\n90\n' | rofi -dmenu -p seconds)
+[ -z "$s" ] && exit
+(
+  sleep "$s"
+  say -e "Timer ${s}s done."
+) &

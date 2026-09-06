@@ -34,6 +34,7 @@ hl.define_submap("rofi", "reset", function()
   hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("kill rofi || rofi-bt"))
 
   hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("kill rofi || rofi-pacman"))
+  hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kill rofi || rofi-timer"))
   hl.bind(mainMod .. " + SHIFT + I", hl.dsp.exec_cmd("kill rofi || rofi-aur"))
   hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("kill rofi || rofi-pacman -r"))
   -- bind = SUPER, I, exec, xdg-terminal-exec --app-id=TUI.float omarchy-pkg-install
