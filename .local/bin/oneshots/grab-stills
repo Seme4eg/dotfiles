@@ -1,0 +1,182 @@
+#!/usr/bin/env bash
+# grab-stills - one full-res still per image in a slideshow / Ken Burns video.
+# Run with -h for usage.
+
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+grab-stills - pull one full-res still per image out of a slideshow /
+                 Ken Burns video (gradually zooming stills).
+
+TL;DR:
+  - ./grab-stills 'URL'
+  - On a long video, sample three minutes before committing to the full pull:
+    ./grab-stills -s '*0-180' 'URL'
+
+USAGE
+
+  ./grab-stills [-r H] [-m S] [-o S] [-s RANGE] [-l] <url>
+
+  -r H       cap on the stream frames are pulled from, px   (default 1440)
+  -m S       shortest scene to accept, seconds              (default 5)
+             raise it if a fast zoom splits single images;
+             lower it for genuinely fast slideshows
+  -o S       seconds past the cut to grab                   (default 0.15)
+             keeps the grab clear of any blend on a soft fade
+  -s RANGE   process only this range, yt-dlp --download-sections syntax,
+             e.g. -s '*0-180' for the first three minutes.
+             Fetches far fewer bytes but is SLOW per byte: sectioning
+             routes the download through ffmpeg, which pulls serially and
+             cannot use the parallel fragments the full path gets. On a
+             short video, omitting -s is often faster in wall-clock terms.
+  -l         grab each scene's closing frame, not its opening one.
+             For videos that zoom OUT, where the last frame is the widest.
+             Default assumes inward zoom, which is the usual case.
+  -h         this help
+
+Output: stills-<videoid>/images/NNN_HH-MM-SS.png
+EOF
+}
+
+HEIGHT=1440
+MINLEN=5
+OFFSET=0.15
+SECTION=
+LAST=0
+
+while getopts ':r:m:o:s:lh' opt; do
+  case $opt in
+    r) HEIGHT=$OPTARG ;;
+    m) MINLEN=$OPTARG ;;
+    o) OFFSET=$OPTARG ;;
+    s) SECTION=$OPTARG ;;
+    l) LAST=1 ;;
+    h)
+      usage
+      exit 0
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+[ $# -ge 1 ] || {
+  usage
+  exit 1
+}
+URL=$1
+
+# --- deps -------------------------------------------------------------------
+sudo pacman -S --needed --noconfirm ffmpeg yt-dlp python
+
+ID=$(yt-dlp --no-warnings --print id "$URL" | head -1)
+WORK="stills-$ID"
+mkdir -p "$WORK/images"
+cd "$WORK"
+
+SECT=()
+[ -n "$SECTION" ] && SECT=(--download-sections "$SECTION")
+
+# --- resume ------------------------------------------------------------------
+# Everything below is cached in $WORK and reused across runs. A cached artifact
+# is only valid for the options that produced it, so each is stamped with its
+# own signature: a scenes.tsv cut from '*0-180' must not be reused for a full
+# pull, and a 720p master must not be reused when -r asks for 1440.
+SCENES_SIG="minlen=$MINLEN section=$SECTION"
+MASTER_SIG="height=$HEIGHT section=$SECTION"
+
+sig_ok() { [ -f "$1" ] && [ "$(cat "$1")" = "$2" ]; }
+
+# --- detect ------------------------------------------------------------------
+if sig_ok scenes.sig "$SCENES_SIG" && [ -s scenes.tsv ]; then
+  echo "reusing scenes.tsv ($(wc -l <scenes.tsv) scenes)"
+else
+  # PySceneDetect needs the PyAV backend: OpenCV's bundled ffmpeg has no AV1
+  # decoder, and YouTube serves AV1 for most modern uploads. Without it every
+  # read returns zero frames - and reports success, so it fails silently.
+  if [ ! -x .venv/bin/python ]; then
+    python -m venv .venv
+    ./.venv/bin/pip -q install --upgrade pip
+    ./.venv/bin/pip -q install scenedetect av
+  fi
+
+  # proxy: cheap stream, only used to find the cuts. Deleted once the cuts are
+  # found, so it is only ever fetched on a run that has to detect.
+  # -N 16 fetches DASH fragments in parallel: measured 2.2x on this connection,
+  # byte-identical output. Note it has no effect when -s is in play, since
+  # --download-sections routes the fetch through ffmpeg, which pulls serially.
+  [ -f proxy.mp4 ] || yt-dlp --no-warnings -N 16 "${SECT[@]}" \
+    -f "bv*[height<=360]" --remux-video mp4 -o proxy.mp4 "$URL"
+
+  # Adaptive beats a fixed threshold here: a slow zoom is continuous motion, and
+  # a fixed threshold either splits mid-image or misses real cuts. min_scene_len
+  # suppresses the split a fast zoom would otherwise trigger.
+  ./.venv/bin/python - "$MINLEN" <<'PY'
+import sys
+from scenedetect import open_video, SceneManager
+from scenedetect.detectors import AdaptiveDetector
+
+minlen = float(sys.argv[1])
+video = open_video("proxy.mp4", backend="pyav")
+fps = video.frame_rate
+sm = SceneManager()
+sm.add_detector(AdaptiveDetector(min_scene_len=int(fps * minlen)))
+sm.detect_scenes(video, show_progress=True)
+
+scenes = sm.get_scene_list()
+if not scenes:                      # single unbroken shot
+    scenes = [(video.base_timecode, video.duration)]
+
+with open("scenes.tsv", "w") as f:
+    for i, (a, b) in enumerate(scenes):
+        f.write(f"{i:03d}\t{a.get_seconds():.3f}\t{b.get_seconds():.3f}\n")
+
+d = sorted(b.get_seconds() - a.get_seconds() for a, b in scenes)
+print(f"\n{len(d)} scenes   shortest {d[0]:.1f}s   median {d[len(d)//2]:.1f}s   longest {d[-1]:.1f}s")
+PY
+
+  printf '%s\n' "$SCENES_SIG" >scenes.sig
+  rm -f proxy.mp4
+fi
+
+# --- master: the stream frames actually come from ---------------------------
+if ! { sig_ok master.sig "$MASTER_SIG" && [ -f master.mp4 ]; }; then
+  # yt-dlp skips a download whose target already exists, so a master left from
+  # a different -r/-s must be cleared, not just re-fetched over.
+  rm -f master.sig master.mp4
+  yt-dlp --no-warnings -N 16 "${SECT[@]}" \
+    -f "bv*[height<=$HEIGHT]" --remux-video mp4 -o master.mp4 "$URL"
+  printf '%s\n' "$MASTER_SIG" >master.sig
+fi
+
+# --- extract ----------------------------------------------------------------
+# Cuts are hard, so OFFSET past the boundary is clean. A Ken Burns zoom is
+# almost always inward, making the opening frame the widest view of the image;
+# -l flips this for videos that zoom out.
+if [ "$LAST" = 1 ]; then
+  awk -F'\t' -v o="$OFFSET" '{printf "%s %.3f\n", $1, $3 - o - 0.15}' scenes.tsv >jobs.txt
+else
+  awk -F'\t' -v o="$OFFSET" '{printf "%s %.3f\n", $1, $2 + o}' scenes.tsv >jobs.txt
+fi
+
+# Each still is written to a .part first and renamed on success, so a run killed
+# mid-grab leaves no truncated png that the next run would mistake for done.
+xargs -P "$(nproc)" -n 2 sh -c '
+  s=${2%.*}
+  ts=$(printf "%02d-%02d-%02d" $((s/3600)) $((s%3600/60)) $((s%60)))
+  out="images/$1_$ts.png"
+  [ -f "$out" ] && exit 0
+  ffmpeg -hide_banner -v error -ss "$2" -i master.mp4 -frames:v 1 -f image2 -y "$out.part" &&
+    mv "$out.part" "$out"
+' _ <jobs.txt
+
+rm -f jobs.txt
+
+N=$(find images -name '*.png' | wc -l)
+echo
+echo "$N stills -> $PWD/images  ($(du -sh images | cut -f1))"
+echo "master.mp4 kept ($(du -h master.mp4 | cut -f1)); rm it when done"
