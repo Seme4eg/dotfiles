@@ -209,6 +209,12 @@ hl.bind(mainMod .. " + CTRL + O", hl.dsp.focus({ last = true }))
 hl.bind(mainMod .. " + SHIFT + CTRL + code:49",
   hl.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = -1 }))
 
+-- NOTE: my borked arrow keys hack
+hl.bind("ALT + SHIFT + H", hl.dsp.send_shortcut({ mods = "", key = "left" }), { repeating = true })
+hl.bind("ALT + SHIFT + J", hl.dsp.send_shortcut({ mods = "", key = "down" }), { repeating = true })
+hl.bind("ALT + SHIFT + K", hl.dsp.send_shortcut({ mods = "", key = "up" }), { repeating = true })
+hl.bind("ALT + SHIFT + L", hl.dsp.send_shortcut({ mods = "", key = "right" }), { repeating = true })
+
 hl.bind(mainMod .. " + CTRL + mouse:272", hl.dsp.window.drag())
 hl.bind(mainMod .. " + ALT + mouse:272", hl.dsp.window.resize())
 
