@@ -4,6 +4,7 @@
 
 require("env")
 require("funcs")
+require("macro")
 require("watchers")
 
 -- error handling for first startup when that file isn't generated yet
