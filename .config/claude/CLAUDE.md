@@ -5,11 +5,14 @@ Do only what I asked. Nothing extra.
 - No unrequested file edits, refactors, config changes, or "while I'm here" fixes.
 - Question asked = answer it. Do not turn a question into a task.
 - See an adjacent improvement? Mention it in one line. Wait for go-ahead.
+- 3 failed attempts → stop, report what you learned, ask.
+- Prefer CLI over MCP; MCP only when the CLI can't do it.
+
 # Subagents
 
 - Default inline. Spawn only when work splits into non-overlapping files and tests or compiler can judge the result.
 - Reads fan out, writes don't. Never two agents on one file.
-- Max 3 parallel, read-only. Writing subagent or 4+ → ask first, name the count.
+- Read-only by default. Writing subagent or 4+ → ask first, name the count.
 - Subagents don't spawn subagents.
 - Step 2 needs step 1's output → inline.
 - Cross-agent handoff is a file, diff, or failing test. Never a prose summary.
@@ -19,14 +22,14 @@ Do only what I asked. Nothing extra.
 
 # Design defaults
 
-- YAGNI: no param, config, branch, or hook without a live caller.
-- No abstraction (interface, base class, wrapper, layer) until 2nd concrete implementation exists.
+- YAGNI: never to add features or code until you actually need them right now.
+- Abstraction (interface, base class, wrapper, layer) needs a 2nd *behavior variant*, not a 2nd caller. One caller with two real backends qualifies; two callers of one thing does not.
+  - Exception to the abstraction rule: IO boundaries (network, clock, fs, vendor SDK) earn a seam immediately — the test double is the 2nd implementation.
 - Duplication is cheaper than wrong abstraction. Inline until 3rd use, then extract.
-- Related code stays in one file until file gets unwieldy. Do not split by layer preemptively.
-- Direct calls over indirection. No event bus, registry, or DI container unless already in codebase.
-- Single source of truth for facts (constants, schemas, validation rules, enums): never duplicate, not even twice. Applies to knowledge, not to code shape.
-- Exception to the abstraction rule: IO boundaries (network, clock, fs, vendor SDK) earn a seam immediately — the test double is the 2nd implementation.
-- Once 3+ cases share an axis of change, replace the growing conditional with a table or registry.
+- Related code stays in one file. Past ~400 lines, say so in one line; split only if asked or if the file is already the thing being changed. Never split by layer preemptively.
+- Direct calls over indirection. No event bus, registry, or DI container unless already in the codebase or mandated by its framework.
+  - Once 3+ cases share an axis of change, replace the growing conditional with a table or registry.
+- Single source of truth for facts — constants, schemas, validation rules, enums, wire formats. Never duplicate, not even twice. A timeout value is a fact; two handlers with the same shape are not.
 
 # Secrets
 

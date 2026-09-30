@@ -4,27 +4,24 @@
       "Read(./.env)"
     ]
   },
+  "model": "claude-opus-5-5",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "\"/usr/bin/node\" \"/home/earthian/.config/claude/hooks/caveman-activate.js\"",
-            "timeout": 5,
-            "statusMessage": "Loading caveman mode..."
+            "command": "cat \"$HOME\"/.config/claude/plugins/cache/karpathy-skills/andrej-karpathy-skills/*/skills/karpathy-guidelines/SKILL.md 2>/dev/null || true"
           }
         ]
       }
     ],
-    "UserPromptSubmit": [
+    "Stop": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "\"/usr/bin/node\" \"/home/earthian/.config/claude/hooks/caveman-mode-tracker.js\"",
-            "timeout": 5,
-            "statusMessage": "Tracking caveman mode..."
+            "command": "say -e 'claude done'"
           }
         ]
       }
@@ -35,8 +32,10 @@
     "command": "bash \"/home/earthian/.config/claude/hooks/caveman-statusline.sh\""
   },
   "enabledPlugins": {
+    "caveman@caveman": true,
+    "andrej-karpathy-skills@karpathy-skills": true,
     "gopls-lsp@claude-plugins-official": true,
-    "caveman@caveman": true
+    "lua-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -44,9 +43,20 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
+    },
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
     }
   },
-  "theme": "dark",
-  "skipAutoPermissionPrompt": true,
-  "model": "opus"
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark"
 }

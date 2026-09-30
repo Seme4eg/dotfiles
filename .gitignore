@@ -64,5 +64,10 @@
 /.config/Element/
 /.config/claude/*
 !/.config/claude/settings.json
+!/.config/claude/CLAUDE.md
+!/.config/claude/agents
+!/.config/claude/docs
+!/.config/claude/rules
+!/.config/claude/skill
 /.local/bin/claude
 /.config/Proxy Studios/
