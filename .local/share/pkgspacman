@@ -100,7 +100,6 @@ pnpm
 podman
 poppler-glib
 pre-commit
-python-pywal
 qrencode
 qutebrowser
 reflector
