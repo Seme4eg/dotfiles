@@ -12,8 +12,10 @@ sleep 2;
 hyprctl dispatch 'hl.dsp.focus({window = "class:org.qutebrowser.qutebrowser"})'
 ]]))
 -- bind = SUPERSHIFT, V, exec, [workspace 2; fullscreen] say -e "Starting $(wl-paste) in mpv..."; mpv "$(wl-paste)" || say -e 'Not valid url?'
-hl.bind(mainMod .. " + SHIFT + V",
-  hl.dsp.exec_cmd("pkill vnc_start || xdg-terminal-exec vnc_start", { workspace = "5 silent" }))
+hl.bind(
+  mainMod .. " + SHIFT + V",
+  hl.dsp.exec_cmd("pkill vnc_start || xdg-terminal-exec vnc_start", { workspace = "5 silent" })
+)
 
 -- script to prevent accidentially closing games trying to switch to workspace 1
 hl.bind(mainMod .. " + Q", function()
@@ -111,6 +113,7 @@ hl.bind(mainMod .. " + 8", yt_chapter)
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd("ytdcur"))
 
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("footclient -D $HOME/temp claude"))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("footclient -D $HOME/Documents/00-travel/llm claude"))
 
 -- --- Windows binds ---
 
