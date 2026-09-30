@@ -156,6 +156,7 @@ wl-clipboard
 wlsunset
 wtype
 xdg-desktop-portal-hyprland
+xdg-terminal-exec
 xorg-xhost
 ydotool
 yt-dlp
