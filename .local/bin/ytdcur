@@ -1,11 +1,19 @@
 #!/usr/bin/sh
 
-url="${1:-$(wl-paste 2>/dev/null)}"
+chapters=""
+url=""
+for arg in "$@"; do
+  case "$arg" in
+    --chapters) chapters="--split-chapters" ;;
+    *) url="$arg" ;;
+  esac
+done
+url="${url:-$(wl-paste 2>/dev/null)}"
 
 case "$url" in
   https://www.youtube.com/watch\?v=*) ;;
   *)
-    say -e "not yt link" >&2
+    say -e "not yt link '$url'" >&2
     exit 1
     ;;
 esac
@@ -15,7 +23,13 @@ url="${url%\&list*}"
 say -e "Downloading $url"
 
 # picks first non-empty field first of artist/creator/uploader
-out="${HOME}/Music/__dw/%(artist,creator,uploader)s - %(title)s.%(ext)s"
+name="%(artist,creator,uploader)s - %(title)s"
+dir="${HOME}/Music/__dw"
+# chapters get their own folder so split tracks don't flood __dw
+[ -n "$chapters" ] && dir="$dir/$name"
+out="$dir/$name.%(ext)s"
+# --split-chapters uses its own template; without this it lands in cwd
+outchap="$dir/%(section_number)03d %(section_title)s.%(ext)s"
 
 # yt-dlp INNERTUBE_CLIENTS keys - no CLI flag lists them, keep in sync by hand
 CLIENTS="web web_safari web_embedded web_music web_creator
@@ -49,7 +63,8 @@ dl() {
     yt-dlp -x \
       --extractor-args "youtube:player_client=$1" \
       --retries 3 --fragment-retries 3 \
-      -o "$out" "$url"
+      $chapters \
+      -o "$out" -o "chapter:$outchap" "$url"
     echo "$?" >"$rcf"
   } 2>&1 | tee "$logf"
   [ "$(cat "$rcf")" -eq 0 ] || return 1
