@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+pactl load-module module-loopback latency_msec=100
+sleep 0.2
+read -p "Press Enter to continue..."
+pactl unload-module module-loopback
