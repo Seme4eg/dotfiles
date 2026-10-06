@@ -29,7 +29,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash \"/home/earthian/.config/claude/hooks/caveman-statusline.sh\""
+    "command": "bash \"/home/earthian/.config/claude/hooks/statusline.sh\""
   },
   "enabledPlugins": {
     "caveman@caveman": true,

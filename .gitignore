@@ -67,6 +67,9 @@
 !/.config/claude/CLAUDE.md
 !/.config/claude/agents
 !/.config/claude/docs
+!/.config/claude/hooks
+/.config/claude/hooks/*
+!/.config/claude/hooks/statusline.sh
 !/.config/claude/rules
 !/.config/claude/skill
 /.local/bin/claude
