@@ -39,6 +39,7 @@ gameconqueror
 git
 git-crypt
 gnome-bluetooth-3.0
+gnome-keyring
 go
 gofumpt
 gpu-screen-recorder
