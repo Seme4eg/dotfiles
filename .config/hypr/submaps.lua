@@ -44,6 +44,7 @@ hl.define_submap("rofi", "reset", function()
   hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("kill rofi || rofi-kaomoji"))
   hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("kill rofi || rofi-bookmarks"))
   hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("kill rofi || rofi-pass"))
+  hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("kill rofi || rofi-profile"))
   hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("kill rofi || rofi-network"))
   hl.bind(
     mainMod .. " + Y",
