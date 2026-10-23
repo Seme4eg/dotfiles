@@ -92,8 +92,14 @@ For now don't need them but maybe some day idk
 Steam command + mangohud overlay. Yes, pass already scaled height & width.
 
 DXVK_CONFIG="d3d11.cachedDynamicResources = a" VK_LOADER_LAYERS_ENABLE=VK_LAYER_MANGOHUD_overlay_x86_64 gamescope -W 1800 -H 1200 -r 120 -e -- %command%
-
 ** Todos
+*** CPU throttling after sleep
+What I haven't proven: that the 8 W was set before suspend. To confirm, run this the next time you're on battery below 20%. It should show about 8 W:
+cat /sys/class/powercap/intel-rapl-mmio:0/constraint_0_power_limit_uw
+Then sleep, plug the charger in while asleep, and wake. If it's still about 8 W, that confirms it.
+
+Quick fix when it happens again: unplug the charger for about 5 seconds and plug it back in.
+
 *** migrate to limine & btrfs (see omarchy)
 see for '.*limine.*' files and 'limine' entries in omarchy repo
 *** IDEA maybe make some 5/6th workspace a scratchpad and fill it with useful widgets?

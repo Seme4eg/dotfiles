@@ -138,6 +138,7 @@ hl.config({
   },
   binds = {
     workspace_back_and_forth = true,     -- switch to current workspace to switch to previous one
+    -- is default now
     workspace_center_on = 1,             -- center cursor on last window when switching to workspace
     focus_preferred_method = 1,          -- find focus by longer shared edges
     movefocus_cycles_fullscreen = false, -- <- is default on wiki, but seems that not
