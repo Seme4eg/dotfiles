@@ -1,0 +1,1 @@
+symlink it to ~/git/ dir on new install, claude will read it
