@@ -1,4 +1,4 @@
 #!/bin/bash
-f=/sys/firmware/acpi/platform_profile
-p=$(tr ' ' '\n' <${f}_choices | rofi -dmenu -p profile -select "$(cat $f)") &&
-  echo "$p" | pkexec tee $f >/dev/null
+cur=$(sed 's/low-power/power-saver/' /sys/firmware/acpi/platform_profile)
+p=$(printf 'performance\nbalanced\npower-saver\n' | rofi -dmenu -p profile -select "$cur") &&
+  pkexec tlp "$p"
