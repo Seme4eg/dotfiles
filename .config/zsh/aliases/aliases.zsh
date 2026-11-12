@@ -20,6 +20,8 @@ alias ppmcalc="~/Documents/02-other/beverages/ppmcalc"
 # mount torrent folder on homelab
 alias mttorrent="sudo mount -t nfs -o vers=4 192.168.50.51:/home/earthian/data/torrents $XDG_DATA_HOME/torrents"
 
+alias fixlagaftersleep="echo 42000000 | sudo tee /sys/class/powercap/intel-rapl-mmio:0/constraint_0_power_limit_uw"
+
 # bind = SUPERCTRL, W, exec, pkill ydotool || ydotoold & { sleep 0.4; ydotool click -r 3000 0xC0; }
 # alias clicker="ydotoold &; sleep 0.4; ydotool mousemove --absolute 300 250; ydotool click -r 3000 0xC0"
 # clicker() { ydotoold &; sleep 0.4; ydotool click -r 3000 0xC0; }
