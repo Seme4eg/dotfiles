@@ -70,7 +70,7 @@
 !/.config/claude/hooks
 /.config/claude/hooks/*
 !/.config/claude/hooks/statusline.sh
-!/.config/claude/rules
+!/.config/claude/coding
 !/.config/claude/skill
 /.local/bin/claude
 /.config/Proxy Studios/
