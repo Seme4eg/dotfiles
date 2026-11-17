@@ -45,6 +45,9 @@
       margin-right: 8px;
       margin-top: 1px;
     }
+    .dnd {
+      color: $_accent;
+    }
     .fg {
       min-width: 31px;
       font-size: 1em;
@@ -264,7 +267,8 @@ circularprogress {
         .icon {
           margin-top: 2px;
           font-size: 0.9em;
-          text-shadow: 0 0 5px color.scale($foreground, $lightness: -35%),
+          text-shadow:
+            0 0 5px color.scale($foreground, $lightness: -35%),
             0 0 5px color.scale($foreground, $lightness: -45%),
             0 0 10px color.scale($foreground, $lightness: -45%);
         }

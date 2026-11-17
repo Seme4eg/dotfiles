@@ -125,7 +125,7 @@ end)
 hl.bind(mainMod .. " + N", hl.dsp.submap("notifs"))
 hl.define_submap("notifs", "reset", function()
   hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
-  hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("swaync-client --hide-latest"))
+  hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("swaync-client -d")) -- toggle dnd
   -- closes latest only if those are still 'floating', not in control-center
   -- bind = SUPER, C, exec, swaync-client --close-latest
   hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("swaync-client -C"))

@@ -94,7 +94,7 @@ function UpdatesAndNotifs() {
   let notif_count = Variable(0, {
     listen: [
       ["bash", "-c", "swaync-client -s"], // subscribe to swaync events
-      (out) => +JSON.parse(out).count,
+      (out) => JSON.parse(out).dnd == true && -1 || +JSON.parse(out).count,
     ],
   });
 
@@ -106,7 +106,7 @@ function UpdatesAndNotifs() {
   });
 
   let showSpacing = Utils.derive([notif_count, failedServicesCount], (notif_count, failedServicesCount) => {
-    return notif_count > 0 || failedServicesCount > 0
+    return notif_count < 0 || notif_count > 0 || failedServicesCount > 0
   })
 
   return Widget.Box({
@@ -157,7 +157,7 @@ export function FailedServicesCount(count) {
 //  notif daemon, which will break swaync
 export function NotificationsCount(notif_count) {
   return Widget.Revealer({
-    revealChild: notif_count.bind().as(c => c > 0),
+    revealChild: notif_count.bind().as(c => c > 0 || c == -1),
     transition: "slide_right",
     transitionDuration: 350,
     child: Widget.Box({
@@ -166,10 +166,14 @@ export function NotificationsCount(notif_count) {
         className: "notification_counter",
         child: Widget.Label({
           className: "fg",
-          label: notif_count.bind().as(String)
+          label: notif_count.bind().as(c => c == -1 && " " || String(c))
         }),
         overlays: [
-          Widget.Label({ className: "bg", vpack: "center", label: "󱥂", }),
+          Widget.Label({
+            className: notif_count.bind().as(c => c < 0 && "bg dnd" || "bg"),
+            vpack: "center",
+            label: notif_count.bind().as(c => c == -1 && "󱙎" || "󱥂"),
+          }),
         ],
       }),
     })
