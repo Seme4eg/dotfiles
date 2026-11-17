@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+# gpgconf() { sudo gpgconf --list-options gpg-agent; }   # list all config options
+gpgreload() { echo RELOADAGENT | gpg-connect-agent; } # forget all cached passwords
+
+# nuklear option:
+# 1. Kills keyboxd, gpg-agent, scdaemon and dirmngr; they restart on the next gpg call.
+# 2. Closes any stuck passphrase prompts.
+# 3. Deletes the keyboxd lock file.
+# 4. Restarts gnome-keyring-daemon.
+# 5. Unlocks the login keyring. An unlock dialog appears every run because of the restart; enter your login password.
+# 6. Test-decrypts the first pass entry to /dev/null.
+pwfix() { # restarts the whole password stack in order and prints ok/not ok;
+  gpgconf --kill all
+  pkill -x pinentry-gnome3
+  rm -f "${GNUPGHOME:-$HOME/.gnupg}/public-keys.d/pubring.db.lock"
+  systemctl --user restart gnome-keyring-daemon.service
+  python3 -I -c "import gi; gi.require_version('Secret','1'); from gi.repository import Secret as S
+s=S.Service.get_sync(S.ServiceFlags.LOAD_COLLECTIONS, None)
+s.unlock_sync([c for c in s.get_collections() if c.get_object_path().endswith('/login')], None)"
+  timeout 60 gpg -qd --batch "$(find "${PASSWORD_STORE_DIR:-$HOME/.local/share/password-store}" -name '*.gpg' -print -quit)" &>/dev/null && echo ok || echo "not ok"
+}

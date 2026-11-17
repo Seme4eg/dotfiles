@@ -9,9 +9,6 @@ alias jq="gojq"
 alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' https://0x0.st" # < file or use < <(commmand) like wl-paste
 
-alias gpgconf="sudo gpgconf --list-options gpg-agent"  # list all config options
-alias gpgreload="echo RELOADAGENT | gpg-connect-agent" # forget all cached passwords
-
 alias randstr="openssl rand -hex" # and pass length
 
 alias cheatengine="xhost +local: &; gameconqueror" # after do 'xhost -local:'
