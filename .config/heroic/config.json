@@ -17,6 +17,7 @@
     "libraryTopSection": "disabled",
     "defaultSteamPath": "/home/earthian/.steam/steam",
     "defaultWinePrefix": "/home/earthian/.local/share/Games/Heroic/Prefixes/default",
+    "defaultWinePrefixDir": "/home/earthian/.local/share/Games/Heroic/Prefixes/default",
     "hideChangelogsOnStartup": false,
     "language": "en",
     "maxWorkers": 0,
@@ -32,8 +33,6 @@
         "value": "d3d11.cachedDynamicResources = a"
       },
       {
-        "key": "LD_PRELOAD",
-        "value": "\"\""
       }
     ],
     "wrapperOptions": [],
@@ -53,8 +52,11 @@
     "enableHDR": false,
     "enableWoW64": true,
     "eacRuntime": false,
+    "gamepadRepeatDelay": 50,
+    "gamepadInitialRepeatDelay": 300,
     "battlEyeRuntime": false,
     "framelessWindow": false,
+    "hideWindowOnProtocolLaunch": false,
     "beforeLaunchScriptPath": "",
     "afterLaunchScriptPath": "",
     "disableUMU": false,
@@ -63,6 +65,8 @@
     "advertiseAvxForRosetta": false,
     "noTrayIcon": false,
     "showValveProton": true,
+    "steamGridDbApiKey": "",
+    "disableGOGPresence": false,
     "userInfo": {
       "name": "earthian"
     },
