@@ -3,10 +3,14 @@
 - _Controller issues:_
   - disconnects right after connecting: via ~bluetoothctl~ first PAIR device (not
     connect) and then TRUST it
-  - doesn't work? - PROTON_PREFER_SDL=1
-    - if still doesn't work - close heroic and launch this game from steam WITH
-      steam input. If heroic is opened - won't work. NO need to change proton
-      version from GE to steam one,
+  - doesn't work? - ~PROTON_PREFER_SDL=1~
+  - still doesn't work ?
+    - _Delete_ PROTON_PREFER_SDL, PROTON_DISABLE_HIDRAW and PROTON_SONY_AUTO_XINPUT.
+    - _Add_ PROTON_SONY_HIDRAW_XINPUT=1.
+  - if still doesn't work - close heroic and launch this game from steam WITH
+    steam input. If heroic is opened - won't work. NO need to change proton
+    version from GE to steam one,
+- When game hangs with status 'Playing' and there is some python script downloading something - its steam runtime updating in background, if want to skip - add env ~UMU_RUNTIME_UPDATE=0~ to the game
 - Adding _friends_:
   - In settings -> advanced -> EOS Overlay section -> install
   - go to game page from your library, in burger menu find option 'Enable EOS
