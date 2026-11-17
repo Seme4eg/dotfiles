@@ -17,7 +17,7 @@
 
 .notification-row:focus,
 .notification-row:hover {
-  background: alpha(@color6, 0.2);
+  background: transparent;
 }
 
 .notification-group {
