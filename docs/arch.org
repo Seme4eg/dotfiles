@@ -104,9 +104,12 @@ changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/
 
 *** using android camera on lenovo laptop (droidcam)
 - install droidcam on android (exists only on playstore)
-- install droidcam from aur,
-- set resolution to better one in =/etc/modprobe.d/droidcam.conf=
-  - =options v4l2loopback_dc width=1920 height=1080=
+- install droidcam from aur, but not =v4l2loopback-dc-dkms= (broken on kernel 7.2), =v4l2loopback-dkms= instead
+- in =/etc/modprobe.d/v4l2loopback.conf=
+  - =alias v4l2loopback_dc v4l2loopback=
+  - =options v4l2loopback video_nr=0 exclusive_caps=1 card_label=DroidCam=
+- set resolution to better one in =~/.config/droidcam=
+  - =size=1920x1080=
 - then =sudo modprobe v4l2loopback-dc=
 - all should work
 
