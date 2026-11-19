@@ -8,7 +8,7 @@ EOF
 sudo mkdir -p /etc/systemd/system/user@.service.d
 
 cat <<EOF | sudo tee /etc/systemd/system/user@.service.d/faster-shutdown.conf
-[Manager]
+[Service]
 TimeoutStopSec=5s
 EOF
 
