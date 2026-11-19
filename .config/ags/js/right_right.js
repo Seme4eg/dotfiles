@@ -34,7 +34,7 @@ function CPU() {
   const cpuTemp = Variable("40", {
     poll: [
       2000,
-      "sensors -j",
+      "sensors -j coretemp-isa-0000",
       (out) => {
         let temp = Number(
           JSON.parse(out)["coretemp-isa-0000"]["Package id 0"].temp1_input
