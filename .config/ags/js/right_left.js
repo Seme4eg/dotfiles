@@ -147,7 +147,7 @@ export function FailedServicesCount(count) {
     child: Widget.Label({
       className: "failed_service_counter",
       css: count.bind().as(c => c > 0 ? "margin-left: " + (spacing - 5) + "px;" : 0),
-      hpack: "right",
+      hpack: "end",
       label: "",
     }),
   });

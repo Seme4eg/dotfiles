@@ -40,7 +40,7 @@ function Media() {
       let active = mpris.players.find(p => p.play_back_status === "Playing") ||
         mpris.players.find(p => p.play_back_status === "Paused")
 
-      return active.track_title
+      return active?.track_title ?? ""
     }
   )
 
@@ -52,7 +52,7 @@ function Media() {
       let active = mpris.players.find(p => p.play_back_status === "Playing") ||
         mpris.players.find(p => p.play_back_status === "Paused")
 
-      return "by " + active.track_artists?.join(", ")
+      return "by " + active?.track_artists?.join(", ")
     }
   )
   const icon = Utils.watch(
@@ -75,7 +75,7 @@ function Media() {
       let active = mpris.players.find(p => p.play_back_status === "Playing") ||
         mpris.players.find(p => p.play_back_status === "Paused")
 
-      return !!active.track_artists?.length &&
+      return !!active?.track_artists?.length &&
         active.track_artists?.join("").length > 1
     }
   )
@@ -93,7 +93,7 @@ function Media() {
       label: trackTitle,
       visible,
       maxWidthChars: 20,
-      truncate: trackTitle.as((v) => v.length > 20 ? "end" : "none"),
+      truncate: trackTitle.as((v) => v?.length > 20 ? "end" : "none"),
     })
   }
 
