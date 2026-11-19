@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+
+# Rank Arch mirrors by speed measured from the current location, then install
+# the result. The old mirrorlist is kept if ranking fails (e.g. offline).
+tmp=$(mktemp) || exit 1
+trap 'rm -f "$tmp"' EXIT
+rate-mirrors --save="$tmp" arch --max-delay=21600 &&
+  sudo install -m644 "$tmp" /etc/pacman.d/mirrorlist

@@ -103,7 +103,7 @@ poppler-glib
 pre-commit
 qrencode
 qutebrowser
-reflector
+rate-mirrors
 ripgrep
 rofi
 samba

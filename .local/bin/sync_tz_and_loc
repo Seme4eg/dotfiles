@@ -43,6 +43,6 @@ waitnetwork() {
 
 # always update coordinates even tho its just gonna yield closest ISP location
 waitnetwork && set_coordinates && set_timezone &&
-  systemctl --user restart wlsunset.service && sudo systemctl start reflector
+  systemctl --user restart wlsunset.service && { update_mirrors & }
 
 exit 0
