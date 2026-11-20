@@ -10,5 +10,7 @@ sudo sed -i 's/^#\(UserspaceHID\)=.*/\1=true/' /etc/bluetooth/input.conf
 sudo sed -i 's/^#\(ClassicBondedOnly\)=.*/\1=false/' /etc/bluetooth/input.conf
 # for ags bluetooth service battery percentage
 sudo sed -i 's/^#\(Experimental\) = .*/\1 = true/' /etc/bluetooth/main.conf
+# LE Audio (BAP/LC3): kernel ISO socket
+sudo sed -i 's/^#\(KernelExperimental\) = .*/\1 = 6fbaf188-05e0-496a-9885-d6ddfdb4e03e/' /etc/bluetooth/main.conf
 
 sudo systemctl enable --now bluetooth.service
