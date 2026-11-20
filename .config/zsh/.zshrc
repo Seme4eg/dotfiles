@@ -86,7 +86,7 @@ for file in "$ZDOTDIR/"modules/*; do source "$file"; done
 source "${ZDOTDIR}"/ffmpeg # ffmpeg postprocessing functions for my audios
 
 # i have cat aliased to 'bat' so i need to call cat directly
-(/usr/bin/cat ~/.cache/wal/sequences &) # pywal
+(/usr/bin/sed 's/\x1b]4;256;#[0-9a-fA-F]*\x1b\\//' ~/.cache/wal/sequences &) # pywal; foot rejects index 256
 
 eval "$(direnv hook zsh)"
 
