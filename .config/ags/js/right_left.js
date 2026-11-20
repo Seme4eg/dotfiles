@@ -1,4 +1,20 @@
+import Gtk from "gi://Gtk?version=3.0";
+
 const systemtray = await Service.import("systemtray");
+
+// libdbusmenu-gtk needs an accel group for menu items with shortcuts (Heroic),
+// else GTK asserts. "added" fires right after the menu is created, before its
+// layout arrives; widgets are built too late for that.
+const setAccelGroup = (item) => {
+  const client = item?.menu?.get_client();
+  if (client && !client.get_accel_group())
+    client.set_accel_group(new Gtk.AccelGroup());
+};
+systemtray.items.forEach(setAccelGroup);
+systemtray.connect("added", (_, busName) =>
+  setAccelGroup(systemtray.getItem(busName)),
+);
+
 const hyprland = await Service.import("hyprland");
 
 // global spacing for this whole block
