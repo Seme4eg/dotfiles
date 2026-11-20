@@ -14,5 +14,7 @@
   "widgets": [
     "notifications"
   ],
-  "widget-config": {}
+  "widget-config": {
+    "notifications": {}
+  }
 }
