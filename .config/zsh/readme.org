@@ -147,5 +147,4 @@ and will only be used if such an implementation is detected.
 - ~...~ (cd ../../) -- Changes current directory two levels higher.
 
 ** Todos
-*** this guys' config?
-https://github.com/xero/dotfiles/tree/master/zsh
+- https://github.com/xero/dotfiles/tree/master/zsh
