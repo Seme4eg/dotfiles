@@ -8,7 +8,6 @@ wpg-install.sh -G
 # apply theme
 nwg-look -a
 
-# TODO: line to install flatpak packages from my pkgsflatpak file
 # Fix for theming in flatpak applications:
 # source: https://web.archive.org/web/20230106121332/https://itsfoss.com/flatpak-app-apply-theme/
 sudo flatpak override --filesystem=$HOME/.local/share/themes

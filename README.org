@@ -103,6 +103,6 @@ Quick fix when it happens again: unplug the charger for about 5 seconds and plug
 G1's 7600M XT-class card sits behind a 40 Gb/s Thunderbolt tunnel (about 2.5–3.5 GB/s of PCIe), so the link, not the GPU, limits most games. That's why the Turbo switch gives only 1–2% more fps. Bigger wins: use the OCuLink port (about 2× the bandwidth), or raise resolution and settings so the load shifts to the GPU. LACT's "Enable overclocking" only sets the overdrive bit (0x4000) in amdgpu.ppfeaturemask through /etc/modprobe.d and needs a reboot. On its own it adds 0% and taints the kernel. With tuning, expect about 5–12% (power cap 100 to 130 W already works without it; an undervolt is the safest gain). To undo: delete the modprobe file, run mkinitcpio -P, reboot.
 
 ** Todos
-*** migrate to limine & btrfs (see omarchy)
+*** migrate to btrfs (see omarchy)
 see for '.*limine.*' files and 'limine' entries in omarchy repo
 *** IDEA maybe make some 5/6th workspace a scratchpad and fill it with useful widgets?
