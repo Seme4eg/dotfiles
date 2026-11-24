@@ -17,10 +17,3 @@ makepkg --install --clean --syncdeps --rmdeps
   enabled in bluetooth config), /network-manager/, /libdbusmenu-gtk3/.
 - How to *collapse*, *reveal*, *expand* and such - help is [[https://github.com/druskus20/eugh][here]], yes, example is for
   eww, but ez to rewrite on ags
-
-** Todos
-*** TODO listen on 'monitor-add/remove' signals on hyprland service
-.. and change the monitor on which the bar appears.
-
-Basically same functionality as eww-window-manager service and eww-manager
-script were doing.

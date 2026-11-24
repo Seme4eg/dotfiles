@@ -142,7 +142,6 @@ function Sink() {
     overlays: [
       Widget.Label({
         className: "icon",
-        // TODO:
         // if [[ "$(node_name)" == *"EDIFIER_S880DB"* ]]; then
         //   is_muted "SINK" && echo 󰓄 || echo 󰓃
         // else is_muted "SINK" && echo 󰟎 || echo
