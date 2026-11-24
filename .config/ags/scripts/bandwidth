@@ -30,4 +30,5 @@ rxcurrent="$(/usr/bin/cat /sys/class/net/"$current_iface"/statistics/rx_bytes)"
 txcurrent="$(/usr/bin/cat /sys/class/net/"$current_iface"/statistics/tx_bytes)"
 
 echo "$(((rxcurrent - ${prevdata%% *}) / 1024)) $(((txcurrent - ${prevdata##* }) / 1024))"
-echo "$rxcurrent $txcurrent" >"$logfile"
+# atomic replace: overlapping polls (under load) must never read a truncated file
+echo "$rxcurrent $txcurrent" >"$logfile.$$" && mv -f "$logfile.$$" "$logfile"
