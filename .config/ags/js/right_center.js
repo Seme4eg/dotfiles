@@ -75,11 +75,11 @@ function IfConnected() {
       child: Widget.ProgressBar({
         widthRequest: 38,
         vpack: "center",
-        value: network.bind("primary").as((type) => {
-          if (type === "wifi") {
-            return network[type].strength / 100;
-          } else return 1;
-        }),
+        // strength is -1 while wifi has no access point (reconnect after resume)
+        value: Utils.merge(
+          [network.bind("primary"), network.wifi.bind("strength")],
+          (type, strength) => (type === "wifi" ? Math.max(strength, 0) / 100 : 1),
+        ),
       }),
       overlays: [
         Widget.Label({
