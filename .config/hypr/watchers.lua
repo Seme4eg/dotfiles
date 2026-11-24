@@ -2,7 +2,6 @@
 hl.on("hyprland.start", function()
   hl.exec_cmd(
     "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_CURRENT_DESKTOP")
-  hl.exec_cmd("systemctl --user start hyprland-session.target")
   -- /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
   -- fix for logitech bolt receiver waking up system immediately after sleep, see arch wiki
   if os.getenv("AT_HOME") == "true" then
@@ -73,11 +72,3 @@ end
 
 restore_edp()
 hl.on("config.reloaded", restore_edp)
-
-hl.on("hyprland.shutdown", function()
-  os.execute("systemctl --user stop hyprland-session.target && sleep 0.1")
-  -- uses a blocking exec function and sleeps a bit to give things time to close
-  -- you might also want to kill troublesome/crashing non-systemd background
-  -- services here: os.execute("pkill wallpaperthing; systemctl --user stop
-  -- hyprland-session.target && sleep 0.1")
-end)
