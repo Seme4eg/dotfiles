@@ -232,17 +232,17 @@ toggle_ssid() { # $1 idx, $2 device (set on retry)
   fi
 
   say -t 2000 -e "Connecting to $ssid..."
-  # FIXME: password on nmcli argv (visible in /proc); acceptable for personal box
-  local -a cmd=(nmcli device wifi connect "$ssid" ifname "$dev")
-  [ "$pass" ] && cmd+=(password "$pass")
 
   # variable to save the connection command error, because often needed
   local error
   # if connection failed - prompt again and remove attempted connection from
   # saved ones (cuz it does save connection even if wrong pass was provided)
-  if ! error=$("${cmd[@]}" 2>&1 >/dev/null); then
+  # --ask: nmcli's secret agent reads the password from stdin, so it never
+  # lands on argv (/proc/*/cmdline)
+  if ! error=$(nmcli --ask device wifi connect "$ssid" ifname "$dev" <<<"$pass" 2>&1 >/dev/null); then
     nmcli connection delete id "$ssid" >/dev/null 2>&1
-    if [[ "$error" == *"activation failed"* ]]; then
+    # wrong pass: NM re-asks the agent, nmcli hits stdin EOF and exits 1 silently
+    if [ -z "$error" ] || [[ "$error" == *"activation failed"* ]]; then
       say -e Nope
       toggle_ssid "$1" "$dev"
     else
