@@ -145,7 +145,7 @@ end
 
 function lid_close()
   if only_laptop_active() and not file_exists(lid_ignore) then
-    hl.exec_cmd("systemctl suspend")
+    hl.exec_cmd("systemctl sleep")
   end
   -- external present -> stay awake, do nothing.
   -- window-move to external handled by monitor.added hook, not here.

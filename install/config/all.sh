@@ -36,5 +36,7 @@ source $DOTFILES_PATH/install/config/hardware/network.sh
 source $DOTFILES_PATH/install/config/hardware/power_key_and_lid.sh
 source $DOTFILES_PATH/install/config/hardware/usb-autosuspend.sh
 
-source $DOTFILES_PATH/install/config/hardware/lenovo.sh
+if [[ $(</sys/class/dmi/id/sys_vendor) == LENOVO ]]; then
+  for f in $DOTFILES_PATH/install/config/hardware/lenovo/*.sh; do source "$f"; done
+fi
 source $DOTFILES_PATH/install/config/hardware/amd.sh

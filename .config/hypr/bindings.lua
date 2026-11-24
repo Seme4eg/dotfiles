@@ -34,7 +34,7 @@ hl.bind(
   mainMod .. " + SHIFT + CTRL + U", hl.dsp.exec_cmd("pkill -USR1 hyprlock"),
   { locked = true }
 )
-hl.bind(mainMod .. " + CTRL + S", hl.dsp.exec_cmd("systemctl suspend"), { locked = true })
+hl.bind(mainMod .. " + CTRL + S", hl.dsp.exec_cmd("systemctl sleep"), { locked = true })
 
 -- --- Lid events ---
 
