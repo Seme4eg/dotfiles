@@ -1,0 +1,6 @@
+[Unit]
+Description=Remove trash items older than 7 days
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/trash-empty -f 7
