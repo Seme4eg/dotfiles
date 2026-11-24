@@ -120,6 +120,17 @@ ffboost() {
 #                 landscape), -2 keeps aspect with even size, never upscales
 # systemd-run ... CPUQuota - cap encode at 80% of all cores (quota is per core,
 #                            hence nproc * 80); nice 19 lets desktop apps go first
+# -y - overwrite existing output: a partial one left by Ctrl+C must be redone.
+#      With -n ffmpeg skips it yet exits 0, and the original got trashed.
+# Why not GPU (av1_vaapi on Intel Arc iGPU / AMD RX 7600, both work here):
+#   3-10x faster, but needs 50-70% bigger files for the same VMAF (16 s HDR
+#   clip: SVT p5 4.9 MB VMAF 96.4 vs AMD 8.25 MB VMAF 95.9). Hardware encoders
+#   are fixed-function blocks with a per-block time budget, so they search far
+#   fewer partitions/references/rate decisions than software; independent tests
+#   put SVT-AV1 ahead of every hardware AV1 encoder (arXiv 2511.18686,
+#   giannirosato.com/blog/post/nvenc-v-qsv). AMD output also decodes 1920x1082.
+#   Fine for streaming, wrong trade for an archive. Faster CPU option: -preset 8
+#   (~2.5x faster than p5, ~25% bigger files).
 vidcompress() {
   if [[ -z "$1" || ! -f "$1" ]]; then
     echo "usage: vidcompress <video-file>" >&2
@@ -131,7 +142,7 @@ vidcompress() {
   base=$(basename -- "$1")
   out="${dir}/${base%.*}.crf${crf}.mp4"
   systemd-run --user --scope -q -p CPUQuota=$(($(nproc) * 80))% nice -n 19 \
-    ffmpeg -nostdin -n -i "$1" \
+    ffmpeg -nostdin -y -i "$1" \
     -map_metadata 0 -fps_mode passthrough \
     -vf "scale='if(gte(iw,ih),-2,min(iw,1080))':'if(gte(iw,ih),min(ih,1080),-2)'" \
     -c:v libsvtav1 -preset 5 -crf "$crf" \
@@ -158,20 +169,25 @@ vidcompress() {
 # threshold (default: 13 Mb/s) — i.e. not yet compressed.
 # 13 Mb/s: above old x264 crf28 outputs (max 12.2), below phone originals
 # (Pixel 1080p HEVC ~19.8, Samsung 1080p H.264 ~17.6).
+# Own .crfNN outputs are skipped by name: high-motion AV1 1080p60 can
+# exceed 13 Mb/s. ffprobe runs on all cores. On a terminal: single updating
+# counter line instead of the list.
 vidfind_uncompressed() {
-  local dir="${1:-.}" threshold="${2:-13000000}" br
-  find "$dir" -type f -iname '*.mp4' -print0 |
-    while IFS= read -r -d '' f; do
+  local dir="${1:-.}" threshold="${2:-13000000}" tty
+  [[ -t 1 ]] && tty=1
+  find "$dir" -type f -iname '*.mp4' ! -iname '*.crf[0-9]*.mp4' -print0 |
+    xargs -0 -r -P "$(nproc)" -n 1 zsh -fc '
       br=$(ffprobe -v error -select_streams v:0 \
-        -show_entries stream=bit_rate -of default=nw=1:nk=1 "$f")
+        -show_entries stream=bit_rate -of default=nw=1:nk=1 "$1")
       # some containers lack per-stream bitrate -> fall back to overall
-      if ! [[ "$br" =~ ^[0-9]+$ ]]; then
-        br=$(ffprobe -v error -show_entries format=bit_rate \
-          -of default=nw=1:nk=1 "$f")
-        [[ "$br" =~ ^[0-9]+$ ]] || continue
-      fi
-      ((br > threshold)) && printf '%s\n' "$f"
-    done
+      [[ $br == <-> ]] || br=$(ffprobe -v error \
+        -show_entries format=bit_rate -of default=nw=1:nk=1 "$1")
+      [[ $br == <-> ]] && print -r -- "$br $1"' _ |
+    awk -v t="$threshold" -v tty="$tty" '
+      { n++; br = $1; sub(/^[0-9]+ /, "") }
+      br > t { m++; if (!tty) { print; fflush() } }
+      tty { printf "\rscanned %d, uncompressed %d", n, m > "/dev/stderr" }
+      END { if (tty) print "" > "/dev/stderr" }'
 }
 
 # Compress every mp4 under dir (default: .) whose video bitrate
