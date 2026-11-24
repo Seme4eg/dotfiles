@@ -4,7 +4,7 @@ hl.on("hyprland.start", function()
     "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_CURRENT_DESKTOP")
   hl.exec_cmd("systemctl --user start hyprland-session.target")
   -- /usr/libexec/xdg-desktop-portal-hyprland & # ain't needed with soystemd
-  -- fix for logitech bolt receiver waking up system immediately after suspend, see arch wiki
+  -- fix for logitech bolt receiver waking up system immediately after sleep, see arch wiki
   if os.getenv("AT_HOME") == "true" then
     hl.exec_cmd("solaar -w hide")
   end
