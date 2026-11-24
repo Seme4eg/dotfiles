@@ -5,3 +5,6 @@
 - Somewhere in security section of browser add your _certificates_ (authorities
   tab -> import ca.crt from secrets repo)
 - See your https://my.nextdns.io/ DoH. Insructions see in nextdns 'setup' tab
+- =~/.config/brave-origin-flags.conf= holds Brave launch flags (read by
+  =/usr/bin/brave-origin=). Enables =WebRtcPipeWireCamera= so the laptop camera
+  works via PipeWire, needs =pipewire-libcamera= package
