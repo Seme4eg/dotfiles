@@ -5,10 +5,11 @@
 sudo mkdir -p /etc/systemd/logind.conf.d
 sudo tee /etc/systemd/logind.conf.d/user.conf >/dev/null <<'EOF'
 [Login]
-HandlePowerKey=suspend
+HandlePowerKey=sleep
 HandleLidSwitch=ignore
 EOF
-sudo systemctl restart systemd-logind
+# reload, not restart: restart drops seat control from running Wayland sessions
+sudo systemctl reload systemd-logind
 
 # shut back down if turned on with lid closed and single monitor
 # happens a lot to me when laptop is in packed out backpack
@@ -21,7 +22,7 @@ n=$(cat /sys/class/drm/card*-*/status 2>/dev/null | grep -wc connected)
 [ "$n" -gt 1 ] && exit 0 # docked (external present) → stay awake
 
 # detached transient timer — independent of this hook's cgroup
-systemd-run --on-active=2 systemctl suspend
+systemd-run --on-active=2 systemctl sleep
 exit 0
 EOF
 sudo chmod +x /usr/lib/systemd/system-sleep/relid-suspend
