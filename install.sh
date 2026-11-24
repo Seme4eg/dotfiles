@@ -6,8 +6,9 @@ set -eEo pipefail
 # Define Dotfiles locations
 export DOTFILES_PATH="$HOME/dotfiles"
 export DOTFILES_INSTALL="$DOTFILES_PATH/install"
-# TODO:
-# export DOTFILES_INSTALL_LOG_FILE="/var/log/dotfiles-install.log"
+export DOTFILES_INSTALL_LOG_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles/install.log"
+mkdir -p "$(dirname "$DOTFILES_INSTALL_LOG_FILE")"
+exec > >(tee -a "$DOTFILES_INSTALL_LOG_FILE") 2>&1
 export PATH="$DOTFILES_PATH/.local/bin:$PATH"
 
 # Install
