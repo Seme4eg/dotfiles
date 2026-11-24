@@ -64,17 +64,16 @@ function IfConnected() {
   );
 
   // connected widget
-  // FIXME: maybe im dumb, cuz can't understand how to make that revealer
-  // work. ProgressBar width fucs everything up
+  // transition must be horizontal: default is gtk's slide_down, which never
+  // shrinks the revealer's width, so the bar keeps space for hidden child
   return Widget.Revealer({
     className: "connected",
+    transition: "slide_right",
     revealChild: isConnected,
     transitionDuration: 350,
     child: Widget.Overlay({
       child: Widget.ProgressBar({
-        widthRequest: network
-          .bind("connectivity")
-          .as((status) => (status === "limited" || status === "full" ? 38 : 0)),
+        widthRequest: 38,
         vpack: "center",
         value: network.bind("primary").as((type) => {
           if (type === "wifi") {

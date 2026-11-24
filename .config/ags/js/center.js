@@ -7,7 +7,7 @@ const date = Variable("", {
 
 function Clock() {
   return Widget.Overlay({
-    // FIXME: didn't figure out how to bring child element on top of the overlay
+    // No way to bring child element on top of the overlay.
     // As a hack - duplikating element to get width set and make it transparent.
     child: Widget.Label({
       className: "fg",
