@@ -5,6 +5,7 @@ source $DOTFILES_PATH/install/config/config.sh
 source $DOTFILES_PATH/install/config/journal-mem-limit.sh
 source $DOTFILES_PATH/install/config/lid-close-ignore.sh
 source $DOTFILES_PATH/install/config/swappiness.sh
+source $DOTFILES_PATH/install/config/limine.sh
 
 # systemd services
 source $DOTFILES_PATH/install/config/system-services.sh

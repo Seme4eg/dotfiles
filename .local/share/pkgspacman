@@ -44,7 +44,6 @@ go
 gofumpt
 gpu-screen-recorder
 grim
-grub
 gtk-layer-shell
 hypridle
 hyprland
@@ -58,6 +57,7 @@ lf
 libsixel
 libvips
 libvterm
+limine
 linux
 linux-firmware
 linux-headers

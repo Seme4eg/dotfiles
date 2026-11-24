@@ -6,7 +6,6 @@ alias vim="nvim"
 alias du="ncdu" # get to know your storage (https://github.com/rofl0r/ncdu)
 alias jq="gojq"
 
-alias grubconf="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias 0x0="curl -F 'file=@-' https://0x0.st" # < file or use < <(commmand) like wl-paste
 
 alias randstr="openssl rand -hex" # and pass length

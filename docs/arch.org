@@ -20,10 +20,25 @@ For any problems that happen to system first see ~journalctl -b 0 --no-pager~
 - _pacstrap_: ~pacstrap -K /mnt base base-devel linux linux-firmware linux-headers
   sof-firmware networkmanager wget neovim man-db man-pages intel/amd-ucode~
 - ...
-- bootloader step:
-  - pacman -S grub efibootmgr
-  - grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
-  - grub-mkconfig -o /boot/grub/grub.cfg
+- bootloader step ([[https://wiki.archlinux.org/title/Limine][Limine]], reads only FAT so kernel + initramfs must stay on ESP =/boot=):
+  - pacman -S limine efibootmgr
+  - mkdir -p /boot/EFI/arch-limine && cp /usr/share/limine/BOOTX64.EFI /boot/EFI/arch-limine/
+  - =/boot/EFI/arch-limine/limine.conf= (root UUID: ~findmnt -no UUID /~; no
+    ucode line needed, mkinitcpio ~microcode~ hook embeds it in initramfs):
+    #+begin_src
+    timeout: 3
+
+    /Arch Linux
+        protocol: linux
+        path: boot():/vmlinuz-linux
+        cmdline: root=UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx rw loglevel=3 quiet
+        module_path: boot():/initramfs-linux.img
+    #+end_src
+  - efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch Linux Limine
+    Boot Loader" --loader '\EFI\arch-limine\BOOTX64.EFI' --unicode
+  - pacman upgrade hook is set up after reboot by =install/config/limine.sh=
+  - if Limine fails: firmware boot menu (Lenovo: F12 / Novo button) and pick
+    another entry; in Limine menu ~e~ edits an entry, F10 boots it
 - *after reboot*:
   - systemctl enable --now NetworkManager -> nmtui
   - create user:
@@ -74,7 +89,7 @@ _Nvidia hybrid laptop setup_: install /nvidia/ drivers, done. In order for HDMI
 port to work (which is often connected directly to Nvidia gpu) hyprland must be
 able to be launched only using Nvidia gpu (do it via ~WLR_DRM_DEVICES~ var).  If
 it launches you're good to go. Otherwise set ~nvidia-drm.modeset=1~ in
-=/etc/default/grub=, check again and if it works - HDMI will b working (tho i
+=cmdline:= in =/boot/EFI/arch-limine/limine.conf=, check again and if it works - HDMI will b working (tho i
 recommend to use USB-C hub and plug HDMI in there so external monitor apps use
 Intel GPU cuz for now nvidia is glichy).
 
@@ -97,7 +112,7 @@ config would be d3d9.cachedDynamicBuffers = True ([[https://canary.discord.com/c
 alias batinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 
 Xiomi laptop was draining battery like crazy in [s2idle] sleep mode, so i
-changed added the ~mem_sleep_default=deep~ to ~GRUB_CMDLINE_LINUX_DEFAULT~ in =/etc/default/grub=
+added ~mem_sleep_default=deep~ to =cmdline:= in =/boot/EFI/arch-limine/limine.conf=
 
 ** gpg
 - import all needed gpg keys - ~gpg --import <keyname>.gpg~, including the one for ~git-crypt~

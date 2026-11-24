@@ -1,11 +1,3 @@
-# grub theme
-git clone git@github.com:vinceliuice/Elegant-grub2-themes.git \
-  $HOME/.local/share/utils/$@
-cd $HOME/.local/share/utils/grubtheme
-# commit before borked opensuse pngs naming..
-git reset --hard 6cfd864
-sudo ./install.sh -s 2k -b
-
 # for hyprland to not show error of undefined color var on first launch
 wal -n -q -i "$DOTFILES_PATH/assets/wallpaper.jpg" --saturate 0.3
 
