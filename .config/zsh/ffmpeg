@@ -103,30 +103,50 @@ ffboost() {
 
 # TLDR: you need the -crf flag most likely
 # ---
-# -c:v libx264 - video codec
 # -crf - Constant Rate Factor controls the quality and compression level of the
 #        video. Higher value - lower quality.
-# -preset slow - speed vs. compression efficiency (where 'ultrafast' = not much
-#                compression)
 # -c:a aac - audio codec
 # -b:a - audio bitrate
 # -an - disable audio
+# -c:v libsvtav1 - AV1 video codec; VMAF-tested on Pixel clips: crf 40 beats
+#                  libx264 crf 28 in quality at 20-35% smaller size
+#                  (crf 35 = same size as x264 crf 28, higher quality)
+# -preset 5 - libsvtav1 speed preset (0 = slowest/best, 13 = fastest)
+# -c:a copy - keep source audio as is (no re-encode generation loss)
+# -map_metadata 0 - keep creation_time (ffmpeg drops it by default)
+# -fps_mode passthrough - keep source frame timestamps (mp4 defaults to CFR,
+#                         which dups/drops frames of variable-rate phone video)
+# -vf scale=... - downscale to 1080p: short side capped at 1080 (portrait or
+#                 landscape), -2 keeps aspect with even size, never upscales
+# systemd-run ... CPUQuota - cap encode at 80% of all cores (quota is per core,
+#                            hence nproc * 80); nice 19 lets desktop apps go first
 vidcompress() {
   if [[ -z "$1" || ! -f "$1" ]]; then
     echo "usage: vidcompress <video-file>" >&2
     return 1
   fi
   local dir base
-  local crf=28
+  local crf=40
   dir=$(dirname -- "$1")
   base=$(basename -- "$1")
   out="${dir}/${base%.*}.crf${crf}.mp4"
-  ffmpeg -nostdin -n -i "$1" \
-    -c:v libx264 -preset slow -crf "$crf" \
-    -c:a aac -b:a 128k \
+  systemd-run --user --scope -q -p CPUQuota=$(($(nproc) * 80))% nice -n 19 \
+    ffmpeg -nostdin -n -i "$1" \
+    -map_metadata 0 -fps_mode passthrough \
+    -vf "scale='if(gte(iw,ih),-2,min(iw,1080))':'if(gte(iw,ih),min(ih,1080),-2)'" \
+    -c:v libsvtav1 -preset 5 -crf "$crf" \
+    -c:a copy \
     -movflags +faststart \
     "$out" || return 1
   if [[ -s "$out" ]]; then
+    # ffmpeg rewrites location ©xyz -> loci (~1 m rounding) and drops
+    # com.android.* keys (model, make, capture fps); copy them back as is
+    exiftool -q -q -overwrite_original -tagsFromFile "$1" \
+      -UserData:all -Keys:all "$out" || {
+      echo "metadata copy failed, keeping original: $1" >&2
+      return 1
+    }
+    touch -r "$1" "$out"
     gio trash "$1"
   else
     echo "output missing/empty, keeping original: $1" >&2
@@ -135,9 +155,11 @@ vidcompress() {
 }
 
 # List mp4 files under dir (default: .) whose video bitrate exceeds
-# threshold (default: 20 Mb/s) — i.e. not yet compressed.
+# threshold (default: 13 Mb/s) — i.e. not yet compressed.
+# 13 Mb/s: above old x264 crf28 outputs (max 12.2), below phone originals
+# (Pixel 1080p HEVC ~19.8, Samsung 1080p H.264 ~17.6).
 vidfind_uncompressed() {
-  local dir="${1:-.}" threshold="${2:-20000000}" br
+  local dir="${1:-.}" threshold="${2:-13000000}" br
   find "$dir" -type f -iname '*.mp4' -print0 |
     while IFS= read -r -d '' f; do
       br=$(ffprobe -v error -select_streams v:0 \
@@ -153,13 +175,11 @@ vidfind_uncompressed() {
 }
 
 # Compress every mp4 under dir (default: .) whose video bitrate
-# exceeds threshold (default: 20 Mb/s).
+# exceeds threshold (default: 13 Mb/s).
 vidcompress_all() {
   local f
-  vidfind_uncompressed "${1:-.}" "${2:-20000000}" |
+  vidfind_uncompressed "${1:-.}" "${2:-13000000}" |
     while IFS= read -r f; do
-      [[ "$f" == *.compressed.mp4 ]] && continue    # never recompress own output
-      [[ -e "${f%.*}.compressed.mp4" ]] && continue # already done, skip quietly
       echo "compressing: $f"
       vidcompress "$f"
     done
