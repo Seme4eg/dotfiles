@@ -95,6 +95,7 @@ pass-otp
 perl-image-exiftool
 pgformatter
 pipewire-alsa
+pipewire-libcamera
 pipewire-pulse
 playerctl
 pnpm
