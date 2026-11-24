@@ -1,5 +1,4 @@
-#!/bin/env bash
-# FIXME: #!/bin/env is non-portable, should be #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # horrible, unreadable, but still a reference:
 # https://github.com/P3rf/rofi-network-manager/blob/master/src/ronema
