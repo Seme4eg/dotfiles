@@ -332,16 +332,22 @@ ssid_menu() { # $1 idx
 }
 
 # autoupdate network list
-# FIXME: background rescan poll every 1s - battery drain, interferes with connects
+# event-driven: one rescan kick (only if cache older than 30s), then recount on
+# NM's AccessPointAdded/Removed D-Bus signals; no polling
 update_networks() {
   local cur=${#SSIDS[@]} new
-  while true; do
-    sleep 1
-    new=$(scan auto | aggregate | wc -l)
-    # -w for 'wait' to not spam tnose notification until user refreshes
-    [ "$new" -ne "$cur" ] && say -w -e "Networks changed, refresh ($kb_refresh)"
-  done
+  nmcli device wifi list --rescan auto >/dev/null 2>&1 &
+  gdbus monitor --system --dest org.freedesktop.NetworkManager |
+    grep --line-buffered -E '\.AccessPoint(Added|Removed) ' |
+    while read -r _; do
+      new=$(scan no | aggregate | wc -l)
+      # -w for 'wait' to not spam tnose notification until user refreshes
+      [ "$new" -ne "$cur" ] && say -w -e "Networks changed, refresh ($kb_refresh)"
+    done
 }
+
+# updater is a pipeline: kill its children too, not only the subshell
+stop_updates() { pkill -P "$update_pid"; kill "$update_pid"; } 2>/dev/null
 
 show_menu() { # $1 rescan mode for nmcli (no|auto|yes)
   local state idx i sel=0
@@ -360,7 +366,7 @@ show_menu() { # $1 rescan mode for nmcli (no|auto|yes)
   # start it as soon as possible
   update_networks &
   update_pid=$!
-  trap 'kill $update_pid 2>/dev/null' EXIT
+  trap stop_updates EXIT
 
   # rofi 2.0 quirk: plain -format i prints -1 on kb-custom keys; 'i s' works
   idx=$(printf '%s\n' "${rows[@]}" | _rofi -format 'i s' -selected-row "$sel" \
@@ -373,7 +379,7 @@ show_menu() { # $1 rescan mode for nmcli (no|auto|yes)
     -theme-str '#entry { placeholder: "Wi-Fi SSID:"; }')
   rofi_exit=$?
 
-  kill $update_pid 2>/dev/null
+  stop_updates
   assert_status $rofi_exit
   idx=${idx%% *}                         # strip ssid text, index is authoritative
   [ "$idx" ] && [ "$idx" -ge 0 ] || exit # typed custom input
