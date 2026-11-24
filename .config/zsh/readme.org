@@ -147,16 +147,5 @@ and will only be used if such an implementation is detected.
 - ~...~ (cd ../../) -- Changes current directory two levels higher.
 
 ** Todos
-*** sourcing?
-#+begin_src bash
-# Include user-specified configs.
-if [ ! -d "${ZSHDDIR}" ]; then
-    mkdir -p "${ZSHDDIR}" && echo "# Put your user-specified config here." > "${ZSHDDIR}/example.zsh"
-fi
-
-for zshd in $(ls -A ${HOME}/.config/zsh.d/^*.(z)sh$); do
-    . "${zshd}"
-done
-#+end_src
 *** this guys' config?
 https://github.com/xero/dotfiles/tree/master/zsh
