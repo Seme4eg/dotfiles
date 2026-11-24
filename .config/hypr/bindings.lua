@@ -50,6 +50,8 @@ hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd("hyprlock"))
 -- create a file to ignore lid-close event once, needed when plugging back to hub
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("touch " .. lid_ignore), { locked = true })
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("record"))
+-- eject Thunderbolt devices before unplugging eGPU: amdgpu teardown ~1 s instead of ~23 s of timeouts
+hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("echo 1 | sudo tee /sys/bus/pci/devices/0000:00:07.*/0000:*/remove >/dev/null && say -e 'eGPU: safe to unplug'"))
 -- minus - code 20, plus - code 21
 hl.bind(mainMod .. " + SHIFT + CTRL + code:20", function() set_laptop(false) end)
 hl.bind(mainMod .. " + SHIFT + CTRL + code:21", function() set_laptop(true) end)
